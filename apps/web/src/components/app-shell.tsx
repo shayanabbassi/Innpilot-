@@ -17,6 +17,7 @@ interface NavItem {
     | 'guests'
     | 'housekeeping'
     | 'maintenance'
+    | 'dayClose'
     | 'rooms'
     | 'staff'
     | 'audit'
@@ -36,6 +37,7 @@ const NAV: NavItem[] = [
   { href: '/guests', label: 'guests', visible: (s) => s.can('guest.read') },
   { href: '/housekeeping', label: 'housekeeping', visible: (s) => s.can('housekeeping.read') },
   { href: '/maintenance', label: 'maintenance', visible: (s) => s.can('housekeeping.read') },
+  { href: '/day-close', label: 'dayClose', visible: (s) => s.can('night_audit.run') },
   { href: '/settings/property', label: 'property', visible: (s) => s.can('property.read') },
   { href: '/settings/rooms', label: 'rooms', visible: (s) => s.can('room.read') },
   { href: '/staff', label: 'staff', visible: tenant('user.read') },

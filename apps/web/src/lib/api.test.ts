@@ -115,6 +115,7 @@ describe('messages', () => {
       'user.mfa_reset',
       'property.updated',
       'property.onboarding_completed',
+      'property.day_closed',
       'tenant.created',
       'room_type.created',
       'room_type.updated',

@@ -1,6 +1,7 @@
 export * from './admin';
 export * from './auth';
 export * from './common';
+export * from './day-close';
 export * from './errors';
 export * from './guests';
 export * from './housekeeping';

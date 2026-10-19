@@ -12,6 +12,8 @@ import { SessionService } from './auth/session.service';
 import { EnvelopeInterceptor } from './common/envelope.interceptor';
 import { ErrorFilter } from './common/error.filter';
 import { APP_CONFIG, type AppConfig } from './config';
+import { DayCloseController } from './day-close/day-close.controller';
+import { DayCloseService } from './day-close/day-close.service';
 import { DbModule } from './db/db.module';
 import { HealthController } from './health/health.controller';
 import { HousekeepingController } from './housekeeping/housekeeping.controller';
@@ -101,6 +103,7 @@ export class AppModule {
         ReservationsController,
         StaysController,
         HousekeepingController,
+        DayCloseController,
         UsersController,
         AuditController,
         HealthController,
@@ -121,6 +124,7 @@ export class AppModule {
         StaysService,
         HousekeepingService,
         MaintenanceService,
+        DayCloseService,
         PiiService,
         IdempotencyService,
       ],

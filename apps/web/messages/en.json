@@ -66,7 +66,8 @@
     "reservations": "Reservations",
     "frontDesk": "Front desk",
     "housekeeping": "Housekeeping",
-    "maintenance": "Maintenance"
+    "maintenance": "Maintenance",
+    "dayClose": "Day close"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -186,7 +187,8 @@
     },
     "property": {
       "updated": "Changed property settings",
-      "onboarding_completed": "Finished property setup"
+      "onboarding_completed": "Finished property setup",
+      "day_closed": "Closed the business day"
     },
     "tenant": {
       "created": "Hotel account created"
@@ -626,5 +628,31 @@
     "resolveNote": "What was done?",
     "submit": "Report",
     "cancel": "Cancel"
+  },
+  "dayClose": {
+    "title": "Day close",
+    "subtitle": "Close {date} and move the hotel to {next}.",
+    "interimNote": "Operational close only. Room charges are not posted yet; that arrives with guest billing.",
+    "checks": "Before closing",
+    "allClear": "Nothing is open. The day can be closed.",
+    "checkLabels": {
+      "arrivals_pending": "Guests due who have not checked in",
+      "overstays": "Guests still in house after their departure date",
+      "rooms_not_clean": "Rooms not cleaned",
+      "open_tasks": "Other open housekeeping tasks"
+    },
+    "serviceChanges": "On {next}",
+    "goesOutOfOrder": "Room {room} goes out of order",
+    "returnsToService": "Room {room} returns to service",
+    "counts": "{inHouse} in house · {checkedIn} checked in today · {sellable} rooms in service",
+    "markNoShows": "Mark the {count, plural, one {# guest} other {# guests}} still due as no-shows",
+    "reason": "Reason for closing with open items (recorded)",
+    "close": "Close {date}",
+    "closing": "Closing…",
+    "closed": "{date} closed. The business date is now {next}.",
+    "history": "Recent closes",
+    "historyLine": "{date} · by {name} · {noShows, plural, =0 {no no-shows} one {# no-show} other {# no-shows}}",
+    "unresolvedCount": "{count, plural, =0 {all clear} one {# item open} other {# items open}}",
+    "noHistory": "No days closed yet."
   }
 }

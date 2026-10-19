@@ -67,6 +67,9 @@ import {
   ticketDto,
   ticketListQuery,
   updateTaskRequest,
+  dayCloseDto,
+  dayClosePreviewDto,
+  dayCloseRequest,
   z,
 } from '@innpilot/contracts';
 import type { ZodTypeAny } from 'zod';
@@ -448,6 +451,24 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Resolve a ticket; ends its out-of-order period and returns the room to service',
     body: resolveTicketRequest,
     data: ticketDto,
+    status: 200,
+  },
+  'GET /properties/{propertyId}/day-close/preview': {
+    tag: 'Day close',
+    summary: 'What is still open for the business date, and out-of-order changes for the next date',
+    data: dayClosePreviewDto,
+  },
+  'GET /properties/{propertyId}/day-close/history': {
+    tag: 'Day close',
+    summary: 'Last 30 closed business dates',
+    data: z.array(dayCloseDto),
+  },
+  'POST /properties/{propertyId}/day-close': {
+    tag: 'Day close',
+    summary:
+      'Close the business date once (Idempotency-Key): optional no-show marking, a reason if items remain, then the date advances by one day',
+    body: dayCloseRequest,
+    data: dayCloseDto,
     status: 200,
   },
   'GET /users': { tag: 'Staff', summary: 'Staff accounts and role assignments', data: z.array(userDto) },

@@ -380,3 +380,17 @@ export const maintenanceTickets = pgTable('maintenance_tickets', {
     .notNull()
     .default([]),
 });
+
+export const businessDateCloses = pgTable('business_date_closes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  nextDate: date('next_date', { mode: 'string' }).notNull(),
+  noShowsMarked: integer('no_shows_marked').notNull().default(0),
+  unresolved: jsonb('unresolved').$type<unknown[]>().notNull().default([]),
+  reason: text('reason'),
+  snapshot: jsonb('snapshot').$type<Record<string, number>>().notNull(),
+  closedBy: uuid('closed_by').notNull(),
+  closedAt: tsz('closed_at').notNull().defaultNow(),
+});
