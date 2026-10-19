@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import { json } from 'express';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
-import { AppModule } from './app.module';
+import { AppModule, type AppOptions } from './app.module';
 import type { AppConfig } from './config';
 
 export const API_PREFIX = 'api/v1';
@@ -14,13 +14,16 @@ export const API_PREFIX = 'api/v1';
 /** Builds the configured application. Shared by main.ts and the end-to-end tests. */
 export async function createApp(
   config: AppConfig,
-  options: { logger?: boolean } = {},
+  options: { logger?: boolean } & AppOptions = {},
 ): Promise<INestApplication> {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule.register(config), {
-    bufferLogs: true,
-    bodyParser: false,
-    logger: options.logger === false ? false : undefined,
-  });
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule.register(config, { logStream: options.logStream }),
+    {
+      bufferLogs: true,
+      bodyParser: false,
+      logger: options.logger === false ? false : undefined,
+    },
+  );
   if (options.logger !== false) app.useLogger(app.get(Logger));
 
   const trustProxy = config.TRUST_PROXY;

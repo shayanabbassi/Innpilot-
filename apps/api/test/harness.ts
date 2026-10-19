@@ -2,6 +2,7 @@ import { type INestApplication } from '@nestjs/common';
 import { CSRF_HEADER, type RoleCode } from '@innpilot/contracts';
 import { createTestDatabase, hashPassword, type TestDatabase } from '@innpilot/db';
 import { Client } from 'pg';
+import type { DestinationStream } from 'pino';
 import request from 'supertest';
 import { encryptSecret } from '../src/auth/crypto';
 import { base32Decode, generateTotpSecret, hotp, timeStep } from '../src/auth/totp';
@@ -130,7 +131,12 @@ async function buildFixture(admin: Client): Promise<Fixture> {
   };
 }
 
-export async function startHarness(): Promise<Harness> {
+export interface HarnessOptions {
+  /** Turns on the application logger at trace level, writing to this stream. */
+  logStream?: DestinationStream;
+}
+
+export async function startHarness(options: HarnessOptions = {}): Promise<Harness> {
   const db = await createTestDatabase();
   const admin = new Client({ connectionString: db.adminUrl });
   await admin.connect();
@@ -142,10 +148,13 @@ export async function startHarness(): Promise<Harness> {
     COOKIE_SECURE: 'false',
     MFA_ENCRYPTION_KEY: MFA_KEY.toString('base64url'),
     PII_ENCRYPTION_KEY: PII_KEY.toString('base64url'),
-    LOG_LEVEL: 'silent',
+    LOG_LEVEL: options.logStream ? 'trace' : 'silent',
     RATE_LIMIT_ENABLED: 'false',
   });
-  const app = await createApp(config, { logger: false });
+  const app = await createApp(
+    config,
+    options.logStream ? { logStream: options.logStream } : { logger: false },
+  );
   await app.init();
   return {
     app,

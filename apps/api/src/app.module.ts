@@ -3,6 +3,8 @@ import { type DynamicModule, Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
+import type { DestinationStream } from 'pino';
+import type { Options as PinoHttpOptions } from 'pino-http';
 import { AuditController } from './audit/audit.controller';
 import { AuditService } from './audit/audit.service';
 import { AuthController } from './auth/auth.controller';
@@ -53,9 +55,21 @@ export const LOG_REDACT_PATHS = [
   '*.document',
 ];
 
+export interface AppOptions {
+  /** Where logs are written instead of stdout. Lets tests read the real log output. */
+  logStream?: DestinationStream;
+}
+
+function withLogStream(
+  stream: DestinationStream | undefined,
+  options: PinoHttpOptions,
+): PinoHttpOptions | [PinoHttpOptions, DestinationStream] {
+  return stream ? [options, stream] : options;
+}
+
 @Module({})
 export class AppModule {
-  static register(config: AppConfig): DynamicModule {
+  static register(config: AppConfig, options: AppOptions = {}): DynamicModule {
     return {
       module: AppModule,
       imports: [
@@ -66,7 +80,7 @@ export class AppModule {
           exports: [APP_CONFIG],
         },
         LoggerModule.forRoot({
-          pinoHttp: {
+          pinoHttp: withLogStream(options.logStream, {
             level: config.LOG_LEVEL,
             genReqId: (req, res) => {
               const incoming = req.headers['x-request-id'];
@@ -87,7 +101,7 @@ export class AppModule {
               const auth = (req as { auth?: { tenantId: string; userId: string } }).auth;
               return auth ? { tenantId: auth.tenantId, userId: auth.userId } : {};
             },
-          },
+          }),
         }),
         ThrottlerModule.forRoot({
           throttlers: [{ name: 'default', ttl: 60_000, limit: 300 }],
