@@ -11,6 +11,7 @@ import { loadConfig } from '../src/config';
 export const ORIGIN = 'http://localhost:3000';
 export const PASSWORD = 'correct-horse-battery';
 const MFA_KEY = Buffer.alloc(32, 9);
+export const PII_KEY = Buffer.alloc(32, 5);
 
 export interface FixtureUser {
   id: string;
@@ -140,6 +141,7 @@ export async function startHarness(): Promise<Harness> {
     WEB_ORIGINS: ORIGIN,
     COOKIE_SECURE: 'false',
     MFA_ENCRYPTION_KEY: MFA_KEY.toString('base64url'),
+    PII_ENCRYPTION_KEY: PII_KEY.toString('base64url'),
     LOG_LEVEL: 'silent',
     RATE_LIMIT_ENABLED: 'false',
   });

@@ -61,7 +61,8 @@
     "property_label": "Property",
     "businessDate": "Business date {date}",
     "rooms": "Rooms & rates",
-    "board": "Room board"
+    "board": "Room board",
+    "guests": "Guests"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -196,6 +197,13 @@
       "created": "Added room",
       "bulk_created": "Added rooms",
       "updated": "Changed room"
+    },
+    "guest": {
+      "created": "Created guest",
+      "updated": "Changed guest details",
+      "document_added": "Added identity document",
+      "document_removed": "Removed identity document",
+      "document_revealed": "Viewed full identity document number"
     }
   },
   "onboarding": {
@@ -288,5 +296,76 @@
       "out_of_order": "Out of order",
       "inactive": "Inactive"
     }
+  },
+  "guests": {
+    "title": "Guests",
+    "subtitle": "Search by name, phone or email.",
+    "searchLabel": "Search guests",
+    "searchPlaceholder": "Name, phone or email",
+    "newGuest": "New guest",
+    "recent": "Recently added",
+    "noResults": "No guests match “{search}”.",
+    "empty": "No guests yet.",
+    "newTitle": "New guest",
+    "editTitle": "Edit guest",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "email": "Email",
+    "nationality": "Nationality (2-letter code)",
+    "addressLine": "Address",
+    "city": "City",
+    "countryCode": "Country (2-letter code)",
+    "preferences": "Preferences",
+    "notes": "Notes",
+    "marketingConsent": "Agrees to receive offers and news",
+    "create": "Create guest",
+    "creating": "Creating…",
+    "save": "Save changes",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "back": "All guests",
+    "possibleDuplicates": "Possible existing guest",
+    "duplicatesHint": "Open the existing profile instead of creating a second one, unless this is a different person.",
+    "open": "Open",
+    "reasons": {
+      "phone": "same phone",
+      "email": "same email",
+      "document": "same ID document",
+      "name": "similar name"
+    },
+    "contact": "Contact",
+    "address": "Address",
+    "other": "Preferences and notes",
+    "consentYes": "Agrees to offers and news",
+    "consentNo": "No marketing consent",
+    "since": "Guest since {date}",
+    "documents": "Identity documents",
+    "documentsHidden": "{count, plural, =0 {No documents on file.} one {# document on file. You do not have access to identity documents.} other {# documents on file. You do not have access to identity documents.}}",
+    "noDocuments": "No documents on file.",
+    "addDocument": "Add document",
+    "documentOptional": "Identity document (optional)",
+    "documentType": "Type",
+    "issuingCountry": "Issuing country",
+    "number": "Number",
+    "expiryDate": "Expiry date (optional)",
+    "types": {
+      "cnic": "CNIC",
+      "passport": "Passport",
+      "driving_license": "Driving licence",
+      "other": "Other"
+    },
+    "masked": "•••• {last4}",
+    "expires": "expires {date}",
+    "reveal": "Show number",
+    "revealTitle": "Show full {type} number",
+    "revealReason": "Reason (recorded in the audit log)",
+    "revealConfirm": "Show",
+    "revealedNote": "Hidden again in {seconds} s.",
+    "hide": "Hide",
+    "remove": "Remove",
+    "removeTitle": "Remove this {type}?",
+    "removeBody": "The document is deleted; the removal is recorded in the audit log.",
+    "nationalityLabel": "Nationality",
+    "countryLabel": "Country"
   }
 }

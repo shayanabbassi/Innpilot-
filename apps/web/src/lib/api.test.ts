@@ -123,6 +123,11 @@ describe('messages', () => {
       'room.created',
       'room.bulk_created',
       'room.updated',
+      'guest.created',
+      'guest.updated',
+      'guest.document_added',
+      'guest.document_removed',
+      'guest.document_revealed',
     ];
     for (const a of actions) {
       const [group, name] = a.split('.') as [string, string];

@@ -22,6 +22,13 @@ const schema = z.object({
       (v) => Buffer.from(v, 'base64url').length === 32,
       'MFA_ENCRYPTION_KEY must be 32 bytes, base64url.',
     ),
+  /** 32 bytes, base64url. Encrypts guest identity-document numbers and keys their lookup hash. */
+  PII_ENCRYPTION_KEY: z
+    .string()
+    .refine(
+      (v) => Buffer.from(v, 'base64url').length === 32,
+      'PII_ENCRYPTION_KEY must be 32 bytes, base64url.',
+    ),
   SESSION_IDLE_MINUTES: z.coerce
     .number()
     .int()
@@ -52,6 +59,9 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   }
   if (parsed.data.NODE_ENV === 'production' && !parsed.data.COOKIE_SECURE) {
     throw new Error('COOKIE_SECURE must be true in production.');
+  }
+  if (parsed.data.PII_ENCRYPTION_KEY === parsed.data.MFA_ENCRYPTION_KEY) {
+    throw new Error('PII_ENCRYPTION_KEY and MFA_ENCRYPTION_KEY must be different keys.');
   }
   if (parsed.data.NODE_ENV === 'production' && !parsed.data.RATE_LIMIT_ENABLED) {
     throw new Error('RATE_LIMIT_ENABLED must be true in production.');

@@ -18,6 +18,7 @@ beforeAll(async () => {
     WEB_ORIGINS: 'http://localhost:3000',
     COOKIE_SECURE: 'false',
     MFA_ENCRYPTION_KEY: Buffer.alloc(32, 1).toString('base64url'),
+    PII_ENCRYPTION_KEY: Buffer.alloc(32, 2).toString('base64url'),
     LOG_LEVEL: 'silent',
   });
   app = await createApp(config, { logger: false });

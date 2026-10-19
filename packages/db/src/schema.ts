@@ -225,3 +225,38 @@ export const roomStatusEvents = pgTable('room_status_events', {
   actorUserId: uuid('actor_user_id'),
   occurredAt: tsz('occurred_at').notNull().defaultNow(),
 });
+
+export const guests = pgTable('guests', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  fullName: text('full_name').notNull(),
+  phone: text('phone'),
+  phoneNormalized: text('phone_normalized'),
+  email: citext('email'),
+  nationality: char('nationality', { length: 2 }),
+  addressLine: text('address_line'),
+  city: text('city'),
+  countryCode: char('country_code', { length: 2 }),
+  preferences: text('preferences'),
+  notes: text('notes'),
+  marketingConsent: boolean('marketing_consent').notNull().default(false),
+  consentUpdatedAt: tsz('consent_updated_at'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+  createdBy: uuid('created_by'),
+});
+
+export const guestDocuments = pgTable('guest_documents', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  guestId: uuid('guest_id').notNull(),
+  documentType: text('document_type', { enum: ['cnic', 'passport', 'driving_license', 'other'] }).notNull(),
+  issuingCountry: char('issuing_country', { length: 2 }).notNull(),
+  /** Encrypted by the API; never select this into a response or log. */
+  numberEnc: text('number_enc').notNull(),
+  numberHmac: bytea('number_hmac').notNull(),
+  numberLast4: text('number_last4').notNull(),
+  expiryDate: date('expiry_date', { mode: 'string' }),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  createdBy: uuid('created_by'),
+});

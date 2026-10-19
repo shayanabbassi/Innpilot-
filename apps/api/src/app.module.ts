@@ -16,6 +16,9 @@ import { DbModule } from './db/db.module';
 import { HealthController } from './health/health.controller';
 import { IdempotencyService } from './idempotency/idempotency.service';
 import { PropertiesController } from './properties/properties.controller';
+import { GuestsController } from './guests/guests.controller';
+import { GuestsService } from './guests/guests.service';
+import { PiiService } from './guests/pii.service';
 import { RoomsController } from './rooms/rooms.controller';
 import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
@@ -36,6 +39,9 @@ export const LOG_REDACT_PATHS = [
   '*.code',
   '*.secret',
   '*.mfaSecretEnc',
+  '*.number',
+  '*.numberEnc',
+  '*.document',
 ];
 
 @Module({})
@@ -84,6 +90,7 @@ export class AppModule {
         AuthController,
         PropertiesController,
         RoomsController,
+        GuestsController,
         UsersController,
         AuditController,
         HealthController,
@@ -99,6 +106,8 @@ export class AppModule {
         SessionService,
         UsersService,
         RoomsService,
+        GuestsService,
+        PiiService,
         IdempotencyService,
       ],
     };
