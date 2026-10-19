@@ -18,6 +18,7 @@ import { PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
 import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 import { GuestsService } from '../guests/guests.service';
+import { HousekeepingService } from '../housekeeping/housekeeping.service';
 import { IdempotencyService } from '../idempotency/idempotency.service';
 import { ReservationsService } from '../reservations/reservations.service';
 
@@ -51,6 +52,7 @@ export class StaysService {
     private readonly idempotency: IdempotencyService,
     private readonly reservations: ReservationsService,
     private readonly guests: GuestsService,
+    private readonly housekeeping: HousekeepingService,
   ) {}
 
   // -------------------------------------------------------------------------------------------- commands
@@ -287,7 +289,14 @@ export class StaysService {
           fromDate: property.businessDate,
           reason: body.reason,
         });
-        await this.markDirty(tx, auth, propertyId, current.roomId, 'Guest moved to another room');
+        await this.housekeeping.markDirty(
+          tx,
+          auth,
+          propertyId,
+          current.roomId,
+          'Guest moved to another room',
+          meta,
+        );
         await this.record(
           tx,
           auth,
@@ -509,22 +518,6 @@ export class StaysService {
         ),
       );
     return new Set(rows.map((x) => x.roomId));
-  }
-
-  private async markDirty(tx: Tx, auth: AuthContext, propertyId: string, roomId: string, reason: string) {
-    const [room] = await tx.select().from(rooms).where(eq(rooms.id, roomId)).for('update');
-    if (!room || room.housekeepingState === 'dirty') return;
-    await tx.update(rooms).set({ housekeepingState: 'dirty' }).where(eq(rooms.id, roomId));
-    await tx.insert(schema.roomStatusEvents).values({
-      tenantId: auth.tenantId,
-      propertyId,
-      roomId,
-      dimension: 'housekeeping',
-      fromState: room.housekeepingState,
-      toState: 'dirty',
-      reason,
-      actorUserId: auth.userId,
-    });
   }
 
   /** Concurrency backstops: a racing check-in into the same room surfaces as a clear 409. */

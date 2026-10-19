@@ -55,6 +55,14 @@ function uuidArray(ids: readonly string[]): string {
   return `{${ids.join(',')}}`;
 }
 
+/** Open out-of-order periods of a room overlapping [arrival, departure). */
+function outOfOrderOverlap(roomId: SQL, arrival: string, departure: string): SQL {
+  return sql`select 1 from maintenance_tickets mt
+               where mt.room_id = ${roomId} and mt.status in ('open', 'in_progress')
+                 and mt.out_of_order_from is not null and mt.out_of_order_from < ${departure}::date
+                 and (mt.out_of_order_to is null or mt.out_of_order_to > ${arrival}::date)`;
+}
+
 interface Segment {
   roomTypeId: string;
   roomId: string | null;
@@ -82,8 +90,8 @@ export class ReservationsService {
         .orderBy(asc(schema.roomTypes.sortOrder), asc(schema.roomTypes.code));
       const out: AvailabilityDto['roomTypes'] = [];
       for (const t of types) {
-        const supply = await this.supply(tx, t.id);
-        const peak = await this.peakBooked(tx, t.id, q.arrival, q.departure, []);
+        const load = await this.nightlyLoad(tx, t.id, q.arrival, q.departure, []);
+        const left = Math.min(...load.map((n) => n.supply - n.booked));
         const rate = await this.rateOn(tx, t.id, q.arrival);
         out.push({
           roomTypeId: t.id,
@@ -91,7 +99,7 @@ export class ReservationsService {
           name: t.name,
           capacityAdults: t.capacityAdults,
           capacityChildren: t.capacityChildren,
-          available: Math.max(0, supply - peak),
+          available: Math.max(0, left),
           freeRooms: await this.freeRooms(tx, t.id, q.arrival, q.departure),
           nightlyRate: rate ? Money.fromStorage(rate, property.currencyCode).toString() : null,
           currencyCode: property.currencyCode,
@@ -334,7 +342,12 @@ export class ReservationsService {
         const res = await this.lock(tx, propertyId, id);
         if (!EDITABLE.includes(res.status)) throw this.badState(res.status, 'changed');
         const seg = await this.segment(tx, id, reservationRoomId);
-        if (roomId) await this.assertRoom(tx, propertyId, seg.roomTypeId, roomId, 'roomId');
+        if (roomId) {
+          await this.assertRoom(tx, propertyId, seg.roomTypeId, roomId, 'roomId', {
+            arrival: seg.arrival,
+            departure: seg.departure,
+          });
+        }
         await tx.update(rr).set({ roomId }).where(eq(rr.id, reservationRoomId));
         await this.record(
           tx,
@@ -497,7 +510,12 @@ export class ReservationsService {
           },
         ]);
       }
-      if (input.roomId) await this.assertRoom(tx, property.id, type.id, input.roomId, path('roomId'));
+      if (input.roomId) {
+        await this.assertRoom(tx, property.id, type.id, input.roomId, path('roomId'), {
+          arrival: input.arrival,
+          departure: input.departure,
+        });
+      }
 
       let rate: string;
       let overridden = false;
@@ -567,21 +585,13 @@ export class ReservationsService {
   async assertInventory(tx: Tx, type: RoomTypeRow, segs: Segment[], excluding: string[]): Promise<void> {
     const from = segs.reduce((m, s) => (s.arrival < m ? s.arrival : m), segs[0]!.arrival);
     const to = segs.reduce((m, s) => (s.departure > m ? s.departure : m), segs[0]!.departure);
-    const supply = await this.supply(tx, type.id);
-    const { rows } = await tx.execute<{ night: string; booked: number }>(sql`
-      select n::date::text as night, count(x.id)::int as booked
-        from generate_series(${from}::date, ${to}::date - 1, interval '1 day') n
-        left join reservation_rooms x
-          on x.room_type_id = ${type.id} and x.status = 'active'
-         and x.arrival <= n::date and x.departure > n::date
-         and not (x.id = any(${uuidArray(excluding)}::uuid[]))
-       group by n order by n`);
-    const full = rows
+    const full = (await this.nightlyLoad(tx, type.id, from, to, excluding))
       .map((row) => ({
         night: row.night,
+        supply: row.supply,
         needed: row.booked + segs.filter((s) => s.arrival <= row.night && s.departure > row.night).length,
       }))
-      .filter((x) => x.needed > supply)
+      .filter((x) => x.needed > x.supply)
       .map((x) => x.night);
     if (full.length > 0) {
       throw unavailable(`${type.code} is fully booked on ${full.join(', ')}.`, [
@@ -590,29 +600,35 @@ export class ReservationsService {
     }
   }
 
-  /** Rooms that count as sellable inventory for a type. Dated out-of-order windows come with housekeeping. */
-  private async supply(tx: Tx, roomTypeId: string): Promise<number> {
-    const [row] = await tx
-      .select({ n: sql<number>`count(*)::int` })
-      .from(schema.rooms)
-      .where(and(eq(schema.rooms.roomTypeId, roomTypeId), eq(schema.rooms.active, true)));
-    return row?.n ?? 0;
+  /**
+   * For each night of [from, to): active bookings of the type, and sellable rooms of the type — active rooms
+   * minus those in an open out-of-order period covering that night.
+   */
+  async nightlyLoad(
+    tx: Tx,
+    roomTypeId: string,
+    from: string,
+    to: string,
+    excluding: string[],
+  ): Promise<{ night: string; booked: number; supply: number }[]> {
+    const { rows } = await tx.execute<{ night: string; booked: number; supply: number }>(sql`
+      select n::date::text as night,
+             (select count(*) from reservation_rooms x
+               where x.room_type_id = ${roomTypeId} and x.status = 'active'
+                 and x.arrival <= n::date and x.departure > n::date
+                 and not (x.id = any(${uuidArray(excluding)}::uuid[])))::int as booked,
+             (select count(*) from rooms rm
+               where rm.room_type_id = ${roomTypeId} and rm.active
+                 and not exists (select 1 from maintenance_tickets mt
+                                  where mt.room_id = rm.id and mt.status in ('open', 'in_progress')
+                                    and mt.out_of_order_from <= n::date
+                                    and (mt.out_of_order_to is null or mt.out_of_order_to > n::date)))::int as supply
+        from generate_series(${from}::date, ${to}::date - 1, interval '1 day') n
+       order by n`);
+    return rows;
   }
 
-  /** Highest number of active bookings of a type on any night of the range. */
-  private async peakBooked(tx: Tx, roomTypeId: string, from: string, to: string, excluding: string[]) {
-    const { rows } = await tx.execute<{ peak: number }>(sql`
-      select coalesce(max(c), 0)::int as peak from (
-        select count(x.id) as c
-          from generate_series(${from}::date, ${to}::date - 1, interval '1 day') n
-          left join reservation_rooms x
-            on x.room_type_id = ${roomTypeId} and x.status = 'active'
-           and x.arrival <= n::date and x.departure > n::date
-           and not (x.id = any(${uuidArray(excluding)}::uuid[]))
-         group by n) s`);
-    return rows[0]?.peak ?? 0;
-  }
-
+  /** Rooms of a type with no active booking and no out-of-order period in [arrival, departure). */
   private async freeRooms(tx: Tx, roomTypeId: string, arrival: string, departure: string) {
     const rows = await tx
       .select({ id: schema.rooms.id, roomNumber: schema.rooms.roomNumber })
@@ -623,6 +639,7 @@ export class ReservationsService {
           eq(schema.rooms.active, true),
           sql`not exists (select 1 from reservation_rooms x where x.room_id = ${schema.rooms.id}
                 and x.status = 'active' and x.arrival < ${departure}::date and x.departure > ${arrival}::date)`,
+          sql`not exists (${outOfOrderOverlap(sql`${schema.rooms.id}`, arrival, departure)})`,
         ),
       )
       .orderBy(sql`length(${schema.rooms.roomNumber})`, asc(schema.rooms.roomNumber));
@@ -641,7 +658,18 @@ export class ReservationsService {
     return row?.rate ?? null;
   }
 
-  async assertRoom(tx: Tx, propertyId: string, roomTypeId: string, roomId: string, path: string) {
+  /**
+   * Checks a specific room can take this booking: active, of the booked type and, when dates are given, not in an
+   * out-of-order period for any of those nights.
+   */
+  async assertRoom(
+    tx: Tx,
+    propertyId: string,
+    roomTypeId: string,
+    roomId: string,
+    path: string,
+    range?: { arrival: string; departure: string },
+  ) {
     const [room] = await tx
       .select()
       .from(schema.rooms)
@@ -655,6 +683,16 @@ export class ReservationsService {
       throw AppError.validation('Review the highlighted fields.', [
         { path, message: `Room ${room.roomNumber} is not of the booked room type.` },
       ]);
+    }
+    if (range) {
+      const { rows } = await tx.execute(
+        outOfOrderOverlap(sql`${roomId}::uuid`, range.arrival, range.departure),
+      );
+      if (rows.length > 0) {
+        throw unavailable(`Room ${room.roomNumber} is out of order for some of these nights.`, [
+          { path, message: 'Out of order for these dates.' },
+        ]);
+      }
     }
   }
 

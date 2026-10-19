@@ -3,6 +3,7 @@ export * from './auth';
 export * from './common';
 export * from './errors';
 export * from './guests';
+export * from './housekeeping';
 export * from './rbac';
 export * from './reservations';
 export * from './rooms';

@@ -15,6 +15,8 @@ interface NavItem {
     | 'reservations'
     | 'board'
     | 'guests'
+    | 'housekeeping'
+    | 'maintenance'
     | 'rooms'
     | 'staff'
     | 'audit'
@@ -32,6 +34,8 @@ const NAV: NavItem[] = [
   { href: '/reservations', label: 'reservations', visible: (s) => s.can('reservation.read') },
   { href: '/rooms', label: 'board', visible: (s) => s.can('room.read') },
   { href: '/guests', label: 'guests', visible: (s) => s.can('guest.read') },
+  { href: '/housekeeping', label: 'housekeeping', visible: (s) => s.can('housekeeping.read') },
+  { href: '/maintenance', label: 'maintenance', visible: (s) => s.can('housekeeping.read') },
   { href: '/settings/property', label: 'property', visible: (s) => s.can('property.read') },
   { href: '/settings/rooms', label: 'rooms', visible: (s) => s.can('room.read') },
   { href: '/staff', label: 'staff', visible: tenant('user.read') },

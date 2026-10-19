@@ -14,6 +14,9 @@ import { ErrorFilter } from './common/error.filter';
 import { APP_CONFIG, type AppConfig } from './config';
 import { DbModule } from './db/db.module';
 import { HealthController } from './health/health.controller';
+import { HousekeepingController } from './housekeeping/housekeeping.controller';
+import { HousekeepingService } from './housekeeping/housekeeping.service';
+import { MaintenanceService } from './housekeeping/maintenance.service';
 import { IdempotencyService } from './idempotency/idempotency.service';
 import { PropertiesController } from './properties/properties.controller';
 import { GuestsController } from './guests/guests.controller';
@@ -97,6 +100,7 @@ export class AppModule {
         GuestsController,
         ReservationsController,
         StaysController,
+        HousekeepingController,
         UsersController,
         AuditController,
         HealthController,
@@ -115,6 +119,8 @@ export class AppModule {
         GuestsService,
         ReservationsService,
         StaysService,
+        HousekeepingService,
+        MaintenanceService,
         PiiService,
         IdempotencyService,
       ],

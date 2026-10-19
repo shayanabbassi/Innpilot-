@@ -64,7 +64,9 @@
     "board": "Room board",
     "guests": "Guests",
     "reservations": "Reservations",
-    "frontDesk": "Front desk"
+    "frontDesk": "Front desk",
+    "housekeeping": "Housekeeping",
+    "maintenance": "Maintenance"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -198,7 +200,10 @@
     "room": {
       "created": "Added room",
       "bulk_created": "Added rooms",
-      "updated": "Changed room"
+      "updated": "Changed room",
+      "housekeeping_changed": "Changed housekeeping status",
+      "out_of_order": "Took room out of order",
+      "returned_to_service": "Returned room to service"
     },
     "guest": {
       "created": "Created guest",
@@ -220,6 +225,14 @@
       "room_removed": "Removed room",
       "checked_in": "Checked in",
       "room_moved": "Moved to another room"
+    },
+    "housekeeping": {
+      "task_created": "Created housekeeping task",
+      "task_assigned": "Assigned housekeeping task",
+      "task_cancelled": "Cancelled housekeeping task"
+    },
+    "maintenance": {
+      "ticket_created": "Reported maintenance problem"
     }
   },
   "onboarding": {
@@ -521,5 +534,97 @@
     "creating": "Checking in…",
     "newGuest": "New guest",
     "existingGuest": "Existing guest"
+  },
+  "housekeeping": {
+    "title": "Housekeeping",
+    "subtitle": "Cleaning and inspection work for {date}.",
+    "tasksTab": "Task queue",
+    "roomsTab": "Rooms",
+    "mine": "Mine and unassigned",
+    "everyone": "Everyone",
+    "noTasks": "No open tasks. Everything is clean.",
+    "floor": "Floor {floor}",
+    "taskTypes": {
+      "clean": "Clean",
+      "inspect": "Inspect"
+    },
+    "taskStatus": {
+      "open": "To do",
+      "in_progress": "In progress",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    },
+    "sources": {
+      "manual": "Requested",
+      "room_dirty": "Room needs cleaning",
+      "inspection_failed": "Failed inspection"
+    },
+    "states": {
+      "dirty": "Dirty",
+      "cleaning": "Being cleaned",
+      "clean": "Clean",
+      "inspected": "Inspected"
+    },
+    "unassigned": "Unassigned",
+    "assignTo": "Assign to",
+    "start": "Start",
+    "done": "Done",
+    "pass": "Passed",
+    "fail": "Failed",
+    "failNote": "What needs redoing?",
+    "requestInspection": "Request inspection",
+    "markAs": "Mark {state}",
+    "outOfOrder": "Out of order",
+    "cancel": "Cancel"
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "subtitle": "Problems reported in rooms and around the property.",
+    "report": "Report a problem",
+    "active": "Open",
+    "resolved": "Resolved",
+    "none": "No open problems.",
+    "noneResolved": "Nothing resolved yet.",
+    "room": "Room",
+    "noRoom": "Not a room (common area)",
+    "category": "Category",
+    "priority": "Priority",
+    "description": "What is wrong?",
+    "categories": {
+      "plumbing": "Plumbing",
+      "electrical": "Electrical",
+      "hvac": "Air conditioning / heating",
+      "furniture": "Furniture",
+      "appliance": "Appliance",
+      "cleaning": "Deep cleaning",
+      "other": "Other"
+    },
+    "priorities": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "statuses": {
+      "open": "Open",
+      "in_progress": "In progress",
+      "resolved": "Resolved",
+      "cancelled": "Cancelled"
+    },
+    "takeOut": "Take the room out of order",
+    "from": "From",
+    "to": "Until (optional)",
+    "toHint": "Leave empty to keep it out of order until the problem is resolved.",
+    "overrideReason": "Reason to unassign the bookings in this period",
+    "oooPeriod": "Out of order {from} → {to}",
+    "untilResolved": "until resolved",
+    "unassigned": "Bookings that need a new room: ",
+    "reportedBy": "Reported by {name}",
+    "startWork": "Start work",
+    "resolve": "Resolve",
+    "resolveTitle": "Resolve this problem",
+    "resolveNote": "What was done?",
+    "submit": "Report",
+    "cancel": "Cancel"
   }
 }

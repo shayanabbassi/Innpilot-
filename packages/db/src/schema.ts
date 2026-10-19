@@ -333,3 +333,50 @@ export const stayRooms = pgTable('stay_rooms', {
   endedAt: tsz('ended_at'),
   reason: text('reason'),
 });
+
+export const housekeepingTasks = pgTable('housekeeping_tasks', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  roomId: uuid('room_id').notNull(),
+  taskType: text('task_type', { enum: ['clean', 'inspect'] }).notNull(),
+  status: text('status', { enum: ['open', 'in_progress', 'done', 'cancelled'] })
+    .notNull()
+    .default('open'),
+  source: text('source', { enum: ['manual', 'room_dirty', 'inspection_failed'] }).notNull(),
+  assignedUserId: uuid('assigned_user_id'),
+  notes: text('notes'),
+  createdBy: uuid('created_by'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  startedAt: tsz('started_at'),
+  completedAt: tsz('completed_at'),
+  completedBy: uuid('completed_by'),
+});
+
+export const maintenanceTickets = pgTable('maintenance_tickets', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  roomId: uuid('room_id'),
+  category: text('category', {
+    enum: ['plumbing', 'electrical', 'hvac', 'furniture', 'appliance', 'cleaning', 'other'],
+  }).notNull(),
+  priority: text('priority', { enum: ['low', 'normal', 'high', 'urgent'] })
+    .notNull()
+    .default('normal'),
+  status: text('status', { enum: ['open', 'in_progress', 'resolved', 'cancelled'] })
+    .notNull()
+    .default('open'),
+  description: text('description').notNull(),
+  outOfOrderFrom: date('out_of_order_from', { mode: 'string' }),
+  outOfOrderTo: date('out_of_order_to', { mode: 'string' }),
+  reportedBy: uuid('reported_by'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  resolvedAt: tsz('resolved_at'),
+  resolvedBy: uuid('resolved_by'),
+  resolutionNote: text('resolution_note'),
+  unassignedReservations: jsonb('unassigned_reservations')
+    .$type<{ reservationId: string; bookingReference: string }[]>()
+    .notNull()
+    .default([]),
+});

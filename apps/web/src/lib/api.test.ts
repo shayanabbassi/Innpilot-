@@ -140,6 +140,13 @@ describe('messages', () => {
       'reservation.room_removed',
       'reservation.checked_in',
       'reservation.room_moved',
+      'room.housekeeping_changed',
+      'room.out_of_order',
+      'room.returned_to_service',
+      'housekeeping.task_created',
+      'housekeeping.task_assigned',
+      'housekeeping.task_cancelled',
+      'maintenance.ticket_created',
     ];
     for (const a of actions) {
       const [group, name] = a.split('.') as [string, string];

@@ -13,6 +13,7 @@ export const PERMISSIONS = {
   'audit.read': 'View the audit log',
   'room.read': 'View rooms, room types and the room board',
   'room.manage': 'Create and change rooms, room types and rates',
+  'room.out_of_order': 'Take rooms out of order and return them to service',
   'reservation.read': 'View reservations',
   'reservation.write': 'Create, change and cancel reservations',
   'reservation.rate_override': 'Book at a rate other than the room type rate',
