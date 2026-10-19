@@ -1,5 +1,6 @@
 /** Postgres SQLSTATE codes the API reacts to. */
 export const PG_UNIQUE_VIOLATION = '23505';
+export const PG_FOREIGN_KEY_VIOLATION = '23503';
 
 /**
  * The SQLSTATE of a database error. Drizzle wraps driver errors (the original is on `cause`),

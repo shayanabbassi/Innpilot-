@@ -128,6 +128,16 @@ describe('messages', () => {
       'guest.document_added',
       'guest.document_removed',
       'guest.document_revealed',
+      'reservation.created',
+      'reservation.updated',
+      'reservation.confirmed',
+      'reservation.cancelled',
+      'reservation.no_show',
+      'reservation.room_assigned',
+      'reservation.room_unassigned',
+      'reservation.room_changed',
+      'reservation.room_added',
+      'reservation.room_removed',
     ];
     for (const a of actions) {
       const [group, name] = a.split('.') as [string, string];

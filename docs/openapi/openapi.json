@@ -124,6 +124,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -247,6 +248,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -431,6 +433,7 @@
                                     "room.manage",
                                     "reservation.read",
                                     "reservation.write",
+                                    "reservation.rate_override",
                                     "guest.read",
                                     "guest.write",
                                     "guest.identity.read",
@@ -488,6 +491,7 @@
                               "room.manage",
                               "reservation.read",
                               "reservation.write",
+                              "reservation.rate_override",
                               "guest.read",
                               "guest.write",
                               "guest.identity.read",
@@ -571,6 +575,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -706,6 +711,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -847,6 +853,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -988,6 +995,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1202,6 +1210,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1413,6 +1422,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1685,6 +1695,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1896,6 +1907,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2099,6 +2111,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2345,6 +2358,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2593,6 +2607,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2745,6 +2760,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2915,6 +2931,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3038,6 +3055,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3215,6 +3233,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3415,6 +3434,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3629,6 +3649,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3833,6 +3854,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4062,6 +4084,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4251,6 +4274,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4618,6 +4642,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4850,6 +4875,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5104,6 +5130,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5432,6 +5459,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5728,6 +5756,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5982,6 +6011,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6138,6 +6168,4314 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/availability": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Rooms left per type for every night of a range, free rooms and rate (advisory)",
+        "description": "Requires permission `reservation.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "arrival",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "departure",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "nights": {
+                          "type": "integer"
+                        },
+                        "roomTypes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "capacityAdults": {
+                                "type": "integer"
+                              },
+                              "capacityChildren": {
+                                "type": "integer"
+                              },
+                              "available": {
+                                "type": "integer"
+                              },
+                              "freeRooms": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "roomNumber": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "roomNumber"
+                                  ]
+                                }
+                              },
+                              "nightlyRate": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "roomTypeId",
+                              "code",
+                              "name",
+                              "capacityAdults",
+                              "capacityChildren",
+                              "available",
+                              "freeRooms",
+                              "nightlyRate",
+                              "currencyCode"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "arrival",
+                        "departure",
+                        "nights",
+                        "roomTypes"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Bookings overlapping a date range, by status or reference/guest search",
+        "description": "Requires permission `reservation.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "confirmed",
+                "checked_in",
+                "checked_out",
+                "cancelled",
+                "no_show"
+              ]
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "required": false,
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 200
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "bookingReference": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "pending",
+                              "confirmed",
+                              "checked_in",
+                              "checked_out",
+                              "cancelled",
+                              "no_show"
+                            ]
+                          },
+                          "source": {
+                            "type": "string",
+                            "enum": [
+                              "walk_in",
+                              "phone",
+                              "email",
+                              "website",
+                              "agent",
+                              "ota",
+                              "other"
+                            ]
+                          },
+                          "notes": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "guest": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "fullName": {
+                                "type": "string"
+                              },
+                              "phone": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "email": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "city": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "nationality": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "fullName",
+                              "phone",
+                              "email",
+                              "city",
+                              "nationality"
+                            ]
+                          },
+                          "rooms": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "roomTypeId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "roomTypeCode": {
+                                  "type": "string"
+                                },
+                                "roomId": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "uuid"
+                                },
+                                "roomNumber": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "arrival": {
+                                  "type": "string"
+                                },
+                                "departure": {
+                                  "type": "string"
+                                },
+                                "nights": {
+                                  "type": "integer"
+                                },
+                                "adults": {
+                                  "type": "integer"
+                                },
+                                "children": {
+                                  "type": "integer"
+                                },
+                                "nightlyRate": {
+                                  "type": "string"
+                                },
+                                "currencyCode": {
+                                  "type": "string"
+                                },
+                                "rateOverridden": {
+                                  "type": "boolean"
+                                },
+                                "roomTotal": {
+                                  "type": "string"
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "active",
+                                    "released"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "roomTypeId",
+                                "roomTypeCode",
+                                "roomId",
+                                "roomNumber",
+                                "arrival",
+                                "departure",
+                                "nights",
+                                "adults",
+                                "children",
+                                "nightlyRate",
+                                "currencyCode",
+                                "rateOverridden",
+                                "roomTotal",
+                                "status"
+                              ]
+                            }
+                          },
+                          "arrival": {
+                            "type": "string"
+                          },
+                          "departure": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "cancelReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "bookingReference",
+                          "status",
+                          "source",
+                          "notes",
+                          "guest",
+                          "rooms",
+                          "arrival",
+                          "departure",
+                          "createdAt",
+                          "cancelReason"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Create a booking. Requires Idempotency-Key. 409 ROOM_UNAVAILABLE if any night is full.",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "guestId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": [
+                      "walk_in",
+                      "phone",
+                      "email",
+                      "website",
+                      "agent",
+                      "ota",
+                      "other"
+                    ]
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "pending",
+                      "confirmed"
+                    ],
+                    "default": "confirmed"
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 2000
+                  },
+                  "rooms": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "roomTypeId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "roomId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "arrival": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                        },
+                        "departure": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                        },
+                        "adults": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 20
+                        },
+                        "children": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "maximum": 20,
+                          "default": 0
+                        },
+                        "nightlyRate": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                        },
+                        "rateOverrideReason": {
+                          "type": "string",
+                          "minLength": 3,
+                          "maxLength": 300
+                        }
+                      },
+                      "required": [
+                        "roomTypeId",
+                        "arrival",
+                        "departure",
+                        "adults"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 20
+                  }
+                },
+                "required": [
+                  "guestId",
+                  "source",
+                  "rooms"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "One booking",
+        "description": "Requires permission `reservation.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Change source or notes",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string",
+                    "enum": [
+                      "walk_in",
+                      "phone",
+                      "email",
+                      "website",
+                      "agent",
+                      "ota",
+                      "other"
+                    ]
+                  },
+                  "notes": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 2000
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/history": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Change history of a booking (from the audit log)",
+        "description": "Requires permission `reservation.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "occurredAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "action": {
+                            "type": "string"
+                          },
+                          "entityType": {
+                            "type": "string"
+                          },
+                          "entityId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "propertyId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "actor": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "system",
+                                  "platform"
+                                ]
+                              },
+                              "userId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "name": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "userId",
+                              "name"
+                            ]
+                          },
+                          "changes": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "reason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "requestId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "occurredAt",
+                          "action",
+                          "entityType",
+                          "entityId",
+                          "propertyId",
+                          "actor",
+                          "changes",
+                          "reason",
+                          "requestId"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/confirm": {
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Confirm a pending booking",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/cancel": {
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Cancel with a reason; releases the rooms",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/no-show": {
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Mark a no-show (not before the arrival date); releases the rooms",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/rooms": {
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Add a room to a booking",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roomTypeId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "roomId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid"
+                  },
+                  "arrival": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "departure": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "adults": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20
+                  },
+                  "children": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 20,
+                    "default": 0
+                  },
+                  "nightlyRate": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "rateOverrideReason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  }
+                },
+                "required": [
+                  "roomTypeId",
+                  "arrival",
+                  "departure",
+                  "adults"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/rooms/{roomId}": {
+      "put": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Change dates, type, room or guests of a booked room (agreed rate kept unless the type changes)",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roomTypeId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "roomId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid"
+                  },
+                  "arrival": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "departure": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "adults": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 20
+                  },
+                  "children": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 20,
+                    "default": 0
+                  },
+                  "nightlyRate": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "rateOverrideReason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 300
+                  }
+                },
+                "required": [
+                  "roomTypeId",
+                  "arrival",
+                  "departure",
+                  "adults"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Remove a room from a multi-room booking",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{id}/rooms/{roomId}/assign": {
+      "post": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Assign or unassign a specific room",
+        "description": "Requires permission `reservation.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "roomId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "roomId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "pending",
+                            "confirmed",
+                            "checked_in",
+                            "checked_out",
+                            "cancelled",
+                            "no_show"
+                          ]
+                        },
+                        "source": {
+                          "type": "string",
+                          "enum": [
+                            "walk_in",
+                            "phone",
+                            "email",
+                            "website",
+                            "agent",
+                            "ota",
+                            "other"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "guest": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "fullName": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "email": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "city": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "nationality": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "fullName",
+                            "phone",
+                            "email",
+                            "city",
+                            "nationality"
+                          ]
+                        },
+                        "rooms": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomTypeCode": {
+                                "type": "string"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "arrival": {
+                                "type": "string"
+                              },
+                              "departure": {
+                                "type": "string"
+                              },
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "adults": {
+                                "type": "integer"
+                              },
+                              "children": {
+                                "type": "integer"
+                              },
+                              "nightlyRate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "rateOverridden": {
+                                "type": "boolean"
+                              },
+                              "roomTotal": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "active",
+                                  "released"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "roomTypeId",
+                              "roomTypeCode",
+                              "roomId",
+                              "roomNumber",
+                              "arrival",
+                              "departure",
+                              "nights",
+                              "adults",
+                              "children",
+                              "nightlyRate",
+                              "currencyCode",
+                              "rateOverridden",
+                              "roomTotal",
+                              "status"
+                            ]
+                          }
+                        },
+                        "arrival": {
+                          "type": "string"
+                        },
+                        "departure": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "cancelReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "bookingReference",
+                        "status",
+                        "source",
+                        "notes",
+                        "guest",
+                        "rooms",
+                        "arrival",
+                        "departure",
+                        "createdAt",
+                        "cancelReason"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6333,6 +10671,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6589,6 +10928,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6829,6 +11169,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7049,6 +11390,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7261,6 +11603,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7523,6 +11866,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7653,6 +11997,7 @@
                             "CSRF_FAILED",
                             "NOT_FOUND",
                             "CONFLICT",
+                            "ROOM_UNAVAILABLE",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",

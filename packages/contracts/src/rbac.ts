@@ -15,6 +15,7 @@ export const PERMISSIONS = {
   'room.manage': 'Create and change rooms, room types and rates',
   'reservation.read': 'View reservations',
   'reservation.write': 'Create, change and cancel reservations',
+  'reservation.rate_override': 'Book at a rate other than the room type rate',
   'guest.read': 'View guest profiles and stay history',
   'guest.write': 'Create and change guest profiles',
   'guest.identity.read': 'View guest identity document details',

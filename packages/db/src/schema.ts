@@ -260,3 +260,45 @@ export const guestDocuments = pgTable('guest_documents', {
   createdAt: tsz('created_at').notNull().defaultNow(),
   createdBy: uuid('created_by'),
 });
+
+export const reservations = pgTable('reservations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  bookingReference: text('booking_reference').notNull(),
+  guestId: uuid('guest_id').notNull(),
+  source: text('source', {
+    enum: ['walk_in', 'phone', 'email', 'website', 'agent', 'ota', 'other'],
+  }).notNull(),
+  status: text('status', {
+    enum: ['pending', 'confirmed', 'checked_in', 'checked_out', 'cancelled', 'no_show'],
+  }).notNull(),
+  notes: text('notes'),
+  cancelReason: text('cancel_reason'),
+  confirmedAt: tsz('confirmed_at'),
+  cancelledAt: tsz('cancelled_at'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+  createdBy: uuid('created_by'),
+});
+
+export const reservationRooms = pgTable('reservation_rooms', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  reservationId: uuid('reservation_id').notNull(),
+  roomTypeId: uuid('room_type_id').notNull(),
+  roomId: uuid('room_id'),
+  arrival: date('arrival', { mode: 'string' }).notNull(),
+  departure: date('departure', { mode: 'string' }).notNull(),
+  adults: integer('adults').notNull(),
+  children: integer('children').notNull().default(0),
+  nightlyRate: numeric('nightly_rate', { precision: 19, scale: 4 }).notNull(),
+  currencyCode: char('currency_code', { length: 3 }).notNull(),
+  rateOverridden: boolean('rate_overridden').notNull().default(false),
+  status: text('status', { enum: ['active', 'released'] })
+    .notNull()
+    .default('active'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});

@@ -39,8 +39,9 @@ async function request<T>(
   method: string,
   path: string,
   body?: unknown,
+  extraHeaders: Record<string, string> = {},
 ): Promise<{ data: T; nextCursor: string | null }> {
-  const headers: Record<string, string> = { accept: 'application/json' };
+  const headers: Record<string, string> = { accept: 'application/json', ...extraHeaders };
   if (body !== undefined) headers['content-type'] = 'application/json';
   if (method !== 'GET') {
     const token = csrfToken();
@@ -84,6 +85,9 @@ export const api = {
     return { items: data, nextCursor };
   },
   post: async <T>(path: string, body: unknown = {}) => (await request<T>('POST', path, body)).data,
+  /** POST with extra headers, e.g. an Idempotency-Key for retry-safe commands. */
+  postWith: async <T>(path: string, body: unknown, headers: Record<string, string>) =>
+    (await request<T>('POST', path, body, headers)).data,
   put: async <T>(path: string, body: unknown) => (await request<T>('PUT', path, body)).data,
   patch: async <T>(path: string, body: unknown) => (await request<T>('PATCH', path, body)).data,
   del: async <T>(path: string) => (await request<T>('DELETE', path)).data,

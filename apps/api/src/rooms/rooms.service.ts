@@ -20,7 +20,7 @@ import { Money } from '@innpilot/money';
 import { and, asc, count, desc, eq, inArray, lte, sql } from 'drizzle-orm';
 import { AuditService, changeSet } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
-import { PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
+import { PG_FOREIGN_KEY_VIOLATION, PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
 import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 
@@ -476,6 +476,13 @@ export class RoomsService {
         throw new AppError('CONFLICT', `Room ${body.roomNumber} already exists at this property.`, [
           { path: 'roomNumber', message: 'This room number is already in use.' },
         ]);
+      }
+      if (pgErrorCode(err) === PG_FOREIGN_KEY_VIOLATION && body.roomTypeId) {
+        throw new AppError(
+          'CONFLICT',
+          'This room has bookings as its current type. Move those bookings first.',
+          [{ path: 'roomTypeId', message: 'The room has bookings for its current type.' }],
+        );
       }
       throw err;
     }
