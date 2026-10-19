@@ -1,0 +1,34 @@
+{
+  "name": "@innpilot/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "5.9.2",
+    "@innpilot/contracts": "workspace:*",
+    "@innpilot/money": "workspace:*",
+    "@tanstack/react-query": "5.104.4",
+    "next": "15.5.28",
+    "next-intl": "4.14.9",
+    "qrcode": "1.5.4",
+    "react": "19.1.10",
+    "react-dom": "19.1.10",
+    "react-hook-form": "7.90.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/qrcode": "1.5.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "4.3.3",
+    "vitest": "3.2.7"
+  }
+}

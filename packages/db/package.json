@@ -1,0 +1,31 @@
+{
+  "name": "@innpilot/db",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "migrations"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "provision": "tsx src/cli.ts provision",
+    "migrate": "tsx src/cli.ts migrate",
+    "seed": "tsx src/cli.ts seed",
+    "test:integration": "vitest run"
+  },
+  "dependencies": {
+    "@innpilot/contracts": "workspace:*",
+    "@node-rs/argon2": "2.2.2",
+    "drizzle-orm": "0.44.7",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "8.23.1",
+    "tsx": "4.23.15",
+    "vitest": "3.2.7"
+  }
+}
