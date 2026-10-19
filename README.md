@@ -65,6 +65,18 @@ Demo accounts (all use `SEED_USER_PASSWORD` from your `.env`) are listed in
 up two-step verification) and `frontdesk@ravi.demo.test`. A second tenant (`*@kohsar.demo.test`) exists so you can
 see that tenants are isolated.
 
+## Adding a hotel (tenant)
+
+Hotels are created by an InnPilot operator, not by public sign-up. This creates the tenant, its first property and
+a tenant-wide owner, and asks for the owner's password without echoing it:
+
+```bash
+pnpm tenant:create --slug margalla --legal-name "Margalla Hotels (Pvt) Ltd" --display-name "Margalla Hotel" --property "Margalla Hotel" --owner-email owner@example.com --owner-name "Owner Name"
+```
+
+On first sign-in the owner sets up two-step verification and then the setup wizard (business details, location
+and times, review). Other staff see a "setup in progress" notice until it is finished.
+
 ## Checks
 
 | Command                                              | Runs                                                                                                      |

@@ -71,8 +71,8 @@ export async function seed(adminUrl: string, password: string): Promise<string[]
         [t.slug, t.legalName, t.displayName],
       );
       await client.query(
-        `INSERT INTO properties (tenant_id, name, city, address_line, business_date)
-         VALUES ($1, $2, $3, $4, $5)`,
+        `INSERT INTO properties (tenant_id, name, city, address_line, business_date, onboarding_completed_at)
+         VALUES ($1, $2, $3, $4, $5, now())`,
         [tenant!.id, t.property.name, t.property.city, t.property.addressLine, todayIn('Asia/Karachi')],
       );
       for (const u of t.users) {

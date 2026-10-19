@@ -114,6 +114,8 @@ describe('messages', () => {
       'user.enabled',
       'user.mfa_reset',
       'property.updated',
+      'property.onboarding_completed',
+      'tenant.created',
     ];
     for (const a of actions) {
       const [group, name] = a.split('.') as [string, string];

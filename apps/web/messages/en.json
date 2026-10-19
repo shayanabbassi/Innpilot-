@@ -178,7 +178,28 @@
       "mfa_reset": "Reset two-step verification"
     },
     "property": {
-      "updated": "Changed property settings"
+      "updated": "Changed property settings",
+      "onboarding_completed": "Finished property setup"
+    },
+    "tenant": {
+      "created": "Hotel account created"
     }
+  },
+  "onboarding": {
+    "title": "Set up {property}",
+    "subtitle": "A few details so documents, dates and times are right. You can stop at any point and continue later.",
+    "stepBusiness": "Business details",
+    "stepLocation": "Location and times",
+    "stepReview": "Review",
+    "progress": "Step {current} of {total}",
+    "saveContinue": "Save and continue",
+    "back": "Back",
+    "finish": "Finish setup",
+    "finishing": "Finishing…",
+    "reviewIntro": "Check these details. You can change them later in Property settings.",
+    "edit": "Edit",
+    "required": "Required",
+    "inProgressTitle": "Setup is not finished yet",
+    "inProgressBody": "{property} is still being set up by your hotel owner or manager. Check back once setup is complete."
   }
 }

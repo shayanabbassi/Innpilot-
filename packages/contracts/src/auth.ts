@@ -45,6 +45,7 @@ export const propertyAccess = z.object({
   timezone: z.string(),
   currencyCode: z.string(),
   businessDate: z.string(),
+  onboardingCompleted: z.boolean(),
   roles: z.array(roleCode),
   permissions: z.array(permission),
 });

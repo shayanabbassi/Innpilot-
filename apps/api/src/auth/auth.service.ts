@@ -157,6 +157,7 @@ export class AuthService {
           timezone: p.timezone,
           currencyCode: p.currencyCode,
           businessDate: p.businessDate,
+          onboardingCompleted: p.onboardingCompletedAt !== null,
           roles: [
             ...new Set(
               auth.assignments

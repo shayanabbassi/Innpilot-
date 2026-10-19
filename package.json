@@ -18,7 +18,8 @@
     "db:down": "docker compose down",
     "db:migrate": "pnpm --filter @innpilot/db migrate",
     "db:seed": "pnpm --filter @innpilot/db seed",
-    "db:provision": "pnpm --filter @innpilot/db provision"
+    "db:provision": "pnpm --filter @innpilot/db provision",
+    "tenant:create": "pnpm --silent --filter @innpilot/db tenant:create"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

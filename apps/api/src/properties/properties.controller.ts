@@ -1,5 +1,10 @@
-import { Body, Controller, Get, Param, Patch, Req } from '@nestjs/common';
-import { updatePropertyRequest, type PropertyDto, type UpdatePropertyRequest } from '@innpilot/contracts';
+import { Body, Controller, Get, HttpCode, Param, Patch, Post, Req } from '@nestjs/common';
+import {
+  ONBOARDING_REQUIRED_FIELDS,
+  updatePropertyRequest,
+  type PropertyDto,
+  type UpdatePropertyRequest,
+} from '@innpilot/contracts';
 import { schema } from '@innpilot/db';
 import { eq, inArray } from 'drizzle-orm';
 import { AuditService, changeSet } from '../audit/audit.service';
@@ -27,6 +32,7 @@ function toDto(p: PropertyRow): PropertyDto {
     checkOutTime: p.checkOutTime.slice(0, 5),
     businessDate: p.businessDate,
     status: p.status,
+    onboardingCompletedAt: p.onboardingCompletedAt?.toISOString() ?? null,
   };
 }
 
@@ -114,6 +120,60 @@ export class PropertiesController {
         );
       }
       return toDto(after!);
+    });
+  }
+
+  /**
+   * Finishes the setup wizard. Checks the required details server-side; completing an already
+   * onboarded property is a no-op that returns it unchanged.
+   */
+  @Post(':id/onboarding/complete')
+  @HttpCode(200)
+  @RequirePermission('property.manage', { propertyParam: 'id' })
+  completeOnboarding(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id') id: string,
+    @Req() req: AppRequest,
+  ): Promise<PropertyDto> {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const [row] = await tx
+        .select()
+        .from(schema.properties)
+        .where(eq(schema.properties.id, id))
+        .for('update');
+      if (!row) throw AppError.notFound('property');
+      if (row.onboardingCompletedAt) return toDto(row);
+
+      const dto = toDto(row);
+      const missing = ONBOARDING_REQUIRED_FIELDS.filter((f) => {
+        const v = dto[f];
+        return v === null || (typeof v === 'string' && v.trim() === '');
+      });
+      if (missing.length > 0) {
+        throw AppError.validation(
+          'Complete the property details before finishing setup.',
+          missing.map((path) => ({ path, message: 'Required to finish setup.' })),
+        );
+      }
+
+      const [done] = await tx
+        .update(schema.properties)
+        .set({ onboardingCompletedAt: new Date() })
+        .where(eq(schema.properties.id, id))
+        .returning();
+      await this.audit.record(
+        tx,
+        {
+          tenantId: auth.tenantId,
+          propertyId: id,
+          actor: { type: 'user', userId: auth.userId },
+          action: 'property.onboarding_completed',
+          entityType: 'property',
+          entityId: id,
+        },
+        requestMeta(req),
+      );
+      return toDto(done!);
     });
   }
 }

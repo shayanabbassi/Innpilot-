@@ -54,6 +54,8 @@ export const properties = pgTable('properties', {
   status: text('status', { enum: ['active', 'archived'] })
     .notNull()
     .default('active'),
+  /** NULL while the setup wizard is unfinished. */
+  onboardingCompletedAt: tsz('onboarding_completed_at'),
   createdAt: tsz('created_at').notNull().defaultNow(),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
 });

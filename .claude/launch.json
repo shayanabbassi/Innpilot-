@@ -4,21 +4,19 @@
     {
       "name": "api",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "--filter",
-        "@innpilot/api",
-        "start"
-      ],
+      "runtimeArgs": ["--filter", "@innpilot/api", "start"],
       "port": 4000
     },
     {
       "name": "web",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": [
-        "--filter",
-        "@innpilot/web",
-        "dev"
-      ],
+      "runtimeArgs": ["--filter", "@innpilot/web", "dev"],
+      "port": 3000
+    },
+    {
+      "name": "web-prod",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@innpilot/web", "start"],
       "port": 3000
     }
   ]

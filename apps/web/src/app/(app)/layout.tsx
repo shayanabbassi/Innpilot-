@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { AppShell } from '@/components/app-shell';
+import { OnboardingGate } from '@/components/onboarding-gate';
 import { PageError, PageSkeleton } from '@/components/ui';
 import { ApiError } from '@/lib/api';
 import { SessionProvider, useMe } from '@/lib/session';
@@ -41,7 +42,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   }
   return (
     <SessionProvider me={me.data}>
-      <AppShell>{children}</AppShell>
+      <AppShell>
+        <OnboardingGate>{children}</OnboardingGate>
+      </AppShell>
     </SessionProvider>
   );
 }

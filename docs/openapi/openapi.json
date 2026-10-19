@@ -399,6 +399,9 @@
                               "businessDate": {
                                 "type": "string"
                               },
+                              "onboardingCompleted": {
+                                "type": "boolean"
+                              },
                               "roles": {
                                 "type": "array",
                                 "items": {
@@ -465,6 +468,7 @@
                               "timezone",
                               "currencyCode",
                               "businessDate",
+                              "onboardingCompleted",
                               "roles",
                               "permissions"
                             ]
@@ -1126,6 +1130,13 @@
                               "active",
                               "archived"
                             ]
+                          },
+                          "onboardingCompletedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time"
                           }
                         },
                         "required": [
@@ -1142,7 +1153,8 @@
                           "checkInTime",
                           "checkOutTime",
                           "businessDate",
-                          "status"
+                          "status",
+                          "onboardingCompletedAt"
                         ]
                       }
                     },
@@ -1341,6 +1353,13 @@
                             "active",
                             "archived"
                           ]
+                        },
+                        "onboardingCompletedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         }
                       },
                       "required": [
@@ -1357,7 +1376,8 @@
                         "checkInTime",
                         "checkOutTime",
                         "businessDate",
-                        "status"
+                        "status",
+                        "onboardingCompletedAt"
                       ]
                     },
                     "meta": {
@@ -1616,6 +1636,13 @@
                             "active",
                             "archived"
                           ]
+                        },
+                        "onboardingCompletedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
                         }
                       },
                       "required": [
@@ -1632,7 +1659,230 @@
                         "checkInTime",
                         "checkOutTime",
                         "businessDate",
-                        "status"
+                        "status",
+                        "onboardingCompletedAt"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{id}/onboarding/complete": {
+      "post": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Finish the setup wizard (checks required details)",
+        "description": "Requires permission `property.manage` on the property in path parameter `id`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "legalName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "timezone": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "addressLine": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "city": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "countryCode": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "email": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "checkInTime": {
+                          "type": "string"
+                        },
+                        "checkOutTime": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "active",
+                            "archived"
+                          ]
+                        },
+                        "onboardingCompletedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "date-time"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "legalName",
+                        "timezone",
+                        "currencyCode",
+                        "addressLine",
+                        "city",
+                        "countryCode",
+                        "phone",
+                        "email",
+                        "checkInTime",
+                        "checkOutTime",
+                        "businessDate",
+                        "status",
+                        "onboardingCompletedAt"
                       ]
                     },
                     "meta": {

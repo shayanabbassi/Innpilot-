@@ -15,7 +15,8 @@
     "provision": "tsx src/cli.ts provision",
     "migrate": "tsx src/cli.ts migrate",
     "seed": "tsx src/cli.ts seed",
-    "test:integration": "vitest run"
+    "test:integration": "vitest run",
+    "tenant:create": "tsx src/cli.ts tenant:create"
   },
   "dependencies": {
     "@innpilot/contracts": "workspace:*",

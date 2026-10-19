@@ -20,6 +20,8 @@ export const propertyDto = z.object({
   /** YYYY-MM-DD; the hotel's operating date. */
   businessDate: z.string(),
   status: z.enum(['active', 'archived']),
+  /** null while the setup wizard is unfinished. */
+  onboardingCompletedAt: z.string().datetime().nullable(),
 });
 export type PropertyDto = z.infer<typeof propertyDto>;
 
@@ -126,3 +128,41 @@ export const reasonRequest = z
   .object({ reason: z.string().trim().min(3, 'Give a reason.').max(500) })
   .strict();
 export type ReasonRequest = z.infer<typeof reasonRequest>;
+
+export const tenantSlug = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .regex(
+    /^[a-z0-9][a-z0-9-]{1,62}$/,
+    'Use 2–63 lowercase letters, digits or hyphens, starting with a letter or digit.',
+  );
+
+/** Operator-side tenant provisioning (CLI now, platform admin later). */
+export const createTenantInput = z
+  .object({
+    slug: tenantSlug,
+    legalName: z.string().trim().min(1, 'Enter the legal name.').max(200),
+    displayName: z.string().trim().min(1, 'Enter the display name.').max(200),
+    propertyName: z.string().trim().min(1, 'Enter the property name.').max(200),
+    timezone: timeZone.default('Asia/Karachi'),
+    // MVP posts in PKR only (accounting spec §1); the column stays explicit for later currencies.
+    currency: z
+      .literal('PKR', { errorMap: () => ({ message: 'Only PKR is supported for now.' }) })
+      .default('PKR'),
+    ownerEmail: z.string().trim().toLowerCase().email('Enter a valid email address.').max(254),
+    ownerFullName: z.string().trim().min(1, 'Enter the owner’s full name.').max(200),
+    ownerPassword: password,
+  })
+  .strict();
+export type CreateTenantInput = z.input<typeof createTenantInput>;
+
+/** Fields a property must have before onboarding can be completed. */
+export const ONBOARDING_REQUIRED_FIELDS = [
+  'name',
+  'legalName',
+  'addressLine',
+  'city',
+  'phone',
+  'timezone',
+] as const;

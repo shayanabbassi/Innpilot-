@@ -90,6 +90,12 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     body: updatePropertyRequest,
     data: propertyDto,
   },
+  'POST /properties/{id}/onboarding/complete': {
+    tag: 'Properties',
+    summary: 'Finish the setup wizard (checks required details)',
+    data: propertyDto,
+    status: 200,
+  },
   'GET /users': { tag: 'Staff', summary: 'Staff accounts and role assignments', data: z.array(userDto) },
   'POST /users': {
     tag: 'Staff',
