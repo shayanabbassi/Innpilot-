@@ -190,50 +190,62 @@ export class ReservationsService {
             body,
           },
           async () => {
-            const property = await this.property(tx, propertyId);
-            const [guest] = await tx
-              .select({ id: schema.guests.id })
-              .from(schema.guests)
-              .where(eq(schema.guests.id, body.guestId));
-            if (!guest) {
-              throw AppError.validation('Review the highlighted fields.', [
-                { path: 'guestId', message: 'Choose an existing guest.' },
-              ]);
-            }
-            const prepared = await this.prepareRooms(tx, auth, property, body.rooms, []);
-            const reference = await this.uniqueReference(tx);
-            const [res] = await tx
-              .insert(r)
-              .values({
-                tenantId: auth.tenantId,
-                propertyId,
-                bookingReference: reference,
-                guestId: body.guestId,
-                source: body.source,
-                status: body.status,
-                notes: body.notes || null,
-                confirmedAt: body.status === 'confirmed' ? new Date() : null,
-                createdBy: auth.userId,
-              })
-              .returning();
-            await tx.insert(rr).values(
-              prepared.map((p) => ({
-                tenantId: auth.tenantId,
-                propertyId,
-                reservationId: res!.id,
-                ...p.values,
-              })),
-            );
-            await this.record(tx, auth, propertyId, res!.id, meta, 'reservation.created', {
-              bookingReference: reference,
-              status: body.status,
-              rooms: prepared.map((p) => p.summary),
-            });
-            return { status: 201, body: await this.load(tx, propertyId, res!.id) };
+            const id = await this.createInTx(tx, auth, propertyId, body, meta);
+            return { status: 201, body: await this.load(tx, propertyId, id) };
           },
         ),
       ),
     );
+  }
+
+  /** Creates a booking inside the caller's transaction (also used by walk-ins). Returns the reservation id. */
+  async createInTx(
+    tx: Tx,
+    auth: AuthContext,
+    propertyId: string,
+    body: CreateReservationRequest,
+    meta: RequestMeta,
+  ): Promise<string> {
+    const property = await this.property(tx, propertyId);
+    const [guest] = await tx
+      .select({ id: schema.guests.id })
+      .from(schema.guests)
+      .where(eq(schema.guests.id, body.guestId));
+    if (!guest) {
+      throw AppError.validation('Review the highlighted fields.', [
+        { path: 'guestId', message: 'Choose an existing guest.' },
+      ]);
+    }
+    const prepared = await this.prepareRooms(tx, auth, property, body.rooms, []);
+    const reference = await this.uniqueReference(tx);
+    const [res] = await tx
+      .insert(r)
+      .values({
+        tenantId: auth.tenantId,
+        propertyId,
+        bookingReference: reference,
+        guestId: body.guestId,
+        source: body.source,
+        status: body.status,
+        notes: body.notes || null,
+        confirmedAt: body.status === 'confirmed' ? new Date() : null,
+        createdBy: auth.userId,
+      })
+      .returning();
+    await tx.insert(rr).values(
+      prepared.map((p) => ({
+        tenantId: auth.tenantId,
+        propertyId,
+        reservationId: res!.id,
+        ...p.values,
+      })),
+    );
+    await this.record(tx, auth, propertyId, res!.id, meta, 'reservation.created', {
+      bookingReference: reference,
+      status: body.status,
+      rooms: prepared.map((p) => p.summary),
+    });
+    return res!.id;
   }
 
   update(
@@ -552,12 +564,7 @@ export class ReservationsService {
     return out;
   }
 
-  private async assertInventory(
-    tx: Tx,
-    type: RoomTypeRow,
-    segs: Segment[],
-    excluding: string[],
-  ): Promise<void> {
+  async assertInventory(tx: Tx, type: RoomTypeRow, segs: Segment[], excluding: string[]): Promise<void> {
     const from = segs.reduce((m, s) => (s.arrival < m ? s.arrival : m), segs[0]!.arrival);
     const to = segs.reduce((m, s) => (s.departure > m ? s.departure : m), segs[0]!.departure);
     const supply = await this.supply(tx, type.id);
@@ -634,7 +641,7 @@ export class ReservationsService {
     return row?.rate ?? null;
   }
 
-  private async assertRoom(tx: Tx, propertyId: string, roomTypeId: string, roomId: string, path: string) {
+  async assertRoom(tx: Tx, propertyId: string, roomTypeId: string, roomId: string, path: string) {
     const [room] = await tx
       .select()
       .from(schema.rooms)
@@ -663,7 +670,7 @@ export class ReservationsService {
   }
 
   /** Exclusion-constraint violations (a racing booking took the room) become a clear 409. */
-  private async mapConflicts<T>(fn: () => Promise<T>): Promise<T> {
+  async mapConflicts<T>(fn: () => Promise<T>): Promise<T> {
     try {
       return await fn();
     } catch (err) {
@@ -736,7 +743,7 @@ export class ReservationsService {
     );
   }
 
-  private async load(tx: Tx, propertyId: string, id: string): Promise<ReservationDto> {
+  async load(tx: Tx, propertyId: string, id: string): Promise<ReservationDto> {
     const [one] = await this.loadMany(tx, [id], propertyId);
     if (!one) throw AppError.notFound('reservation');
     return one;
@@ -782,6 +789,7 @@ export class ReservationsService {
               rateOverridden: seg.rateOverridden,
               roomTotal: rate.multiply(String(nights)).toString(),
               status: seg.status,
+              stayId: seg.stayId,
             };
           });
         const active = segs.filter((s) => s.status === 'active');

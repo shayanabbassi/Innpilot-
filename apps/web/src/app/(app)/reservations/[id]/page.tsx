@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { BookingRoomPicker, toRoomInput, type RoomChoice } from '@/components/booking-room-picker';
+import { CheckInDialog, type CheckInTarget } from '@/components/front-desk';
 import { formatRate } from '@/components/rooms-setup';
 import {
   ApiErrorAlert,
@@ -30,6 +31,7 @@ type Dialogs =
   | { kind: 'noShow' }
   | { kind: 'assign'; seg: ReservationRoomDto }
   | { kind: 'addRoom' }
+  | { kind: 'checkIn'; target: CheckInTarget }
   | null;
 
 export default function ReservationPage() {
@@ -117,6 +119,9 @@ export default function ReservationPage() {
                       {t('roomLine', { type: s.roomTypeCode, room: s.roomNumber ?? t('noRoomYet') })}{' '}
                       {s.status === 'released' && <StatusBadge tone="neutral">{t('released')}</StatusBadge>}
                       {s.rateOverridden && <StatusBadge tone="warning">{t('overridden')}</StatusBadge>}
+                      {s.stayId && s.status === 'active' && (
+                        <StatusBadge tone="neutral">{t('statuses.checked_in')}</StatusBadge>
+                      )}
                     </p>
                     <p className="tabular text-muted">
                       {t('datesLine', {
@@ -133,6 +138,32 @@ export default function ReservationPage() {
                       <span className="font-medium text-ink">{formatRate(s.roomTotal, s.currencyCode)}</span>
                     </p>
                   </div>
+                  {can('stay.checkin') &&
+                    s.status === 'active' &&
+                    !s.stayId &&
+                    (r.status === 'confirmed' || r.status === 'checked_in') &&
+                    s.arrival <= (property?.businessDate ?? '') &&
+                    s.departure > (property?.businessDate ?? '') && (
+                      <Button
+                        className="min-h-8 px-3"
+                        onClick={() =>
+                          setDialog({
+                            kind: 'checkIn',
+                            target: {
+                              reservationId: r.id,
+                              reservationRoomId: s.id,
+                              guestName: r.guest.fullName,
+                              roomTypeId: s.roomTypeId,
+                              roomId: s.roomId,
+                              roomNumber: s.roomNumber,
+                              departure: s.departure,
+                            },
+                          })
+                        }
+                      >
+                        {t('checkIn')}
+                      </Button>
+                    )}
                   {editable && s.status === 'active' && (
                     <div className="flex gap-1">
                       <Button
@@ -237,6 +268,7 @@ export default function ReservationPage() {
           onDone={refresh}
         />
       )}
+      {dialog?.kind === 'checkIn' && <CheckInDialog target={dialog.target} onClose={() => setDialog(null)} />}
       {dialog?.kind === 'addRoom' && property && (
         <AddRoomDialog
           propertyId={propertyId}

@@ -213,6 +213,8 @@ export const reservationRoomDto = z.object({
   /** nights × nightly rate, before taxes and extras (those come with folios). */
   roomTotal: z.string(),
   status: z.enum(['active', 'released']),
+  /** Set once the guest is checked in to this booked room. */
+  stayId: z.string().uuid().nullable(),
 });
 export type ReservationRoomDto = z.infer<typeof reservationRoomDto>;
 

@@ -36,6 +36,7 @@ function res(
       rateOverridden: false,
       roomTotal: '5000.00',
       status: r.status ?? 'active',
+      stayId: null,
     })),
   };
 }

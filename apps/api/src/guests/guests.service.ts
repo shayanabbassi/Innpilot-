@@ -201,7 +201,17 @@ export class GuestsService {
     if (body.document && !holds(auth, 'guest.identity.read')) {
       throw AppError.forbidden('You do not have permission to record identity documents.');
     }
-    return this.db.tenant(auth.tenantId, async (tx) => {
+    return this.db.tenant(auth.tenantId, async (tx) =>
+      this.load(tx, auth, await this.createInTx(tx, auth, body, meta)),
+    );
+  }
+
+  /** Creates a guest inside the caller's transaction (also used by walk-ins). Returns the guest id. */
+  async createInTx(tx: Tx, auth: AuthContext, body: CreateGuestRequest, meta: RequestMeta): Promise<string> {
+    if (body.document && !holds(auth, 'guest.identity.read')) {
+      throw AppError.forbidden('You do not have permission to record identity documents.');
+    }
+    {
       const { document, ...fields } = body;
       const [row] = await tx
         .insert(g)
@@ -231,8 +241,8 @@ export class GuestsService {
         meta,
       );
       if (document) await this.insertDocument(tx, auth, row!.id, document, meta);
-      return this.load(tx, auth, row!.id);
-    });
+      return row!.id;
+    }
   }
 
   update(auth: AuthContext, id: string, body: UpdateGuestRequest, meta: RequestMeta): Promise<GuestDto> {

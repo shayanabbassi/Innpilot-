@@ -17,7 +17,7 @@ import {
 } from '@innpilot/contracts';
 import { schema, type Tx } from '@innpilot/db';
 import { Money } from '@innpilot/money';
-import { and, asc, count, desc, eq, inArray, lte, sql } from 'drizzle-orm';
+import { and, asc, count, desc, eq, inArray, isNull, lte, sql } from 'drizzle-orm';
 import { AuditService, changeSet } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import { PG_FOREIGN_KEY_VIOLATION, PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
@@ -499,11 +499,18 @@ export class RoomsService {
         .innerJoin(schema.roomTypes, eq(schema.roomTypes.id, schema.rooms.roomTypeId))
         .where(eq(schema.rooms.propertyId, propertyId))
         .orderBy(sql`length(${schema.rooms.roomNumber})`, asc(schema.rooms.roomNumber));
-      // Occupancy joins in when stays exist (slice 2.5).
+      const occupied = new Set(
+        (
+          await tx
+            .select({ roomId: schema.stayRooms.roomId })
+            .from(schema.stayRooms)
+            .where(and(eq(schema.stayRooms.propertyId, propertyId), isNull(schema.stayRooms.endedAt)))
+        ).map((x) => x.roomId),
+      );
       const rooms = rows.map((r) => ({
         ...roomDto(r.room, r.code),
         roomTypeName: r.typeName,
-        boardState: boardState(r.room),
+        boardState: boardState({ ...r.room, occupied: occupied.has(r.room.id) }),
       }));
       const counts = Object.fromEntries(BOARD_STATES.map((s) => [s, 0])) as Record<BoardState, number>;
       for (const r of rooms) counts[r.boardState] += 1;

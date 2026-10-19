@@ -301,4 +301,35 @@ export const reservationRooms = pgTable('reservation_rooms', {
     .default('active'),
   createdAt: tsz('created_at').notNull().defaultNow(),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
+  /** Set at check-in; a move's split segment inherits it. */
+  stayId: uuid('stay_id'),
+});
+
+export const stays = pgTable('stays', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  reservationId: uuid('reservation_id').notNull(),
+  guestId: uuid('guest_id').notNull(),
+  status: text('status', { enum: ['in_house', 'checked_out'] })
+    .notNull()
+    .default('in_house'),
+  checkedInAt: tsz('checked_in_at').notNull().defaultNow(),
+  checkedInBy: uuid('checked_in_by'),
+  checkedOutAt: tsz('checked_out_at'),
+  checkedOutBy: uuid('checked_out_by'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});
+
+export const stayRooms = pgTable('stay_rooms', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  stayId: uuid('stay_id').notNull(),
+  roomId: uuid('room_id').notNull(),
+  fromDate: date('from_date', { mode: 'string' }).notNull(),
+  startedAt: tsz('started_at').notNull().defaultNow(),
+  endedAt: tsz('ended_at'),
+  reason: text('reason'),
 });

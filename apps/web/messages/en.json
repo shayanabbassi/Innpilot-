@@ -63,7 +63,8 @@
     "rooms": "Rooms & rates",
     "board": "Room board",
     "guests": "Guests",
-    "reservations": "Reservations"
+    "reservations": "Reservations",
+    "frontDesk": "Front desk"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -216,7 +217,9 @@
       "room_unassigned": "Unassigned room",
       "room_changed": "Changed room or dates",
       "room_added": "Added room",
-      "room_removed": "Removed room"
+      "room_removed": "Removed room",
+      "checked_in": "Checked in",
+      "room_moved": "Moved to another room"
     }
   },
   "onboarding": {
@@ -469,6 +472,54 @@
     "close": "Close",
     "back": "All reservations",
     "keep": "Keep booking",
-    "conflictRefresh": "Availability has been refreshed."
+    "conflictRefresh": "Availability has been refreshed.",
+    "checkIn": "Check in"
+  },
+  "frontDesk": {
+    "title": "Front desk",
+    "subtitle": "Today, {date}",
+    "walkIn": "Walk-in",
+    "arrivals": "Arrivals",
+    "inHouse": "In house",
+    "departures": "Due out",
+    "noArrivals": "No more arrivals today.",
+    "noInHouse": "No guests in house.",
+    "noDepartures": "Nobody is due out today.",
+    "checkoutLater": "Check-out becomes available once guest billing is in place.",
+    "lateArrival": "Due {date}",
+    "overdue": "Was due out {date}",
+    "room": "Room {room}",
+    "noRoom": "No room yet",
+    "until": "until {date}",
+    "checkIn": "Check in",
+    "move": "Move room",
+    "readiness": {
+      "ready": "Ready",
+      "occupied": "Occupied",
+      "out_of_order": "Out of order",
+      "dirty": "Not cleaned",
+      "cleaning": "Being cleaned",
+      "inactive": "Not in use"
+    },
+    "checkInTitle": "Check in {guest}",
+    "chooseRoom": "Room",
+    "chooseRoomPlaceholder": "Choose a room",
+    "notReady": "This room is not ready: {problem}.",
+    "notReadyNoOverride": "Choose a ready room, or ask a manager.",
+    "overrideReason": "Reason for using it anyway (recorded)",
+    "confirmCheckIn": "Check in",
+    "moveTitle": "Move {guest} from room {room}",
+    "moveReason": "Reason for the move",
+    "confirmMove": "Move",
+    "cancel": "Cancel",
+    "walkInTitle": "Walk-in",
+    "stayUntil": "Departure",
+    "roomsTonight": "Rooms free tonight",
+    "noRoomsFree": "No room is free for these dates.",
+    "ratePerNight": "{rate} per night",
+    "create": "Book and check in",
+    "creating": "Checking in…",
+    "newGuest": "New guest",
+    "existingGuest": "Existing guest"
   }
 }

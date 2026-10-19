@@ -51,6 +51,11 @@ import {
   reservationListQueryObject,
   reservationRoomInput,
   updateReservationRequest,
+  checkInRequest,
+  frontDeskTodayDto,
+  moveRoomRequest,
+  stayDto,
+  walkInRequest,
   z,
 } from '@innpilot/contracts';
 import type { ZodTypeAny } from 'zod';
@@ -324,6 +329,38 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     tag: 'Reservations',
     summary: 'Remove a room from a multi-room booking',
     data: reservationDto,
+  },
+  'GET /properties/{propertyId}/front-desk/today': {
+    tag: 'Front desk',
+    summary: 'Arrivals due (with room readiness), in-house guests and departures for the business date',
+    data: frontDeskTodayDto,
+  },
+  'POST /properties/{propertyId}/reservations/{id}/rooms/{roomId}/check-in': {
+    tag: 'Front desk',
+    summary:
+      'Check in one booked room. Requires Idempotency-Key. 409 ROOM_NOT_READY unless the room is ready or a manager overrides with a reason.',
+    body: checkInRequest,
+    data: stayDto,
+    status: 200,
+  },
+  'POST /properties/{propertyId}/walk-ins': {
+    tag: 'Front desk',
+    summary: 'Create guest (optional), booking and check-in in one step. Requires Idempotency-Key.',
+    body: walkInRequest,
+    data: stayDto,
+    status: 201,
+  },
+  'GET /properties/{propertyId}/stays/{stayId}': {
+    tag: 'Front desk',
+    summary: 'One stay with room history',
+    data: stayDto,
+  },
+  'POST /properties/{propertyId}/stays/{stayId}/move': {
+    tag: 'Front desk',
+    summary: 'Move an in-house guest to another room from today (old room becomes dirty)',
+    body: moveRoomRequest,
+    data: stayDto,
+    status: 200,
   },
   'GET /users': { tag: 'Staff', summary: 'Staff accounts and role assignments', data: z.array(userDto) },
   'POST /users': {

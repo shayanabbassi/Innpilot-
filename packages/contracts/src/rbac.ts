@@ -21,6 +21,7 @@ export const PERMISSIONS = {
   'guest.identity.read': 'View guest identity document details',
   'stay.checkin': 'Check guests in',
   'stay.checkout': 'Check guests out',
+  'stay.readiness_override': 'Check in or move a guest into a room that is not ready',
   'housekeeping.read': 'View housekeeping tasks and room status',
   'housekeeping.write': 'Update cleaning, inspection and maintenance status',
   'folio.read': 'View guest folios',

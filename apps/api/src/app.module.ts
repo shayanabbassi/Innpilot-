@@ -22,6 +22,8 @@ import { PiiService } from './guests/pii.service';
 import { ReservationsController } from './reservations/reservations.controller';
 import { ReservationsService } from './reservations/reservations.service';
 import { RoomsController } from './rooms/rooms.controller';
+import { StaysController } from './stays/stays.controller';
+import { StaysService } from './stays/stays.service';
 import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
@@ -94,6 +96,7 @@ export class AppModule {
         RoomsController,
         GuestsController,
         ReservationsController,
+        StaysController,
         UsersController,
         AuditController,
         HealthController,
@@ -111,6 +114,7 @@ export class AppModule {
         RoomsService,
         GuestsService,
         ReservationsService,
+        StaysService,
         PiiService,
         IdempotencyService,
       ],
