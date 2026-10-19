@@ -116,6 +116,13 @@ describe('messages', () => {
       'property.updated',
       'property.onboarding_completed',
       'tenant.created',
+      'room_type.created',
+      'room_type.updated',
+      'room_type.rate_added',
+      'room_type.rate_removed',
+      'room.created',
+      'room.bulk_created',
+      'room.updated',
     ];
     for (const a of actions) {
       const [group, name] = a.split('.') as [string, string];

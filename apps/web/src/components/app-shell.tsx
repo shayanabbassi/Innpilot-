@@ -9,7 +9,7 @@ import { useSession } from '@/lib/session';
 
 interface NavItem {
   href: string;
-  label: 'overview' | 'staff' | 'audit' | 'property' | 'account';
+  label: 'overview' | 'board' | 'rooms' | 'staff' | 'audit' | 'property' | 'account';
   /** Shown only when the user could use it. Phase 2+ sections appear here as they ship. */
   visible: (s: ReturnType<typeof useSession>) => boolean;
 }
@@ -18,7 +18,9 @@ const tenant = (p: Permission) => (s: ReturnType<typeof useSession>) => s.canTen
 
 const NAV: NavItem[] = [
   { href: '/', label: 'overview', visible: () => true },
+  { href: '/rooms', label: 'board', visible: (s) => s.can('room.read') },
   { href: '/settings/property', label: 'property', visible: (s) => s.can('property.read') },
+  { href: '/settings/rooms', label: 'rooms', visible: (s) => s.can('room.read') },
   { href: '/staff', label: 'staff', visible: tenant('user.read') },
   { href: '/audit', label: 'audit', visible: tenant('audit.read') },
   { href: '/account', label: 'account', visible: () => true },

@@ -10,6 +10,7 @@ import {
   date,
   integer,
   jsonb,
+  numeric,
   pgTable,
   primaryKey,
   text,
@@ -163,3 +164,64 @@ export const idempotencyKeys = pgTable(
   },
   (t) => [primaryKey({ columns: [t.tenantId, t.scope, t.key] })],
 );
+
+export const roomTypes = pgTable('room_types', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  code: citext('code').notNull(),
+  name: text('name').notNull(),
+  description: text('description'),
+  capacityAdults: integer('capacity_adults').notNull(),
+  capacityChildren: integer('capacity_children').notNull().default(0),
+  active: boolean('active').notNull().default(true),
+  sortOrder: integer('sort_order').notNull().default(0),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+  createdBy: uuid('created_by'),
+});
+
+export const rooms = pgTable('rooms', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  roomTypeId: uuid('room_type_id').notNull(),
+  roomNumber: citext('room_number').notNull(),
+  floor: text('floor'),
+  housekeepingState: text('housekeeping_state', { enum: ['dirty', 'cleaning', 'clean', 'inspected'] })
+    .notNull()
+    .default('clean'),
+  serviceState: text('service_state', { enum: ['in_service', 'out_of_order'] })
+    .notNull()
+    .default('in_service'),
+  active: boolean('active').notNull().default(true),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+  createdBy: uuid('created_by'),
+});
+
+export const roomTypeRates = pgTable('room_type_rates', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  roomTypeId: uuid('room_type_id').notNull(),
+  effectiveFrom: date('effective_from', { mode: 'string' }).notNull(),
+  /** NUMERIC(19,4) read as a string; convert with @innpilot/money, never Number(). */
+  nightlyRate: numeric('nightly_rate', { precision: 19, scale: 4 }).notNull(),
+  currencyCode: char('currency_code', { length: 3 }).notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  createdBy: uuid('created_by'),
+});
+
+export const roomStatusEvents = pgTable('room_status_events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  roomId: uuid('room_id').notNull(),
+  dimension: text('dimension', { enum: ['housekeeping', 'service'] }).notNull(),
+  fromState: text('from_state'),
+  toState: text('to_state').notNull(),
+  reason: text('reason'),
+  actorUserId: uuid('actor_user_id'),
+  occurredAt: tsz('occurred_at').notNull().defaultNow(),
+});

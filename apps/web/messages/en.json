@@ -59,7 +59,9 @@
     "signOut": "Sign out",
     "menu": "Menu",
     "property_label": "Property",
-    "businessDate": "Business date {date}"
+    "businessDate": "Business date {date}",
+    "rooms": "Rooms & rates",
+    "board": "Room board"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -183,6 +185,17 @@
     },
     "tenant": {
       "created": "Hotel account created"
+    },
+    "room_type": {
+      "created": "Added room type",
+      "updated": "Changed room type",
+      "rate_added": "Added rate",
+      "rate_removed": "Removed scheduled rate"
+    },
+    "room": {
+      "created": "Added room",
+      "bulk_created": "Added rooms",
+      "updated": "Changed room"
     }
   },
   "onboarding": {
@@ -200,6 +213,80 @@
     "edit": "Edit",
     "required": "Required",
     "inProgressTitle": "Setup is not finished yet",
-    "inProgressBody": "{property} is still being set up by your hotel owner or manager. Check back once setup is complete."
+    "inProgressBody": "{property} is still being set up by your hotel owner or manager. Check back once setup is complete.",
+    "stepRooms": "Rooms and rates",
+    "roomsIntro": "Add your room types with a nightly rate, then the rooms of each type. You need at least one room to finish.",
+    "roomsNotReady": "Add at least one room, and a rate for every room type that has rooms.",
+    "continue": "Continue"
+  },
+  "rooms": {
+    "title": "Rooms & rates",
+    "subtitle": "Room types, their nightly rates, and the rooms of each type.",
+    "readOnly": "You can view rooms and rates but not change them.",
+    "types": "Room types",
+    "addType": "Add room type",
+    "editType": "Edit {name}",
+    "code": "Code",
+    "codeHint": "Short code shown on the board, e.g. DLX.",
+    "name": "Name",
+    "description": "Description",
+    "adults": "Adults",
+    "children": "Children",
+    "capacity": "Sleeps",
+    "capacityValue": "{adults} adults, {children} children",
+    "roomCount": "Rooms",
+    "rate": "Rate per night",
+    "rateHint": "Before tax rules are set up. Optional now; required before finishing setup.",
+    "noRate": "No rate",
+    "firstRate": "Nightly rate",
+    "active": "Active",
+    "inactive": "Inactive",
+    "rates": "Rates",
+    "ratesTitle": "Rates for {name}",
+    "ratesIntro": "Rates apply from their start date until the next one. Bookings keep the rate agreed when they were made.",
+    "effectiveFrom": "From",
+    "addRate": "Add rate",
+    "remove": "Remove",
+    "current": "Current",
+    "scheduled": "Scheduled",
+    "past": "Past",
+    "noTypes": "No room types yet. Add one to start.",
+    "roomsHeading": "Rooms",
+    "addRooms": "Add rooms",
+    "noRooms": "No rooms yet.",
+    "mode": "How many",
+    "single": "One room",
+    "range": "A numbered range",
+    "roomNumber": "Room number",
+    "from": "From",
+    "to": "To",
+    "prefix": "Prefix (optional)",
+    "floor": "Floor (optional)",
+    "roomType": "Room type",
+    "preview": "Will add {count, plural, one {# room} other {# rooms}}: {list}",
+    "editRoom": "Edit room {number}",
+    "save": "Save",
+    "add": "Add",
+    "deactivateTypeBlocked": "Deactivate or move its rooms first.",
+    "edit": "Edit"
+  },
+  "board": {
+    "title": "Room board",
+    "subtitle": "Status of every room on {date}.",
+    "filterFloor": "Floor",
+    "filterType": "Room type",
+    "filterState": "Status",
+    "all": "All",
+    "empty": "No rooms match these filters.",
+    "noRooms": "No rooms have been set up yet.",
+    "floorLabel": "Floor {floor}",
+    "states": {
+      "vacant_ready": "Vacant, ready",
+      "vacant_dirty": "Vacant, dirty",
+      "cleaning": "Cleaning",
+      "occupied": "Occupied",
+      "out_of_order": "Out of order",
+      "inactive": "Inactive"
+    }
   }
 }

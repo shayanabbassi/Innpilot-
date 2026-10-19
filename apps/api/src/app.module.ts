@@ -16,6 +16,8 @@ import { DbModule } from './db/db.module';
 import { HealthController } from './health/health.controller';
 import { IdempotencyService } from './idempotency/idempotency.service';
 import { PropertiesController } from './properties/properties.controller';
+import { RoomsController } from './rooms/rooms.controller';
+import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 
@@ -78,7 +80,14 @@ export class AppModule {
         }),
         DbModule,
       ],
-      controllers: [AuthController, PropertiesController, UsersController, AuditController, HealthController],
+      controllers: [
+        AuthController,
+        PropertiesController,
+        RoomsController,
+        UsersController,
+        AuditController,
+        HealthController,
+      ],
       providers: [
         // Order matters: rate limiting runs before authentication.
         { provide: APP_GUARD, useClass: ThrottlerGuard },
@@ -89,6 +98,7 @@ export class AppModule {
         AuthService,
         SessionService,
         UsersService,
+        RoomsService,
         IdempotencyService,
       ],
     };

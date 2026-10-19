@@ -21,6 +21,16 @@ import {
   setUserStatusRequest,
   updatePropertyRequest,
   userDto,
+  bulkCreateRoomsRequest,
+  createRateRequest,
+  createRoomRequest,
+  createRoomTypeRequest,
+  roomBoardDto,
+  roomDto,
+  roomTypeDto,
+  roomTypeRateDto,
+  updateRoomRequest,
+  updateRoomTypeRequest,
   z,
 } from '@innpilot/contracts';
 import type { ZodTypeAny } from 'zod';
@@ -41,7 +51,11 @@ interface RouteDoc {
   status?: number;
 }
 
-const idParam = z.object({ id: z.string().uuid() });
+/** Every {placeholder} in our paths is a UUID. */
+function pathParams(path: string) {
+  const names = [...path.matchAll(/{(w+)}/g)].map((m) => m[1]!);
+  return names.length ? z.object(Object.fromEntries(names.map((n) => [n, z.string().uuid()]))) : undefined;
+}
 
 /** Documentation for every route. A test fails if a route is missing here or listed but not implemented. */
 export const ROUTE_DOCS: Record<string, RouteDoc> = {
@@ -95,6 +109,71 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Finish the setup wizard (checks required details)',
     data: propertyDto,
     status: 200,
+  },
+  'GET /properties/{propertyId}/room-types': {
+    tag: 'Rooms',
+    summary: 'Room types with room counts and the rate in effect on the business date',
+    data: z.array(roomTypeDto),
+  },
+  'POST /properties/{propertyId}/room-types': {
+    tag: 'Rooms',
+    summary: 'Create a room type, optionally with its first rate',
+    body: createRoomTypeRequest,
+    data: roomTypeDto,
+    status: 201,
+  },
+  'PATCH /properties/{propertyId}/room-types/{id}': {
+    tag: 'Rooms',
+    summary: 'Change a room type (cannot deactivate while it has active rooms)',
+    body: updateRoomTypeRequest,
+    data: roomTypeDto,
+  },
+  'GET /properties/{propertyId}/room-types/{id}/rates': {
+    tag: 'Rooms',
+    summary: 'Rate history, newest first',
+    data: z.array(roomTypeRateDto),
+  },
+  'POST /properties/{propertyId}/room-types/{id}/rates': {
+    tag: 'Rooms',
+    summary: 'Add a base nightly rate from a date (not before the business date)',
+    body: createRateRequest,
+    data: roomTypeRateDto,
+    status: 201,
+  },
+  'DELETE /properties/{propertyId}/room-types/{id}/rates/{rateId}': {
+    tag: 'Rooms',
+    summary: 'Remove a rate that has not taken effect yet',
+    data: null,
+  },
+  'GET /properties/{propertyId}/rooms': {
+    tag: 'Rooms',
+    summary: 'All rooms of the property',
+    data: z.array(roomDto),
+  },
+  'POST /properties/{propertyId}/rooms': {
+    tag: 'Rooms',
+    summary: 'Add one room',
+    body: createRoomRequest,
+    data: roomDto,
+    status: 201,
+  },
+  'POST /properties/{propertyId}/rooms/bulk': {
+    tag: 'Rooms',
+    summary: 'Add a numbered range of rooms (all or nothing, up to 200)',
+    body: bulkCreateRoomsRequest,
+    data: z.array(roomDto),
+    status: 201,
+  },
+  'PATCH /properties/{propertyId}/rooms/{id}': {
+    tag: 'Rooms',
+    summary: 'Change room number, floor, type or active flag',
+    body: updateRoomRequest,
+    data: roomDto,
+  },
+  'GET /properties/{propertyId}/room-board': {
+    tag: 'Rooms',
+    summary: 'Read-only room board with derived status labels and counts',
+    data: roomBoardDto,
   },
   'GET /users': { tag: 'Staff', summary: 'Staff accounts and role assignments', data: z.array(userDto) },
   'POST /users': {
@@ -177,7 +256,7 @@ export function buildOpenApiDocument() {
       description: describePolicy(route.policy),
       security: route.policy.kind === 'public' ? [] : [{ session: [] }],
       request: {
-        ...(route.path.includes('{id}') ? { params: idParam } : {}),
+        ...(pathParams(route.path) ? { params: pathParams(route.path)! } : {}),
         ...(doc.query ? { query: doc.query } : {}),
         ...(doc.body ? { body: { content: { 'application/json': { schema: doc.body } } } } : {}),
       },

@@ -29,7 +29,7 @@ describe('property onboarding', () => {
     expect(res.status).toBe(400);
     expect(res.body.error.code).toBe('VALIDATION_ERROR');
     expect(res.body.error.details.map((d: { path: string }) => d.path).sort()).toEqual(
-      ['addressLine', 'city', 'legalName', 'phone'].sort(),
+      ['addressLine', 'city', 'legalName', 'phone', 'rooms'].sort(),
     );
   });
 
@@ -41,6 +41,24 @@ describe('property onboarding', () => {
       phone: '+92 300 0000000',
     });
     expect(patch.status).toBe(200);
+
+    // Rooms and rates are part of setup: a room type without a rate is not enough.
+    const type = await owner.post(`/properties/${h.fx.propA1}/room-types`, {
+      code: 'STD',
+      name: 'Standard',
+      capacityAdults: 2,
+      capacityChildren: 0,
+    });
+    await owner.post(`/properties/${h.fx.propA1}/rooms`, {
+      roomNumber: '101',
+      roomTypeId: type.body.data.id,
+    });
+    const noRate = await complete(owner, h.fx.propA1);
+    expect(noRate.status).toBe(400);
+    expect(noRate.body.error.details).toEqual([{ path: 'rates', message: 'Set a rate for: STD.' }]);
+    await owner.post(`/properties/${h.fx.propA1}/room-types/${type.body.data.id}/rates`, {
+      nightlyRate: '6500',
+    });
 
     const first = await complete(owner, h.fx.propA1);
     expect(first.status).toBe(200);

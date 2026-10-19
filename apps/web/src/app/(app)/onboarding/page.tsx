@@ -21,7 +21,8 @@ import {
 } from '@/components/ui';
 import { api } from '@/lib/api';
 import { applyServerErrors } from '@/lib/forms';
-import { firstIncompleteStep, ONBOARDING_STEPS, type OnboardingStep } from '@/lib/onboarding';
+import { RoomsSetup, useRoomData } from '@/components/rooms-setup';
+import { firstIncompleteStep, ONBOARDING_STEPS, roomsReady, type OnboardingStep } from '@/lib/onboarding';
 import { ME_QUERY_KEY, useSession } from '@/lib/session';
 
 const TIME_ZONES = Intl.supportedValuesOf('timeZone');
@@ -45,7 +46,12 @@ const locationSchema = z.object({
   checkOutTime: timeOfDay,
 });
 
-const STEP_LABEL = { business: 'stepBusiness', location: 'stepLocation', review: 'stepReview' } as const;
+const STEP_LABEL = {
+  business: 'stepBusiness',
+  location: 'stepLocation',
+  rooms: 'stepRooms',
+  review: 'stepReview',
+} as const;
 
 export default function OnboardingPage() {
   const t = useTranslations('onboarding');
@@ -57,23 +63,25 @@ export default function OnboardingPage() {
     queryFn: () => api.get<PropertyDto>(`/properties/${propertyId}`),
     enabled: allowed && !!propertyId,
   });
+  const roomData = useRoomData(propertyId ?? '');
 
   if (!allowed || !propertyId) return <PermissionDenied />;
-  if (property.isPending) return <PageSkeleton />;
+  if (property.isPending || roomData.types.isPending || roomData.rooms.isPending) return <PageSkeleton />;
   if (property.isError) return <PageError error={property.error} onRetry={() => void property.refetch()} />;
+  const ready = roomsReady(roomData.types.data ?? [], roomData.rooms.data ?? []);
 
   return (
     <>
       <PageHeader title={t('title', { property: property.data.name })} subtitle={t('subtitle')} />
-      <Wizard key={property.data.id} initial={property.data} />
+      <Wizard key={property.data.id} initial={property.data} roomsReady={ready} />
     </>
   );
 }
 
-function Wizard({ initial }: { initial: PropertyDto }) {
+function Wizard({ initial, roomsReady: ready }: { initial: PropertyDto; roomsReady: boolean }) {
   const t = useTranslations('onboarding');
   const [property, setProperty] = useState(initial);
-  const [step, setStep] = useState<OnboardingStep>(() => firstIncompleteStep(initial));
+  const [step, setStep] = useState<OnboardingStep>(() => firstIncompleteStep(initial, ready));
   const index = ONBOARDING_STEPS.indexOf(step);
 
   const saved = (updated: PropertyDto, next: OnboardingStep) => {
@@ -106,13 +114,21 @@ function Wizard({ initial }: { initial: PropertyDto }) {
           ))}
         </ol>
       </nav>
-      <div className="max-w-2xl">
+      <div className="max-w-3xl">
         {step === 'business' && <BusinessStep property={property} onSaved={(p) => saved(p, 'location')} />}
         {step === 'location' && (
           <LocationStep
             property={property}
             onBack={() => setStep('business')}
-            onSaved={(p) => saved(p, 'review')}
+            onSaved={(p) => saved(p, 'rooms')}
+          />
+        )}
+        {step === 'rooms' && (
+          <RoomsStep
+            propertyId={property.id}
+            ready={ready}
+            onBack={() => setStep('location')}
+            onNext={() => setStep('review')}
           />
         )}
         {step === 'review' && <ReviewStep property={property} onEdit={setStep} />}
@@ -342,7 +358,7 @@ function ReviewStep({ property, onEdit }: { property: PropertyDto; onEdit: (s: O
         ))}
       </dl>
       <div className="mt-6 flex justify-between">
-        <Button variant="secondary" onClick={() => onEdit('location')}>
+        <Button variant="secondary" onClick={() => onEdit('rooms')}>
           {t('back')}
         </Button>
         <Button busy={finishing} onClick={() => void finish()}>
@@ -350,5 +366,34 @@ function ReviewStep({ property, onEdit }: { property: PropertyDto; onEdit: (s: O
         </Button>
       </div>
     </Card>
+  );
+}
+
+function RoomsStep({
+  propertyId,
+  ready,
+  onBack,
+  onNext,
+}: {
+  propertyId: string;
+  ready: boolean;
+  onBack: () => void;
+  onNext: () => void;
+}) {
+  const t = useTranslations('onboarding');
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-sm text-muted">{t('roomsIntro')}</p>
+      <RoomsSetup propertyId={propertyId} canManage />
+      {!ready && <p className="text-sm text-warning">{t('roomsNotReady')}</p>}
+      <div className="flex justify-between">
+        <Button variant="secondary" onClick={onBack}>
+          {t('back')}
+        </Button>
+        <Button disabled={!ready} onClick={onNext}>
+          {t('continue')}
+        </Button>
+      </div>
+    </div>
   );
 }

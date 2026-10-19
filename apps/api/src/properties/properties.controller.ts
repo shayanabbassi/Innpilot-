@@ -6,7 +6,7 @@ import {
   type UpdatePropertyRequest,
 } from '@innpilot/contracts';
 import { schema } from '@innpilot/db';
-import { eq, inArray } from 'drizzle-orm';
+import { and, eq, inArray, lte, notExists, sql } from 'drizzle-orm';
 import { AuditService, changeSet } from '../audit/audit.service';
 import { CurrentAuth, RequirePermission } from '../auth/policy';
 import { AppError } from '../common/app-error';
@@ -149,11 +149,42 @@ export class PropertiesController {
         const v = dto[f];
         return v === null || (typeof v === 'string' && v.trim() === '');
       });
-      if (missing.length > 0) {
-        throw AppError.validation(
-          'Complete the property details before finishing setup.',
-          missing.map((path) => ({ path, message: 'Required to finish setup.' })),
-        );
+      const issues = missing.map((path) => ({ path: path as string, message: 'Required to finish setup.' }));
+
+      // At least one active room, and every room type that has active rooms needs a rate in effect.
+      const rooms = await tx
+        .select({ typeId: schema.rooms.roomTypeId })
+        .from(schema.rooms)
+        .where(and(eq(schema.rooms.propertyId, id), eq(schema.rooms.active, true)));
+      if (rooms.length === 0) issues.push({ path: 'rooms', message: 'Add at least one room.' });
+      const typeIds = [...new Set(rooms.map((r) => r.typeId))];
+      if (typeIds.length > 0) {
+        const t = schema.roomTypes;
+        const r = schema.roomTypeRates;
+        const unpriced = await tx
+          .select({ code: t.code })
+          .from(t)
+          .where(
+            and(
+              inArray(t.id, typeIds),
+              notExists(
+                tx
+                  .select({ one: sql`1` })
+                  .from(r)
+                  .where(and(eq(r.roomTypeId, t.id), lte(r.effectiveFrom, row.businessDate))),
+              ),
+            ),
+          )
+          .orderBy(t.code);
+        if (unpriced.length > 0) {
+          issues.push({
+            path: 'rates',
+            message: `Set a rate for: ${unpriced.map((u) => u.code).join(', ')}.`,
+          });
+        }
+      }
+      if (issues.length > 0) {
+        throw AppError.validation('Complete the setup steps before finishing.', issues);
       }
 
       const [done] = await tx
