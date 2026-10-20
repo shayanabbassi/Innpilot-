@@ -5,6 +5,7 @@ export * from './day-close';
 export * from './errors';
 export * from './finance';
 export * from './folios';
+export * from './payments';
 export * from './guests';
 export * from './housekeeping';
 export * from './rbac';

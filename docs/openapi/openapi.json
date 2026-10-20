@@ -129,6 +129,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -257,6 +260,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -594,6 +600,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -734,6 +743,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -880,6 +892,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1026,6 +1041,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1245,6 +1263,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1461,6 +1482,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1738,6 +1762,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1954,6 +1981,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2162,6 +2192,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2413,6 +2446,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2666,6 +2702,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2823,6 +2862,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2998,6 +3040,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3126,6 +3171,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3308,6 +3356,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3513,6 +3564,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3732,6 +3786,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3941,6 +3998,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4175,6 +4235,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4369,6 +4432,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4741,6 +4807,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4978,6 +5047,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5237,6 +5309,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5570,6 +5645,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5871,6 +5949,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6130,6 +6211,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6291,6 +6375,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6522,6 +6609,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6911,6 +7001,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7343,6 +7436,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7673,6 +7769,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8032,6 +8131,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8252,6 +8354,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8582,6 +8687,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8660,6 +8768,13 @@
                     "type": "string",
                     "minLength": 3,
                     "maxLength": 500
+                  },
+                  "deposit": {
+                    "type": "string",
+                    "enum": [
+                      "refund",
+                      "forfeit"
+                    ]
                   }
                 },
                 "required": [
@@ -8932,6 +9047,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9009,6 +9127,13 @@
                   "reason": {
                     "type": "string",
                     "maxLength": 500
+                  },
+                  "deposit": {
+                    "type": "string",
+                    "enum": [
+                      "refund",
+                      "forfeit"
+                    ]
                   }
                 },
                 "additionalProperties": false
@@ -9278,6 +9403,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9668,6 +9796,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10058,6 +10189,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10386,6 +10520,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10738,6 +10875,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11322,6 +11462,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11620,6 +11763,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12067,6 +12213,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12344,6 +12493,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12651,6 +12803,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12820,6 +12975,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13091,6 +13249,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13364,6 +13525,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13508,6 +13672,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13771,6 +13938,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14008,6 +14178,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14264,6 +14437,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14501,6 +14677,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14772,6 +14951,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15095,6 +15277,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15345,6 +15530,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15615,6 +15803,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15855,6 +16046,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16094,6 +16288,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16358,6 +16555,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16546,6 +16746,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16781,6 +16984,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16993,6 +17199,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17327,6 +17536,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17627,6 +17839,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17991,6 +18206,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18126,6 +18344,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18492,6 +18713,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18792,6 +19016,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19116,6 +19343,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19422,6 +19652,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19696,6 +19929,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19894,6 +20130,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20092,6 +20331,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20310,6 +20552,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20546,6 +20791,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20832,6 +21080,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21096,6 +21347,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21357,6 +21611,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21590,6 +21847,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21697,7 +21957,8 @@
                               "null"
                             ],
                             "enum": [
-                              "room"
+                              "room",
+                              "cancellation"
                             ]
                           },
                           "active": {
@@ -21773,6 +22034,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21914,7 +22178,8 @@
                             "null"
                           ],
                           "enum": [
-                            "room"
+                            "room",
+                            "cancellation"
                           ]
                         },
                         "active": {
@@ -21989,6 +22254,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22126,7 +22394,8 @@
                             "null"
                           ],
                           "enum": [
-                            "room"
+                            "room",
+                            "cancellation"
                           ]
                         },
                         "active": {
@@ -22201,6 +22470,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22428,6 +22700,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22631,6 +22906,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22905,6 +23183,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23231,6 +23512,63 @@
                               ]
                             }
                           },
+                          "payments": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "receiptNumber": {
+                                  "type": "string"
+                                },
+                                "kind": {
+                                  "type": "string",
+                                  "enum": [
+                                    "deposit",
+                                    "payment"
+                                  ]
+                                },
+                                "method": {
+                                  "type": "string",
+                                  "enum": [
+                                    "cash",
+                                    "bank_transfer",
+                                    "card",
+                                    "other"
+                                  ]
+                                },
+                                "amount": {
+                                  "type": "string"
+                                },
+                                "refunded": {
+                                  "type": "string"
+                                },
+                                "applied": {
+                                  "type": "string"
+                                },
+                                "refundable": {
+                                  "type": "string"
+                                },
+                                "businessDate": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "receiptNumber",
+                                "kind",
+                                "method",
+                                "amount",
+                                "refunded",
+                                "applied",
+                                "refundable",
+                                "businessDate"
+                              ]
+                            }
+                          },
                           "posted": {
                             "type": "object",
                             "properties": {
@@ -23249,6 +23587,15 @@
                               "tax",
                               "gross"
                             ]
+                          },
+                          "received": {
+                            "type": "string"
+                          },
+                          "refunded": {
+                            "type": "string"
+                          },
+                          "depositHeld": {
+                            "type": "string"
                           },
                           "balance": {
                             "type": "string"
@@ -23347,7 +23694,11 @@
                           "status",
                           "currencyCode",
                           "charges",
+                          "payments",
                           "posted",
+                          "received",
+                          "refunded",
+                          "depositHeld",
                           "balance",
                           "pendingNights",
                           "pending",
@@ -23405,6 +23756,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23747,6 +24101,63 @@
                             ]
                           }
                         },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "receiptNumber": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "deposit",
+                                  "payment"
+                                ]
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "refunded": {
+                                "type": "string"
+                              },
+                              "applied": {
+                                "type": "string"
+                              },
+                              "refundable": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "receiptNumber",
+                              "kind",
+                              "method",
+                              "amount",
+                              "refunded",
+                              "applied",
+                              "refundable",
+                              "businessDate"
+                            ]
+                          }
+                        },
                         "posted": {
                           "type": "object",
                           "properties": {
@@ -23765,6 +24176,15 @@
                             "tax",
                             "gross"
                           ]
+                        },
+                        "received": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "depositHeld": {
+                          "type": "string"
                         },
                         "balance": {
                           "type": "string"
@@ -23863,7 +24283,11 @@
                         "status",
                         "currencyCode",
                         "charges",
+                        "payments",
                         "posted",
+                        "received",
+                        "refunded",
+                        "depositHeld",
                         "balance",
                         "pendingNights",
                         "pending",
@@ -23920,6 +24344,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24092,6 +24519,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24416,6 +24846,63 @@
                             ]
                           }
                         },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "receiptNumber": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "deposit",
+                                  "payment"
+                                ]
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "refunded": {
+                                "type": "string"
+                              },
+                              "applied": {
+                                "type": "string"
+                              },
+                              "refundable": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "receiptNumber",
+                              "kind",
+                              "method",
+                              "amount",
+                              "refunded",
+                              "applied",
+                              "refundable",
+                              "businessDate"
+                            ]
+                          }
+                        },
                         "posted": {
                           "type": "object",
                           "properties": {
@@ -24434,6 +24921,15 @@
                             "tax",
                             "gross"
                           ]
+                        },
+                        "received": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "depositHeld": {
+                          "type": "string"
                         },
                         "balance": {
                           "type": "string"
@@ -24532,7 +25028,11 @@
                         "status",
                         "currencyCode",
                         "charges",
+                        "payments",
                         "posted",
+                        "received",
+                        "refunded",
+                        "depositHeld",
                         "balance",
                         "pendingNights",
                         "pending",
@@ -24589,6 +25089,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24952,6 +25455,63 @@
                             ]
                           }
                         },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "receiptNumber": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "deposit",
+                                  "payment"
+                                ]
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "refunded": {
+                                "type": "string"
+                              },
+                              "applied": {
+                                "type": "string"
+                              },
+                              "refundable": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "receiptNumber",
+                              "kind",
+                              "method",
+                              "amount",
+                              "refunded",
+                              "applied",
+                              "refundable",
+                              "businessDate"
+                            ]
+                          }
+                        },
                         "posted": {
                           "type": "object",
                           "properties": {
@@ -24970,6 +25530,15 @@
                             "tax",
                             "gross"
                           ]
+                        },
+                        "received": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "depositHeld": {
+                          "type": "string"
                         },
                         "balance": {
                           "type": "string"
@@ -25068,7 +25637,11 @@
                         "status",
                         "currencyCode",
                         "charges",
+                        "payments",
                         "posted",
+                        "received",
+                        "refunded",
+                        "depositHeld",
                         "balance",
                         "pendingNights",
                         "pending",
@@ -25125,6 +25698,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -25489,6 +26065,63 @@
                             ]
                           }
                         },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "receiptNumber": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "deposit",
+                                  "payment"
+                                ]
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "refunded": {
+                                "type": "string"
+                              },
+                              "applied": {
+                                "type": "string"
+                              },
+                              "refundable": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "receiptNumber",
+                              "kind",
+                              "method",
+                              "amount",
+                              "refunded",
+                              "applied",
+                              "refundable",
+                              "businessDate"
+                            ]
+                          }
+                        },
                         "posted": {
                           "type": "object",
                           "properties": {
@@ -25507,6 +26140,15 @@
                             "tax",
                             "gross"
                           ]
+                        },
+                        "received": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "depositHeld": {
+                          "type": "string"
                         },
                         "balance": {
                           "type": "string"
@@ -25605,7 +26247,11 @@
                         "status",
                         "currencyCode",
                         "charges",
+                        "payments",
                         "posted",
+                        "received",
+                        "refunded",
+                        "depositHeld",
                         "balance",
                         "pendingNights",
                         "pending",
@@ -25662,6 +26308,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -26006,6 +26655,63 @@
                             ]
                           }
                         },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "receiptNumber": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "deposit",
+                                  "payment"
+                                ]
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "refunded": {
+                                "type": "string"
+                              },
+                              "applied": {
+                                "type": "string"
+                              },
+                              "refundable": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "receiptNumber",
+                              "kind",
+                              "method",
+                              "amount",
+                              "refunded",
+                              "applied",
+                              "refundable",
+                              "businessDate"
+                            ]
+                          }
+                        },
                         "posted": {
                           "type": "object",
                           "properties": {
@@ -26024,6 +26730,15 @@
                             "tax",
                             "gross"
                           ]
+                        },
+                        "received": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "depositHeld": {
+                          "type": "string"
                         },
                         "balance": {
                           "type": "string"
@@ -26122,7 +26837,11 @@
                         "status",
                         "currencyCode",
                         "charges",
+                        "payments",
                         "posted",
+                        "received",
+                        "refunded",
+                        "depositHeld",
                         "balance",
                         "pendingNights",
                         "pending",
@@ -26179,6 +26898,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -26528,6 +27250,63 @@
                             ]
                           }
                         },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "receiptNumber": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "deposit",
+                                  "payment"
+                                ]
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "refunded": {
+                                "type": "string"
+                              },
+                              "applied": {
+                                "type": "string"
+                              },
+                              "refundable": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "receiptNumber",
+                              "kind",
+                              "method",
+                              "amount",
+                              "refunded",
+                              "applied",
+                              "refundable",
+                              "businessDate"
+                            ]
+                          }
+                        },
                         "posted": {
                           "type": "object",
                           "properties": {
@@ -26546,6 +27325,15 @@
                             "tax",
                             "gross"
                           ]
+                        },
+                        "received": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "depositHeld": {
+                          "type": "string"
                         },
                         "balance": {
                           "type": "string"
@@ -26644,7 +27432,11 @@
                         "status",
                         "currencyCode",
                         "charges",
+                        "payments",
                         "posted",
+                        "received",
+                        "refunded",
+                        "depositHeld",
                         "balance",
                         "pendingNights",
                         "pending",
@@ -26701,6 +27493,2131 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cash-accounts": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Cash drawer, bank and card accounts that payments go to",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "cash",
+                              "bank",
+                              "card_clearing",
+                              "other"
+                            ]
+                          },
+                          "ledgerAccountCode": {
+                            "type": "string"
+                          },
+                          "active": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "kind",
+                          "ledgerAccountCode",
+                          "active"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/payments": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Payments and deposits, newest first, with their refunds",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "receiptNumber": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "deposit",
+                              "payment"
+                            ]
+                          },
+                          "method": {
+                            "type": "string",
+                            "enum": [
+                              "cash",
+                              "bank_transfer",
+                              "card",
+                              "other"
+                            ]
+                          },
+                          "cashAccountId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "cashAccountName": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "string"
+                          },
+                          "refunded": {
+                            "type": "string"
+                          },
+                          "applied": {
+                            "type": "string"
+                          },
+                          "refundable": {
+                            "type": "string"
+                          },
+                          "currencyCode": {
+                            "type": "string"
+                          },
+                          "businessDate": {
+                            "type": "string"
+                          },
+                          "receivedAt": {
+                            "type": "string"
+                          },
+                          "externalReference": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "notes": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "folioId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "folioLabel": {
+                            "type": "string"
+                          },
+                          "reservationId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "bookingReference": {
+                            "type": "string"
+                          },
+                          "guestName": {
+                            "type": "string"
+                          },
+                          "createdByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "journalEntryId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "journalNumber": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "refunds": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "refundNumber": {
+                                  "type": "string"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                },
+                                "method": {
+                                  "type": "string",
+                                  "enum": [
+                                    "cash",
+                                    "bank_transfer",
+                                    "card",
+                                    "other"
+                                  ]
+                                },
+                                "cashAccountName": {
+                                  "type": "string"
+                                },
+                                "externalReference": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "reason": {
+                                  "type": "string"
+                                },
+                                "businessDate": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "createdByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "journalEntryId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "refundNumber",
+                                "amount",
+                                "method",
+                                "cashAccountName",
+                                "externalReference",
+                                "reason",
+                                "businessDate",
+                                "createdAt",
+                                "createdByName",
+                                "journalEntryId"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "receiptNumber",
+                          "kind",
+                          "method",
+                          "cashAccountId",
+                          "cashAccountName",
+                          "amount",
+                          "refunded",
+                          "applied",
+                          "refundable",
+                          "currencyCode",
+                          "businessDate",
+                          "receivedAt",
+                          "externalReference",
+                          "notes",
+                          "folioId",
+                          "folioLabel",
+                          "reservationId",
+                          "bookingReference",
+                          "guestName",
+                          "createdByName",
+                          "journalEntryId",
+                          "journalNumber",
+                          "refunds"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Receive money on a folio, or a deposit on a booking before check-in (Idempotency-Key); 422 PAYMENT_EXCEEDS_BALANCE",
+        "description": "Requires permission `payment.receive` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "folioId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "reservationId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "cash",
+                      "bank_transfer",
+                      "card",
+                      "other"
+                    ]
+                  },
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "externalReference": {
+                    "type": "string",
+                    "maxLength": 60
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 300
+                  }
+                },
+                "required": [
+                  "amount",
+                  "method"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "receiptNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "deposit",
+                            "payment"
+                          ]
+                        },
+                        "method": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bank_transfer",
+                            "card",
+                            "other"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "applied": {
+                          "type": "string"
+                        },
+                        "refundable": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "receivedAt": {
+                          "type": "string"
+                        },
+                        "externalReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "folioId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "folioLabel": {
+                          "type": "string"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "refunds": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "refundNumber": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "externalReference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reason": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "refundNumber",
+                              "amount",
+                              "method",
+                              "cashAccountName",
+                              "externalReference",
+                              "reason",
+                              "businessDate",
+                              "createdAt",
+                              "createdByName",
+                              "journalEntryId"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "receiptNumber",
+                        "kind",
+                        "method",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "amount",
+                        "refunded",
+                        "applied",
+                        "refundable",
+                        "currencyCode",
+                        "businessDate",
+                        "receivedAt",
+                        "externalReference",
+                        "notes",
+                        "folioId",
+                        "folioLabel",
+                        "reservationId",
+                        "bookingReference",
+                        "guestName",
+                        "createdByName",
+                        "journalEntryId",
+                        "journalNumber",
+                        "refunds"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/payments/{id}": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "One payment",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "receiptNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "deposit",
+                            "payment"
+                          ]
+                        },
+                        "method": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bank_transfer",
+                            "card",
+                            "other"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "applied": {
+                          "type": "string"
+                        },
+                        "refundable": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "receivedAt": {
+                          "type": "string"
+                        },
+                        "externalReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "folioId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "folioLabel": {
+                          "type": "string"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "refunds": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "refundNumber": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "externalReference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reason": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "refundNumber",
+                              "amount",
+                              "method",
+                              "cashAccountName",
+                              "externalReference",
+                              "reason",
+                              "businessDate",
+                              "createdAt",
+                              "createdByName",
+                              "journalEntryId"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "receiptNumber",
+                        "kind",
+                        "method",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "amount",
+                        "refunded",
+                        "applied",
+                        "refundable",
+                        "currencyCode",
+                        "businessDate",
+                        "receivedAt",
+                        "externalReference",
+                        "notes",
+                        "folioId",
+                        "folioLabel",
+                        "reservationId",
+                        "bookingReference",
+                        "guestName",
+                        "createdByName",
+                        "journalEntryId",
+                        "journalNumber",
+                        "refunds"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/payments/{id}/receipt": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Receipt data: the payment and the hotel details from the invoice profile",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "payment": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "receiptNumber": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "deposit",
+                                "payment"
+                              ]
+                            },
+                            "method": {
+                              "type": "string",
+                              "enum": [
+                                "cash",
+                                "bank_transfer",
+                                "card",
+                                "other"
+                              ]
+                            },
+                            "cashAccountId": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "cashAccountName": {
+                              "type": "string"
+                            },
+                            "amount": {
+                              "type": "string"
+                            },
+                            "refunded": {
+                              "type": "string"
+                            },
+                            "applied": {
+                              "type": "string"
+                            },
+                            "refundable": {
+                              "type": "string"
+                            },
+                            "currencyCode": {
+                              "type": "string"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "receivedAt": {
+                              "type": "string"
+                            },
+                            "externalReference": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "notes": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "folioId": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "folioLabel": {
+                              "type": "string"
+                            },
+                            "reservationId": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "bookingReference": {
+                              "type": "string"
+                            },
+                            "guestName": {
+                              "type": "string"
+                            },
+                            "createdByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "journalEntryId": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "journalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "refunds": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "refundNumber": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  },
+                                  "method": {
+                                    "type": "string",
+                                    "enum": [
+                                      "cash",
+                                      "bank_transfer",
+                                      "card",
+                                      "other"
+                                    ]
+                                  },
+                                  "cashAccountName": {
+                                    "type": "string"
+                                  },
+                                  "externalReference": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "reason": {
+                                    "type": "string"
+                                  },
+                                  "businessDate": {
+                                    "type": "string"
+                                  },
+                                  "createdAt": {
+                                    "type": "string"
+                                  },
+                                  "createdByName": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "journalEntryId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "refundNumber",
+                                  "amount",
+                                  "method",
+                                  "cashAccountName",
+                                  "externalReference",
+                                  "reason",
+                                  "businessDate",
+                                  "createdAt",
+                                  "createdByName",
+                                  "journalEntryId"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "receiptNumber",
+                            "kind",
+                            "method",
+                            "cashAccountId",
+                            "cashAccountName",
+                            "amount",
+                            "refunded",
+                            "applied",
+                            "refundable",
+                            "currencyCode",
+                            "businessDate",
+                            "receivedAt",
+                            "externalReference",
+                            "notes",
+                            "folioId",
+                            "folioLabel",
+                            "reservationId",
+                            "bookingReference",
+                            "guestName",
+                            "createdByName",
+                            "journalEntryId",
+                            "journalNumber",
+                            "refunds"
+                          ]
+                        },
+                        "hotel": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "legalName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "address": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "registrationFields": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "value"
+                                ]
+                              }
+                            },
+                            "footer": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "legalName",
+                            "address",
+                            "registrationFields",
+                            "footer"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "payment",
+                        "hotel"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/payments/{id}/refunds": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Refund part or all of a payment (Idempotency-Key, payment.refund); 422 REFUND_EXCEEDS_REMAINDER",
+        "description": "Requires permission `payment.refund` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "cash",
+                      "bank_transfer",
+                      "card",
+                      "other"
+                    ]
+                  },
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "externalReference": {
+                    "type": "string",
+                    "maxLength": 60
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "amount",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "receiptNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "deposit",
+                            "payment"
+                          ]
+                        },
+                        "method": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bank_transfer",
+                            "card",
+                            "other"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "string"
+                        },
+                        "refunded": {
+                          "type": "string"
+                        },
+                        "applied": {
+                          "type": "string"
+                        },
+                        "refundable": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "receivedAt": {
+                          "type": "string"
+                        },
+                        "externalReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "folioId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "folioLabel": {
+                          "type": "string"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "refunds": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "refundNumber": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "cash",
+                                  "bank_transfer",
+                                  "card",
+                                  "other"
+                                ]
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "externalReference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reason": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "refundNumber",
+                              "amount",
+                              "method",
+                              "cashAccountName",
+                              "externalReference",
+                              "reason",
+                              "businessDate",
+                              "createdAt",
+                              "createdByName",
+                              "journalEntryId"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "receiptNumber",
+                        "kind",
+                        "method",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "amount",
+                        "refunded",
+                        "applied",
+                        "refundable",
+                        "currencyCode",
+                        "businessDate",
+                        "receivedAt",
+                        "externalReference",
+                        "notes",
+                        "folioId",
+                        "folioLabel",
+                        "reservationId",
+                        "bookingReference",
+                        "guestName",
+                        "createdByName",
+                        "journalEntryId",
+                        "journalNumber",
+                        "refunds"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{reservationId}/forfeit-deposit": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Keep the deposit of a cancelled or no-show booking as a fee (Idempotency-Key, folio.adjust)",
+        "description": "Requires permission `folio.adjust` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "amount": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "amount"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -26901,6 +29818,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27162,6 +30082,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27407,6 +30330,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27632,6 +30558,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27849,6 +30778,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28116,6 +31048,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28251,6 +31186,9 @@
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
                             "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",

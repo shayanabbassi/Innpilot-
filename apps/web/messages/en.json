@@ -275,6 +275,12 @@
       "allowance_posted": "Allowance posted",
       "charge_voided": "Folio item voided",
       "charge_transferred": "Folio item transferred"
+    },
+    "payment": {
+      "received": "Payment received",
+      "deposit_received": "Deposit received",
+      "refunded": "Refund issued",
+      "deposit_forfeited": "Deposit kept as a fee"
     }
   },
   "onboarding": {
@@ -528,7 +534,10 @@
     "back": "All reservations",
     "keep": "Keep booking",
     "conflictRefresh": "Availability has been refreshed.",
-    "checkIn": "Check in"
+    "checkIn": "Check in",
+    "depositQuestion": "This booking holds a deposit. What should happen to it?",
+    "depositRefund": "Refund it to the guest (the folio stays open until the refund is made)",
+    "depositForfeit": "Keep it as a cancellation or no-show fee"
   },
   "frontDesk": {
     "title": "Front desk",
@@ -912,7 +921,9 @@
     "movedTo": "Moved to {folio} ({ref})",
     "movedFrom": "Moved from {folio} ({ref})",
     "kinds": {
-      "allowance": "Allowance"
+      "allowance": "Allowance",
+      "deposit": "Deposit",
+      "payment": "Payment"
     },
     "statuses": {
       "voided": "Voided",
@@ -951,7 +962,46 @@
       "allowance": "Post",
       "folio": "Open folio",
       "void": "Void",
-      "transfer": "Move"
-    }
+      "transfer": "Move",
+      "payment": "Record payment",
+      "refund": "Refund"
+    },
+    "takeDeposit": "Take deposit",
+    "takePayment": "Take payment",
+    "paymentsTitle": "Money received",
+    "depositHeld": "Deposit held: {amount}. It is applied to the bill at check-out.",
+    "refundedAmount": "refunded {amount}",
+    "appliedAmount": "applied {amount}",
+    "refund": "Refund",
+    "paymentTitle": "Take a payment",
+    "depositTitle": "Take a deposit",
+    "refundTitle": "Refund from {receipt}",
+    "amountReceived": "Amount received",
+    "refundAmount": "Amount to refund",
+    "refundableHint": "Up to {amount} can still be refunded from this receipt.",
+    "method": "Method",
+    "methods": {
+      "cash": "Cash",
+      "bank_transfer": "Bank transfer",
+      "card": "Card",
+      "other": "Other"
+    },
+    "externalReference": "Reference (optional)",
+    "externalReferenceHint": "Card terminal or bank reference. Never the card number.",
+    "notes": "Notes (optional)"
+  },
+  "receipt": {
+    "back": "Back to booking {ref}",
+    "print": "Print or save as PDF",
+    "depositReceipt": "Deposit receipt",
+    "paymentReceipt": "Payment receipt",
+    "date": "Date",
+    "guest": "Guest",
+    "booking": "Booking",
+    "method": "Method",
+    "amount": "Amount",
+    "refunds": "Refunds",
+    "receivedBy": "Received by {name}",
+    "notTaxInvoice": "This is a receipt for money received, not a tax invoice."
   }
 }

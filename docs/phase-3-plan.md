@@ -106,3 +106,17 @@ policy, write-off policy, and which taxes apply to which charges.
 ## Order
 
 3.1 → 3.2 → 3.3 → 3.4 → 3.5. 3.1 and 3.5 are the largest. Work continues on branch `phase-1-foundation`.
+
+## Notes from the build
+
+- **3.3:** room-night pending charges count from the actual check-in date of each booked-room segment, at that
+  segment's agreed rate; moves split segments at the business date.
+- **3.4:** a payment belongs to one folio; a split payment is recorded as several payments, each with its own
+  receipt. Applying a deposit to the bill is its own append-only record (`deposit_applications`, Dr guest deposits /
+  Cr guest receivable), used at check-out and when a deposit is kept as a fee. The folio reconciliation is: folio
+  balance = the folio's guest receivable + guest deposit lines in the ledger. A folio can take at most its balance plus
+  the room nights still to post; refunds are limited by the payment's remainder and by the guest's credit.
+- **Known limits carried into 3.5:** (1) the day close's automatic no-show marking leaves any deposit held (as if
+  "refund" was chosen); staff can keep it as a fee afterwards with _forfeit deposit_. (2) A credit created by voiding
+  a fee after its deposit was applied cannot yet be refunded, because refunds draw only on unapplied money;
+  check-out settlement (3.5) handles refunds of a folio credit.

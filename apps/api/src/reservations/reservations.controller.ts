@@ -145,7 +145,7 @@ export class ReservationsController {
     @Body(new ZodPipe(cancelReservationRequest)) body: CancelReservationRequest,
     @Req() req: AppRequest,
   ): Promise<ReservationDto> {
-    return this.reservations.cancel(auth, propertyId, id, body.reason, requestMeta(req));
+    return this.reservations.cancel(auth, propertyId, id, body.reason, requestMeta(req), body.deposit);
   }
 
   @Post('reservations/:id/no-show')
@@ -158,7 +158,7 @@ export class ReservationsController {
     @Body(new ZodPipe(noShowRequest)) body: NoShowRequest,
     @Req() req: AppRequest,
   ): Promise<ReservationDto> {
-    return this.reservations.noShow(auth, propertyId, id, body.reason, requestMeta(req));
+    return this.reservations.noShow(auth, propertyId, id, body.reason, requestMeta(req), body.deposit);
   }
 
   @Post('reservations/:id/rooms')

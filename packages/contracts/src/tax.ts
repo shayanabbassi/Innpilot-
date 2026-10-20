@@ -112,8 +112,8 @@ export const chargeCategoryDto = z.object({
   revenueAccountId: uuid,
   revenueAccountCode: z.string(),
   revenueAccountName: z.string(),
-  /** "room": used for room nights at check-out; always active. */
-  systemKind: z.enum(['room']).nullable(),
+  /** "room": room nights at check-out; "cancellation": kept deposits. Both always active. */
+  systemKind: z.enum(['room', 'cancellation']).nullable(),
   active: z.boolean(),
   taxCodeIds: z.array(uuid),
 });

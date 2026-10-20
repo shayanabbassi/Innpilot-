@@ -41,6 +41,7 @@ describe('defaults', () => {
   it('starts with charge categories on the revenue accounts and no taxes at all', async () => {
     const cats = (await acc.get(`${base}/charge-categories`)).body.data;
     expect(cats.map((c: { code: string }) => c.code).sort()).toEqual([
+      'cancellation',
       'fnb',
       'laundry',
       'meeting',

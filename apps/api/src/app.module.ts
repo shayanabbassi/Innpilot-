@@ -21,6 +21,8 @@ import { AccountsService } from './finance/accounts.service';
 import { FinanceController } from './finance/finance.controller';
 import { FolioController } from './finance/folio.controller';
 import { FolioService } from './finance/folio.service';
+import { PaymentController } from './finance/payment.controller';
+import { PaymentService } from './finance/payment.service';
 import { JournalsService } from './finance/journals.service';
 import { PeriodsService } from './finance/periods.service';
 import { PostingService } from './finance/posting.service';
@@ -131,6 +133,7 @@ export class AppModule {
         FinanceController,
         TaxController,
         FolioController,
+        PaymentController,
         UsersController,
         AuditController,
         HealthController,
@@ -159,6 +162,7 @@ export class AppModule {
         ReportsService,
         TaxService,
         FolioService,
+        PaymentService,
         PiiService,
         IdempotencyService,
       ],

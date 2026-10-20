@@ -86,8 +86,11 @@ export class FolioService {
           f,
           ref: r.bookingReference,
           guest: schema.guests.fullName,
-          balance: sql<string>`coalesce((select sum(x.gross_amount) from folio_charges x
-                                where x.folio_id = ${f.id} and x.status = 'posted'), 0)::text`,
+          balance: sql<string>`(coalesce((select sum(x.gross_amount) from folio_charges x
+                                 where x.folio_id = ${f.id} and x.status = 'posted'), 0)
+                              - coalesce((select sum(p.amount) from payments p where p.folio_id = ${f.id}), 0)
+                              + coalesce((select sum(rf.amount) from refunds rf join payments p on p.id = rf.payment_id
+                                 where p.folio_id = ${f.id}), 0))::text`,
           room: sql<
             string | null
           >`(select rm.room_number from reservation_rooms y join rooms rm on rm.id = y.room_id
@@ -107,7 +110,7 @@ export class FolioService {
         bookingReference: x.ref,
         guestName: x.guest,
         roomNumber: x.room,
-        balance: money2(x.balance),
+        balance: Money.of(x.balance, x.f.currencyCode).round().toString(),
       }));
     });
   }
@@ -392,6 +395,39 @@ export class FolioService {
     });
   }
 
+  /**
+   * A charge the system posts on its own, in the category marked with `kind` (a kept deposit becomes a
+   * cancellation fee). Taxes follow the category set-up like any other charge.
+   */
+  async postSystemCharge(
+    tx: Tx,
+    auth: AuthContext,
+    property: PropertyRow,
+    folio: FolioRow,
+    item: { kind: 'cancellation'; description: string; amount: Money; reason: string },
+  ): Promise<string> {
+    const [category] = await tx
+      .select({ id: schema.chargeCategories.id })
+      .from(schema.chargeCategories)
+      .where(
+        and(
+          eq(schema.chargeCategories.propertyId, property.id),
+          eq(schema.chargeCategories.systemKind, item.kind),
+        ),
+      );
+    if (!category) throw AppError.notFound('cancellation fee category');
+    return this.postItem(tx, auth, property, folio, {
+      kind: 'charge',
+      categoryId: category.id,
+      description: item.description,
+      quantity: '1',
+      unitPrice: item.amount.toString(),
+      amount: item.amount,
+      reason: item.reason,
+      key: undefined,
+    });
+  }
+
   // ------------------------------------------------------------------------------------------- internals
 
   private async postItem(
@@ -570,7 +606,8 @@ export class FolioService {
     return charge;
   }
 
-  private async openFolio(tx: Tx, propertyId: string, folioId: string): Promise<FolioRow> {
+  /** Locks the folio and refuses a closed one (FOLIO_CLOSED). */
+  async openFolio(tx: Tx, propertyId: string, folioId: string): Promise<FolioRow> {
     const [folio] = await tx
       .select()
       .from(f)
@@ -605,7 +642,8 @@ export class FolioService {
     );
   }
 
-  private async load(tx: Tx, property: PropertyRow, folioId: string): Promise<FolioDto> {
+  /** The full folio view. Used by payments and check-out too. */
+  async load(tx: Tx, property: PropertyRow, folioId: string): Promise<FolioDto> {
     const [row] = await tx
       .select({ f, ref: r.bookingReference, resStatus: r.status, guest: schema.guests.fullName })
       .from(f)
@@ -633,7 +671,19 @@ export class FolioService {
         pending.map((n) => n[k]),
         currency,
       );
-    const balance = posted.gross;
+    const payments = await this.paymentSummaries(tx, folioId, currency);
+    const total = (k: 'amount' | 'refunded') =>
+      Money.sum(
+        payments.map((p) => Money.of(p[k], currency)),
+        currency,
+      );
+    const received = total('amount');
+    const refunded = total('refunded');
+    const depositHeld = Money.sum(
+      payments.filter((p) => p.kind === 'deposit').map((p) => Money.of(p.refundable, currency)),
+      currency,
+    );
+    const balance = posted.gross.subtract(received).add(refunded);
     return {
       id: row.f.id,
       reservationId: row.f.reservationId,
@@ -645,7 +695,11 @@ export class FolioService {
       status: row.f.status as FolioDto['status'],
       currencyCode: currency,
       charges,
+      payments,
       posted: { net: posted.net.toString(), tax: posted.tax.toString(), gross: posted.gross.toString() },
+      received: received.toString(),
+      refunded: refunded.toString(),
+      depositHeld: depositHeld.toString(),
       balance: balance.toString(),
       pendingNights: pending.map((n) => ({
         date: n.date,
@@ -731,6 +785,40 @@ export class FolioService {
       }
     }
     return { pending, estimate };
+  }
+
+  /** Payments on the folio with what has been refunded and applied from each. */
+  private async paymentSummaries(tx: Tx, folioId: string, currency: string): Promise<FolioDto['payments']> {
+    const { rows } = await tx.execute<{
+      id: string;
+      receipt_number: string;
+      kind: 'deposit' | 'payment';
+      method: FolioDto['payments'][number]['method'];
+      amount: string;
+      refunded: string;
+      applied: string;
+      business_date: string;
+    }>(sql`
+      select p.id, p.receipt_number, p.kind, p.method, p.amount::text, p.business_date::text,
+             coalesce((select sum(amount) from refunds where payment_id = p.id), 0)::text as refunded,
+             coalesce((select sum(amount) from deposit_applications where payment_id = p.id), 0)::text as applied
+      from payments p where p.folio_id = ${folioId} order by p.received_at`);
+    return rows.map((p) => {
+      const amount = Money.of(p.amount, currency).round();
+      const refunded = Money.of(p.refunded, currency).round();
+      const applied = Money.of(p.applied, currency).round();
+      return {
+        id: p.id,
+        receiptNumber: p.receipt_number,
+        kind: p.kind,
+        method: p.method,
+        amount: amount.toString(),
+        refunded: refunded.toString(),
+        applied: applied.toString(),
+        refundable: amount.subtract(refunded).subtract(applied).toString(),
+        businessDate: p.business_date,
+      };
+    });
   }
 
   private async chargeDtos(tx: Tx, folioId: string): Promise<FolioChargeDto[]> {

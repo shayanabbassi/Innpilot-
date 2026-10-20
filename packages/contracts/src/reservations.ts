@@ -133,11 +133,21 @@ export const updateReservationRequest = z
 export type UpdateReservationRequest = z.infer<typeof updateReservationRequest>;
 
 export const cancelReservationRequest = z
-  .object({ reason: z.string().trim().min(3, 'Give a reason for cancelling.').max(500) })
+  .object({
+    reason: z.string().trim().min(3, 'Give a reason for cancelling.').max(500),
+    /** Required when the booking holds a deposit: refund it, or keep it as a fee. */
+    deposit: z.enum(['refund', 'forfeit']).optional(),
+  })
   .strict();
 export type CancelReservationRequest = z.infer<typeof cancelReservationRequest>;
 
-export const noShowRequest = z.object({ reason: z.string().trim().max(500).optional() }).strict();
+export const noShowRequest = z
+  .object({
+    reason: z.string().trim().max(500).optional(),
+    /** Required when the booking holds a deposit: refund it, or keep it as a fee. */
+    deposit: z.enum(['refund', 'forfeit']).optional(),
+  })
+  .strict();
 export type NoShowRequest = z.infer<typeof noShowRequest>;
 
 export const assignRoomRequest = z.object({ roomId: z.string().uuid().nullable() }).strict();

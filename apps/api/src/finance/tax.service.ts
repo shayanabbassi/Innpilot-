@@ -233,7 +233,9 @@ export class TaxService {
         .for('update');
       if (!before) throw AppError.notFound('charge category');
       if (body.active === false && before.systemKind) {
-        throw AppError.validation('The room category is used for room nights and always stays active.');
+        throw AppError.validation(
+          `${before.name} is used by the system (room nights or kept deposits) and always stays active.`,
+        );
       }
       if (body.revenueAccountId) await this.assertAccount(tx, body.revenueAccountId, 'revenue');
       const set = {
@@ -518,7 +520,7 @@ export class TaxService {
       revenueAccountId: c.revenueAccountId,
       revenueAccountCode: accountCode,
       revenueAccountName: accountName,
-      systemKind: (c.systemKind as 'room' | null) ?? null,
+      systemKind: (c.systemKind as ChargeCategoryDto['systemKind']) ?? null,
       active: c.active,
       taxCodeIds: allLinks.filter((l) => l.categoryId === c.id).map((l) => l.taxCodeId),
     }));

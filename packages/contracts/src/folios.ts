@@ -115,6 +115,19 @@ export const pendingNightDto = z.object({
 
 const amounts = { net: z.string(), tax: z.string(), gross: z.string() };
 
+export const folioPaymentDto = z.object({
+  id: uuid,
+  receiptNumber: z.string(),
+  kind: z.enum(['deposit', 'payment']),
+  method: z.enum(['cash', 'bank_transfer', 'card', 'other']),
+  amount: z.string(),
+  refunded: z.string(),
+  applied: z.string(),
+  refundable: z.string(),
+  businessDate: z.string(),
+});
+export type FolioPaymentDto = z.infer<typeof folioPaymentDto>;
+
 export const folioDto = z.object({
   id: uuid,
   reservationId: uuid,
@@ -126,9 +139,15 @@ export const folioDto = z.object({
   status: z.enum(FOLIO_STATUSES),
   currencyCode: z.string(),
   charges: z.array(folioChargeDto),
-  /** Posted items only (voided and transferred-out items excluded). Payments arrive in slice 3.4. */
+  payments: z.array(folioPaymentDto),
+  /** Posted items only (voided and transferred-out items excluded). */
   posted: z.object(amounts),
-  /** Positive: the guest owes. Posted charges − allowances − payments + refunds. */
+  /** Money received on this folio (deposits and payments) and refunded from it. */
+  received: z.string(),
+  refunded: z.string(),
+  /** Deposits not yet applied to the bill: still a liability in the ledger. */
+  depositHeld: z.string(),
+  /** Positive: the guest owes; negative: the guest is in credit. Charges − allowances − received + refunded. */
   balance: z.string(),
   /** Primary folio only: nights stayed so far, not yet posted. */
   pendingNights: z.array(pendingNightDto),

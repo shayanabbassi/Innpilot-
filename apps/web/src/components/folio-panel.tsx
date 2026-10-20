@@ -3,6 +3,8 @@
 import type {
   ChargeCategoryDto,
   FolioChargeDto,
+  FolioPaymentDto,
+  PaymentDto,
   FolioDto,
   OpenFolioDto,
   TaxPreviewDto,
@@ -32,6 +34,8 @@ type Action =
   | { kind: 'folio' }
   | { kind: 'void'; item: FolioChargeDto }
   | { kind: 'transfer'; item: FolioChargeDto }
+  | { kind: 'payment'; suggested: string }
+  | { kind: 'refund'; payment: FolioPaymentDto }
   | null;
 
 const AMOUNT = /^\d{1,13}(\.\d{1,2})?$/;
@@ -57,6 +61,8 @@ export function FolioPanel({
   const [action, setAction] = useState<Action>(null);
   const canCharge = can('folio.charge');
   const canAdjust = can('folio.adjust');
+  const canReceive = can('payment.receive');
+  const canRefund = can('payment.refund');
 
   if (folios.isPending)
     return (
@@ -77,13 +83,16 @@ export function FolioPanel({
     return (
       <Card title={t('title')}>
         <p className="text-sm text-muted">{t('none')}</p>
-        {canOpen && (
-          <div className="mt-3">
+        <div className="mt-3 flex flex-wrap gap-2">
+          {canReceive && ['pending', 'confirmed'].includes(reservationStatus) && (
+            <Button onClick={() => setAction({ kind: 'payment', suggested: '' })}>{t('takeDeposit')}</Button>
+          )}
+          {canOpen && (
             <Button variant="secondary" onClick={() => setAction({ kind: 'folio' })}>
               {t('openFolio')}
             </Button>
-          </div>
-        )}
+          )}
+        </div>
         <ActionDialog
           action={action}
           onClose={() => setAction(null)}
@@ -98,6 +107,8 @@ export function FolioPanel({
   const cur = folio.currencyCode;
   const fmt = (v: string) => formatAmount(v, cur);
   const open = folio.status === 'open';
+  // Nights slept and "if checking out today" only mean something once the guest is in house.
+  const inHouse = reservationStatus === 'checked_in';
 
   return (
     <Card title={t('title')}>
@@ -127,7 +138,7 @@ export function FolioPanel({
           <dt className="text-muted">{t('balance')}</dt>
           <dd className="tabular text-lg font-semibold">{fmt(folio.balance)}</dd>
         </div>
-        {folio.isPrimary && open && (
+        {folio.isPrimary && open && inHouse && (
           <>
             <div>
               <dt className="text-muted">{t('pendingNights', { n: folio.pendingNights.length })}</dt>
@@ -140,10 +151,16 @@ export function FolioPanel({
           </>
         )}
       </dl>
-      {folio.isPrimary && open && folio.stayEstimate.nights > 0 && (
-        <p className="mt-2 text-xs text-muted">
-          {t('estimate', { n: folio.stayEstimate.nights, amount: fmt(folio.stayEstimate.gross) })}
-        </p>
+      {folio.isPrimary &&
+        open &&
+        ['pending', 'confirmed', 'checked_in'].includes(reservationStatus) &&
+        folio.stayEstimate.nights > 0 && (
+          <p className="mt-2 text-xs text-muted">
+            {t('estimate', { n: folio.stayEstimate.nights, amount: fmt(folio.stayEstimate.gross) })}
+          </p>
+        )}
+      {Money.of(folio.depositHeld, cur).isPositive() && (
+        <p className="mt-1 text-xs text-muted">{t('depositHeld', { amount: fmt(folio.depositHeld) })}</p>
       )}
       {!open && <Alert tone="info">{t('closed')}</Alert>}
 
@@ -215,7 +232,7 @@ export function FolioPanel({
         ))}
       </ul>
 
-      {folio.isPrimary && open && folio.pendingNights.length > 0 && (
+      {folio.isPrimary && open && inHouse && folio.pendingNights.length > 0 && (
         <details className="mt-3 text-sm">
           <summary className="cursor-pointer text-teal-700">{t('pendingDetail')}</summary>
           <ul className="mt-2 text-muted">
@@ -234,9 +251,55 @@ export function FolioPanel({
         </details>
       )}
 
-      {open && (canCharge || canAdjust) && (
+      {folio.payments.length > 0 && (
+        <section className="mt-4">
+          <h3 className="mb-1 text-sm font-medium text-ink">{t('paymentsTitle')}</h3>
+          <ul className="divide-y divide-line border-y border-line text-sm">
+            {folio.payments.map((pay) => (
+              <li key={pay.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2">
+                <span className="tabular w-24 text-muted">{pay.businessDate}</span>
+                <span className="min-w-40 flex-1">
+                  <Link href={`/receipts/${pay.id}`} className="font-medium text-teal-700 underline">
+                    {pay.receiptNumber}
+                  </Link>{' '}
+                  <span className="text-xs text-muted">
+                    {t(`kinds.${pay.kind}`)} · {t(`methods.${pay.method}`)}
+                    {Money.of(pay.refunded, cur).isPositive() &&
+                      ` · ${t('refundedAmount', { amount: fmt(pay.refunded) })}`}
+                    {Money.of(pay.applied, cur).isPositive() &&
+                      ` · ${t('appliedAmount', { amount: fmt(pay.applied) })}`}
+                  </span>
+                </span>
+                <span className="tabular font-medium">−{fmt(pay.amount)}</span>
+                {open && canRefund && Money.of(pay.refundable, cur).isPositive() && (
+                  <Button variant="ghost" onClick={() => setAction({ kind: 'refund', payment: pay })}>
+                    {t('refund')}
+                    <span className="sr-only"> {pay.receiptNumber}</span>
+                  </Button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {open && (canCharge || canAdjust || canReceive) && (
         <div className="mt-4 flex flex-wrap gap-2">
-          {canCharge && <Button onClick={() => setAction({ kind: 'charge' })}>{t('addCharge')}</Button>}
+          {canReceive && ['pending', 'confirmed', 'checked_in'].includes(reservationStatus) && (
+            <Button
+              onClick={() => {
+                const due = Money.of(folio.balance, cur).add(Money.of(folio.stayEstimate.gross, cur));
+                setAction({ kind: 'payment', suggested: due.isPositive() ? due.toString() : '' });
+              }}
+            >
+              {['pending', 'confirmed'].includes(reservationStatus) ? t('takeDeposit') : t('takePayment')}
+            </Button>
+          )}
+          {canCharge && (
+            <Button variant="secondary" onClick={() => setAction({ kind: 'charge' })}>
+              {t('addCharge')}
+            </Button>
+          )}
           {canAdjust && (
             <Button variant="secondary" onClick={() => setAction({ kind: 'allowance' })}>
               {t('addAllowance')}
@@ -302,7 +365,13 @@ function ActionDialog({
     setOpenedFor(action);
     setError(null);
     setKey(crypto.randomUUID());
-    setV({ quantity: '1' });
+    setV(
+      action?.kind === 'payment'
+        ? { amount: action.suggested, method: 'cash' }
+        : action?.kind === 'refund'
+          ? { amount: action.payment.refundable, method: action.payment.method }
+          : { quantity: '1' },
+    );
   }
   const set = (k: string) => (e: { target: { value: string } }) =>
     setV((x) => ({ ...x, [k]: e.target.value }));
@@ -363,6 +432,29 @@ function ActionDialog({
           },
           headers,
         );
+      } else if (action.kind === 'payment') {
+        await api.postWith<PaymentDto>(
+          `${base}/payments`,
+          {
+            ...(folio ? { folioId: folio.id } : { reservationId }),
+            amount: (v.amount ?? '').trim(),
+            method: v.method ?? 'cash',
+            ...(v.externalReference?.trim() ? { externalReference: v.externalReference.trim() } : {}),
+            ...(v.notes?.trim() ? { notes: v.notes.trim() } : {}),
+          },
+          headers,
+        );
+      } else if (action.kind === 'refund') {
+        await api.postWith<PaymentDto>(
+          `${base}/payments/${action.payment.id}/refunds`,
+          {
+            amount: (v.amount ?? '').trim(),
+            method: v.method,
+            reason: (v.reason ?? '').trim(),
+            ...(v.externalReference?.trim() ? { externalReference: v.externalReference.trim() } : {}),
+          },
+          headers,
+        );
       } else if (action.kind === 'void') {
         await api.postWith(
           `${base}/folio-charges/${action.item.id}/void`,
@@ -392,13 +484,56 @@ function ActionDialog({
       ? t('voidTitle', { item: action.item.description })
       : action.kind === 'transfer'
         ? t('transferTitle', { item: action.item.description })
-        : t(`${action.kind}Title`);
+        : action.kind === 'refund'
+          ? t('refundTitle', { receipt: action.payment.receiptNumber })
+          : action.kind === 'payment' && !folio
+            ? t('depositTitle')
+            : t(`${action.kind}Title`);
   const otherFolios = (targets.data ?? []).filter((x) => x.id !== folio?.id);
 
   return (
     <Dialog open={action !== null} onClose={onClose} title={title}>
       <div className="flex flex-col gap-4">
         {error !== null && <ApiErrorAlert error={error} />}
+        {(action?.kind === 'payment' || action?.kind === 'refund') && (
+          <div className="grid gap-4 sm:grid-cols-2">
+            <TextField
+              label={action.kind === 'refund' ? t('refundAmount') : t('amountReceived')}
+              inputMode="decimal"
+              value={v.amount ?? ''}
+              onChange={set('amount')}
+              hint={
+                action.kind === 'refund'
+                  ? t('refundableHint', { amount: formatAmount(action.payment.refundable, currency) })
+                  : undefined
+              }
+            />
+            <SelectField label={t('method')} value={v.method ?? 'cash'} onChange={set('method')}>
+              {(['cash', 'bank_transfer', 'card', 'other'] as const).map((m) => (
+                <option key={m} value={m}>
+                  {t(`methods.${m}`)}
+                </option>
+              ))}
+            </SelectField>
+            <TextField
+              label={t('externalReference')}
+              value={v.externalReference ?? ''}
+              maxLength={60}
+              onChange={set('externalReference')}
+              hint={t('externalReferenceHint')}
+              className="sm:col-span-2"
+            />
+            {action.kind === 'payment' && (
+              <TextField
+                label={t('notes')}
+                value={v.notes ?? ''}
+                maxLength={300}
+                onChange={set('notes')}
+                className="sm:col-span-2"
+              />
+            )}
+          </div>
+        )}
         {action?.kind === 'folio' && (
           <TextField
             label={t('folioLabel')}
@@ -494,7 +629,10 @@ function ActionDialog({
             {t('voidExplain', { amount: formatAmount(action.item.gross, currency) })}
           </p>
         )}
-        {(action?.kind === 'allowance' || action?.kind === 'void' || action?.kind === 'transfer') && (
+        {(action?.kind === 'allowance' ||
+          action?.kind === 'void' ||
+          action?.kind === 'transfer' ||
+          action?.kind === 'refund') && (
           <TextField
             label={t('reasonLabel')}
             value={v.reason ?? ''}
@@ -510,7 +648,10 @@ function ActionDialog({
             busy={busy}
             variant={action?.kind === 'void' ? 'danger' : 'primary'}
             disabled={
-              (action?.kind !== 'folio' && action?.kind !== 'charge' && (v.reason ?? '').trim().length < 3) ||
+              (action?.kind !== 'folio' &&
+                action?.kind !== 'charge' &&
+                action?.kind !== 'payment' &&
+                (v.reason ?? '').trim().length < 3) ||
               (action?.kind === 'transfer' && !v.toFolioId)
             }
             onClick={() => void submit()}

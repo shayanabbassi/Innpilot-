@@ -17,6 +17,7 @@ import {
   type ReservationRoomInput,
   type ReservationStatus,
   type UpdateReservationRequest,
+  type DepositHandling,
 } from '@innpilot/contracts';
 import { schema, type Tx } from '@innpilot/db';
 import { Money } from '@innpilot/money';
@@ -27,6 +28,7 @@ import { pgErrorCode } from '../common/pg-error';
 import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 import { IdempotencyService } from '../idempotency/idempotency.service';
+import { PaymentService } from '../finance/payment.service';
 
 const r = schema.reservations;
 const rr = schema.reservationRooms;
@@ -76,6 +78,7 @@ export class ReservationsService {
     private readonly db: Db,
     private readonly audit: AuditService,
     private readonly idempotency: IdempotencyService,
+    private readonly payments: PaymentService,
   ) {}
 
   // ---------------------------------------------------------------------------------------------- queries
@@ -291,26 +294,39 @@ export class ReservationsService {
     id: string,
     reason: string,
     meta: RequestMeta,
+    deposit?: DepositHandling,
   ): Promise<ReservationDto> {
     return this.db.tenant(auth.tenantId, async (tx) => {
       const res = await this.lock(tx, propertyId, id);
       if (!EDITABLE.includes(res.status)) throw this.badState(res.status, 'cancelled');
+      const handling = await this.depositHandling(tx, auth, propertyId, id, deposit);
       await tx
         .update(r)
         .set({ status: 'cancelled', cancelReason: reason, cancelledAt: new Date() })
         .where(eq(r.id, id));
       await tx.update(rr).set({ status: 'released' }).where(eq(rr.reservationId, id));
-      await this.record(tx, auth, propertyId, id, meta, 'reservation.cancelled', {}, reason);
+      await this.record(tx, auth, propertyId, id, meta, 'reservation.cancelled', handling.changes, reason);
+      if (handling.forfeit) {
+        await this.payments.forfeitDeposits(tx, auth, await this.property(tx, propertyId), id, reason, meta);
+      }
       return this.load(tx, propertyId, id);
     });
   }
 
   /** Only once the arrival date has come: a guest cannot be a no-show for a future stay. */
-  noShow(auth: AuthContext, propertyId: string, id: string, reason: string | undefined, meta: RequestMeta) {
+  noShow(
+    auth: AuthContext,
+    propertyId: string,
+    id: string,
+    reason: string | undefined,
+    meta: RequestMeta,
+    deposit?: DepositHandling,
+  ) {
     return this.db.tenant(auth.tenantId, async (tx) => {
       const property = await this.property(tx, propertyId);
       const res = await this.lock(tx, propertyId, id);
       if (!EDITABLE.includes(res.status)) throw this.badState(res.status, 'no_show');
+      const handling = await this.depositHandling(tx, auth, propertyId, id, deposit);
       const [first] = await tx
         .select({ arrival: sql<string>`min(${rr.arrival})::text` })
         .from(rr)
@@ -323,9 +339,47 @@ export class ReservationsService {
       }
       await tx.update(r).set({ status: 'no_show' }).where(eq(r.id, id));
       await tx.update(rr).set({ status: 'released' }).where(eq(rr.reservationId, id));
-      await this.record(tx, auth, propertyId, id, meta, 'reservation.no_show', {}, reason ?? null);
+      await this.record(
+        tx,
+        auth,
+        propertyId,
+        id,
+        meta,
+        'reservation.no_show',
+        handling.changes,
+        reason ?? null,
+      );
+      if (handling.forfeit) {
+        await this.payments.forfeitDeposits(tx, auth, property, id, reason ?? 'No-show', meta);
+      }
       return this.load(tx, propertyId, id);
     });
+  }
+
+  /**
+   * A booking that holds a deposit cannot be cancelled or marked no-show without a decision (P3-15): refund it
+   * (the folio stays open with the guest in credit until refunded) or keep it as a fee (needs folio.adjust).
+   */
+  private async depositHandling(
+    tx: Tx,
+    auth: AuthContext,
+    propertyId: string,
+    id: string,
+    deposit: DepositHandling | undefined,
+  ): Promise<{ forfeit: boolean; changes: Record<string, unknown> }> {
+    const held = await this.payments.depositHeld(tx, await this.property(tx, propertyId), id);
+    if (!held.isPositive()) return { forfeit: false, changes: {} };
+    if (!deposit) {
+      throw new AppError(
+        'DEPOSIT_HANDLING_REQUIRED',
+        `This booking holds a deposit of ${held.toString()}. Choose to refund it or keep it as a fee.`,
+        [{ path: 'deposit', message: 'Choose refund or forfeit.' }],
+      );
+    }
+    if (deposit === 'forfeit' && !auth.permissionsByProperty.get(propertyId)?.has('folio.adjust')) {
+      throw AppError.forbidden('Keeping a deposit as a fee needs permission to adjust folios.');
+    }
+    return { forfeit: deposit === 'forfeit', changes: { deposit, depositHeld: held.toString() } };
   }
 
   /** Assigns (or unassigns with null) a specific room to one booked room of the reservation. */

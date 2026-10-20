@@ -589,3 +589,63 @@ export const folioChargeTaxes = pgTable('folio_charge_taxes', {
   taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull(),
   payableAccountId: uuid('payable_account_id').notNull(),
 });
+
+export const cashAccounts = pgTable('cash_accounts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  name: text('name').notNull(),
+  kind: text('kind').notNull(),
+  ledgerAccountId: uuid('ledger_account_id').notNull(),
+  active: boolean('active').notNull().default(true),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const payments = pgTable('payments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  folioId: uuid('folio_id').notNull(),
+  reservationId: uuid('reservation_id').notNull(),
+  kind: text('kind').notNull(),
+  method: text('method').notNull(),
+  cashAccountId: uuid('cash_account_id').notNull(),
+  amount: numeric('amount', { precision: 19, scale: 4 }).notNull(),
+  currencyCode: char('currency_code', { length: 3 }).notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  receivedAt: tsz('received_at').notNull().defaultNow(),
+  externalReference: text('external_reference'),
+  notes: text('notes'),
+  receiptNumber: text('receipt_number').notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  idempotencyKey: text('idempotency_key'),
+  createdBy: uuid('created_by').notNull(),
+});
+
+export const depositApplications = pgTable('deposit_applications', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  paymentId: uuid('payment_id').notNull(),
+  amount: numeric('amount', { precision: 19, scale: 4 }).notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const refunds = pgTable('refunds', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  paymentId: uuid('payment_id').notNull(),
+  amount: numeric('amount', { precision: 19, scale: 4 }).notNull(),
+  method: text('method').notNull(),
+  cashAccountId: uuid('cash_account_id').notNull(),
+  externalReference: text('external_reference'),
+  reason: text('reason').notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  refundNumber: text('refund_number').notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});

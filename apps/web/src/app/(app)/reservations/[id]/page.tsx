@@ -22,7 +22,7 @@ import {
   StatusBadge,
   TextField,
 } from '@/components/ui';
-import { api } from '@/lib/api';
+import { api, ApiError } from '@/lib/api';
 import { STATUS_TONE } from '@/lib/reservation-ui';
 import { useSession } from '@/lib/session';
 import { FolioPanel } from '@/components/folio-panel';
@@ -61,6 +61,8 @@ export default function ReservationPage() {
     void queryClient.invalidateQueries({ queryKey: ['reservation-history', id] });
     void queryClient.invalidateQueries({ queryKey: ['reservations'] });
     void queryClient.invalidateQueries({ queryKey: ['availability'] });
+    // Cancelling or a no-show can move money on the folio (a deposit kept as a fee).
+    void queryClient.invalidateQueries({ queryKey: ['folios', id] });
   };
   const confirm = useMutation({
     mutationFn: () => api.post<ReservationDto>(`${base}/confirm`),
@@ -247,7 +249,10 @@ export default function ReservationPage() {
           confirmLabel={t('cancel')}
           required
           onClose={() => setDialog(null)}
-          onSubmit={(reason) => api.post<ReservationDto>(`${base}/cancel`, { reason })}
+          canForfeit={can('folio.adjust')}
+          onSubmit={(reason, deposit) =>
+            api.post<ReservationDto>(`${base}/cancel`, { reason, ...(deposit ? { deposit } : {}) })
+          }
           onDone={refresh}
         />
       )}
@@ -257,7 +262,13 @@ export default function ReservationPage() {
           body={t('noShowBody')}
           confirmLabel={t('noShow')}
           onClose={() => setDialog(null)}
-          onSubmit={(reason) => api.post<ReservationDto>(`${base}/no-show`, reason ? { reason } : {})}
+          canForfeit={can('folio.adjust')}
+          onSubmit={(reason, deposit) =>
+            api.post<ReservationDto>(`${base}/no-show`, {
+              ...(reason ? { reason } : {}),
+              ...(deposit ? { deposit } : {}),
+            })
+          }
           onDone={refresh}
         />
       )}
@@ -291,6 +302,7 @@ function ReasonDialog({
   body,
   confirmLabel,
   required = false,
+  canForfeit = false,
   onClose,
   onSubmit,
   onDone,
@@ -299,14 +311,21 @@ function ReasonDialog({
   body: string;
   confirmLabel: string;
   required?: boolean;
+  canForfeit?: boolean;
   onClose: () => void;
-  onSubmit: (reason: string) => Promise<ReservationDto>;
+  onSubmit: (reason: string, deposit?: 'refund' | 'forfeit') => Promise<ReservationDto>;
   onDone: (r: ReservationDto) => void;
 }) {
   const t = useTranslations('reservations');
   const [reason, setReason] = useState('');
+  // Asked only when the server says the booking holds a deposit (P3-15).
+  const [deposit, setDeposit] = useState<'refund' | 'forfeit' | null>(null);
+  const [askDeposit, setAskDeposit] = useState(false);
   const run = useMutation({
-    mutationFn: () => onSubmit(reason.trim()),
+    mutationFn: () => onSubmit(reason.trim(), deposit ?? undefined),
+    onError: (err) => {
+      if (err instanceof ApiError && err.code === 'DEPOSIT_HANDLING_REQUIRED') setAskDeposit(true);
+    },
     onSuccess: (r) => {
       onDone(r);
       onClose();
@@ -323,6 +342,33 @@ function ReasonDialog({
           maxLength={500}
           onChange={(e) => setReason(e.target.value)}
         />
+        {askDeposit && (
+          <fieldset className="flex flex-col gap-2 text-sm">
+            <legend className="mb-1 font-medium text-ink">{t('depositQuestion')}</legend>
+            <label className="flex items-start gap-2">
+              <input
+                type="radio"
+                name="deposit"
+                className="mt-1 h-4 w-4"
+                checked={deposit === 'refund'}
+                onChange={() => setDeposit('refund')}
+              />
+              {t('depositRefund')}
+            </label>
+            {canForfeit && (
+              <label className="flex items-start gap-2">
+                <input
+                  type="radio"
+                  name="deposit"
+                  className="mt-1 h-4 w-4"
+                  checked={deposit === 'forfeit'}
+                  onChange={() => setDeposit('forfeit')}
+                />
+                {t('depositForfeit')}
+              </label>
+            )}
+          </fieldset>
+        )}
         <div className="flex justify-end gap-2">
           <Button variant="secondary" onClick={onClose}>
             {t('keep')}
@@ -330,7 +376,7 @@ function ReasonDialog({
           <Button
             variant="danger"
             busy={run.isPending}
-            disabled={required && reason.trim().length < 3}
+            disabled={(required && reason.trim().length < 3) || (askDeposit && !deposit)}
             onClick={() => run.mutate()}
           >
             {confirmLabel}

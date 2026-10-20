@@ -50,6 +50,7 @@ describe('property defaults', () => {
       [ids.otherProperty],
     );
     expect(rows).toEqual([
+      { code: 'cancellation', account: '4500', system_kind: 'cancellation' },
       { code: 'fnb', account: '4100', system_kind: null },
       { code: 'laundry', account: '4200', system_kind: null },
       { code: 'meeting', account: '4400', system_kind: null },
