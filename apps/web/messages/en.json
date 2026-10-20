@@ -71,7 +71,9 @@
     "journals": "Journals",
     "trialBalance": "Trial balance",
     "accounts": "Chart of accounts",
-    "periods": "Accounting periods"
+    "periods": "Accounting periods",
+    "taxes": "Taxes & charges",
+    "invoice": "Invoice details"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -253,6 +255,19 @@
     "period": {
       "closed": "Accounting period closed",
       "reopened": "Accounting period reopened"
+    },
+    "tax_code": {
+      "created": "Tax code added",
+      "updated": "Tax code changed",
+      "rate_added": "Tax rate added",
+      "rate_removed": "Scheduled tax rate withdrawn"
+    },
+    "charge_category": {
+      "created": "Charge category added",
+      "updated": "Charge category changed"
+    },
+    "invoice_profile": {
+      "updated": "Invoice details changed"
     }
   },
   "onboarding": {
@@ -801,5 +816,76 @@
     "reopenTitle": "Reopen {month}?",
     "closeExplain": "Nothing can be posted into this month while it is closed. Drafts dated in it can still be edited.",
     "reopenExplain": "Postings into this month will be allowed again. Your reason is kept in the audit log."
+  },
+  "taxes": {
+    "title": "Taxes & charges",
+    "subtitle": "The taxes that apply to this property and how each kind of charge is taxed and booked.",
+    "invoiceLink": "Invoice details",
+    "codesTitle": "Tax codes",
+    "codesNote": "Nothing is preset: enter the taxes that apply to your hotel, as advised by your tax adviser. A rate change is added from a date; rates already in effect are kept as history.",
+    "noCodes": "No tax codes yet. Charges are not taxed.",
+    "inactive": "Inactive",
+    "addRate": "Change rate",
+    "edit": "Edit",
+    "rateNowExclusive": "{rate}% added on top, since {from}",
+    "rateNowInclusive": "{rate}% included in the price, since {from}",
+    "noRateNow": "No rate in effect today",
+    "collectedInto": "collected into {account}",
+    "addCode": "Add tax code",
+    "history": "Rate history ({n})",
+    "inclusive": "inclusive",
+    "exclusive": "exclusive",
+    "scheduled": "Scheduled",
+    "withdraw": "Withdraw",
+    "categoriesTitle": "Charge categories",
+    "categoriesNote": "Each charge on a guest folio has a category, which decides its revenue account and default taxes.",
+    "noTaxes": "no tax",
+    "roomNights": "Room nights",
+    "addCategory": "Add category",
+    "calculatorTitle": "Tax calculator",
+    "category": "Category",
+    "amount": "Amount",
+    "amountHint": "For inclusive taxes, enter the price including tax.",
+    "serviceDate": "Date (optional)",
+    "net": "Net",
+    "gross": "Total",
+    "notInEffect": "No rate in effect on this date for: {codes}.",
+    "editCode": "Edit {code}",
+    "addRateTitle": "New rate for {code}",
+    "editCategory": "Edit {name}",
+    "codeLabel": "Code",
+    "codeHint": "Short code shown on invoices, e.g. PST. Cannot be changed later.",
+    "categoryCodeHint": "Lowercase, e.g. minibar. Cannot be changed later.",
+    "nameLabel": "Name",
+    "jurisdiction": "Jurisdiction",
+    "jurisdictionHint": "Optional, e.g. Punjab or Federal.",
+    "payableAccount": "Collected into",
+    "revenueAccount": "Revenue account",
+    "defaultPayable": "2200 · Taxes payable (default)",
+    "chooseAccount": "Choose an account",
+    "ratePercent": "Rate (%)",
+    "effectiveFrom": "Effective from",
+    "effectiveHint": "Today (the business date) or later.",
+    "inclusiveLabel": "Included in the price (inclusive). Leave unticked to add tax on top.",
+    "taxesOnCategory": "Taxes on this category",
+    "activeLabel": "Active"
+  },
+  "invoiceSettings": {
+    "title": "Invoice details",
+    "subtitle": "What prints on invoices and receipts for this property.",
+    "legalNote": "InnPilot invoices are not certified tax invoices. Check the required fields with your tax adviser before using them with guests.",
+    "legalName": "Legal name",
+    "address": "Address",
+    "invoicePrefix": "Invoice number prefix",
+    "receiptPrefix": "Receipt number prefix",
+    "prefixHint": "Numbers will look like {example}.",
+    "footer": "Footer text",
+    "registrationTitle": "Registration numbers",
+    "registrationNote": "Add the registration fields your invoices must show, e.g. NTN or a provincial registration. Up to six.",
+    "fieldLabel": "Field {n} label",
+    "fieldValue": "Field {n} value",
+    "remove": "Remove",
+    "addField": "Add field",
+    "lastChanged": "Last changed by {name} on {date}"
   }
 }

@@ -23,6 +23,8 @@ import { JournalsService } from './finance/journals.service';
 import { PeriodsService } from './finance/periods.service';
 import { PostingService } from './finance/posting.service';
 import { ReportsService } from './finance/reports.service';
+import { TaxController } from './finance/tax.controller';
+import { TaxService } from './finance/tax.service';
 import { HealthController } from './health/health.controller';
 import { HousekeepingController } from './housekeeping/housekeeping.controller';
 import { HousekeepingService } from './housekeeping/housekeeping.service';
@@ -125,6 +127,7 @@ export class AppModule {
         HousekeepingController,
         DayCloseController,
         FinanceController,
+        TaxController,
         UsersController,
         AuditController,
         HealthController,
@@ -151,6 +154,7 @@ export class AppModule {
         JournalsService,
         PeriodsService,
         ReportsService,
+        TaxService,
         PiiService,
         IdempotencyService,
       ],

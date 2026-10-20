@@ -73,20 +73,20 @@ export class AccountsService {
         );
       }
       if (body.parentId) await this.assertParent(tx, body.parentId, before.accountClass as AccountClass, id);
-      const [row] = await tx
-        .update(a)
-        .set({
-          ...(body.name !== undefined ? { name: body.name } : {}),
-          ...(body.parentId !== undefined ? { parentId: body.parentId } : {}),
-          ...(body.active !== undefined ? { active: body.active } : {}),
-        })
-        .where(eq(a.id, id))
-        .returning();
-      const changes = changeSet(before, row!, ['name', 'parentId', 'active']);
+      const set = {
+        ...(body.name !== undefined ? { name: body.name } : {}),
+        ...(body.parentId !== undefined ? { parentId: body.parentId } : {}),
+        ...(body.active !== undefined ? { active: body.active } : {}),
+      };
+      // Drizzle refuses an update with nothing to set; an empty PATCH simply changes nothing.
+      const row = Object.keys(set).length
+        ? (await tx.update(a).set(set).where(eq(a.id, id)).returning())[0]!
+        : before;
+      const changes = changeSet(before, row, ['name', 'parentId', 'active']);
       if (Object.keys(changes).length > 0) {
         await this.record(tx, auth, meta, 'account.updated', id, { code: before.code, ...changes });
       }
-      return dto(row!);
+      return dto(row);
     });
   }
 

@@ -22,6 +22,8 @@ interface NavItem {
     | 'trialBalance'
     | 'accounts'
     | 'periods'
+    | 'taxes'
+    | 'invoice'
     | 'rooms'
     | 'staff'
     | 'audit'
@@ -48,6 +50,8 @@ const NAV: NavItem[] = [
   { href: '/finance/periods', label: 'periods', visible: tenant('journal.read') },
   { href: '/settings/property', label: 'property', visible: (s) => s.can('property.read') },
   { href: '/settings/rooms', label: 'rooms', visible: (s) => s.can('room.read') },
+  { href: '/settings/taxes', label: 'taxes', visible: (s) => s.can('tax.configure') },
+  { href: '/settings/invoice', label: 'invoice', visible: (s) => s.can('tax.configure') },
   { href: '/staff', label: 'staff', visible: tenant('user.read') },
   { href: '/audit', label: 'audit', visible: tenant('audit.read') },
   { href: '/account', label: 'account', visible: () => true },

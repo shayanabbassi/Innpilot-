@@ -466,3 +466,68 @@ export const journalLines = pgTable('journal_lines', {
   credit: numeric('credit', { precision: 19, scale: 4 }).notNull().default('0'),
   description: text('description'),
 });
+
+export const taxCodes = pgTable('tax_codes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  code: text('code').notNull(),
+  name: text('name').notNull(),
+  jurisdiction: text('jurisdiction'),
+  payableAccountId: uuid('payable_account_id').notNull(),
+  active: boolean('active').notNull().default(true),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});
+
+export const taxRates = pgTable('tax_rates', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  taxCodeId: uuid('tax_code_id').notNull(),
+  effectiveFrom: date('effective_from', { mode: 'string' }).notNull(),
+  ratePercent: numeric('rate_percent', { precision: 9, scale: 4 }).notNull(),
+  inclusive: boolean('inclusive').notNull().default(false),
+  createdBy: uuid('created_by'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const chargeCategories = pgTable('charge_categories', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  code: text('code').notNull(),
+  name: text('name').notNull(),
+  revenueAccountId: uuid('revenue_account_id').notNull(),
+  systemKind: text('system_kind'),
+  active: boolean('active').notNull().default(true),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});
+
+export const chargeCategoryTaxes = pgTable(
+  'charge_category_taxes',
+  {
+    tenantId: uuid('tenant_id').notNull(),
+    propertyId: uuid('property_id').notNull(),
+    categoryId: uuid('category_id').notNull(),
+    taxCodeId: uuid('tax_code_id').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.categoryId, t.taxCodeId] })],
+);
+
+export const invoiceProfiles = pgTable('invoice_profiles', {
+  propertyId: uuid('property_id').primaryKey(),
+  tenantId: uuid('tenant_id').notNull(),
+  legalName: text('legal_name'),
+  address: text('address'),
+  registrationFields: jsonb('registration_fields')
+    .$type<{ label: string; value: string }[]>()
+    .notNull()
+    .default([]),
+  invoicePrefix: text('invoice_prefix').notNull().default('INV-'),
+  receiptPrefix: text('receipt_prefix').notNull().default('RCT-'),
+  footer: text('footer'),
+  updatedBy: uuid('updated_by'),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});

@@ -66,7 +66,8 @@ export const updateAccountRequest = z
     parentId: uuid.nullable().optional(),
     active: z.boolean().optional(),
   })
-  .strict();
+  .strict()
+  .refine((v) => Object.keys(v).length > 0, { message: 'Change at least one field.' });
 export type UpdateAccountRequest = z.infer<typeof updateAccountRequest>;
 
 export const accountDto = z.object({
