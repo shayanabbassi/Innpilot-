@@ -232,7 +232,8 @@
       "room_added": "Added room",
       "room_removed": "Removed room",
       "checked_in": "Checked in",
-      "room_moved": "Moved to another room"
+      "room_moved": "Moved to another room",
+      "checked_out": "Checked out"
     },
     "housekeeping": {
       "task_created": "Created housekeeping task",
@@ -274,7 +275,10 @@
       "charge_posted": "Charge posted",
       "allowance_posted": "Allowance posted",
       "charge_voided": "Folio item voided",
-      "charge_transferred": "Folio item transferred"
+      "charge_transferred": "Folio item transferred",
+      "credit_refunded": "Credit refunded at check-out",
+      "written_off": "Balance written off",
+      "moved_to_account": "Balance moved to the guest's account"
     },
     "payment": {
       "received": "Payment received",
@@ -549,7 +553,6 @@
     "noArrivals": "No more arrivals today.",
     "noInHouse": "No guests in house.",
     "noDepartures": "Nobody is due out today.",
-    "checkoutLater": "Check-out becomes available once guest billing is in place.",
     "lateArrival": "Due {date}",
     "overdue": "Was due out {date}",
     "room": "Room {room}",
@@ -584,7 +587,8 @@
     "create": "Book and check in",
     "creating": "Checking in…",
     "newGuest": "New guest",
-    "existingGuest": "Existing guest"
+    "existingGuest": "Existing guest",
+    "checkOut": "Check out"
   },
   "housekeeping": {
     "title": "Housekeeping",
@@ -988,7 +992,10 @@
     },
     "externalReference": "Reference (optional)",
     "externalReferenceHint": "Card terminal or bank reference. Never the card number.",
-    "notes": "Notes (optional)"
+    "notes": "Notes (optional)",
+    "onAccount": "Checked out with {amount} left on the guest's account. Payments can still be taken here.",
+    "invoicesLabel": "Invoices:",
+    "writtenOff": "Written off at check-out: {amount}"
   },
   "receipt": {
     "back": "Back to booking {ref}",
@@ -1003,5 +1010,56 @@
     "refunds": "Refunds",
     "receivedBy": "Received by {name}",
     "notTaxInvoice": "This is a receipt for money received, not a tax invoice."
+  },
+  "checkout": {
+    "title": "Check out room {room}",
+    "backToFrontDesk": "Back to front desk",
+    "viewBooking": "View booking",
+    "nightsTitle": "{n, plural, =0 {No room nights to post} one {# room night to post} other {# room nights to post}}",
+    "noNights": "The guest is leaving on the day they arrived, so no room night is charged.",
+    "total": "Total",
+    "notLast": "Other rooms of this booking are still in house. The folios are settled when the last guest leaves.",
+    "folioTitle": "Folio: {label}",
+    "now": "Balance now",
+    "plusNights": "Plus room nights",
+    "lessDeposit": "Less deposit applied",
+    "toSettle": "To settle",
+    "nothingToSettle": "Nothing to settle: this folio closes at zero.",
+    "how": "Settle by",
+    "actions": {
+      "pay": "Taking payment now",
+      "refund": "Refunding the credit",
+      "write_off": "Writing it off",
+      "on_account": "Moving it to the guest's account"
+    },
+    "needsRefundRole": "This folio has a credit to refund. Ask someone allowed to issue refunds.",
+    "confirm": "Check out",
+    "checkingOut": "Checking out…",
+    "doneTitle": "Checked out",
+    "done": "Checked out. {nights, plural, =0 {No room nights were posted.} one {# room night was posted.} other {# room nights were posted.}} The room is now waiting for cleaning.",
+    "othersStill": "Other rooms of the booking are still in house.",
+    "invoices": "Invoices",
+    "onAccount": "{amount} on account"
+  },
+  "invoice": {
+    "back": "Back to booking {ref}",
+    "print": "Print or save as PDF",
+    "number": "Invoice",
+    "date": "Date",
+    "billTo": "Bill to",
+    "booking": "Booking",
+    "dateCol": "Date",
+    "description": "Description",
+    "net": "Net",
+    "tax": "Tax",
+    "amount": "Amount",
+    "total": "Total",
+    "taxSummary": "Tax summary",
+    "inclusive": "included",
+    "onBase": "on {base}",
+    "paid": "Paid",
+    "writtenOff": "Written off",
+    "balanceDue": "Balance due",
+    "notCertified": "Issued by InnPilot. Not a certified tax invoice: check local requirements with your tax adviser."
   }
 }

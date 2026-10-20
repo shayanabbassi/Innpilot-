@@ -34,6 +34,7 @@ export default function FrontDeskPage() {
 
   if (!allowed) return <PermissionDenied />;
   const canCheckIn = can('stay.checkin');
+  const canCheckOut = can('stay.checkout');
   const date = (d: string) =>
     format.dateTime(new Date(`${d}T00:00:00Z`), { dateStyle: 'medium', timeZone: 'UTC' });
   const header = (
@@ -154,11 +155,22 @@ export default function FrontDeskPage() {
                     </p>
                     <p className="text-muted">{t('until', { date: date(s.departure) })}</p>
                   </div>
-                  {canCheckIn && (
-                    <Button variant="secondary" className="shrink-0" onClick={() => setMoving(s)}>
-                      {t('move')}
-                    </Button>
-                  )}
+                  <div className="flex shrink-0 gap-2">
+                    {canCheckIn && (
+                      <Button variant="secondary" onClick={() => setMoving(s)}>
+                        {t('move')}
+                      </Button>
+                    )}
+                    {canCheckOut && (
+                      <Link
+                        href={`/check-out/${s.id}`}
+                        className="inline-flex min-h-10 items-center rounded-md border border-line bg-white px-4 text-sm font-medium text-ink hover:bg-navy-50"
+                      >
+                        {t('checkOut')}
+                        <span className="sr-only"> {s.roomNumber}</span>
+                      </Link>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -171,21 +183,34 @@ export default function FrontDeskPage() {
           ) : (
             <ul className="divide-y divide-line">
               {d.departures.map((s) => (
-                <li key={s.id} className="py-3 text-sm">
-                  <p>
-                    <span className="tabular mr-2 rounded bg-navy-50 px-1.5 py-0.5 text-xs font-semibold text-navy-800">
-                      {s.roomNumber}
-                    </span>
-                    <span className="font-medium text-ink">{s.guest.fullName}</span>
-                  </p>
-                  {s.departure < d.businessDate && (
-                    <p className="text-xs text-danger">{t('overdue', { date: date(s.departure) })}</p>
+                <li
+                  key={s.id}
+                  className="flex flex-col gap-2 py-3 text-sm sm:flex-row sm:items-center sm:justify-between"
+                >
+                  <div>
+                    <p>
+                      <span className="tabular mr-2 rounded bg-navy-50 px-1.5 py-0.5 text-xs font-semibold text-navy-800">
+                        {s.roomNumber}
+                      </span>
+                      <span className="font-medium text-ink">{s.guest.fullName}</span>
+                    </p>
+                    {s.departure < d.businessDate && (
+                      <p className="text-xs text-danger">{t('overdue', { date: date(s.departure) })}</p>
+                    )}
+                  </div>
+                  {canCheckOut && (
+                    <Link
+                      href={`/check-out/${s.id}`}
+                      className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-md bg-teal-600 px-4 text-sm font-medium text-white hover:bg-teal-700"
+                    >
+                      {t('checkOut')}
+                      <span className="sr-only"> {s.roomNumber}</span>
+                    </Link>
                   )}
                 </li>
               ))}
             </ul>
           )}
-          <p className="mt-3 text-xs text-muted">{t('checkoutLater')}</p>
         </Card>
       </div>
       {checkIn && <CheckInDialog target={checkIn} onClose={() => setCheckIn(null)} />}

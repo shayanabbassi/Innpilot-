@@ -162,7 +162,35 @@ export function FolioPanel({
       {Money.of(folio.depositHeld, cur).isPositive() && (
         <p className="mt-1 text-xs text-muted">{t('depositHeld', { amount: fmt(folio.depositHeld) })}</p>
       )}
-      {!open && <Alert tone="info">{t('closed')}</Alert>}
+      {folio.status === 'settled' && <Alert tone="info">{t('closed')}</Alert>}
+      {folio.status === 'on_account' && (
+        <Alert tone="warning">
+          <p>{t('onAccount', { amount: fmt(folio.balance) })}</p>
+          {canReceive && Money.of(folio.balance, cur).isPositive() && (
+            <div className="mt-2">
+              <Button onClick={() => setAction({ kind: 'payment', suggested: folio.balance })}>
+                {t('takePayment')}
+              </Button>
+            </div>
+          )}
+        </Alert>
+      )}
+      {folio.invoices.length > 0 && (
+        <p className="mt-2 text-sm">
+          {t('invoicesLabel')}{' '}
+          {folio.invoices.map((inv, i) => (
+            <span key={inv.id}>
+              {i > 0 && ', '}
+              <Link href={`/invoices/${inv.id}`} className="font-medium text-teal-700 underline">
+                {inv.invoiceNumber}
+              </Link>
+            </span>
+          ))}
+        </p>
+      )}
+      {Money.of(folio.writtenOff, cur).isPositive() && (
+        <p className="mt-1 text-xs text-muted">{t('writtenOff', { amount: fmt(folio.writtenOff) })}</p>
+      )}
 
       <ul className="mt-4 divide-y divide-line border-y border-line text-sm">
         {folio.charges.length === 0 && <li className="py-3 text-muted">{t('noItems')}</li>}
