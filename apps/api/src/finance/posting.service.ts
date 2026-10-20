@@ -16,6 +16,8 @@ export interface PostingLine {
   debit: string;
   credit: string;
   description?: string | null;
+  /** Set on guest receivable lines, so every folio can be reconciled to the ledger. */
+  folioId?: string | null;
 }
 
 export interface PostingRequest {
@@ -93,6 +95,7 @@ export class PostingService {
         debit: this.amount(line.debit, currency),
         credit: this.amount(line.credit, currency),
         description: line.description ?? null,
+        folioId: line.folioId ?? null,
       })),
     );
   }

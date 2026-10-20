@@ -25,6 +25,7 @@ import {
 import { api } from '@/lib/api';
 import { STATUS_TONE } from '@/lib/reservation-ui';
 import { useSession } from '@/lib/session';
+import { FolioPanel } from '@/components/folio-panel';
 
 type Dialogs =
   | { kind: 'cancel' }
@@ -194,6 +195,7 @@ export default function ReservationPage() {
               </Button>
             )}
           </Card>
+          {can('folio.read') && <FolioPanel reservationId={r.id} reservationStatus={r.status} />}
         </div>
         <div className="flex flex-col gap-4">
           {editable && (

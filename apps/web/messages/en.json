@@ -268,6 +268,13 @@
     },
     "invoice_profile": {
       "updated": "Invoice details changed"
+    },
+    "folio": {
+      "created": "Folio opened",
+      "charge_posted": "Charge posted",
+      "allowance_posted": "Allowance posted",
+      "charge_voided": "Folio item voided",
+      "charge_transferred": "Folio item transferred"
     }
   },
   "onboarding": {
@@ -887,5 +894,64 @@
     "remove": "Remove",
     "addField": "Add field",
     "lastChanged": "Last changed by {name} on {date}"
+  },
+  "folio": {
+    "title": "Folio",
+    "folios": "Folios",
+    "none": "No folio yet. The main folio opens at check-in.",
+    "openFolio": "Open folio",
+    "balance": "Balance",
+    "pendingNights": "{n, plural, one {# night} other {# nights}} not yet posted",
+    "ifCheckOutToday": "If checking out today",
+    "estimate": "Whole stay: {n, plural, one {# night} other {# nights}}, about {amount} including tax at the rates on each date.",
+    "closed": "This folio is closed.",
+    "noItems": "No charges yet.",
+    "journal": "Journal {n}",
+    "reason": "Reason: {reason}",
+    "voidedBecause": "Voided: {reason}",
+    "movedTo": "Moved to {folio} ({ref})",
+    "movedFrom": "Moved from {folio} ({ref})",
+    "kinds": {
+      "allowance": "Allowance"
+    },
+    "statuses": {
+      "voided": "Voided",
+      "transferred": "Transferred"
+    },
+    "void": "Void",
+    "transfer": "Transfer",
+    "pendingDetail": "Nights not yet posted",
+    "pendingNote": "Room nights are posted at check-out, each with the tax in effect on that night.",
+    "addCharge": "Add charge",
+    "addAllowance": "Discount or correction",
+    "newFolio": "New folio",
+    "chargeTitle": "Add a charge",
+    "allowanceTitle": "Discount or correction",
+    "folioTitle": "New folio",
+    "voidTitle": "Void {item}?",
+    "transferTitle": "Move {item}",
+    "folioLabel": "Folio name",
+    "folioLabelHint": "For split billing, e.g. Company or Extras.",
+    "category": "Category",
+    "description": "Description",
+    "quantity": "Quantity",
+    "unitPrice": "Price each",
+    "serviceDate": "Date (optional)",
+    "serviceDateHint": "Defaults to today. Cannot be in the future.",
+    "allowanceAmount": "Amount to take off",
+    "net": "Net",
+    "total": "Total",
+    "takenOff": "Taken off the bill",
+    "toFolio": "Move to",
+    "chooseFolio": "Choose a folio",
+    "voidExplain": "The item stays on the folio, marked voided, and {amount} is reversed in the ledger.",
+    "reasonLabel": "Reason",
+    "submit": {
+      "charge": "Post charge",
+      "allowance": "Post",
+      "folio": "Open folio",
+      "void": "Void",
+      "transfer": "Move"
+    }
   }
 }

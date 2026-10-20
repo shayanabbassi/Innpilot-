@@ -128,6 +128,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -255,6 +256,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -591,6 +593,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -730,6 +733,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -875,6 +879,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1020,6 +1025,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1238,6 +1244,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1453,6 +1460,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1729,6 +1737,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1944,6 +1953,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2151,6 +2161,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2401,6 +2412,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2653,6 +2665,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2809,6 +2822,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2983,6 +2997,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3110,6 +3125,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3291,6 +3307,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3495,6 +3512,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3713,6 +3731,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3921,6 +3940,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4154,6 +4174,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4347,6 +4368,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4718,6 +4740,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4954,6 +4977,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5212,6 +5236,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5544,6 +5569,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5844,6 +5870,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6102,6 +6129,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6262,6 +6290,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6492,6 +6521,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6880,6 +6910,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7311,6 +7342,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7640,6 +7672,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7998,6 +8031,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8217,6 +8251,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8546,6 +8581,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8895,6 +8931,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9240,6 +9277,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9629,6 +9667,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10018,6 +10057,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10345,6 +10385,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10696,6 +10737,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11279,6 +11321,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11576,6 +11619,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12022,6 +12066,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12298,6 +12343,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12604,6 +12650,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12772,6 +12819,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13042,6 +13090,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13314,6 +13363,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13457,6 +13507,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13719,6 +13770,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13955,6 +14007,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14210,6 +14263,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14446,6 +14500,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14716,6 +14771,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15038,6 +15094,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15287,6 +15344,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15556,6 +15614,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15795,6 +15854,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16033,6 +16093,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16296,6 +16357,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16483,6 +16545,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16717,6 +16780,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16928,6 +16992,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17261,6 +17326,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17560,6 +17626,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17923,6 +17990,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18057,6 +18125,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18422,6 +18491,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18721,6 +18791,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19044,6 +19115,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19349,6 +19421,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19622,6 +19695,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19819,6 +19893,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20016,6 +20091,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20233,6 +20309,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20468,6 +20545,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20753,6 +20831,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21016,6 +21095,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21276,6 +21356,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21508,6 +21589,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21690,6 +21772,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21905,6 +21988,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22116,6 +22200,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22342,6 +22427,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22544,6 +22630,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22817,6 +22904,3803 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reservations/{reservationId}/folios": {
+      "get": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Folios of a reservation, main first, with items, balance and pending room nights",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "reservationId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "bookingReference": {
+                            "type": "string"
+                          },
+                          "guestId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "guestName": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "isPrimary": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "open",
+                              "settled",
+                              "on_account"
+                            ]
+                          },
+                          "currencyCode": {
+                            "type": "string"
+                          },
+                          "charges": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "kind": {
+                                  "type": "string",
+                                  "enum": [
+                                    "charge",
+                                    "allowance",
+                                    "room_night"
+                                  ]
+                                },
+                                "categoryId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "categoryName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "serviceDate": {
+                                  "type": "string"
+                                },
+                                "quantity": {
+                                  "type": "string"
+                                },
+                                "unitPrice": {
+                                  "type": "string"
+                                },
+                                "net": {
+                                  "type": "string"
+                                },
+                                "tax": {
+                                  "type": "string"
+                                },
+                                "gross": {
+                                  "type": "string"
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "posted",
+                                    "voided",
+                                    "transferred"
+                                  ]
+                                },
+                                "reason": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "taxes": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "code": {
+                                        "type": "string"
+                                      },
+                                      "name": {
+                                        "type": "string"
+                                      },
+                                      "ratePercent": {
+                                        "type": "string"
+                                      },
+                                      "inclusive": {
+                                        "type": "boolean"
+                                      },
+                                      "amount": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "code",
+                                      "name",
+                                      "ratePercent",
+                                      "inclusive",
+                                      "amount"
+                                    ]
+                                  }
+                                },
+                                "journalEntryId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "journalNumber": {
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ]
+                                },
+                                "transferredFrom": {
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "chargeId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "folioId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "folioLabel": {
+                                      "type": "string"
+                                    },
+                                    "bookingReference": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "chargeId",
+                                    "folioId",
+                                    "folioLabel",
+                                    "bookingReference"
+                                  ]
+                                },
+                                "transferredTo": {
+                                  "type": [
+                                    "object",
+                                    "null"
+                                  ],
+                                  "properties": {
+                                    "chargeId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "folioId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "folioLabel": {
+                                      "type": "string"
+                                    },
+                                    "bookingReference": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "chargeId",
+                                    "folioId",
+                                    "folioLabel",
+                                    "bookingReference"
+                                  ]
+                                },
+                                "voidReason": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "voidedAt": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "voidedByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "createdByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "kind",
+                                "categoryId",
+                                "categoryName",
+                                "description",
+                                "serviceDate",
+                                "quantity",
+                                "unitPrice",
+                                "net",
+                                "tax",
+                                "gross",
+                                "status",
+                                "reason",
+                                "taxes",
+                                "journalEntryId",
+                                "journalNumber",
+                                "transferredFrom",
+                                "transferredTo",
+                                "voidReason",
+                                "voidedAt",
+                                "voidedByName",
+                                "createdByName",
+                                "createdAt"
+                              ]
+                            }
+                          },
+                          "posted": {
+                            "type": "object",
+                            "properties": {
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          },
+                          "balance": {
+                            "type": "string"
+                          },
+                          "pendingNights": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "date": {
+                                  "type": "string"
+                                },
+                                "roomNumber": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "rate": {
+                                  "type": "string"
+                                },
+                                "net": {
+                                  "type": "string"
+                                },
+                                "tax": {
+                                  "type": "string"
+                                },
+                                "gross": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "date",
+                                "roomNumber",
+                                "rate",
+                                "net",
+                                "tax",
+                                "gross"
+                              ]
+                            }
+                          },
+                          "pending": {
+                            "type": "object",
+                            "properties": {
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          },
+                          "balanceWithPending": {
+                            "type": "string"
+                          },
+                          "stayEstimate": {
+                            "type": "object",
+                            "properties": {
+                              "nights": {
+                                "type": "integer"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "nights",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "reservationId",
+                          "bookingReference",
+                          "guestId",
+                          "guestName",
+                          "label",
+                          "isPrimary",
+                          "status",
+                          "currencyCode",
+                          "charges",
+                          "posted",
+                          "balance",
+                          "pendingNights",
+                          "pending",
+                          "balanceWithPending",
+                          "stayEstimate"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Open an extra folio for split billing (the main folio opens at check-in)",
+        "description": "Requires permission `folio.charge` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  }
+                },
+                "required": [
+                  "label"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "settled",
+                            "on_account"
+                          ]
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "charges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "charge",
+                                  "allowance",
+                                  "room_night"
+                                ]
+                              },
+                              "categoryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "posted",
+                                  "voided",
+                                  "transferred"
+                                ]
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "taxes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "ratePercent": {
+                                      "type": "string"
+                                    },
+                                    "inclusive": {
+                                      "type": "boolean"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "code",
+                                    "name",
+                                    "ratePercent",
+                                    "inclusive",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "transferredFrom": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "transferredTo": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "voidReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "categoryId",
+                              "categoryName",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross",
+                              "status",
+                              "reason",
+                              "taxes",
+                              "journalEntryId",
+                              "journalNumber",
+                              "transferredFrom",
+                              "transferredTo",
+                              "voidReason",
+                              "voidedAt",
+                              "voidedByName",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        },
+                        "posted": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balance": {
+                          "type": "string"
+                        },
+                        "pendingNights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "rate": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "rate",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "pending": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balanceWithPending": {
+                          "type": "string"
+                        },
+                        "stayEstimate": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reservationId",
+                        "bookingReference",
+                        "guestId",
+                        "guestName",
+                        "label",
+                        "isPrimary",
+                        "status",
+                        "currencyCode",
+                        "charges",
+                        "posted",
+                        "balance",
+                        "pendingNights",
+                        "pending",
+                        "balanceWithPending",
+                        "stayEstimate"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/folios": {
+      "get": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Open folios of the property, for transfers",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "isPrimary": {
+                            "type": "boolean"
+                          },
+                          "reservationId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "bookingReference": {
+                            "type": "string"
+                          },
+                          "guestName": {
+                            "type": "string"
+                          },
+                          "roomNumber": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "balance": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "isPrimary",
+                          "reservationId",
+                          "bookingReference",
+                          "guestName",
+                          "roomNumber",
+                          "balance"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/folios/{id}": {
+      "get": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "One folio",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "settled",
+                            "on_account"
+                          ]
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "charges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "charge",
+                                  "allowance",
+                                  "room_night"
+                                ]
+                              },
+                              "categoryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "posted",
+                                  "voided",
+                                  "transferred"
+                                ]
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "taxes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "ratePercent": {
+                                      "type": "string"
+                                    },
+                                    "inclusive": {
+                                      "type": "boolean"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "code",
+                                    "name",
+                                    "ratePercent",
+                                    "inclusive",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "transferredFrom": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "transferredTo": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "voidReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "categoryId",
+                              "categoryName",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross",
+                              "status",
+                              "reason",
+                              "taxes",
+                              "journalEntryId",
+                              "journalNumber",
+                              "transferredFrom",
+                              "transferredTo",
+                              "voidReason",
+                              "voidedAt",
+                              "voidedByName",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        },
+                        "posted": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balance": {
+                          "type": "string"
+                        },
+                        "pendingNights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "rate": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "rate",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "pending": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balanceWithPending": {
+                          "type": "string"
+                        },
+                        "stayEstimate": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reservationId",
+                        "bookingReference",
+                        "guestId",
+                        "guestName",
+                        "label",
+                        "isPrimary",
+                        "status",
+                        "currencyCode",
+                        "charges",
+                        "posted",
+                        "balance",
+                        "pendingNights",
+                        "pending",
+                        "balanceWithPending",
+                        "stayEstimate"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/folios/{id}/charges": {
+      "post": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Post a charge with its tax snapshot and journal (Idempotency-Key); room nights post at check-out",
+        "description": "Requires permission `folio.charge` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "serviceDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "quantity": {
+                    "type": "string",
+                    "pattern": "^\\d{1,7}(\\.\\d{1,2})?$",
+                    "default": "1"
+                  },
+                  "unitPrice": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  }
+                },
+                "required": [
+                  "categoryId",
+                  "description",
+                  "unitPrice"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "settled",
+                            "on_account"
+                          ]
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "charges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "charge",
+                                  "allowance",
+                                  "room_night"
+                                ]
+                              },
+                              "categoryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "posted",
+                                  "voided",
+                                  "transferred"
+                                ]
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "taxes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "ratePercent": {
+                                      "type": "string"
+                                    },
+                                    "inclusive": {
+                                      "type": "boolean"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "code",
+                                    "name",
+                                    "ratePercent",
+                                    "inclusive",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "transferredFrom": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "transferredTo": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "voidReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "categoryId",
+                              "categoryName",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross",
+                              "status",
+                              "reason",
+                              "taxes",
+                              "journalEntryId",
+                              "journalNumber",
+                              "transferredFrom",
+                              "transferredTo",
+                              "voidReason",
+                              "voidedAt",
+                              "voidedByName",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        },
+                        "posted": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balance": {
+                          "type": "string"
+                        },
+                        "pendingNights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "rate": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "rate",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "pending": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balanceWithPending": {
+                          "type": "string"
+                        },
+                        "stayEstimate": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reservationId",
+                        "bookingReference",
+                        "guestId",
+                        "guestName",
+                        "label",
+                        "isPrimary",
+                        "status",
+                        "currencyCode",
+                        "charges",
+                        "posted",
+                        "balance",
+                        "pendingNights",
+                        "pending",
+                        "balanceWithPending",
+                        "stayEstimate"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/folios/{id}/allowances": {
+      "post": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Post a discount or correction with a reason (Idempotency-Key, folio.adjust)",
+        "description": "Requires permission `folio.adjust` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "serviceDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "categoryId",
+                  "description",
+                  "amount",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "settled",
+                            "on_account"
+                          ]
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "charges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "charge",
+                                  "allowance",
+                                  "room_night"
+                                ]
+                              },
+                              "categoryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "posted",
+                                  "voided",
+                                  "transferred"
+                                ]
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "taxes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "ratePercent": {
+                                      "type": "string"
+                                    },
+                                    "inclusive": {
+                                      "type": "boolean"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "code",
+                                    "name",
+                                    "ratePercent",
+                                    "inclusive",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "transferredFrom": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "transferredTo": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "voidReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "categoryId",
+                              "categoryName",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross",
+                              "status",
+                              "reason",
+                              "taxes",
+                              "journalEntryId",
+                              "journalNumber",
+                              "transferredFrom",
+                              "transferredTo",
+                              "voidReason",
+                              "voidedAt",
+                              "voidedByName",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        },
+                        "posted": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balance": {
+                          "type": "string"
+                        },
+                        "pendingNights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "rate": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "rate",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "pending": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balanceWithPending": {
+                          "type": "string"
+                        },
+                        "stayEstimate": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reservationId",
+                        "bookingReference",
+                        "guestId",
+                        "guestName",
+                        "label",
+                        "isPrimary",
+                        "status",
+                        "currencyCode",
+                        "charges",
+                        "posted",
+                        "balance",
+                        "pendingNights",
+                        "pending",
+                        "balanceWithPending",
+                        "stayEstimate"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/folio-charges/{id}/void": {
+      "post": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Void an item: its journal is reversed exactly; the item stays, marked voided (folio.adjust)",
+        "description": "Requires permission `folio.adjust` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "settled",
+                            "on_account"
+                          ]
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "charges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "charge",
+                                  "allowance",
+                                  "room_night"
+                                ]
+                              },
+                              "categoryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "posted",
+                                  "voided",
+                                  "transferred"
+                                ]
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "taxes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "ratePercent": {
+                                      "type": "string"
+                                    },
+                                    "inclusive": {
+                                      "type": "boolean"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "code",
+                                    "name",
+                                    "ratePercent",
+                                    "inclusive",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "transferredFrom": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "transferredTo": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "voidReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "categoryId",
+                              "categoryName",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross",
+                              "status",
+                              "reason",
+                              "taxes",
+                              "journalEntryId",
+                              "journalNumber",
+                              "transferredFrom",
+                              "transferredTo",
+                              "voidReason",
+                              "voidedAt",
+                              "voidedByName",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        },
+                        "posted": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balance": {
+                          "type": "string"
+                        },
+                        "pendingNights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "rate": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "rate",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "pending": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balanceWithPending": {
+                          "type": "string"
+                        },
+                        "stayEstimate": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reservationId",
+                        "bookingReference",
+                        "guestId",
+                        "guestName",
+                        "label",
+                        "isPrimary",
+                        "status",
+                        "currencyCode",
+                        "charges",
+                        "posted",
+                        "balance",
+                        "pendingNights",
+                        "pending",
+                        "balanceWithPending",
+                        "stayEstimate"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/folio-charges/{id}/transfer": {
+      "post": {
+        "tags": [
+          "Folios"
+        ],
+        "summary": "Move an item to another open folio; the receivable moves with it (folio.adjust)",
+        "description": "Requires permission `folio.adjust` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "toFolioId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "toFolioId",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "settled",
+                            "on_account"
+                          ]
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "charges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "charge",
+                                  "allowance",
+                                  "room_night"
+                                ]
+                              },
+                              "categoryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "posted",
+                                  "voided",
+                                  "transferred"
+                                ]
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "taxes": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "ratePercent": {
+                                      "type": "string"
+                                    },
+                                    "inclusive": {
+                                      "type": "boolean"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "code",
+                                    "name",
+                                    "ratePercent",
+                                    "inclusive",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "transferredFrom": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "transferredTo": {
+                                "type": [
+                                  "object",
+                                  "null"
+                                ],
+                                "properties": {
+                                  "chargeId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "folioLabel": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "chargeId",
+                                  "folioId",
+                                  "folioLabel",
+                                  "bookingReference"
+                                ]
+                              },
+                              "voidReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "voidedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "categoryId",
+                              "categoryName",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross",
+                              "status",
+                              "reason",
+                              "taxes",
+                              "journalEntryId",
+                              "journalNumber",
+                              "transferredFrom",
+                              "transferredTo",
+                              "voidReason",
+                              "voidedAt",
+                              "voidedByName",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        },
+                        "posted": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balance": {
+                          "type": "string"
+                        },
+                        "pendingNights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "rate": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "rate",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "pending": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "balanceWithPending": {
+                          "type": "string"
+                        },
+                        "stayEstimate": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "reservationId",
+                        "bookingReference",
+                        "guestId",
+                        "guestName",
+                        "label",
+                        "isPrimary",
+                        "status",
+                        "currencyCode",
+                        "charges",
+                        "posted",
+                        "balance",
+                        "pendingNights",
+                        "pending",
+                        "balanceWithPending",
+                        "stayEstimate"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23016,6 +26900,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23276,6 +27161,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23520,6 +27406,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23744,6 +27631,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23960,6 +27848,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24226,6 +28115,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24360,6 +28250,7 @@
                             "ROOM_NOT_READY",
                             "JOURNAL_UNBALANCED",
                             "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",

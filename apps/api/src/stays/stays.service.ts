@@ -19,6 +19,7 @@ import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 import { GuestsService } from '../guests/guests.service';
 import { HousekeepingService } from '../housekeeping/housekeeping.service';
+import { FolioService } from '../finance/folio.service';
 import { IdempotencyService } from '../idempotency/idempotency.service';
 import { ReservationsService } from '../reservations/reservations.service';
 
@@ -53,6 +54,7 @@ export class StaysService {
     private readonly reservations: ReservationsService,
     private readonly guests: GuestsService,
     private readonly housekeeping: HousekeepingService,
+    private readonly folios: FolioService,
   ) {}
 
   // -------------------------------------------------------------------------------------------- commands
@@ -458,6 +460,8 @@ export class StaysService {
       fromDate: property.businessDate,
     });
     await tx.update(rr).set({ stayId: stay!.id }).where(eq(rr.id, booked.id));
+    // The guest's main folio opens with the stay (workflow spec §4), in the same transaction.
+    await this.folios.ensurePrimary(tx, auth, property, reservationId);
     await tx.update(r).set({ status: 'checked_in' }).where(eq(r.id, reservationId));
     await this.record(
       tx,

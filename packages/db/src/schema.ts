@@ -465,6 +465,7 @@ export const journalLines = pgTable('journal_lines', {
   debit: numeric('debit', { precision: 19, scale: 4 }).notNull().default('0'),
   credit: numeric('credit', { precision: 19, scale: 4 }).notNull().default('0'),
   description: text('description'),
+  folioId: uuid('folio_id'),
 });
 
 export const taxCodes = pgTable('tax_codes', {
@@ -530,4 +531,61 @@ export const invoiceProfiles = pgTable('invoice_profiles', {
   footer: text('footer'),
   updatedBy: uuid('updated_by'),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
+});
+
+export const folios = pgTable('folios', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  reservationId: uuid('reservation_id').notNull(),
+  guestId: uuid('guest_id').notNull(),
+  label: text('label').notNull().default('Main'),
+  isPrimary: boolean('is_primary').notNull().default(false),
+  status: text('status').notNull().default('open'),
+  currencyCode: char('currency_code', { length: 3 }).notNull(),
+  createdBy: uuid('created_by'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});
+
+export const folioCharges = pgTable('folio_charges', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  folioId: uuid('folio_id').notNull(),
+  categoryId: uuid('category_id').notNull(),
+  kind: text('kind').notNull(),
+  description: text('description').notNull(),
+  serviceDate: date('service_date', { mode: 'string' }).notNull(),
+  quantity: numeric('quantity', { precision: 9, scale: 2 }).notNull().default('1'),
+  unitPrice: numeric('unit_price', { precision: 19, scale: 4 }).notNull(),
+  netAmount: numeric('net_amount', { precision: 19, scale: 4 }).notNull(),
+  taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull(),
+  grossAmount: numeric('gross_amount', { precision: 19, scale: 4 }).notNull(),
+  status: text('status').notNull().default('posted'),
+  reason: text('reason'),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  transferredFromId: uuid('transferred_from_id'),
+  transferredToId: uuid('transferred_to_id'),
+  voidJournalEntryId: uuid('void_journal_entry_id'),
+  voidedBy: uuid('voided_by'),
+  voidedAt: tsz('voided_at'),
+  voidReason: text('void_reason'),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const folioChargeTaxes = pgTable('folio_charge_taxes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  chargeId: uuid('charge_id').notNull(),
+  taxCodeId: uuid('tax_code_id').notNull(),
+  code: text('code').notNull(),
+  name: text('name').notNull(),
+  ratePercent: numeric('rate_percent', { precision: 9, scale: 4 }).notNull(),
+  inclusive: boolean('inclusive').notNull(),
+  baseAmount: numeric('base_amount', { precision: 19, scale: 4 }).notNull(),
+  taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull(),
+  payableAccountId: uuid('payable_account_id').notNull(),
 });

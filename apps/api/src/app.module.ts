@@ -19,6 +19,8 @@ import { DayCloseService } from './day-close/day-close.service';
 import { DbModule } from './db/db.module';
 import { AccountsService } from './finance/accounts.service';
 import { FinanceController } from './finance/finance.controller';
+import { FolioController } from './finance/folio.controller';
+import { FolioService } from './finance/folio.service';
 import { JournalsService } from './finance/journals.service';
 import { PeriodsService } from './finance/periods.service';
 import { PostingService } from './finance/posting.service';
@@ -128,6 +130,7 @@ export class AppModule {
         DayCloseController,
         FinanceController,
         TaxController,
+        FolioController,
         UsersController,
         AuditController,
         HealthController,
@@ -155,6 +158,7 @@ export class AppModule {
         PeriodsService,
         ReportsService,
         TaxService,
+        FolioService,
         PiiService,
         IdempotencyService,
       ],

@@ -219,6 +219,7 @@ export class JournalsService {
                 debit: x.credit,
                 credit: x.debit,
                 description: x.description,
+                folioId: x.folioId,
               })),
             });
             await tx.update(e).set({ status: 'reversed', reversedById: reversalId }).where(eq(e.id, id));
