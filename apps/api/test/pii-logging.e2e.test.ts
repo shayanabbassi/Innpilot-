@@ -100,11 +100,38 @@ describe('identity numbers in the application log', () => {
       .send(`{"documentType":"cnic","number":"${CNIC}"`);
     expect(broken.status).toBe(400);
 
+    // A failed login, logged by AuthService through Nest's Logger rather than by the request logger.
+    const failedLogin = await browser(h).login('nobody@a.test');
+    expect(failedLogin.status).toBe(401);
+
+    // An unexpected database failure while a number is being stored: ErrorFilter logs it at error level.
+    await h.admin.query('ALTER TABLE guest_documents RENAME TO guest_documents_unavailable');
+    try {
+      const failed = await desk.post(`/guests/${guestId}/documents`, {
+        documentType: 'cnic',
+        issuingCountry: 'PK',
+        number: CNIC,
+      });
+      expect(failed.status).toBe(500);
+    } finally {
+      await h.admin.query('ALTER TABLE guest_documents_unavailable RENAME TO guest_documents');
+    }
+
     // The log is real and covers these requests, so an empty or disabled log cannot pass.
     const output = log();
     expect(output).toContain('/api/v1/guests/duplicate-check');
     expect(output).toContain('/walk-ins');
     expect(lines.length).toBeGreaterThan(10);
+    // Nest Logger lines (services, the error filter) reach the same log as the request lines.
+    const entries = lines.map(
+      (line) => JSON.parse(line) as { level: number; context?: string; msg?: string },
+    );
+    expect(entries).toContainEqual(
+      expect.objectContaining({ level: 40, context: 'AuthService', msg: 'Login failed: unknown account' }),
+    );
+    expect(entries).toContainEqual(
+      expect.objectContaining({ level: 50, context: 'ErrorFilter', msg: 'Unhandled error' }),
+    );
 
     for (const secret of SECRETS) expect(output, secret).not.toContain(secret);
   });
