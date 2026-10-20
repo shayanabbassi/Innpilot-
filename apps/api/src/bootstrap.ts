@@ -24,7 +24,12 @@ export async function createApp(
       logger: options.logger === false ? false : undefined,
     },
   );
-  if (options.logger !== false) app.useLogger(app.get(Logger));
+  if (options.logger !== false) {
+    app.useLogger(app.get(Logger));
+    // Nest only flushes buffered logs in listen(). Flush now, or an app started with init() (the tests)
+    // keeps buffering every Nest Logger line and never writes it.
+    app.flushLogs();
+  }
 
   const trustProxy = config.TRUST_PROXY;
   app.set('trust proxy', /^\d+$/.test(trustProxy) ? Number(trustProxy) : trustProxy);
