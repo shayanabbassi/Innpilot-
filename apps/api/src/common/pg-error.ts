@@ -14,3 +14,13 @@ export function pgErrorCode(err: unknown): string | undefined {
   }
   return undefined;
 }
+
+/** The HINT of a database error, used by ledger triggers to name the business rule that failed. */
+export function pgErrorHint(err: unknown): string | undefined {
+  for (let e: unknown = err, depth = 0; e && typeof e === 'object' && depth < 3; depth++) {
+    const hint = (e as { hint?: unknown }).hint;
+    if (typeof hint === 'string') return hint;
+    e = (e as { cause?: unknown }).cause;
+  }
+  return undefined;
+}

@@ -33,6 +33,7 @@ export interface Fixture {
     | 'managerA'
     | 'managerA1'
     | 'deskA'
+    | 'accountantA'
     | 'housekeepingA'
     | 'auditorA'
     | 'ownerB'
@@ -123,6 +124,7 @@ async function buildFixture(admin: Client): Promise<Fixture> {
       managerA: await user(tenantA, 'manager@a.test', 'hotel_manager', null, true),
       managerA1: await user(tenantA, 'manager1@a.test', 'hotel_manager', propA1, true),
       deskA: await user(tenantA, 'desk@a.test', 'front_desk'),
+      accountantA: await user(tenantA, 'accountant@a.test', 'accountant', null, true),
       housekeepingA: await user(tenantA, 'hk@a.test', 'housekeeping'),
       auditorA: await user(tenantA, 'auditor@a.test', 'read_only_auditor'),
       ownerB: await user(tenantB, 'owner@b.test', 'tenant_owner', null, true),

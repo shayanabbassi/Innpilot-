@@ -3,6 +3,7 @@ export * from './auth';
 export * from './common';
 export * from './day-close';
 export * from './errors';
+export * from './finance';
 export * from './guests';
 export * from './housekeeping';
 export * from './rbac';

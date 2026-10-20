@@ -17,6 +17,12 @@ import { APP_CONFIG, type AppConfig } from './config';
 import { DayCloseController } from './day-close/day-close.controller';
 import { DayCloseService } from './day-close/day-close.service';
 import { DbModule } from './db/db.module';
+import { AccountsService } from './finance/accounts.service';
+import { FinanceController } from './finance/finance.controller';
+import { JournalsService } from './finance/journals.service';
+import { PeriodsService } from './finance/periods.service';
+import { PostingService } from './finance/posting.service';
+import { ReportsService } from './finance/reports.service';
 import { HealthController } from './health/health.controller';
 import { HousekeepingController } from './housekeeping/housekeeping.controller';
 import { HousekeepingService } from './housekeeping/housekeeping.service';
@@ -118,6 +124,7 @@ export class AppModule {
         StaysController,
         HousekeepingController,
         DayCloseController,
+        FinanceController,
         UsersController,
         AuditController,
         HealthController,
@@ -139,6 +146,11 @@ export class AppModule {
         HousekeepingService,
         MaintenanceService,
         DayCloseService,
+        PostingService,
+        AccountsService,
+        JournalsService,
+        PeriodsService,
+        ReportsService,
         PiiService,
         IdempotencyService,
       ],

@@ -13,6 +13,7 @@ import {
   numeric,
   pgTable,
   primaryKey,
+  smallint,
   text,
   time,
   timestamp,
@@ -393,4 +394,75 @@ export const businessDateCloses = pgTable('business_date_closes', {
   snapshot: jsonb('snapshot').$type<Record<string, number>>().notNull(),
   closedBy: uuid('closed_by').notNull(),
   closedAt: tsz('closed_at').notNull().defaultNow(),
+});
+
+export const accounts = pgTable('accounts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  code: text('code').notNull(),
+  name: text('name').notNull(),
+  accountClass: text('account_class').notNull(),
+  normalBalance: text('normal_balance').notNull(),
+  parentId: uuid('parent_id'),
+  systemRole: text('system_role'),
+  active: boolean('active').notNull().default(true),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  updatedAt: tsz('updated_at').notNull().defaultNow(),
+});
+
+export const fiscalPeriods = pgTable('fiscal_periods', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  startDate: date('start_date', { mode: 'string' }).notNull(),
+  endDate: date('end_date', { mode: 'string' }).notNull(),
+  status: text('status').notNull().default('open'),
+  closedBy: uuid('closed_by'),
+  closedAt: tsz('closed_at'),
+  reopenedBy: uuid('reopened_by'),
+  reopenedAt: tsz('reopened_at'),
+  reopenReason: text('reopen_reason'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const documentSequences = pgTable('document_sequences', {
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id'),
+  series: text('series').notNull(),
+  nextNumber: bigint('next_number', { mode: 'number' }).notNull().default(1),
+});
+
+export const journalEntries = pgTable('journal_entries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  journalNumber: bigint('journal_number', { mode: 'number' }),
+  status: text('status').notNull().default('draft'),
+  accountingDate: date('accounting_date', { mode: 'string' }).notNull(),
+  periodId: uuid('period_id'),
+  currencyCode: char('currency_code', { length: 3 }).notNull(),
+  sourceType: text('source_type').notNull(),
+  sourceId: uuid('source_id'),
+  purpose: text('purpose').notNull().default('main'),
+  reference: text('reference'),
+  narration: text('narration').notNull(),
+  totalDebit: numeric('total_debit', { precision: 19, scale: 4 }).notNull().default('0'),
+  totalCredit: numeric('total_credit', { precision: 19, scale: 4 }).notNull().default('0'),
+  reversesEntryId: uuid('reverses_entry_id'),
+  reversedById: uuid('reversed_by_id'),
+  idempotencyKey: text('idempotency_key'),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  postedBy: uuid('posted_by'),
+  postedAt: tsz('posted_at'),
+});
+
+export const journalLines = pgTable('journal_lines', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  lineNo: smallint('line_no').notNull(),
+  accountId: uuid('account_id').notNull(),
+  debit: numeric('debit', { precision: 19, scale: 4 }).notNull().default('0'),
+  credit: numeric('credit', { precision: 19, scale: 4 }).notNull().default('0'),
+  description: text('description'),
 });

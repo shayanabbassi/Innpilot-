@@ -33,6 +33,7 @@ export const PERMISSIONS = {
   'cashier.operate': 'Open and close own cashier session',
   'cashier.approve': 'Approve cashier variances',
   'journal.read': 'View chart of accounts and journals',
+  'account.manage': 'Create and change accounts in the chart of accounts',
   'journal.post': 'Post manual journal entries',
   'journal.reverse': 'Reverse posted journal entries',
   'period.close': 'Close accounting periods',
@@ -84,7 +85,14 @@ export const ROLES: Record<RoleCode, RoleDefinition> = {
     mfaRequired: true,
     permissions: ALL_PERMISSIONS.filter(
       (p) =>
-        !['period.close', 'period.reopen', 'journal.post', 'journal.reverse', 'tax.configure'].includes(p),
+        ![
+          'period.close',
+          'period.reopen',
+          'journal.post',
+          'journal.reverse',
+          'account.manage',
+          'tax.configure',
+        ].includes(p),
     ),
   },
   accountant: {
@@ -93,6 +101,7 @@ export const ROLES: Record<RoleCode, RoleDefinition> = {
     mfaRequired: true,
     permissions: [
       ...READ_ALL,
+      'account.manage',
       'journal.post',
       'journal.reverse',
       'period.close',

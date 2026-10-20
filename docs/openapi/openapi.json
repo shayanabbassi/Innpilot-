@@ -126,6 +126,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -251,6 +253,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -453,6 +457,7 @@
                                     "cashier.operate",
                                     "cashier.approve",
                                     "journal.read",
+                                    "account.manage",
                                     "journal.post",
                                     "journal.reverse",
                                     "period.close",
@@ -513,6 +518,7 @@
                               "cashier.operate",
                               "cashier.approve",
                               "journal.read",
+                              "account.manage",
                               "journal.post",
                               "journal.reverse",
                               "period.close",
@@ -583,6 +589,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -720,6 +728,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -863,6 +873,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1006,6 +1018,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1222,6 +1236,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1435,6 +1451,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1709,6 +1727,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1922,6 +1942,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2127,6 +2149,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2375,6 +2399,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2625,6 +2651,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2779,6 +2807,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2951,6 +2981,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3076,6 +3108,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3255,6 +3289,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3457,6 +3493,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3673,6 +3711,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3879,6 +3919,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4110,6 +4152,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4301,6 +4345,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4670,6 +4716,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4904,6 +4952,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5160,6 +5210,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5490,6 +5542,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5788,6 +5842,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6044,6 +6100,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6202,6 +6260,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6430,6 +6490,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6816,6 +6878,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7245,6 +7309,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7572,6 +7638,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7928,6 +7996,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8145,6 +8215,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8472,6 +8544,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8819,6 +8893,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9162,6 +9238,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9549,6 +9627,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9936,6 +10016,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10261,6 +10343,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10610,6 +10694,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11191,6 +11277,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11486,6 +11574,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11930,6 +12020,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12204,6 +12296,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12508,6 +12602,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12674,6 +12770,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12942,6 +13040,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13212,6 +13312,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13353,6 +13455,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13613,6 +13717,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13847,6 +13953,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14100,6 +14208,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14334,6 +14444,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14602,6 +14714,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14922,6 +15036,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15169,6 +15285,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15436,6 +15554,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15673,6 +15793,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15909,6 +16031,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16170,6 +16294,3945 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/accounts": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Chart of accounts, active and inactive, by code",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "accountClass": {
+                            "type": "string",
+                            "enum": [
+                              "asset",
+                              "liability",
+                              "equity",
+                              "revenue",
+                              "cost_of_sales",
+                              "expense",
+                              "other"
+                            ]
+                          },
+                          "normalBalance": {
+                            "type": "string",
+                            "enum": [
+                              "debit",
+                              "credit"
+                            ]
+                          },
+                          "parentId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "systemRole": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "active": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "code",
+                          "name",
+                          "accountClass",
+                          "normalBalance",
+                          "parentId",
+                          "systemRole",
+                          "active"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Add an account (code starts with the digit of its class)",
+        "description": "Requires permission `account.manage` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "pattern": "^[1-7]\\d{3,5}$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "accountClass": {
+                    "type": "string",
+                    "enum": [
+                      "asset",
+                      "liability",
+                      "equity",
+                      "revenue",
+                      "cost_of_sales",
+                      "expense",
+                      "other"
+                    ]
+                  },
+                  "normalBalance": {
+                    "type": "string",
+                    "enum": [
+                      "debit",
+                      "credit"
+                    ]
+                  },
+                  "parentId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "code",
+                  "name",
+                  "accountClass"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "accountClass": {
+                          "type": "string",
+                          "enum": [
+                            "asset",
+                            "liability",
+                            "equity",
+                            "revenue",
+                            "cost_of_sales",
+                            "expense",
+                            "other"
+                          ]
+                        },
+                        "normalBalance": {
+                          "type": "string",
+                          "enum": [
+                            "debit",
+                            "credit"
+                          ]
+                        },
+                        "parentId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "systemRole": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "active": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "code",
+                        "name",
+                        "accountClass",
+                        "normalBalance",
+                        "parentId",
+                        "systemRole",
+                        "active"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/accounts/{id}": {
+      "patch": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Rename, re-parent or (de)activate an account; system accounts stay active",
+        "description": "Requires permission `account.manage` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "parentId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "format": "uuid"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "accountClass": {
+                          "type": "string",
+                          "enum": [
+                            "asset",
+                            "liability",
+                            "equity",
+                            "revenue",
+                            "cost_of_sales",
+                            "expense",
+                            "other"
+                          ]
+                        },
+                        "normalBalance": {
+                          "type": "string",
+                          "enum": [
+                            "debit",
+                            "credit"
+                          ]
+                        },
+                        "parentId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "systemRole": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "active": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "code",
+                        "name",
+                        "accountClass",
+                        "normalBalance",
+                        "parentId",
+                        "systemRole",
+                        "active"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/journal-entries": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Journal entries, newest first",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "posted",
+                "reversed"
+              ]
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 100000,
+              "default": 0
+            },
+            "required": false,
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "propertyId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "draft",
+                                  "posted",
+                                  "reversed"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "currencyCode": {
+                                "type": "string"
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "sourceId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "totalDebit": {
+                                "type": "string"
+                              },
+                              "totalCredit": {
+                                "type": "string"
+                              },
+                              "reversesEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "reversesNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reversedById": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "reversedByNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              },
+                              "postedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "postedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "propertyId",
+                              "journalNumber",
+                              "status",
+                              "accountingDate",
+                              "currencyCode",
+                              "sourceType",
+                              "sourceId",
+                              "reference",
+                              "narration",
+                              "totalDebit",
+                              "totalCredit",
+                              "reversesEntryId",
+                              "reversesNumber",
+                              "reversedById",
+                              "reversedByNumber",
+                              "createdByName",
+                              "createdAt",
+                              "postedByName",
+                              "postedAt"
+                            ]
+                          }
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "items",
+                        "total"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/journal-entries/{id}": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "One journal entry with its lines",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "propertyId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "posted",
+                            "reversed"
+                          ]
+                        },
+                        "accountingDate": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "sourceType": {
+                          "type": "string"
+                        },
+                        "sourceId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "narration": {
+                          "type": "string"
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "reversesEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversesNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "reversedById": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversedByNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "postedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "postedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "debit",
+                              "credit",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "propertyId",
+                        "journalNumber",
+                        "status",
+                        "accountingDate",
+                        "currencyCode",
+                        "sourceType",
+                        "sourceId",
+                        "reference",
+                        "narration",
+                        "totalDebit",
+                        "totalCredit",
+                        "reversesEntryId",
+                        "reversesNumber",
+                        "reversedById",
+                        "reversedByNumber",
+                        "createdByName",
+                        "createdAt",
+                        "postedByName",
+                        "postedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Replace a manual draft",
+        "description": "Requires permission `journal.post` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "propertyId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "accountingDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "narration": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  },
+                  "reference": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "debit": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "credit": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "description": {
+                          "type": "string",
+                          "maxLength": 300
+                        }
+                      },
+                      "required": [
+                        "accountId"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 2,
+                    "maxItems": 100
+                  }
+                },
+                "required": [
+                  "propertyId",
+                  "narration",
+                  "lines"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "propertyId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "posted",
+                            "reversed"
+                          ]
+                        },
+                        "accountingDate": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "sourceType": {
+                          "type": "string"
+                        },
+                        "sourceId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "narration": {
+                          "type": "string"
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "reversesEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversesNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "reversedById": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversedByNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "postedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "postedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "debit",
+                              "credit",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "propertyId",
+                        "journalNumber",
+                        "status",
+                        "accountingDate",
+                        "currencyCode",
+                        "sourceType",
+                        "sourceId",
+                        "reference",
+                        "narration",
+                        "totalDebit",
+                        "totalCredit",
+                        "reversesEntryId",
+                        "reversesNumber",
+                        "reversedById",
+                        "reversedByNumber",
+                        "createdByName",
+                        "createdAt",
+                        "postedByName",
+                        "postedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Delete a manual draft (posted entries are never deleted)",
+        "description": "Requires permission `journal.post` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/journal-entries/draft": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Save a manual journal draft (Idempotency-Key); drafts may be unbalanced",
+        "description": "Requires permission `journal.post` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "propertyId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "accountingDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "narration": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  },
+                  "reference": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "debit": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "credit": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "description": {
+                          "type": "string",
+                          "maxLength": 300
+                        }
+                      },
+                      "required": [
+                        "accountId"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 2,
+                    "maxItems": 100
+                  }
+                },
+                "required": [
+                  "propertyId",
+                  "narration",
+                  "lines"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "propertyId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "posted",
+                            "reversed"
+                          ]
+                        },
+                        "accountingDate": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "sourceType": {
+                          "type": "string"
+                        },
+                        "sourceId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "narration": {
+                          "type": "string"
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "reversesEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversesNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "reversedById": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversedByNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "postedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "postedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "debit",
+                              "credit",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "propertyId",
+                        "journalNumber",
+                        "status",
+                        "accountingDate",
+                        "currencyCode",
+                        "sourceType",
+                        "sourceId",
+                        "reference",
+                        "narration",
+                        "totalDebit",
+                        "totalCredit",
+                        "reversesEntryId",
+                        "reversesNumber",
+                        "reversedById",
+                        "reversedByNumber",
+                        "createdByName",
+                        "createdAt",
+                        "postedByName",
+                        "postedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/journal-entries/{id}/post": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Post a draft once (Idempotency-Key); 422 JOURNAL_UNBALANCED, 409 PERIOD_CLOSED",
+        "description": "Requires permission `journal.post` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "propertyId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "posted",
+                            "reversed"
+                          ]
+                        },
+                        "accountingDate": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "sourceType": {
+                          "type": "string"
+                        },
+                        "sourceId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "narration": {
+                          "type": "string"
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "reversesEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversesNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "reversedById": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversedByNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "postedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "postedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "debit",
+                              "credit",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "propertyId",
+                        "journalNumber",
+                        "status",
+                        "accountingDate",
+                        "currencyCode",
+                        "sourceType",
+                        "sourceId",
+                        "reference",
+                        "narration",
+                        "totalDebit",
+                        "totalCredit",
+                        "reversesEntryId",
+                        "reversesNumber",
+                        "reversedById",
+                        "reversedByNumber",
+                        "createdByName",
+                        "createdAt",
+                        "postedByName",
+                        "postedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/journal-entries/{id}/reverse": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Reverse a posted manual journal with an equal and opposite entry (Idempotency-Key); returns the reversal",
+        "description": "Requires permission `journal.reverse` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  },
+                  "accountingDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "propertyId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "posted",
+                            "reversed"
+                          ]
+                        },
+                        "accountingDate": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "sourceType": {
+                          "type": "string"
+                        },
+                        "sourceId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "narration": {
+                          "type": "string"
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "reversesEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversesNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "reversedById": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "reversedByNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "postedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "postedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "debit",
+                              "credit",
+                              "description"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "propertyId",
+                        "journalNumber",
+                        "status",
+                        "accountingDate",
+                        "currencyCode",
+                        "sourceType",
+                        "sourceId",
+                        "reference",
+                        "narration",
+                        "totalDebit",
+                        "totalCredit",
+                        "reversesEntryId",
+                        "reversesNumber",
+                        "reversedById",
+                        "reversedByNumber",
+                        "createdByName",
+                        "createdAt",
+                        "postedByName",
+                        "postedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/ledger": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Account ledger with opening, movements and running balance (debit minus credit)",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "accountId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "account": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "accountClass": {
+                              "type": "string",
+                              "enum": [
+                                "asset",
+                                "liability",
+                                "equity",
+                                "revenue",
+                                "cost_of_sales",
+                                "expense",
+                                "other"
+                              ]
+                            },
+                            "normalBalance": {
+                              "type": "string",
+                              "enum": [
+                                "debit",
+                                "credit"
+                              ]
+                            },
+                            "parentId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "systemRole": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "active": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "code",
+                            "name",
+                            "accountClass",
+                            "normalBalance",
+                            "parentId",
+                            "systemRole",
+                            "active"
+                          ]
+                        },
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "openingBalance": {
+                          "type": "string"
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "closingBalance": {
+                          "type": "string"
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": "integer"
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "balance": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "reference",
+                              "sourceType",
+                              "debit",
+                              "credit",
+                              "balance"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "account",
+                        "from",
+                        "to",
+                        "openingBalance",
+                        "totalDebit",
+                        "totalCredit",
+                        "closingBalance",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/trial-balance": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Trial balance for a date range, all accounts, from posted entries only",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "rows": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "accountClass": {
+                                "type": "string",
+                                "enum": [
+                                  "asset",
+                                  "liability",
+                                  "equity",
+                                  "revenue",
+                                  "cost_of_sales",
+                                  "expense",
+                                  "other"
+                                ]
+                              },
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "openingDebit": {
+                                "type": "string"
+                              },
+                              "openingCredit": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "closingDebit": {
+                                "type": "string"
+                              },
+                              "closingCredit": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "accountId",
+                              "code",
+                              "name",
+                              "accountClass",
+                              "active",
+                              "openingDebit",
+                              "openingCredit",
+                              "debit",
+                              "credit",
+                              "closingDebit",
+                              "closingCredit"
+                            ]
+                          }
+                        },
+                        "totals": {
+                          "type": "object",
+                          "properties": {
+                            "openingDebit": {
+                              "type": "string"
+                            },
+                            "openingCredit": {
+                              "type": "string"
+                            },
+                            "debit": {
+                              "type": "string"
+                            },
+                            "credit": {
+                              "type": "string"
+                            },
+                            "closingDebit": {
+                              "type": "string"
+                            },
+                            "closingCredit": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "openingDebit",
+                            "openingCredit",
+                            "debit",
+                            "credit",
+                            "closingDebit",
+                            "closingCredit"
+                          ]
+                        },
+                        "balanced": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to",
+                        "currencyCode",
+                        "rows",
+                        "totals",
+                        "balanced"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/periods": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Monthly accounting periods with their status and entry counts",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "month": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "open",
+                              "closed"
+                            ]
+                          },
+                          "closedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "closedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "postedEntries": {
+                            "type": "integer"
+                          },
+                          "draftEntries": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "month",
+                          "startDate",
+                          "endDate",
+                          "status",
+                          "closedAt",
+                          "closedByName",
+                          "reopenedAt",
+                          "reopenedByName",
+                          "reopenReason",
+                          "postedEntries",
+                          "draftEntries"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/periods/{month}/close": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Close a month: no more postings into it",
+        "description": "Requires permission `period.close` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "month": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "open",
+                              "closed"
+                            ]
+                          },
+                          "closedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "closedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "postedEntries": {
+                            "type": "integer"
+                          },
+                          "draftEntries": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "month",
+                          "startDate",
+                          "endDate",
+                          "status",
+                          "closedAt",
+                          "closedByName",
+                          "reopenedAt",
+                          "reopenedByName",
+                          "reopenReason",
+                          "postedEntries",
+                          "draftEntries"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/periods/{month}/reopen": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Reopen a closed month with a reason (audited)",
+        "description": "Requires permission `period.reopen` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "month": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "open",
+                              "closed"
+                            ]
+                          },
+                          "closedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "closedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "reopenReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "postedEntries": {
+                            "type": "integer"
+                          },
+                          "draftEntries": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "month",
+                          "startDate",
+                          "endDate",
+                          "status",
+                          "closedAt",
+                          "closedByName",
+                          "reopenedAt",
+                          "reopenedByName",
+                          "reopenReason",
+                          "postedEntries",
+                          "draftEntries"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16367,6 +20430,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16625,6 +20690,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16867,6 +20934,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17089,6 +21158,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17303,6 +21374,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17567,6 +21640,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17699,6 +21774,8 @@
                             "CONFLICT",
                             "ROOM_UNAVAILABLE",
                             "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",

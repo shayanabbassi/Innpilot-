@@ -18,6 +18,10 @@ interface NavItem {
     | 'housekeeping'
     | 'maintenance'
     | 'dayClose'
+    | 'journals'
+    | 'trialBalance'
+    | 'accounts'
+    | 'periods'
     | 'rooms'
     | 'staff'
     | 'audit'
@@ -38,6 +42,10 @@ const NAV: NavItem[] = [
   { href: '/housekeeping', label: 'housekeeping', visible: (s) => s.can('housekeeping.read') },
   { href: '/maintenance', label: 'maintenance', visible: (s) => s.can('housekeeping.read') },
   { href: '/day-close', label: 'dayClose', visible: (s) => s.can('night_audit.run') },
+  { href: '/finance/journals', label: 'journals', visible: tenant('journal.read') },
+  { href: '/finance/trial-balance', label: 'trialBalance', visible: tenant('journal.read') },
+  { href: '/finance/accounts', label: 'accounts', visible: tenant('journal.read') },
+  { href: '/finance/periods', label: 'periods', visible: tenant('journal.read') },
   { href: '/settings/property', label: 'property', visible: (s) => s.can('property.read') },
   { href: '/settings/rooms', label: 'rooms', visible: (s) => s.can('room.read') },
   { href: '/staff', label: 'staff', visible: tenant('user.read') },
