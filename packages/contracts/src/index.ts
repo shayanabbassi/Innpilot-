@@ -6,6 +6,7 @@ export * from './checkout';
 export * from './common';
 export * from './day-close';
 export * from './errors';
+export * from './expenses';
 export * from './finance';
 export * from './folios';
 export * from './payments';

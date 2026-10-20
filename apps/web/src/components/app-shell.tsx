@@ -21,6 +21,8 @@ interface NavItem {
     | 'cash'
     | 'myShift'
     | 'cashClosings'
+    | 'expenses'
+    | 'suppliers'
     | 'journals'
     | 'trialBalance'
     | 'accounts'
@@ -53,6 +55,8 @@ const NAV: NavItem[] = [
     label: 'cashClosings',
     visible: (s) => s.can('cashier.approve') || s.can('journal.read'),
   },
+  { href: '/expenses', label: 'expenses', visible: (s) => s.can('expense.write') },
+  { href: '/suppliers', label: 'suppliers', visible: (s) => s.can('expense.write') },
   { href: '/finance/cash', label: 'cash', visible: (s) => s.can('journal.read') || s.can('cash.transfer') },
   { href: '/finance/journals', label: 'journals', visible: tenant('journal.read') },
   { href: '/finance/trial-balance', label: 'trialBalance', visible: tenant('journal.read') },

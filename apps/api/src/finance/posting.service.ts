@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { schema, type Tx } from '@innpilot/db';
 import { Money } from '@innpilot/money';
-import { and, asc, eq, sql } from 'drizzle-orm';
+import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import { AppError } from '../common/app-error';
 import { pgErrorHint } from '../common/pg-error';
 import type { AuthContext } from '../common/request';
@@ -23,6 +23,8 @@ export interface PostingLine {
    * one cash account on that ledger account; required when it has several.
    */
   cashAccountId?: string | null;
+  /** Required on accounts payable lines, and only there (4.3): whose bill it is. */
+  supplierId?: string | null;
 }
 
 export interface PostingRequest {
@@ -117,8 +119,20 @@ export class PostingService {
       // Several drawers or banks on one ledger account: the person must say which (checked again on posting).
       return candidates.length === 1 ? candidates[0]!.id : null;
     });
+    const supplierIds = [...new Set(lines.flatMap((x) => (x.supplierId ? [x.supplierId] : [])))];
+    if (supplierIds.length > 0) {
+      const found = await tx
+        .select({ id: schema.suppliers.id })
+        .from(schema.suppliers)
+        .where(inArray(schema.suppliers.id, supplierIds));
+      lines.forEach((line, i) => {
+        if (line.supplierId && !found.some((x) => x.id === line.supplierId)) {
+          issues.push({ path: `lines.${i}.supplierId`, message: 'Choose a supplier from the list.' });
+        }
+      });
+    }
     if (issues.length > 0)
-      throw AppError.validation('Some lines name the wrong cash or bank account.', issues);
+      throw AppError.validation('Some lines name the wrong cash account or supplier.', issues);
     await tx.insert(l).values(
       lines.map((line, i) => ({
         tenantId: auth.tenantId,
@@ -130,6 +144,7 @@ export class PostingService {
         description: line.description ?? null,
         folioId: line.folioId ?? null,
         cashAccountId: cashIds[i] ?? null,
+        supplierId: line.supplierId ?? null,
       })),
     );
   }
@@ -169,6 +184,22 @@ export class PostingService {
       throw AppError.validation(
         'Lines on cash and bank ledger accounts must say which drawer or bank account.',
         untagged,
+      );
+    }
+    const supplierIssues = lines.flatMap((x, i) => {
+      const payable = x.account.systemRole === 'accounts_payable';
+      if (payable && !x.line.supplierId) {
+        return [{ path: `lines.${i}.supplierId`, message: 'Choose the supplier for this payables line.' }];
+      }
+      if (!payable && x.line.supplierId) {
+        return [{ path: `lines.${i}.supplierId`, message: 'Only accounts payable lines name a supplier.' }];
+      }
+      return [];
+    });
+    if (supplierIssues.length > 0) {
+      throw AppError.validation(
+        'Accounts payable lines must say which supplier, and only they.',
+        supplierIssues,
       );
     }
     // Cash on a drawer with an open cashier shift belongs to that shift (P4-4). The shift is share-locked, so a
@@ -221,6 +252,39 @@ export class PostingService {
         postedAt: sql`now()`,
       })
       .where(eq(e.id, entryId));
+  }
+
+  /**
+   * Posts the equal and opposite entry of a posted one (FIN-004), dated on the business date, with every line's
+   * folio, cash account and supplier kept, and marks the original reversed. Returns the reversal's id.
+   */
+  async reverse(tx: Tx, auth: AuthContext, entryId: string, narration: string): Promise<string> {
+    const [original] = await tx.select().from(e).where(eq(e.id, entryId)).for('update');
+    if (!original) throw AppError.notFound('journal entry');
+    if (original.status !== 'posted') {
+      throw new AppError('CONFLICT', `Journal ${original.journalNumber ?? ''} has already been reversed.`);
+    }
+    const lines = await tx.select().from(l).where(eq(l.journalEntryId, entryId)).orderBy(asc(l.lineNo));
+    const reversalId = await this.post(tx, auth, {
+      propertyId: original.propertyId,
+      sourceType: 'reversal',
+      sourceId: original.id,
+      purpose: 'reversal',
+      narration: `Reversal of journal ${original.journalNumber}: ${narration}`,
+      reference: original.reference,
+      reversesEntryId: original.id,
+      lines: lines.map((x) => ({
+        accountId: x.accountId,
+        debit: x.credit,
+        credit: x.debit,
+        description: x.description,
+        folioId: x.folioId,
+        cashAccountId: x.cashAccountId,
+        supplierId: x.supplierId,
+      })),
+    });
+    await tx.update(e).set({ status: 'reversed', reversedById: reversalId }).where(eq(e.id, entryId));
+    return reversalId;
   }
 
   /**
@@ -318,6 +382,9 @@ export async function ledgerErrors<T>(fn: () => Promise<T>): Promise<T> {
       throw new AppError('JOURNAL_UNBALANCED', 'The journal entry does not balance.');
     }
     if (hint === 'PERIOD_CLOSED') throw new AppError('PERIOD_CLOSED', 'The accounting period is closed.');
+    if (hint === 'SUPPLIER_REQUIRED') {
+      throw AppError.validation('Accounts payable lines must say which supplier, and only they.');
+    }
     if (hint === 'CASH_ACCOUNT_REQUIRED') {
       throw AppError.validation(
         'Lines on cash and bank ledger accounts must say which drawer or bank account.',

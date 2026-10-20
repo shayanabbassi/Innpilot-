@@ -76,7 +76,9 @@
     "taxes": "Taxes & charges",
     "invoice": "Invoice details",
     "myShift": "My shift",
-    "cashClosings": "Cash closings"
+    "cashClosings": "Cash closings",
+    "expenses": "Expenses",
+    "suppliers": "Suppliers"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -306,6 +308,19 @@
       "closing_submitted": "Cash closing submitted",
       "closing_approved": "Cash closing approved",
       "closing_reopened": "Cash closing reopened"
+    },
+    "supplier": {
+      "created": "Supplier added",
+      "updated": "Supplier changed"
+    },
+    "expense": {
+      "created": "Expense recorded",
+      "updated": "Expense draft changed",
+      "submitted": "Bill submitted for approval",
+      "paid": "Cash expense paid",
+      "approved": "Expense approved",
+      "payment_made": "Bill payment made",
+      "voided": "Expense voided"
     }
   },
   "onboarding": {
@@ -790,7 +805,9 @@
       "deposit_application": "Deposit applied",
       "cash_transfer": "Transfer",
       "opening_balance": "Opening balances",
-      "cash_closing": "Cash over or short"
+      "cash_closing": "Cash over or short",
+      "expense": "Expense",
+      "expense_payment": "Bill payment"
     },
     "createdBy": "Created",
     "postedBy": "Posted",
@@ -866,7 +883,9 @@
     "closeTitle": "Close {month}?",
     "reopenTitle": "Reopen {month}?",
     "closeExplain": "Nothing can be posted into this month while it is closed. Drafts dated in it can still be edited.",
-    "reopenExplain": "Postings into this month will be allowed again. Your reason is kept in the audit log."
+    "reopenExplain": "Postings into this month will be allowed again. Your reason is kept in the audit log.",
+    "lineSupplier": "Line {n} supplier",
+    "chooseSupplier": "Choose the supplier"
   },
   "cash": {
     "title": "Cash & bank",
@@ -1228,5 +1247,125 @@
     "reopenTitle": "Reopen this closing?",
     "reopenExplain": "Any posted difference is reversed and the shift opens again for a recount. The closing stays in the history.",
     "reopenReason": "Reason"
+  },
+  "expenses": {
+    "title": "Expenses",
+    "subtitle": "Cash paid out and supplier bills. Every one is posted to the ledger and never deleted.",
+    "newExpense": "New expense",
+    "newTitle": "New expense",
+    "newSubtitle": "Record money paid out now, or a supplier bill to pay later.",
+    "editTitle": "Edit {number}",
+    "filter": "Show",
+    "filters": {
+      "to_approve": "Waiting for approval",
+      "unpaid": "Unpaid bills",
+      "draft": "Drafts",
+      "paid": "Paid",
+      "void": "Void",
+      "all": "All"
+    },
+    "none": "Nothing here.",
+    "all": "All expenses",
+    "kind": "Kind",
+    "kinds": {
+      "cash": "Paid now",
+      "bill": "Supplier bill"
+    },
+    "kindHints": {
+      "cash": "Cash or bank money paid out today",
+      "bill": "Owed to a supplier, paid later"
+    },
+    "supplier": "Supplier",
+    "supplierOptional": "Supplier (optional)",
+    "chooseSupplier": "Choose a supplier",
+    "payee": "Paid to",
+    "expenseDate": "Date",
+    "billDate": "Bill date",
+    "dueDate": "Due date",
+    "dueDateHint": "Leave empty to use the supplier's payment terms.",
+    "paidFrom": "Paid from",
+    "chooseCashAccount": "Choose the drawer or bank",
+    "description": "What was it for?",
+    "billReference": "Supplier's bill number",
+    "receiptReference": "Receipt number",
+    "attachmentRef": "Where the paper is kept",
+    "attachmentRefHint": "For example \"Petty cash file, slip 12\". Scans come later.",
+    "lines": "Lines",
+    "lineAccount": "Line {n} account",
+    "chooseAccount": "Choose an account",
+    "amount": "Amount",
+    "taxAmount": "Tax on the bill",
+    "taxHint": "As printed on the bill; leave empty if none.",
+    "taxRecoverable": "This tax can be claimed back (ask your tax adviser)",
+    "lineNote": "Note",
+    "remove": "Remove",
+    "removeLine": "Remove line {n}",
+    "addLine": "Add line",
+    "net": "Before tax",
+    "tax": "Tax",
+    "total": "Total",
+    "saveDraft": "Save draft",
+    "saveAndPay": "Save and pay",
+    "saveAndSubmit": "Save and submit",
+    "statuses": {
+      "draft": "Draft",
+      "submitted": "Waiting for approval",
+      "approved": "Approved, unpaid",
+      "partly_paid": "Partly paid",
+      "paid": "Paid",
+      "void": "Void"
+    },
+    "needsApproval": "Waiting for approval",
+    "edit": "Edit",
+    "pay": "Pay",
+    "submit": "Submit",
+    "approve": "Approve",
+    "payBill": "Pay bill",
+    "void": "Void",
+    "submitFailed": "The draft was saved but not submitted. Fix the problem shown, then submit it.",
+    "voidedNote": "Voided by {name}: {reason}",
+    "payments": "Payments",
+    "noPayments": "Nothing paid yet.",
+    "outstanding": "Still owed",
+    "taxRecoverableNote": "Tax {amount}, claimed back",
+    "taxInCostNote": "Tax {amount}, part of the cost",
+    "createdBy": "Recorded by",
+    "submittedBy": "Submitted by",
+    "approvedBy": "Approved by",
+    "journal": "Ledger",
+    "journalNo": "Journal {n}",
+    "payTitle": "Pay this expense",
+    "payExplain": "The money is taken from the chosen drawer or bank now and posted to the ledger. It cannot be edited afterwards.",
+    "submitTitle": "Submit for approval",
+    "submitExplain": "Someone else approves the bill before it is owed in the books. It cannot be edited afterwards.",
+    "approveTitle": "Approve",
+    "approveBillExplain": "The bill is posted to accounts payable as owed to the supplier.",
+    "approveCashExplain": "Confirms this cash expense was right. It was already paid and posted.",
+    "payBillTitle": "Pay bill",
+    "payBillExplain": "Pay all or part of what is still owed. Each payment is posted and cannot be edited.",
+    "upTo": "Up to {amount}",
+    "paymentReference": "Cheque or transfer reference",
+    "reason": "Reason",
+    "voidTitle": "Void",
+    "voidExplain": "The expense stops here and stays in the list as void.",
+    "voidPostedExplain": "What was posted is reversed with an equal and opposite entry. The expense stays in the list as void."
+  },
+  "suppliers": {
+    "title": "Suppliers",
+    "subtitle": "What is owed to each supplier comes from the ledger.",
+    "add": "Add supplier",
+    "none": "No suppliers yet.",
+    "terms": "{days, plural, =0 {due on receipt} one {# day to pay} other {# days to pay}}",
+    "openBills": "{n, plural, =0 {no open bills} one {# open bill} other {# open bills}}",
+    "inactive": "Inactive",
+    "edit": "Edit",
+    "editTitle": "Edit {name}",
+    "name": "Name",
+    "contact": "Phone or email",
+    "taxIdentifier": "Tax number (NTN/STRN)",
+    "paymentTerms": "Days to pay",
+    "paymentTermsHint": "Used for the due date of new bills. 0 = on receipt.",
+    "notes": "Notes",
+    "activeLabel": "Active (inactive suppliers cannot get new bills)"
   }
 }

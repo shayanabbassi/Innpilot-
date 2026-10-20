@@ -123,3 +123,13 @@ Also for your accountant: the variance threshold, the opening balances, and whet
   stays as history. The threshold is a property setting (default Rs 500), changed with `property.manage`.
 - **4.2:** the opening count is compared with the drawer's ledger balance; a difference is shown on the shift, not
   posted. The night audit (4.5) will list it with cash recorded outside any shift.
+- **4.3 (P4-6 refined):** a cash expense is posted when it is recorded and paid ("Save and pay"), because the
+  money has already left the drawer and the shift's expected cash must include it (Scenario B). Approval of a cash
+  expense is a review afterwards by someone else; a wrong one is voided, which reverses it. A supplier bill is
+  posted only on approval, never by its creator or submitter, and paid in one or more payments up to the bill.
+- **4.3:** accounts payable lines must name their supplier (checked at commit, like the cash dimension), so each
+  supplier's balance is read from the ledger. Manual journals and opening balances on 2000 choose a supplier.
+  Permission `supplier.manage` added (owner, manager, accountant). Expense lines may use expense, cost of sales,
+  or non-system asset accounts other than cash; cashiers get that list from `GET …/expenses/accounts`.
+- **4.3:** a bill with payments cannot be voided; reversing a supplier payment comes with bank reconciliation (4.4)
+  if needed.

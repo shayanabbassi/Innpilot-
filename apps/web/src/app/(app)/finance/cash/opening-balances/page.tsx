@@ -6,6 +6,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import { useSuppliers } from '@/components/expense-form';
 import { useAccounts, useCashAccounts } from '@/components/journal-form';
 import {
   Alert,
@@ -31,6 +32,7 @@ interface LineState {
   key: string;
   accountId: string;
   cashAccountId: string;
+  supplierId: string;
   debit: string;
   credit: string;
   description: string;
@@ -39,6 +41,7 @@ const blank = (): LineState => ({
   key: crypto.randomUUID(),
   accountId: '',
   cashAccountId: '',
+  supplierId: '',
   debit: '',
   credit: '',
   description: '',
@@ -114,6 +117,9 @@ function OpeningForm() {
       ),
     [accounts.data],
   );
+  const suppliers = useSuppliers();
+  const payable = (accountId: string) =>
+    (accounts.data ?? []).find((a) => a.id === accountId)?.systemRole === 'accounts_payable';
   const cashChoices = (accountId: string) =>
     (cashAccounts.data ?? []).filter((c) => c.ledgerAccountId === accountId && c.active);
   const lineErrors = useMemo(() => {
@@ -144,6 +150,7 @@ function OpeningForm() {
         credit: l.credit.trim() || '0',
         description: l.description.trim() || undefined,
         cashAccountId: cashChoices(l.accountId).length > 1 ? l.cashAccountId || undefined : undefined,
+        supplierId: payable(l.accountId) ? l.supplierId || undefined : undefined,
       })),
     };
     try {
@@ -184,7 +191,9 @@ function OpeningForm() {
               <SelectField
                 label={tFinance('lineAccount', { n: i + 1 })}
                 value={l.accountId}
-                onChange={(e) => update(l.key, { accountId: e.target.value, cashAccountId: '' })}
+                onChange={(e) =>
+                  update(l.key, { accountId: e.target.value, cashAccountId: '', supplierId: '' })
+                }
                 error={lineErrors.get(l.key)}
               >
                 <option value="">{tFinance('chooseAccount')}</option>
@@ -231,6 +240,21 @@ function OpeningForm() {
                   {cashChoices(l.accountId).map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
+                    </option>
+                  ))}
+                </SelectField>
+              )}
+              {payable(l.accountId) && (
+                <SelectField
+                  label={tFinance('lineSupplier', { n: i + 1 })}
+                  value={l.supplierId}
+                  onChange={(e) => update(l.key, { supplierId: e.target.value })}
+                  className="md:col-span-4"
+                >
+                  <option value="">{tFinance('chooseSupplier')}</option>
+                  {(suppliers.data ?? []).map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
                     </option>
                   ))}
                 </SelectField>

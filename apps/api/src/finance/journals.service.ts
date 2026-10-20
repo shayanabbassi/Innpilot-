@@ -221,6 +221,7 @@ export class JournalsService {
                 description: x.description,
                 folioId: x.folioId,
                 cashAccountId: x.cashAccountId,
+                supplierId: x.supplierId,
               })),
             });
             await tx.update(e).set({ status: 'reversed', reversedById: reversalId }).where(eq(e.id, id));
@@ -315,15 +316,17 @@ export class JournalsService {
         code: schema.accounts.code,
         name: schema.accounts.name,
         cashName: schema.cashAccounts.name,
+        supplierName: schema.suppliers.name,
       })
       .from(l)
       .innerJoin(schema.accounts, eq(schema.accounts.id, l.accountId))
       .leftJoin(schema.cashAccounts, eq(schema.cashAccounts.id, l.cashAccountId))
+      .leftJoin(schema.suppliers, eq(schema.suppliers.id, l.supplierId))
       .where(eq(l.journalEntryId, id))
       .orderBy(asc(l.lineNo));
     return {
       ...head,
-      lines: lines.map(({ line, code, name, cashName }): JournalLineDto => ({
+      lines: lines.map(({ line, code, name, cashName, supplierName }): JournalLineDto => ({
         id: line.id,
         lineNo: line.lineNo,
         accountId: line.accountId,
@@ -334,6 +337,8 @@ export class JournalsService {
         description: line.description,
         cashAccountId: line.cashAccountId,
         cashAccountName: cashName,
+        supplierId: line.supplierId,
+        supplierName,
       })),
     };
   }

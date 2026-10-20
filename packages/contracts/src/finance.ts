@@ -102,6 +102,8 @@ export const journalLineInput = z
      * cash account on that ledger account.
      */
     cashAccountId: uuid.optional(),
+    /** Required on accounts payable lines: whose bill it is (4.3). */
+    supplierId: uuid.optional(),
   })
   .strict()
   .superRefine((l, ctx) => {
@@ -153,6 +155,8 @@ export const journalLineDto = z.object({
   description: z.string().nullable(),
   cashAccountId: uuid.nullable(),
   cashAccountName: z.string().nullable(),
+  supplierId: uuid.nullable(),
+  supplierName: z.string().nullable(),
 });
 export type JournalLineDto = z.infer<typeof journalLineDto>;
 

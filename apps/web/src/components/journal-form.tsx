@@ -1,6 +1,12 @@
 'use client';
 
-import type { AccountDto, CashAccountDto, JournalDraftRequest, JournalEntryDto } from '@innpilot/contracts';
+import type {
+  AccountDto,
+  CashAccountDto,
+  JournalDraftRequest,
+  JournalEntryDto,
+  SupplierDto,
+} from '@innpilot/contracts';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -17,6 +23,7 @@ interface LineState {
   credit: string;
   description: string;
   cashAccountId: string;
+  supplierId: string;
 }
 
 const blank = (): LineState => ({
@@ -26,6 +33,7 @@ const blank = (): LineState => ({
   credit: '',
   description: '',
   cashAccountId: '',
+  supplierId: '',
 });
 
 export const ACCOUNTS_QUERY_KEY = ['finance', 'accounts'] as const;
@@ -71,6 +79,7 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
           credit: /[1-9]/.test(l.credit) ? l.credit : '',
           description: l.description ?? '',
           cashAccountId: l.cashAccountId ?? '',
+          supplierId: l.supplierId ?? '',
         }))
       : [blank(), blank()],
   );
@@ -84,6 +93,12 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
   // A line on a ledger account shared by several drawers or banks must say which one.
   const cashChoices = (accountId: string) =>
     (cashAccounts.data ?? []).filter((c) => c.ledgerAccountId === accountId && c.active);
+  const suppliers = useQuery({
+    queryKey: ['suppliers'],
+    queryFn: () => api.get<SupplierDto[]>('/suppliers'),
+  });
+  const payable = (accountId: string) =>
+    (accounts.data ?? []).find((a) => a.id === accountId)?.systemRole === 'accounts_payable';
   const totals = journalTotals(lines, currency);
   const active = useMemo(() => (accounts.data ?? []).filter((a) => a.active), [accounts.data]);
   const lineErrors = useMemo(() => {
@@ -113,6 +128,7 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
         credit: l.credit.trim() || '0',
         description: l.description.trim() || undefined,
         cashAccountId: cashChoices(l.accountId).length > 1 ? l.cashAccountId || undefined : undefined,
+        supplierId: payable(l.accountId) ? l.supplierId || undefined : undefined,
       })),
   });
 
@@ -206,7 +222,9 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
               <SelectField
                 label={t('lineAccount', { n: i + 1 })}
                 value={l.accountId}
-                onChange={(e) => update(l.key, { accountId: e.target.value, cashAccountId: '' })}
+                onChange={(e) =>
+                  update(l.key, { accountId: e.target.value, cashAccountId: '', supplierId: '' })
+                }
                 error={lineErrors.get(l.key)}
               >
                 <option value="">{t('chooseAccount')}</option>
@@ -253,6 +271,21 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
                   {cashChoices(l.accountId).map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
+                    </option>
+                  ))}
+                </SelectField>
+              )}
+              {payable(l.accountId) && (
+                <SelectField
+                  label={t('lineSupplier', { n: i + 1 })}
+                  value={l.supplierId}
+                  onChange={(e) => update(l.key, { supplierId: e.target.value })}
+                  className="md:col-span-4"
+                >
+                  <option value="">{t('chooseSupplier')}</option>
+                  {(suppliers.data ?? []).map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
                     </option>
                   ))}
                 </SelectField>

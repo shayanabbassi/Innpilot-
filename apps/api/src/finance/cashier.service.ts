@@ -12,7 +12,7 @@ import type {
 } from '@innpilot/contracts';
 import { schema, type Tx } from '@innpilot/db';
 import { Money } from '@innpilot/money';
-import { and, asc, desc, eq, gte, inArray, lte, ne, sql, type SQL } from 'drizzle-orm';
+import { and, desc, eq, gte, inArray, lte, ne, sql, type SQL } from 'drizzle-orm';
 import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import { PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
@@ -404,27 +404,12 @@ export class CashierService {
   }
 
   private async reverseVariance(tx: Tx, auth: AuthContext, entryId: string, reason: string) {
-    const e = schema.journalEntries;
-    const l = schema.journalLines;
-    const [original] = await tx.select().from(e).where(eq(e.id, entryId)).for('update');
-    if (!original || original.status !== 'posted') return;
-    const lines = await tx.select().from(l).where(eq(l.journalEntryId, entryId)).orderBy(asc(l.lineNo));
-    const reversalId = await this.posting.post(tx, auth, {
-      propertyId: original.propertyId,
-      sourceType: 'reversal',
-      sourceId: original.id,
-      purpose: 'reversal',
-      narration: `Reversal of journal ${original.journalNumber}: cash closing reopened (${reason})`,
-      reversesEntryId: original.id,
-      lines: lines.map((x) => ({
-        accountId: x.accountId,
-        debit: x.credit,
-        credit: x.debit,
-        description: x.description,
-        cashAccountId: x.cashAccountId,
-      })),
-    });
-    await tx.update(e).set({ status: 'reversed', reversedById: reversalId }).where(eq(e.id, entryId));
+    const [original] = await tx
+      .select({ status: schema.journalEntries.status })
+      .from(schema.journalEntries)
+      .where(eq(schema.journalEntries.id, entryId));
+    if (original?.status !== 'posted') return;
+    await this.posting.reverse(tx, auth, entryId, `cash closing reopened (${reason})`);
   }
 
   private async movementTotals(tx: Tx, shiftId: string, cur: string) {

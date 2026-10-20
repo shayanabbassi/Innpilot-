@@ -383,6 +383,7 @@ export class CashService {
         credit: x.credit,
         description: x.description ?? null,
         cashAccountId: x.cashAccountId ?? null,
+        supplierId: x.supplierId ?? null,
       }));
       if (!difference.isZero()) {
         lines.push({
@@ -391,6 +392,7 @@ export class CashService {
           credit: difference.isPositive() ? difference.toString() : '0',
           description: 'Difference to opening balance equity',
           cashAccountId: null,
+          supplierId: null,
         });
       }
       const id = randomUUID();

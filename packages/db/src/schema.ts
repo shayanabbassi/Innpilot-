@@ -473,6 +473,8 @@ export const journalLines = pgTable('journal_lines', {
   cashAccountId: uuid('cash_account_id'),
   /** The open cashier shift on that drawer when the line was posted (P4-4). */
   cashierShiftId: uuid('cashier_shift_id'),
+  /** Set on accounts payable lines, so each supplier's balance reconciles to the ledger (4.3). */
+  supplierId: uuid('supplier_id'),
 });
 
 export const taxCodes = pgTable('tax_codes', {
@@ -773,4 +775,72 @@ export const cashClosings = pgTable('cash_closings', {
   reopenedBy: uuid('reopened_by'),
   reopenedAt: tsz('reopened_at'),
   reopenReason: text('reopen_reason'),
+});
+
+export const suppliers = pgTable('suppliers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  name: text('name').notNull(),
+  contact: text('contact'),
+  taxIdentifier: text('tax_identifier'),
+  paymentTermsDays: integer('payment_terms_days').notNull().default(0),
+  notes: text('notes'),
+  active: boolean('active').notNull().default(true),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const expenseVouchers = pgTable('expense_vouchers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  voucherNumber: text('voucher_number').notNull(),
+  kind: text('kind').notNull(),
+  status: text('status').notNull().default('draft'),
+  supplierId: uuid('supplier_id'),
+  payee: text('payee'),
+  expenseDate: date('expense_date', { mode: 'string' }).notNull(),
+  dueDate: date('due_date', { mode: 'string' }),
+  billReference: text('bill_reference'),
+  description: text('description').notNull(),
+  attachmentRef: text('attachment_ref'),
+  cashAccountId: uuid('cash_account_id'),
+  netAmount: numeric('net_amount', { precision: 19, scale: 4 }).notNull().default('0'),
+  taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull().default('0'),
+  totalAmount: numeric('total_amount', { precision: 19, scale: 4 }).notNull().default('0'),
+  journalEntryId: uuid('journal_entry_id'),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  submittedBy: uuid('submitted_by'),
+  submittedAt: tsz('submitted_at'),
+  approvedBy: uuid('approved_by'),
+  approvedAt: tsz('approved_at'),
+  voidedBy: uuid('voided_by'),
+  voidedAt: tsz('voided_at'),
+  voidReason: text('void_reason'),
+});
+
+export const expenseLines = pgTable('expense_lines', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  voucherId: uuid('voucher_id').notNull(),
+  lineNo: integer('line_no').notNull(),
+  accountId: uuid('account_id').notNull(),
+  description: text('description'),
+  amount: numeric('amount', { precision: 19, scale: 4 }).notNull(),
+  taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull().default('0'),
+  taxRecoverable: boolean('tax_recoverable').notNull().default(false),
+});
+
+export const expensePayments = pgTable('expense_payments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  voucherId: uuid('voucher_id').notNull(),
+  cashAccountId: uuid('cash_account_id').notNull(),
+  amount: numeric('amount', { precision: 19, scale: 4 }).notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  reference: text('reference'),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
 });

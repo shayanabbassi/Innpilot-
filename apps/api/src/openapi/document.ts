@@ -74,6 +74,16 @@ import {
   invoiceDto,
   cashAccountDto,
   cashMovementsDto,
+  createSupplierRequest,
+  expenseAccountDto,
+  expenseDraftRequest,
+  expenseDto,
+  expenseListQueryObject,
+  payExpenseRequest,
+  submitExpenseRequest,
+  supplierDto,
+  updateSupplierRequest,
+  voidExpenseRequest,
   approveClosingRequest,
   cashierShiftDetailDto,
   cashierShiftDto,
@@ -742,6 +752,85 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
       'Reopen a closing (cashier.reopen, reason): the variance entry is reversed and the shift opens again',
     body: reopenClosingRequest,
     data: cashierShiftDto,
+    status: 200,
+  },
+  'GET /suppliers': {
+    tag: 'Expenses',
+    summary: 'Suppliers with what each is owed (from their accounts payable lines) and open bills',
+    data: z.array(supplierDto),
+  },
+  'POST /suppliers': {
+    tag: 'Expenses',
+    summary: 'Add a supplier (supplier.manage)',
+    body: createSupplierRequest,
+    data: supplierDto,
+    status: 201,
+  },
+  'PATCH /suppliers/{id}': {
+    tag: 'Expenses',
+    summary: 'Change or deactivate a supplier (suppliers are never deleted)',
+    body: updateSupplierRequest,
+    data: supplierDto,
+  },
+  'GET /properties/{propertyId}/expenses': {
+    tag: 'Expenses',
+    summary:
+      'Expenses and bills, newest first (only your own without expense.approve, expense.pay or journal.read)',
+    query: expenseListQueryObject,
+    data: z.array(expenseDto),
+  },
+  'GET /properties/{propertyId}/expenses/accounts': {
+    tag: 'Expenses',
+    summary: 'Accounts an expense line can use (expense, cost of sales, non-cash assets)',
+    data: z.array(expenseAccountDto),
+  },
+  'GET /properties/{propertyId}/expenses/{id}': {
+    tag: 'Expenses',
+    summary: 'One expense or bill with its lines and payments',
+    data: expenseDto,
+  },
+  'POST /properties/{propertyId}/expenses': {
+    tag: 'Expenses',
+    summary: 'Record a draft cash expense or supplier bill (Idempotency-Key)',
+    body: expenseDraftRequest,
+    data: expenseDto,
+    status: 201,
+  },
+  'PUT /properties/{propertyId}/expenses/{id}': {
+    tag: 'Expenses',
+    summary: 'Replace a draft; refused once submitted',
+    body: expenseDraftRequest,
+    data: expenseDto,
+  },
+  'POST /properties/{propertyId}/expenses/{id}/submit': {
+    tag: 'Expenses',
+    summary:
+      'Submit (Idempotency-Key): a cash expense is paid and posted now (Dr expense, Cr cash); a bill goes for approval',
+    body: submitExpenseRequest,
+    data: expenseDto,
+    status: 200,
+  },
+  'POST /properties/{propertyId}/expenses/{id}/approve': {
+    tag: 'Expenses',
+    summary:
+      'Approve a bill into payables (Dr expense, Cr accounts payable) or review a paid cash expense; never your own (Idempotency-Key)',
+    data: expenseDto,
+    status: 200,
+  },
+  'POST /properties/{propertyId}/expenses/{id}/pay': {
+    tag: 'Expenses',
+    summary:
+      'Pay part or all of an approved bill (Idempotency-Key, expense.pay): Dr accounts payable, Cr cash or bank; 422 PAYMENT_EXCEEDS_BALANCE',
+    body: payExpenseRequest,
+    data: expenseDto,
+    status: 201,
+  },
+  'POST /properties/{propertyId}/expenses/{id}/void': {
+    tag: 'Expenses',
+    summary:
+      'Void with a reason; anything posted is reversed (expense.approve); bills with payments cannot be voided',
+    body: voidExpenseRequest,
+    data: expenseDto,
     status: 200,
   },
   'GET /properties/{propertyId}/payments': {

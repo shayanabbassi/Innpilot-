@@ -25,6 +25,9 @@ import { CashController } from './finance/cash.controller';
 import { CashService } from './finance/cash.service';
 import { CashierController } from './finance/cashier.controller';
 import { CashierService } from './finance/cashier.service';
+import { ExpenseController, SuppliersController } from './finance/expense.controller';
+import { ExpenseService } from './finance/expense.service';
+import { SuppliersService } from './finance/suppliers.service';
 import { PaymentController } from './finance/payment.controller';
 import { PaymentService } from './finance/payment.service';
 import { InvoiceService } from './finance/invoice.service';
@@ -143,6 +146,8 @@ export class AppModule {
         PaymentController,
         CashController,
         CashierController,
+        SuppliersController,
+        ExpenseController,
         CheckoutController,
         UsersController,
         AuditController,
@@ -175,6 +180,8 @@ export class AppModule {
         PaymentService,
         CashService,
         CashierService,
+        SuppliersService,
+        ExpenseService,
         InvoiceService,
         CheckoutService,
         PiiService,

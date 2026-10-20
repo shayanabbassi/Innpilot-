@@ -473,6 +473,7 @@
                                     "cashier.approve",
                                     "cash.transfer",
                                     "cashier.reopen",
+                                    "supplier.manage",
                                     "journal.read",
                                     "account.manage",
                                     "journal.post",
@@ -537,6 +538,7 @@
                               "cashier.approve",
                               "cash.transfer",
                               "cashier.reopen",
+                              "supplier.manage",
                               "journal.read",
                               "account.manage",
                               "journal.post",
@@ -17924,6 +17926,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "supplierId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "supplierName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -17936,7 +17951,9 @@
                               "credit",
                               "description",
                               "cashAccountId",
-                              "cashAccountName"
+                              "cashAccountName",
+                              "supplierId",
+                              "supplierName"
                             ]
                           }
                         }
@@ -18134,6 +18151,10 @@
                         "cashAccountId": {
                           "type": "string",
                           "format": "uuid"
+                        },
+                        "supplierId": {
+                          "type": "string",
+                          "format": "uuid"
                         }
                       },
                       "required": [
@@ -18312,6 +18333,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "supplierId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "supplierName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -18324,7 +18358,9 @@
                               "credit",
                               "description",
                               "cashAccountId",
-                              "cashAccountName"
+                              "cashAccountName",
+                              "supplierId",
+                              "supplierName"
                             ]
                           }
                         }
@@ -18664,6 +18700,10 @@
                         "cashAccountId": {
                           "type": "string",
                           "format": "uuid"
+                        },
+                        "supplierId": {
+                          "type": "string",
+                          "format": "uuid"
                         }
                       },
                       "required": [
@@ -18842,6 +18882,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "supplierId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "supplierName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -18854,7 +18907,9 @@
                               "credit",
                               "description",
                               "cashAccountId",
-                              "cashAccountName"
+                              "cashAccountName",
+                              "supplierId",
+                              "supplierName"
                             ]
                           }
                         }
@@ -19162,6 +19217,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "supplierId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "supplierName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -19174,7 +19242,9 @@
                               "credit",
                               "description",
                               "cashAccountId",
-                              "cashAccountName"
+                              "cashAccountName",
+                              "supplierId",
+                              "supplierName"
                             ]
                           }
                         }
@@ -19506,6 +19576,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "supplierId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "supplierName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -19518,7 +19601,9 @@
                               "credit",
                               "description",
                               "cashAccountId",
-                              "cashAccountName"
+                              "cashAccountName",
+                              "supplierId",
+                              "supplierName"
                             ]
                           }
                         }
@@ -31625,6 +31710,10 @@
                         "cashAccountId": {
                           "type": "string",
                           "format": "uuid"
+                        },
+                        "supplierId": {
+                          "type": "string",
+                          "format": "uuid"
                         }
                       },
                       "required": [
@@ -35072,6 +35161,4715 @@
                         "expected",
                         "closing",
                         "reopenedClosings"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suppliers": {
+      "get": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Suppliers with what each is owed (from their accounts payable lines) and open bills",
+        "description": "Requires permission `expense.write` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "contact": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "taxIdentifier": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "paymentTermsDays": {
+                            "type": "integer"
+                          },
+                          "notes": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "active": {
+                            "type": "boolean"
+                          },
+                          "owed": {
+                            "type": "string"
+                          },
+                          "openBills": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "contact",
+                          "taxIdentifier",
+                          "paymentTermsDays",
+                          "notes",
+                          "active",
+                          "owed",
+                          "openBills"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Add a supplier (supplier.manage)",
+        "description": "Requires permission `supplier.manage` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "contact": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "taxIdentifier": {
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "paymentTermsDays": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 365,
+                    "default": 0
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "contact": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "taxIdentifier": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "paymentTermsDays": {
+                          "type": "integer"
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "owed": {
+                          "type": "string"
+                        },
+                        "openBills": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "contact",
+                        "taxIdentifier",
+                        "paymentTermsDays",
+                        "notes",
+                        "active",
+                        "owed",
+                        "openBills"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suppliers/{id}": {
+      "patch": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Change or deactivate a supplier (suppliers are never deleted)",
+        "description": "Requires permission `supplier.manage` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160
+                  },
+                  "contact": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 200
+                  },
+                  "taxIdentifier": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 40
+                  },
+                  "paymentTermsDays": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 365
+                  },
+                  "notes": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 500
+                  },
+                  "active": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "contact": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "taxIdentifier": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "paymentTermsDays": {
+                          "type": "integer"
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "owed": {
+                          "type": "string"
+                        },
+                        "openBills": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "contact",
+                        "taxIdentifier",
+                        "paymentTermsDays",
+                        "notes",
+                        "active",
+                        "owed",
+                        "openBills"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses": {
+      "get": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Expenses and bills, newest first (only your own without expense.approve, expense.pay or journal.read)",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "to_approve",
+                "unpaid",
+                "draft",
+                "paid",
+                "void",
+                "all"
+              ],
+              "default": "all"
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "supplierId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "voucherNumber": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "cash",
+                              "bill"
+                            ]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "draft",
+                              "submitted",
+                              "approved",
+                              "partly_paid",
+                              "paid",
+                              "void"
+                            ]
+                          },
+                          "supplierId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "supplierName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "payee": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "expenseDate": {
+                            "type": "string"
+                          },
+                          "dueDate": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "billReference": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "attachmentRef": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "cashAccountId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "cashAccountName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "netAmount": {
+                            "type": "string"
+                          },
+                          "taxAmount": {
+                            "type": "string"
+                          },
+                          "totalAmount": {
+                            "type": "string"
+                          },
+                          "paidAmount": {
+                            "type": "string"
+                          },
+                          "outstanding": {
+                            "type": "string"
+                          },
+                          "needsApproval": {
+                            "type": "boolean"
+                          },
+                          "journalEntryId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "journalNumber": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "createdById": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "createdByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "submittedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "submittedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "approvedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "approvedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "voidedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "voidedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "voidReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "lines": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "lineNo": {
+                                  "type": "integer"
+                                },
+                                "accountId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "accountCode": {
+                                  "type": "string"
+                                },
+                                "accountName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "amount": {
+                                  "type": "string"
+                                },
+                                "taxAmount": {
+                                  "type": "string"
+                                },
+                                "taxRecoverable": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "lineNo",
+                                "accountId",
+                                "accountCode",
+                                "accountName",
+                                "description",
+                                "amount",
+                                "taxAmount",
+                                "taxRecoverable"
+                              ]
+                            }
+                          },
+                          "payments": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                },
+                                "cashAccountId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "cashAccountName": {
+                                  "type": "string"
+                                },
+                                "businessDate": {
+                                  "type": "string"
+                                },
+                                "reference": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "journalEntryId": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "journalNumber": {
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ]
+                                },
+                                "createdByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "amount",
+                                "cashAccountId",
+                                "cashAccountName",
+                                "businessDate",
+                                "reference",
+                                "journalEntryId",
+                                "journalNumber",
+                                "createdByName",
+                                "createdAt"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "voucherNumber",
+                          "kind",
+                          "status",
+                          "supplierId",
+                          "supplierName",
+                          "payee",
+                          "expenseDate",
+                          "dueDate",
+                          "billReference",
+                          "description",
+                          "attachmentRef",
+                          "cashAccountId",
+                          "cashAccountName",
+                          "netAmount",
+                          "taxAmount",
+                          "totalAmount",
+                          "paidAmount",
+                          "outstanding",
+                          "needsApproval",
+                          "journalEntryId",
+                          "journalNumber",
+                          "createdById",
+                          "createdByName",
+                          "createdAt",
+                          "submittedByName",
+                          "submittedAt",
+                          "approvedByName",
+                          "approvedAt",
+                          "voidedByName",
+                          "voidedAt",
+                          "voidReason",
+                          "lines",
+                          "payments"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Record a draft cash expense or supplier bill (Idempotency-Key)",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "cash",
+                      "bill"
+                    ]
+                  },
+                  "supplierId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "payee": {
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "expenseDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "billReference": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  },
+                  "attachmentRef": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "description": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "amount": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                        },
+                        "taxAmount": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "taxRecoverable": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      },
+                      "required": [
+                        "accountId",
+                        "amount"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 50
+                  }
+                },
+                "required": [
+                  "kind",
+                  "expenseDate",
+                  "description",
+                  "lines"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses/accounts": {
+      "get": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Accounts an expense line can use (expense, cost of sales, non-cash assets)",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "code": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "code",
+                          "name"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses/{id}": {
+      "get": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "One expense or bill with its lines and payments",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Replace a draft; refused once submitted",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "cash",
+                      "bill"
+                    ]
+                  },
+                  "supplierId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "payee": {
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "expenseDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "billReference": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  },
+                  "attachmentRef": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "description": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "amount": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                        },
+                        "taxAmount": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "taxRecoverable": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      },
+                      "required": [
+                        "accountId",
+                        "amount"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 50
+                  }
+                },
+                "required": [
+                  "kind",
+                  "expenseDate",
+                  "description",
+                  "lines"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses/{id}/submit": {
+      "post": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Submit (Idempotency-Key): a cash expense is paid and posted now (Dr expense, Cr cash); a bill goes for approval",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses/{id}/approve": {
+      "post": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Approve a bill into payables (Dr expense, Cr accounts payable) or review a paid cash expense; never your own (Idempotency-Key)",
+        "description": "Requires permission `expense.approve` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses/{id}/pay": {
+      "post": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Pay part or all of an approved bill (Idempotency-Key, expense.pay): Dr accounts payable, Cr cash or bank; 422 PAYMENT_EXCEEDS_BALANCE",
+        "description": "Requires permission `expense.pay` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "reference": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "amount",
+                  "cashAccountId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/expenses/{id}/void": {
+      "post": {
+        "tags": [
+          "Expenses"
+        ],
+        "summary": "Void with a reason; anything posted is reversed (expense.approve); bills with payments cannot be voided",
+        "description": "Requires permission `expense.write` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "voucherNumber": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bill"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "submitted",
+                            "approved",
+                            "partly_paid",
+                            "paid",
+                            "void"
+                          ]
+                        },
+                        "supplierId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "supplierName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "payee": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "expenseDate": {
+                          "type": "string"
+                        },
+                        "dueDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "billReference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "attachmentRef": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "taxAmount": {
+                          "type": "string"
+                        },
+                        "totalAmount": {
+                          "type": "string"
+                        },
+                        "paidAmount": {
+                          "type": "string"
+                        },
+                        "outstanding": {
+                          "type": "string"
+                        },
+                        "needsApproval": {
+                          "type": "boolean"
+                        },
+                        "journalEntryId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdById": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "submittedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "submittedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "approvedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "voidReason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "accountCode": {
+                                "type": "string"
+                              },
+                              "accountName": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "taxAmount": {
+                                "type": "string"
+                              },
+                              "taxRecoverable": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "lineNo",
+                              "accountId",
+                              "accountCode",
+                              "accountName",
+                              "description",
+                              "amount",
+                              "taxAmount",
+                              "taxRecoverable"
+                            ]
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "cashAccountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "journalEntryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "createdByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "amount",
+                              "cashAccountId",
+                              "cashAccountName",
+                              "businessDate",
+                              "reference",
+                              "journalEntryId",
+                              "journalNumber",
+                              "createdByName",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "voucherNumber",
+                        "kind",
+                        "status",
+                        "supplierId",
+                        "supplierName",
+                        "payee",
+                        "expenseDate",
+                        "dueDate",
+                        "billReference",
+                        "description",
+                        "attachmentRef",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "netAmount",
+                        "taxAmount",
+                        "totalAmount",
+                        "paidAmount",
+                        "outstanding",
+                        "needsApproval",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdById",
+                        "createdByName",
+                        "createdAt",
+                        "submittedByName",
+                        "submittedAt",
+                        "approvedByName",
+                        "approvedAt",
+                        "voidedByName",
+                        "voidedAt",
+                        "voidReason",
+                        "lines",
+                        "payments"
                       ]
                     },
                     "meta": {
