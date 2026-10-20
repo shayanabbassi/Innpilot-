@@ -14,7 +14,7 @@ import { SessionService } from './auth/session.service';
 import { EnvelopeInterceptor } from './common/envelope.interceptor';
 import { ErrorFilter } from './common/error.filter';
 import { APP_CONFIG, type AppConfig } from './config';
-import { DayCloseController } from './day-close/day-close.controller';
+import { DayCloseController, NightAuditController } from './day-close/day-close.controller';
 import { DayCloseService } from './day-close/day-close.service';
 import { DbModule } from './db/db.module';
 import { AccountsService } from './finance/accounts.service';
@@ -141,6 +141,7 @@ export class AppModule {
         ReservationsController,
         StaysController,
         HousekeepingController,
+        NightAuditController,
         DayCloseController,
         FinanceController,
         TaxController,

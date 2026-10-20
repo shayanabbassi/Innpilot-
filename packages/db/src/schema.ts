@@ -398,6 +398,9 @@ export const businessDateCloses = pgTable('business_date_closes', {
   snapshot: jsonb('snapshot').$type<Record<string, number>>().notNull(),
   closedBy: uuid('closed_by').notNull(),
   closedAt: tsz('closed_at').notNull().defaultNow(),
+  /** day_close: the interim close of Phase 2; night_audit: from slice 4.5 on. */
+  kind: text('kind').notNull().default('night_audit'),
+  summary: jsonb('summary').$type<Record<string, unknown>>().notNull().default({}),
 });
 
 export const accounts = pgTable('accounts', {
@@ -881,5 +884,18 @@ export const cardSettlements = pgTable('card_settlements', {
   reference: text('reference'),
   journalEntryId: uuid('journal_entry_id').notNull(),
   createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const roomRevenueAccruals = pgTable('room_revenue_accruals', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  reservationRoomId: uuid('reservation_room_id').notNull(),
+  night: date('night', { mode: 'string' }).notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  netAmount: numeric('net_amount', { precision: 19, scale: 4 }).notNull(),
+  revenueAccountId: uuid('revenue_account_id').notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
   createdAt: tsz('created_at').notNull().defaultNow(),
 });

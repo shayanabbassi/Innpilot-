@@ -49,7 +49,7 @@ const NAV: NavItem[] = [
   { href: '/guests', label: 'guests', visible: (s) => s.can('guest.read') },
   { href: '/housekeeping', label: 'housekeeping', visible: (s) => s.can('housekeeping.read') },
   { href: '/maintenance', label: 'maintenance', visible: (s) => s.can('housekeeping.read') },
-  { href: '/day-close', label: 'dayClose', visible: (s) => s.can('night_audit.run') },
+  { href: '/night-audit', label: 'dayClose', visible: (s) => s.can('night_audit.run') },
   { href: '/cashier', label: 'myShift', visible: (s) => s.can('cashier.operate') },
   {
     href: '/cashier/shifts',

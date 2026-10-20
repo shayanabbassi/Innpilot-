@@ -530,20 +530,38 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     data: ticketDto,
     status: 200,
   },
+  'GET /properties/{propertyId}/night-audit/preview': {
+    tag: 'Night audit',
+    summary:
+      'What is still open for the business date, no-shows holding deposits, the room nights to accrue and the summary so far',
+    data: dayClosePreviewDto,
+  },
+  'GET /properties/{propertyId}/night-audit/history': {
+    tag: 'Night audit',
+    summary: 'Last 30 closed business dates with their stored summaries',
+    data: z.array(dayCloseDto),
+  },
+  'POST /properties/{propertyId}/night-audit': {
+    tag: 'Night audit',
+    summary:
+      'Run the night audit once per date (Idempotency-Key): no-shows with deposit decisions (409 DEPOSIT_HANDLING_REQUIRED), a reason to override open items, room revenue accrued, summary stored, date advanced by one day',
+    body: dayCloseRequest,
+    data: dayCloseDto,
+    status: 200,
+  },
   'GET /properties/{propertyId}/day-close/preview': {
-    tag: 'Day close',
-    summary: 'What is still open for the business date, and out-of-order changes for the next date',
+    tag: 'Night audit',
+    summary: 'Alias of GET …/night-audit/preview, kept for one release',
     data: dayClosePreviewDto,
   },
   'GET /properties/{propertyId}/day-close/history': {
-    tag: 'Day close',
-    summary: 'Last 30 closed business dates',
+    tag: 'Night audit',
+    summary: 'Alias of GET …/night-audit/history, kept for one release',
     data: z.array(dayCloseDto),
   },
   'POST /properties/{propertyId}/day-close': {
-    tag: 'Day close',
-    summary:
-      'Close the business date once (Idempotency-Key): optional no-show marking, a reason if items remain, then the date advances by one day',
+    tag: 'Night audit',
+    summary: 'Alias of POST …/night-audit, kept for one release (Idempotency-Key)',
     body: dayCloseRequest,
     data: dayCloseDto,
     status: 200,

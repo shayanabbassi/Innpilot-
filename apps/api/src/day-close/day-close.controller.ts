@@ -13,9 +13,10 @@ import { DayCloseService } from './day-close.service';
 
 const P = { propertyParam: 'propertyId' } as const;
 
-@Controller('properties/:propertyId/day-close')
-export class DayCloseController {
-  constructor(private readonly dayClose: DayCloseService) {}
+/** The night audit (P4-9, OPS-004). */
+@Controller('properties/:propertyId/night-audit')
+export class NightAuditController {
+  constructor(private readonly audit: DayCloseService) {}
 
   @Get('preview')
   @RequirePermission('night_audit.run', P)
@@ -23,16 +24,54 @@ export class DayCloseController {
     @CurrentAuth() auth: AuthContext,
     @Param('propertyId') propertyId: string,
   ): Promise<DayClosePreviewDto> {
-    return this.dayClose.preview(auth, propertyId);
+    return this.audit.preview(auth, propertyId);
   }
 
   @Get('history')
   @RequirePermission('night_audit.run', P)
   history(@CurrentAuth() auth: AuthContext, @Param('propertyId') propertyId: string): Promise<DayCloseDto[]> {
-    return this.dayClose.history(auth, propertyId);
+    return this.audit.history(auth, propertyId);
   }
 
-  /** Requires an Idempotency-Key header. Closes exactly the business date given in the body, once. */
+  /** Requires an Idempotency-Key header. Runs exactly the business date given in the body, once. */
+  @Post()
+  @HttpCode(200)
+  @RequirePermission('night_audit.run', P)
+  async run(
+    @CurrentAuth() auth: AuthContext,
+    @Param('propertyId') propertyId: string,
+    @Body(new ZodPipe(dayCloseRequest)) body: DayCloseRequest,
+    @Req() req: AppRequest,
+  ): Promise<DayCloseDto> {
+    return (await this.audit.close(auth, propertyId, body, req.get(IDEMPOTENCY_HEADER), requestMeta(req)))
+      .body;
+  }
+}
+
+/**
+ * The interim day close's routes, kept for one release as an alias of the night audit (P4-9). Same checks, same
+ * once-per-date record; a retry with the same Idempotency-Key is the same request on either path.
+ */
+@Controller('properties/:propertyId/day-close')
+export class DayCloseController {
+  constructor(private readonly audit: DayCloseService) {}
+
+  @Get('preview')
+  @RequirePermission('night_audit.run', P)
+  preview(
+    @CurrentAuth() auth: AuthContext,
+    @Param('propertyId') propertyId: string,
+  ): Promise<DayClosePreviewDto> {
+    return this.audit.preview(auth, propertyId);
+  }
+
+  @Get('history')
+  @RequirePermission('night_audit.run', P)
+  history(@CurrentAuth() auth: AuthContext, @Param('propertyId') propertyId: string): Promise<DayCloseDto[]> {
+    return this.audit.history(auth, propertyId);
+  }
+
+  /** Requires an Idempotency-Key header. */
   @Post()
   @HttpCode(200)
   @RequirePermission('night_audit.run', P)
@@ -42,13 +81,7 @@ export class DayCloseController {
     @Body(new ZodPipe(dayCloseRequest)) body: DayCloseRequest,
     @Req() req: AppRequest,
   ): Promise<DayCloseDto> {
-    const result = await this.dayClose.close(
-      auth,
-      propertyId,
-      body,
-      req.get(IDEMPOTENCY_HEADER),
-      requestMeta(req),
-    );
-    return result.body;
+    return (await this.audit.close(auth, propertyId, body, req.get(IDEMPOTENCY_HEADER), requestMeta(req)))
+      .body;
   }
 }

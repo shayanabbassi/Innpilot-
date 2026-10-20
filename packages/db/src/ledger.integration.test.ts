@@ -124,7 +124,7 @@ describe('chart of accounts', () => {
        FROM accounts WHERE tenant_id = $1`,
       [ids.tenant],
     );
-    expect(rows[0]!.n).toBe(46);
+    expect(rows[0]!.n).toBe(47);
     expect(rows[0]!.roles).toEqual(
       expect.arrayContaining([
         'guest_receivable',
@@ -384,7 +384,7 @@ describe('ledger isolation', () => {
       const own = await app.query<{ n: number }>('SELECT count(*)::int AS n FROM accounts');
       expect(accounts.rows[0]!.n).toBe(0);
       expect(journals.rows[0]!.n).toBe(0);
-      expect(own.rows[0]!.n).toBe(46);
+      expect(own.rows[0]!.n).toBe(47);
       await app.query('ROLLBACK');
     } finally {
       await app.end();

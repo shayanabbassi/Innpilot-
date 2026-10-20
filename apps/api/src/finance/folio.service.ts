@@ -274,9 +274,21 @@ export class FolioService {
       const original = await this.originalLines(tx, charge);
       const gross = Money.of(charge.grossAmount, property.currencyCode).round();
       const receivable = await this.receivableAccount(tx);
+      // D9: a billed room night that was accrued cleared Unbilled guest revenue. Voiding it takes the night out of
+      // revenue (where the accrual put it), so nothing is left waiting in Unbilled for a night that will not be billed.
+      const [accrued] = await tx
+        .execute<{ unbilled: string; revenue: string }>(
+          sql`
+        select u.id as unbilled, a.revenue_account_id as revenue
+        from room_night_charges n
+        join room_revenue_accruals a on a.reservation_room_id = n.reservation_room_id and a.night = n.night
+        join accounts u on u.system_role = 'unbilled_revenue'
+        where n.charge_id = ${charge.id}`,
+        )
+        .then((x) => x.rows);
       const lines: PostingLine[] = [
         ...original.map((l) => ({
-          accountId: l.accountId,
+          accountId: accrued && l.accountId === accrued.unbilled ? accrued.revenue : l.accountId,
           debit: money2(l.credit),
           credit: money2(l.debit),
         })),
@@ -459,8 +471,19 @@ export class FolioService {
         ),
       );
     if (!category) throw AppError.notFound('room charge category');
+    // D9: a night accrued by the night audit is already in revenue; billing it clears Unbilled guest revenue instead.
+    const [accrual] = await tx
+      .select({ net: schema.roomRevenueAccruals.netAmount })
+      .from(schema.roomRevenueAccruals)
+      .where(
+        and(
+          eq(schema.roomRevenueAccruals.reservationRoomId, night.reservationRoomId),
+          eq(schema.roomRevenueAccruals.night, night.date),
+        ),
+      );
     const chargeId = await this.postItem(tx, auth, property, folio, {
       kind: 'room_night',
+      accrued: accrual ? Money.fromStorage(accrual.net, property.currencyCode).round() : undefined,
       categoryId: category.id,
       description: night.roomNumber
         ? `Room ${night.roomNumber}, night of ${night.date}`
@@ -499,6 +522,8 @@ export class FolioService {
       amount: Money;
       reason: string | null;
       key: string | undefined;
+      /** Room nights only: the net already accrued for this night (D9). */
+      accrued?: Money;
     },
   ): Promise<string> {
     const serviceDate = item.serviceDate ?? property.businessDate;
@@ -545,9 +570,7 @@ export class FolioService {
         : { debit: '0', credit: m.toString() };
     const lines: PostingLine[] = [
       { accountId: receivable, folioId: folio.id, ...side(result.gross, 'debit') },
-      ...(result.net.isPositive()
-        ? [{ accountId: category.cat.revenueAccountId, ...side(result.net, 'credit') }]
-        : []),
+      ...(await this.revenueLines(tx, category.cat.revenueAccountId, result.net, item.accrued, side)),
       ...result.lines
         .filter((l) => l.amount.isPositive())
         .map((l) => ({ accountId: payable.get(l.taxCodeId)!, ...side(l.amount, 'credit') })),
@@ -582,6 +605,32 @@ export class FolioService {
     });
     await this.snapshotTaxes(tx, auth, property.id, chargeId, result, payable, sign);
     return chargeId;
+  }
+
+  /**
+   * The revenue side of a charge. For an accrued room night (D9) the accrued net clears Unbilled guest revenue and
+   * only a difference (a rate or tax change since the accrual) touches revenue, so the night is never counted twice.
+   */
+  private async revenueLines(
+    tx: Tx,
+    revenueAccountId: string,
+    net: Money,
+    accrued: Money | undefined,
+    side: (m: Money, normal: 'debit' | 'credit') => { debit: string; credit: string },
+  ): Promise<PostingLine[]> {
+    if (!accrued) return net.isPositive() ? [{ accountId: revenueAccountId, ...side(net, 'credit') }] : [];
+    const [unbilled] = await tx
+      .select({ id: schema.accounts.id })
+      .from(schema.accounts)
+      .where(eq(schema.accounts.systemRole, 'unbilled_revenue'));
+    if (!unbilled) throw AppError.notFound('unbilled revenue account');
+    const rest = net.subtract(accrued);
+    return [
+      { accountId: unbilled.id, ...side(accrued, 'credit'), description: 'Accrued at night audit' },
+      ...(rest.isZero()
+        ? []
+        : [{ accountId: revenueAccountId, ...side(rest.abs(), rest.isPositive() ? 'credit' : 'debit') }]),
+    ];
   }
 
   /** TAX-001: the rate, inclusivity, base and account as charged, kept with the item for ever. */
@@ -800,7 +849,9 @@ export class FolioService {
    * every booked night to departure.
    */
   /** Room nights of a booking not yet posted. Used by the folio view and by check-out. */
-  async nights(tx: Tx, property: PropertyRow, reservationId: string) {
+  async nights(tx: Tx, property: PropertyRow, reservationId: string, pendingThrough?: string) {
+    // Pending: nights slept so far (before the business date), or up to and including `pendingThrough`.
+    const pendingBefore = pendingThrough ? addDays(pendingThrough, 1) : property.businessDate;
     const currency = property.currencyCode;
     const [roomCategory] = await tx
       .select({ id: schema.chargeCategories.id })
@@ -879,7 +930,7 @@ export class FolioService {
         estimate.net = estimate.net.add(n.net);
         estimate.tax = estimate.tax.add(n.tax);
         estimate.gross = estimate.gross.add(n.gross);
-        if (s.rr.stayId && d < property.businessDate) pending.push(n);
+        if (s.rr.stayId && d < pendingBefore) pending.push(n);
       }
     }
     return { pending, estimate };

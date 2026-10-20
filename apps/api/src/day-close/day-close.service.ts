@@ -5,14 +5,20 @@ import {
   type DayCloseIssueDto,
   type DayClosePreviewDto,
   type DayCloseRequest,
+  type NightAuditSummaryDto,
+  type NoShowDepositDto,
 } from '@innpilot/contracts';
 import { schema, type Tx } from '@innpilot/db';
+import { Money } from '@innpilot/money';
 import { and, desc, eq, gt, inArray, isNotNull, isNull, lte, or, sql } from 'drizzle-orm';
 import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import { PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
 import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
+import { FolioService } from '../finance/folio.service';
+import { PaymentService } from '../finance/payment.service';
+import { ledgerErrors, PostingService } from '../finance/posting.service';
 import { IdempotencyService } from '../idempotency/idempotency.service';
 
 const r = schema.reservations;
@@ -20,16 +26,24 @@ const rr = schema.reservationRooms;
 const rooms = schema.rooms;
 const tickets = schema.maintenanceTickets;
 const closes = schema.businessDateCloses;
+const accruals = schema.roomRevenueAccruals;
 type PropertyRow = typeof schema.properties.$inferSelect;
 
-interface Assessment {
-  preview: DayClosePreviewDto;
+interface NightToAccrue {
+  date: string;
+  reservationRoomId: string;
+  net: Money;
 }
 
 /**
- * Interim business-date close (decision D3). Checks the day, optionally marks remaining arrivals as no-shows,
- * advances the business date by exactly one day, and applies out-of-order periods for the new date. A date can be
- * closed only once (unique key + expected-date check + row lock). No money is posted; Phase 4's night audit adds that.
+ * The night audit (P4-9), replacing the interim day close (D3) on the same once-per-date record (OPS-004): a unique
+ * key per property and date, the expected-date check and a property row lock. In one transaction it
+ *   - marks remaining arrivals as no-shows when asked, with a refund-or-keep decision for any deposit they hold;
+ *   - lists what is still open (arrivals, overstays, rooms not clean, open tasks, open cashier shifts); anything open
+ *     needs a reason, recorded as an override;
+ *   - accrues each room night slept tonight (D9): Dr Unbilled guest revenue, Cr room revenue, net of tax, keyed by
+ *     booked room and night so no night is ever accrued twice;
+ *   - stores a summary read from the ledger and the source records, and advances the business date by one day.
  */
 @Injectable()
 export class DayCloseService {
@@ -37,13 +51,13 @@ export class DayCloseService {
     private readonly db: Db,
     private readonly audit: AuditService,
     private readonly idempotency: IdempotencyService,
+    private readonly posting: PostingService,
+    private readonly folios: FolioService,
+    private readonly payments: PaymentService,
   ) {}
 
   preview(auth: AuthContext, propertyId: string): Promise<DayClosePreviewDto> {
-    return this.db.tenant(
-      auth.tenantId,
-      async (tx) => (await this.assess(tx, await this.property(tx, propertyId))).preview,
-    );
+    return this.db.tenant(auth.tenantId, async (tx) => this.assess(tx, await this.property(tx, propertyId)));
   }
 
   history(auth: AuthContext, propertyId: string): Promise<DayCloseDto[]> {
@@ -66,103 +80,108 @@ export class DayCloseService {
     body: DayCloseRequest,
     idempotencyKey: string | undefined,
     meta: RequestMeta,
+    scope = `POST /properties/${propertyId}/night-audit`,
   ): Promise<{ status: number; body: DayCloseDto }> {
     return this.mapDuplicate(() =>
-      this.db.tenant(auth.tenantId, (tx) =>
-        this.idempotency.run(
-          tx,
-          {
-            tenantId: auth.tenantId,
-            actorUserId: auth.userId,
-            scope: `POST /properties/${propertyId}/day-close`,
-            key: idempotencyKey,
-            body,
-          },
-          async () => {
-            // The property row lock serialises closes; the expected date stops a second close from another screen.
-            const [property] = await tx
-              .select()
-              .from(schema.properties)
-              .where(eq(schema.properties.id, propertyId))
-              .for('update');
-            if (!property) throw AppError.notFound('property');
-            if (property.businessDate !== body.businessDate) {
-              throw new AppError(
-                'CONFLICT',
-                `${body.businessDate} is already closed. The business date is now ${property.businessDate}.`,
-              );
-            }
-            const today = property.businessDate;
-            const next = addDays(today, 1);
+      ledgerErrors(() =>
+        this.db.tenant(auth.tenantId, (tx) =>
+          this.idempotency.run(
+            tx,
+            { tenantId: auth.tenantId, actorUserId: auth.userId, scope, key: idempotencyKey, body },
+            async () => {
+              // The property row lock serialises audits; the expected date stops a second run from another screen.
+              const [property] = await tx
+                .select()
+                .from(schema.properties)
+                .where(eq(schema.properties.id, propertyId))
+                .for('update');
+              if (!property) throw AppError.notFound('property');
+              if (property.businessDate !== body.businessDate) {
+                throw new AppError(
+                  'CONFLICT',
+                  `${body.businessDate} is already closed. The business date is now ${property.businessDate}.`,
+                );
+              }
+              const today = property.businessDate;
+              const next = addDays(today, 1);
 
-            let noShows = 0;
-            if (body.markNoShows) noShows = await this.markNoShows(tx, auth, propertyId, today, meta);
-            const { preview } = await this.assess(tx, property);
-            const unresolved = preview.issues;
-            if (unresolved.length > 0 && !body.reason) {
-              throw new AppError(
-                'CONFLICT',
-                'Some items are still open. Resolve them, or give a reason to close the day anyway.',
-                unresolved.map((i) => ({ path: i.check, message: i.label })),
-              );
-            }
+              let noShows = 0;
+              if (body.markNoShows) {
+                noShows = await this.markNoShows(tx, auth, property, body.deposits, meta);
+              }
+              const preview = await this.assess(tx, property);
+              const unresolved = preview.issues;
+              if (unresolved.length > 0 && !body.reason) {
+                throw new AppError(
+                  'CONFLICT',
+                  'Some items are still open. Resolve them, or give a reason to close the day anyway.',
+                  unresolved.map((i) => ({ path: i.check, message: i.label })),
+                );
+              }
 
-            const [row] = await tx
-              .insert(closes)
-              .values({
-                tenantId: auth.tenantId,
-                propertyId,
-                businessDate: today,
-                nextDate: next,
-                noShowsMarked: noShows,
-                unresolved,
-                reason: unresolved.length > 0 ? body.reason! : (body.reason ?? null),
-                snapshot: {
-                  inHouse: preview.counts.inHouse,
-                  arrivalsCheckedIn: preview.counts.arrivalsCheckedIn,
-                  sellableRooms: preview.counts.sellableRooms,
-                },
-                closedBy: auth.userId,
-              })
-              .returning();
-            await tx
-              .update(schema.properties)
-              .set({ businessDate: next })
-              .where(eq(schema.properties.id, propertyId));
-            await this.applyServiceChanges(tx, auth, propertyId, next);
-            await this.audit.record(
-              tx,
-              {
-                tenantId: auth.tenantId,
-                propertyId,
-                actor: { type: 'user', userId: auth.userId },
-                action: 'property.day_closed',
-                entityType: 'property',
-                entityId: propertyId,
-                changes: {
+              const accrued = await this.accrue(tx, auth, property);
+              const summary = await this.summary(tx, property, accrued);
+              const [row] = await tx
+                .insert(closes)
+                .values({
+                  tenantId: auth.tenantId,
+                  propertyId,
                   businessDate: today,
                   nextDate: next,
                   noShowsMarked: noShows,
-                  unresolved: unresolved.length,
+                  unresolved,
+                  reason: unresolved.length > 0 ? body.reason! : (body.reason ?? null),
+                  snapshot: {
+                    inHouse: preview.counts.inHouse,
+                    arrivalsCheckedIn: preview.counts.arrivalsCheckedIn,
+                    sellableRooms: preview.counts.sellableRooms,
+                  },
+                  kind: 'night_audit',
+                  summary,
+                  closedBy: auth.userId,
+                })
+                .returning();
+              await tx
+                .update(schema.properties)
+                .set({ businessDate: next })
+                .where(eq(schema.properties.id, propertyId));
+              await this.applyServiceChanges(tx, auth, propertyId, next);
+              await this.audit.record(
+                tx,
+                {
+                  tenantId: auth.tenantId,
+                  propertyId,
+                  actor: { type: 'user', userId: auth.userId },
+                  action: 'property.day_closed',
+                  entityType: 'property',
+                  entityId: propertyId,
+                  changes: {
+                    businessDate: today,
+                    nextDate: next,
+                    noShowsMarked: noShows,
+                    unresolved: unresolved.length,
+                    accruedNights: accrued.nights,
+                    accruedNet: accrued.net,
+                  },
+                  reason: body.reason ?? null,
                 },
-                reason: body.reason ?? null,
-              },
-              meta,
-            );
-            const [name] = await tx
-              .select({ n: schema.users.fullName })
-              .from(schema.users)
-              .where(eq(schema.users.id, auth.userId));
-            return { status: 200, body: this.dto(row!, name?.n ?? null) };
-          },
+                meta,
+              );
+              const [name] = await tx
+                .select({ n: schema.users.fullName })
+                .from(schema.users)
+                .where(eq(schema.users.id, auth.userId));
+              return { status: 200, body: this.dto(row!, name?.n ?? null) };
+            },
+          ),
         ),
       ),
     );
   }
 
-  // ------------------------------------------------------------------------------------------- internals
+  // ------------------------------------------------------------------------------------------- checks
 
-  private async assess(tx: Tx, property: PropertyRow): Promise<Assessment> {
+  private async assess(tx: Tx, property: PropertyRow): Promise<DayClosePreviewDto> {
     const today = property.businessDate;
     const next = addDays(today, 1);
     const issues: DayCloseIssueDto[] = [];
@@ -191,8 +210,20 @@ export class DayCloseService {
         roomId: d.booked.roomId,
       });
     }
+    const noShowDeposits: NoShowDepositDto[] = [];
+    for (const res of new Map(due.map((d) => [d.booked.reservationId, d])).values()) {
+      const held = await this.payments.depositHeld(tx, property, res.booked.reservationId);
+      if (held.isPositive()) {
+        noShowDeposits.push({
+          reservationId: res.booked.reservationId,
+          bookingReference: res.ref,
+          guestName: res.guest,
+          held: held.toString(),
+        });
+      }
+    }
 
-    // In-house guests whose stay ends by tomorrow without a check-out (check-out arrives in Phase 3).
+    // In-house guests whose stay ends today or earlier without a check-out.
     const stays = await tx
       .select({
         reservationId: schema.stays.reservationId,
@@ -258,10 +289,26 @@ export class DayCloseService {
       });
     }
 
+    // Cashier shifts still open (P4-9): the day's cash is not counted yet.
+    const shifts = await tx
+      .select({ drawer: schema.cashAccounts.name, cashier: schema.users.fullName })
+      .from(schema.cashierShifts)
+      .innerJoin(schema.cashAccounts, eq(schema.cashAccounts.id, schema.cashierShifts.cashAccountId))
+      .innerJoin(schema.users, eq(schema.users.id, schema.cashierShifts.userId))
+      .where(and(eq(schema.cashierShifts.propertyId, property.id), eq(schema.cashierShifts.status, 'open')));
+    for (const s of shifts) {
+      issues.push({
+        check: 'open_shifts',
+        label: s.drawer,
+        detail: s.cashier,
+        reservationId: null,
+        roomId: null,
+      });
+    }
+
     const [checkedIn] = await tx
       .select({ n: sql<number>`count(*)::int` })
       .from(schema.stayRooms)
-      .innerJoin(schema.stays, eq(schema.stays.id, schema.stayRooms.stayId))
       .where(
         and(
           eq(schema.stayRooms.propertyId, property.id),
@@ -276,21 +323,239 @@ export class DayCloseService {
         and(eq(rooms.propertyId, property.id), eq(rooms.active, true), eq(rooms.serviceState, 'in_service')),
       );
 
+    const toAccrue = await this.nightsToAccrue(tx, property);
+    const accrualPreview = {
+      nights: toAccrue.length,
+      net: Money.sum(
+        toAccrue.map((n) => n.net),
+        property.currencyCode,
+      ).toString(),
+    };
     return {
-      preview: {
-        businessDate: today,
-        nextDate: next,
-        issues,
-        serviceChanges: await this.serviceChanges(tx, property.id, next),
-        counts: {
-          inHouse: stays.length,
-          arrivalsCheckedIn: checkedIn?.n ?? 0,
-          arrivalsPending: due.length,
-          sellableRooms: sellable?.n ?? 0,
-        },
+      businessDate: today,
+      nextDate: next,
+      issues,
+      serviceChanges: await this.serviceChanges(tx, property.id, next),
+      counts: {
+        inHouse: stays.length,
+        arrivalsCheckedIn: checkedIn?.n ?? 0,
+        arrivalsPending: due.length,
+        sellableRooms: sellable?.n ?? 0,
       },
+      noShowDeposits,
+      accruals: accrualPreview,
+      summary: await this.summary(tx, property, {
+        nights: 0,
+        net: Money.zero(property.currencyCode).toString(),
+      }),
     };
   }
+
+  // ------------------------------------------------------------------------------------------- accrual (D9)
+
+  /** Room nights slept up to and including the business date, in house, not yet accrued and not yet billed. */
+  private async nightsToAccrue(tx: Tx, property: PropertyRow): Promise<NightToAccrue[]> {
+    const inHouse = await tx
+      .selectDistinct({ id: schema.stays.reservationId })
+      .from(schema.stays)
+      .where(and(eq(schema.stays.propertyId, property.id), eq(schema.stays.status, 'in_house')));
+    const out: NightToAccrue[] = [];
+    for (const res of inHouse) {
+      const { pending } = await this.folios.nights(tx, property, res.id, property.businessDate);
+      for (const n of pending) {
+        if (n.net.isPositive())
+          out.push({ date: n.date, reservationRoomId: n.reservationRoomId, net: n.net });
+      }
+    }
+    if (out.length === 0) return out;
+    const done = await tx
+      .select({ rr: accruals.reservationRoomId, night: accruals.night })
+      .from(accruals)
+      .where(inArray(accruals.reservationRoomId, [...new Set(out.map((n) => n.reservationRoomId))]));
+    const seen = new Set(done.map((d) => `${d.rr}|${d.night}`));
+    return out.filter((n) => !seen.has(`${n.reservationRoomId}|${n.date}`));
+  }
+
+  /**
+   * Posts the accrual: one journal per night date (normally just tonight; earlier nights only if an audit was ever
+   * skipped), Dr Unbilled guest revenue / Cr room revenue, and records each night so it is never accrued again.
+   */
+  private async accrue(
+    tx: Tx,
+    auth: AuthContext,
+    property: PropertyRow,
+  ): Promise<{ nights: number; net: string }> {
+    const nights = await this.nightsToAccrue(tx, property);
+    const cur = property.currencyCode;
+    if (nights.length === 0) return { nights: 0, net: Money.zero(cur).toString() };
+    const [category] = await tx
+      .select({ revenue: schema.chargeCategories.revenueAccountId })
+      .from(schema.chargeCategories)
+      .where(
+        and(
+          eq(schema.chargeCategories.propertyId, property.id),
+          eq(schema.chargeCategories.systemKind, 'room'),
+        ),
+      );
+    const [unbilled] = await tx
+      .select({ id: schema.accounts.id })
+      .from(schema.accounts)
+      .where(eq(schema.accounts.systemRole, 'unbilled_revenue'));
+    if (!category || !unbilled) throw AppError.notFound('room revenue or unbilled revenue account');
+    const byDate = new Map<string, NightToAccrue[]>();
+    for (const n of nights) byDate.set(n.date, [...(byDate.get(n.date) ?? []), n]);
+    let total = Money.zero(cur);
+    for (const [date, group] of [...byDate].sort(([a], [b]) => a.localeCompare(b))) {
+      const net = Money.sum(
+        group.map((n) => n.net),
+        cur,
+      );
+      const journalId = await this.posting.post(tx, auth, {
+        propertyId: property.id,
+        accountingDate: date,
+        sourceType: 'night_audit',
+        reference: `Night audit ${property.businessDate}`,
+        narration: `Room revenue earned, night of ${date} (${group.length} ${group.length === 1 ? 'room' : 'rooms'}), billed at check-out`,
+        lines: [
+          { accountId: unbilled.id, debit: net.toString(), credit: '0' },
+          { accountId: category.revenue, debit: '0', credit: net.toString() },
+        ],
+      });
+      await tx.insert(accruals).values(
+        group.map((n) => ({
+          tenantId: auth.tenantId,
+          propertyId: property.id,
+          reservationRoomId: n.reservationRoomId,
+          night: n.date,
+          businessDate: property.businessDate,
+          netAmount: n.net.toStorage(),
+          revenueAccountId: category.revenue,
+          journalEntryId: journalId,
+        })),
+      );
+      total = total.add(net);
+    }
+    return { nights: nights.length, net: total.toString() };
+  }
+
+  // ------------------------------------------------------------------------------------------- summary
+
+  private async summary(
+    tx: Tx,
+    property: PropertyRow,
+    accrued: { nights: number; net: string },
+  ): Promise<NightAuditSummaryDto> {
+    const cur = property.currencyCode;
+    const m = (v: string | null | undefined) => Money.fromStorage(v ?? '0', cur).round();
+    const date = property.businessDate;
+    const q = async <T extends Record<string, unknown>>(query: ReturnType<typeof sql>) =>
+      (await tx.execute<T>(query)).rows;
+
+    const revenue = await q<{ code: string; name: string; amount: string }>(sql`
+      select a.code, a.name, sum(l.credit - l.debit)::text as amount
+      from journal_lines l join journal_entries e on e.id = l.journal_entry_id join accounts a on a.id = l.account_id
+      where e.property_id = ${property.id} and e.status <> 'draft' and e.accounting_date = ${date}::date
+        and a.account_class = 'revenue'
+      group by a.code, a.name having sum(l.credit - l.debit) <> 0 order by a.code`);
+    const revenueTotal = Money.sum(
+      revenue.map((x) => m(x.amount)),
+      cur,
+    );
+
+    const [occupied] = await q<{ n: number }>(sql`
+      select count(distinct sr.room_id)::int as n from stay_rooms sr join stays s on s.id = sr.stay_id
+      where s.property_id = ${property.id} and s.status = 'in_house' and sr.ended_at is null`);
+    const [sellable] = await q<{ n: number }>(sql`
+      select count(*)::int as n from rooms
+      where property_id = ${property.id} and active and service_state = 'in_service'`);
+    const [arrivals] = await q<{ n: number }>(sql`
+      select count(*)::int as n from stay_rooms
+      where property_id = ${property.id} and from_date = ${date}::date and reason is null`);
+    const [inHouse] = await q<{ n: number }>(sql`
+      select count(*)::int as n from stays where property_id = ${property.id} and status = 'in_house'`);
+    // Departures since the previous close (check-out time is a timestamp; the business date is the property's).
+    const [departures] = await q<{ n: number }>(sql`
+      select count(*)::int as n from stays s
+      where s.property_id = ${property.id} and s.status = 'checked_out'
+        and s.checked_out_at > coalesce((select max(c.closed_at) from business_date_closes c
+                                         where c.property_id = ${property.id}), '-infinity'::timestamptz)`);
+
+    const receipts = await q<{ method: string; amount: string }>(sql`
+      select method, sum(amount)::text as amount from payments
+      where property_id = ${property.id} and business_date = ${date}::date group by method order by method`);
+    const [refunds] = await q<{ amount: string | null }>(sql`
+      select sum(amount)::text as amount from refunds where property_id = ${property.id} and business_date = ${date}::date`);
+
+    const variances = await q<{ drawer: string; cashier: string; variance: string; status: string }>(sql`
+      select ca.name as drawer, u.full_name as cashier, c.variance::text as variance, c.status
+      from cash_closings c join cashier_shifts s on s.id = c.shift_id
+      join cash_accounts ca on ca.id = c.cash_account_id join users u on u.id = s.user_id
+      where c.property_id = ${property.id} and c.business_date = ${date}::date and c.status <> 'reopened'
+        and c.variance <> 0
+      order by c.submitted_at`);
+    const [outside] = await q<{ n: number; i: string | null; o: string | null }>(sql`
+      select count(*)::int as n, sum(l.debit)::text as i, sum(l.credit)::text as o
+      from journal_lines l join journal_entries e on e.id = l.journal_entry_id
+      join cash_accounts ca on ca.id = l.cash_account_id
+      where e.property_id = ${property.id} and e.status <> 'draft' and e.accounting_date = ${date}::date
+        and ca.kind = 'cash' and l.cashier_shift_id is null
+        and e.source_type not in ('opening_balance', 'cash_closing', 'reversal')`);
+
+    const onAccount = await q<{ id: string }>(sql`
+      select id from folios where property_id = ${property.id} and status = 'on_account'`);
+    let onAccountBalance = Money.zero(cur);
+    for (const f of onAccount) {
+      const [b] = await q<{ b: string }>(sql`
+        select coalesce(sum(l.debit - l.credit), 0)::text as b from journal_lines l
+        join journal_entries e on e.id = l.journal_entry_id join accounts a on a.id = l.account_id
+        where l.folio_id = ${f.id} and a.system_role in ('guest_receivable', 'guest_deposits') and e.status <> 'draft'`);
+      onAccountBalance = onAccountBalance.add(m(b?.b));
+    }
+
+    const closed = await q<{ id: string }>(sql`
+      select id from reservations where property_id = ${property.id} and status in ('cancelled', 'no_show')`);
+    let toRefund = Money.zero(cur);
+    let toRefundCount = 0;
+    for (const res of closed) {
+      const held = await this.payments.depositHeld(tx, property, res.id);
+      if (held.isPositive()) {
+        toRefund = toRefund.add(held);
+        toRefundCount += 1;
+      }
+    }
+
+    const occ = occupied?.n ?? 0;
+    const sell = sellable?.n ?? 0;
+    return {
+      revenue: revenue.map((x) => ({
+        accountCode: x.code,
+        accountName: x.name,
+        amount: m(x.amount).toString(),
+      })),
+      revenueTotal: revenueTotal.toString(),
+      accrued,
+      occupancy: {
+        occupied: occ,
+        sellable: sell,
+        percent: sell > 0 ? ((occ * 1000) / sell / 10).toFixed(1) : '0.0',
+      },
+      arrivals: arrivals?.n ?? 0,
+      departures: departures?.n ?? 0,
+      inHouse: inHouse?.n ?? 0,
+      receipts: receipts.map((x) => ({ method: x.method, amount: m(x.amount).toString() })),
+      refunds: m(refunds?.amount).toString(),
+      cashierVariances: variances.map((v) => ({ ...v, variance: m(v.variance).toString() })),
+      cashOutsideShift: {
+        lines: outside?.n ?? 0,
+        in: m(outside?.i).toString(),
+        out: m(outside?.o).toString(),
+      },
+      foliosOnAccount: { count: onAccount.length, balance: onAccountBalance.toString() },
+      depositsToRefund: { count: toRefundCount, amount: toRefund.toString() },
+    };
+  }
+
+  // ------------------------------------------------------------------------------------------- rooms and no-shows
 
   /** Rooms whose service state must change on `date` because an out-of-order period starts or ends. */
   private async serviceChanges(tx: Tx, propertyId: string, date: string) {
@@ -331,19 +596,30 @@ export class DayCloseService {
         dimension: 'service',
         fromState: from,
         toState: change.to,
-        reason: `Day close: out-of-order period ${change.to === 'out_of_order' ? 'starts' : 'ended'}`,
+        reason: `Night audit: out-of-order period ${change.to === 'out_of_order' ? 'starts' : 'ended'}`,
         actorUserId: auth.userId,
       });
     }
   }
 
-  private async markNoShows(tx: Tx, auth: AuthContext, propertyId: string, today: string, meta: RequestMeta) {
+  /**
+   * Marks arrivals still due as no-shows. A booking holding a deposit needs a decision first (closing the Phase 3
+   * known limit): refund it later, or keep it as a fee, which needs folio.adjust.
+   */
+  private async markNoShows(
+    tx: Tx,
+    auth: AuthContext,
+    property: PropertyRow,
+    decisions: Record<string, 'refund' | 'forfeit'>,
+    meta: RequestMeta,
+  ) {
+    const today = property.businessDate;
     const due = await tx
-      .select({ id: r.id })
+      .select({ id: r.id, ref: r.bookingReference })
       .from(r)
       .where(
         and(
-          eq(r.propertyId, propertyId),
+          eq(r.propertyId, property.id),
           inArray(r.status, ['pending', 'confirmed']),
           sql`exists (select 1 from reservation_rooms x where x.reservation_id = ${r.id} and x.status = 'active'
                         and x.stay_id is null and x.arrival <= ${today}::date)`,
@@ -352,22 +628,54 @@ export class DayCloseService {
         ),
       )
       .for('update');
+    const held = new Map<string, Money>();
+    for (const res of due) {
+      const amount = await this.payments.depositHeld(tx, property, res.id);
+      if (amount.isPositive()) held.set(res.id, amount);
+    }
+    const undecided = due.filter((res) => held.has(res.id) && !decisions[res.id]);
+    if (undecided.length > 0) {
+      throw new AppError(
+        'DEPOSIT_HANDLING_REQUIRED',
+        'Some no-shows hold a deposit. Choose for each: refund it later, or keep it as a fee.',
+        undecided.map((res) => ({
+          path: `deposits.${res.id}`,
+          message: `${res.ref}: ${held.get(res.id)!.toString()}`,
+        })),
+      );
+    }
+    const forfeits = due.filter((res) => held.has(res.id) && decisions[res.id] === 'forfeit');
+    if (forfeits.length > 0 && !auth.permissionsByProperty.get(property.id)?.has('folio.adjust')) {
+      throw AppError.forbidden('Keeping a deposit as a fee needs permission to adjust folios.');
+    }
     for (const res of due) {
       await tx.update(r).set({ status: 'no_show' }).where(eq(r.id, res.id));
       await tx.update(rr).set({ status: 'released' }).where(eq(rr.reservationId, res.id));
+      const deposit = held.get(res.id);
       await this.audit.record(
         tx,
         {
           tenantId: auth.tenantId,
-          propertyId,
+          propertyId: property.id,
           actor: { type: 'user', userId: auth.userId },
           action: 'reservation.no_show',
           entityType: 'reservation',
           entityId: res.id,
-          reason: `Marked at day close for ${today}`,
+          changes: deposit ? { deposit: decisions[res.id], depositHeld: deposit.toString() } : {},
+          reason: `Marked at the night audit for ${today}`,
         },
         meta,
       );
+      if (deposit && decisions[res.id] === 'forfeit') {
+        await this.payments.forfeitDeposits(
+          tx,
+          auth,
+          property,
+          res.id,
+          `No-show at the night audit for ${today}`,
+          meta,
+        );
+      }
     }
     return due.length;
   }
@@ -393,6 +701,7 @@ export class DayCloseService {
   private dto(c: typeof closes.$inferSelect, closedByName: string | null): DayCloseDto {
     return {
       id: c.id,
+      kind: c.kind as DayCloseDto['kind'],
       businessDate: c.businessDate,
       nextDate: c.nextDate,
       closedAt: c.closedAt.toISOString(),
@@ -405,6 +714,7 @@ export class DayCloseService {
         arrivalsCheckedIn: c.snapshot.arrivalsCheckedIn ?? 0,
         sellableRooms: c.snapshot.sellableRooms ?? 0,
       },
+      summary: c.kind === 'night_audit' ? (c.summary as NightAuditSummaryDto) : null,
     };
   }
 }

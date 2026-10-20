@@ -67,7 +67,7 @@
     "frontDesk": "Front desk",
     "housekeeping": "Housekeeping",
     "maintenance": "Maintenance",
-    "dayClose": "Day close",
+    "dayClose": "Night audit",
     "cash": "Cash & bank",
     "journals": "Journals",
     "trialBalance": "Trial balance",
@@ -726,16 +726,14 @@
     "cancel": "Cancel"
   },
   "dayClose": {
-    "title": "Day close",
-    "subtitle": "Close {date} and move the hotel to {next}.",
-    "interimNote": "Operational close only. Room charges are not posted yet; that arrives with guest billing.",
     "checks": "Before closing",
     "allClear": "Nothing is open. The day can be closed.",
     "checkLabels": {
       "arrivals_pending": "Guests due who have not checked in",
       "overstays": "Guests still in house after their departure date",
       "rooms_not_clean": "Rooms not cleaned",
-      "open_tasks": "Other open housekeeping tasks"
+      "open_tasks": "Other open housekeeping tasks",
+      "open_shifts": "Cashier shifts still open"
     },
     "serviceChanges": "On {next}",
     "goesOutOfOrder": "Room {room} goes out of order",
@@ -743,9 +741,6 @@
     "counts": "{inHouse} in house · {checkedIn} checked in today · {sellable} rooms in service",
     "markNoShows": "Mark the {count, plural, one {# guest} other {# guests}} still due as no-shows",
     "reason": "Reason for closing with open items (recorded)",
-    "close": "Close {date}",
-    "closing": "Closing…",
-    "closed": "{date} closed. The business date is now {next}.",
     "history": "Recent closes",
     "historyLine": "{date} · by {name} · {noShows, plural, =0 {no no-shows} one {# no-show} other {# no-shows}}",
     "unresolvedCount": "{count, plural, =0 {all clear} one {# item open} other {# items open}}",
@@ -815,7 +810,8 @@
       "cash_closing": "Cash over or short",
       "expense": "Expense",
       "expense_payment": "Bill payment",
-      "card_settlement": "Card settlement"
+      "card_settlement": "Card settlement",
+      "night_audit": "Night audit (room revenue earned)"
     },
     "createdBy": "Created",
     "postedBy": "Posted",
@@ -1425,5 +1421,53 @@
     "abandon": "Abandon",
     "abandonTitle": "Abandon this reconciliation?",
     "abandonExplain": "The ticks are removed. Nothing in the books changes."
+  },
+  "nightAudit": {
+    "title": "Night audit",
+    "subtitle": "Closes {date} and opens {next}. Each date is closed once.",
+    "done": "{date} is closed. The business date is now {next}.",
+    "storedSummary": "Summary of {date}",
+    "accrualPreview": "{nights, plural, one {# room night} other {# room nights}} will be recorded as earned tonight ({amount} before tax). Guests are billed at check-out.",
+    "noAccrual": "No room nights to record as earned tonight.",
+    "depositDecisions": "These no-shows paid a deposit. Choose for each:",
+    "holds": "deposit {amount}",
+    "decisions": {
+      "refund": "Refund it later",
+      "forfeit": "Keep it as a no-show fee"
+    },
+    "overrideReason": "Reason to close with open items",
+    "overrideHint": "Kept with the audit and in the audit log.",
+    "run": "Run night audit for {date}",
+    "running": "Running…",
+    "soFar": "Today so far",
+    "historySummary": "Revenue {revenue} · occupancy {percent}%",
+    "interimClose": "Day close (before the night audit)",
+    "revenue": "Revenue",
+    "noRevenue": "No revenue posted.",
+    "revenueTotal": "Total revenue",
+    "accruedNote": "Includes {nights, plural, one {# room night} other {# room nights}} earned tonight ({amount}), billed at check-out.",
+    "rooms": "Rooms",
+    "occupancy": "Occupancy",
+    "occupancyValue": "{occupied} of {sellable} ({percent}%)",
+    "arrivals": "Arrivals checked in",
+    "departures": "Checked out since the last close",
+    "inHouse": "In house",
+    "money": "Money",
+    "noReceipts": "No money received.",
+    "methods": {
+      "cash": "Cash received",
+      "bank_transfer": "Bank transfers received",
+      "card": "Card payments received",
+      "other": "Other receipts"
+    },
+    "refunds": "Refunds paid",
+    "cashOutsideShift": "Cash outside a cashier shift",
+    "cashOutsideShiftValue": "{lines, plural, one {# entry} other {# entries}}: in {in}, out {out}",
+    "none": "None",
+    "variance": "Variance on {drawer} ({cashier})",
+    "followUp": "To follow up",
+    "foliosOnAccount": "Folios on account",
+    "depositsToRefund": "Deposits waiting to be refunded",
+    "countAmount": "{count} · {amount}"
   }
 }

@@ -16012,12 +16012,12 @@
         }
       }
     },
-    "/properties/{propertyId}/day-close/preview": {
+    "/properties/{propertyId}/night-audit/preview": {
       "get": {
         "tags": [
-          "Day close"
+          "Night audit"
         ],
-        "summary": "What is still open for the business date, and out-of-order changes for the next date",
+        "summary": "What is still open for the business date, no-shows holding deposits, the room nights to accrue and the summary so far",
         "description": "Requires permission `night_audit.run` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
         "security": [
           {
@@ -16052,7 +16052,8 @@
                                   "arrivals_pending",
                                   "overstays",
                                   "rooms_not_clean",
-                                  "open_tasks"
+                                  "open_tasks",
+                                  "open_shifts"
                                 ]
                               },
                               "label": {
@@ -16137,6 +16138,232 @@
                             "arrivalsPending",
                             "sellableRooms"
                           ]
+                        },
+                        "noShowDeposits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "reservationId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "bookingReference": {
+                                "type": "string"
+                              },
+                              "guestName": {
+                                "type": "string"
+                              },
+                              "held": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "reservationId",
+                              "bookingReference",
+                              "guestName",
+                              "held"
+                            ]
+                          }
+                        },
+                        "accruals": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net"
+                          ]
+                        },
+                        "summary": {
+                          "type": "object",
+                          "properties": {
+                            "revenue": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "accountCode": {
+                                    "type": "string"
+                                  },
+                                  "accountName": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "accountCode",
+                                  "accountName",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "revenueTotal": {
+                              "type": "string"
+                            },
+                            "accrued": {
+                              "type": "object",
+                              "properties": {
+                                "nights": {
+                                  "type": "integer"
+                                },
+                                "net": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "nights",
+                                "net"
+                              ]
+                            },
+                            "occupancy": {
+                              "type": "object",
+                              "properties": {
+                                "occupied": {
+                                  "type": "integer"
+                                },
+                                "sellable": {
+                                  "type": "integer"
+                                },
+                                "percent": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "occupied",
+                                "sellable",
+                                "percent"
+                              ]
+                            },
+                            "arrivals": {
+                              "type": "integer"
+                            },
+                            "departures": {
+                              "type": "integer"
+                            },
+                            "inHouse": {
+                              "type": "integer"
+                            },
+                            "receipts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "method": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "method",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "refunds": {
+                              "type": "string"
+                            },
+                            "cashierVariances": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "drawer": {
+                                    "type": "string"
+                                  },
+                                  "cashier": {
+                                    "type": "string"
+                                  },
+                                  "variance": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "drawer",
+                                  "cashier",
+                                  "variance",
+                                  "status"
+                                ]
+                              }
+                            },
+                            "cashOutsideShift": {
+                              "type": "object",
+                              "properties": {
+                                "lines": {
+                                  "type": "integer"
+                                },
+                                "in": {
+                                  "type": "string"
+                                },
+                                "out": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "lines",
+                                "in",
+                                "out"
+                              ]
+                            },
+                            "foliosOnAccount": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "balance": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "balance"
+                              ]
+                            },
+                            "depositsToRefund": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "amount"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "revenue",
+                            "revenueTotal",
+                            "accrued",
+                            "occupancy",
+                            "arrivals",
+                            "departures",
+                            "inHouse",
+                            "receipts",
+                            "refunds",
+                            "cashierVariances",
+                            "cashOutsideShift",
+                            "foliosOnAccount",
+                            "depositsToRefund"
+                          ]
                         }
                       },
                       "required": [
@@ -16144,7 +16371,1403 @@
                         "nextDate",
                         "issues",
                         "serviceChanges",
-                        "counts"
+                        "counts",
+                        "noShowDeposits",
+                        "accruals",
+                        "summary"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/night-audit/history": {
+      "get": {
+        "tags": [
+          "Night audit"
+        ],
+        "summary": "Last 30 closed business dates with their stored summaries",
+        "description": "Requires permission `night_audit.run` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "day_close",
+                              "night_audit"
+                            ]
+                          },
+                          "businessDate": {
+                            "type": "string"
+                          },
+                          "nextDate": {
+                            "type": "string"
+                          },
+                          "closedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "closedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "noShowsMarked": {
+                            "type": "integer"
+                          },
+                          "unresolved": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "check": {
+                                  "type": "string",
+                                  "enum": [
+                                    "arrivals_pending",
+                                    "overstays",
+                                    "rooms_not_clean",
+                                    "open_tasks",
+                                    "open_shifts"
+                                  ]
+                                },
+                                "label": {
+                                  "type": "string"
+                                },
+                                "detail": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "reservationId": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "uuid"
+                                },
+                                "roomId": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "uuid"
+                                }
+                              },
+                              "required": [
+                                "check",
+                                "label",
+                                "detail",
+                                "reservationId",
+                                "roomId"
+                              ]
+                            }
+                          },
+                          "reason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "snapshot": {
+                            "type": "object",
+                            "properties": {
+                              "inHouse": {
+                                "type": "integer"
+                              },
+                              "arrivalsCheckedIn": {
+                                "type": "integer"
+                              },
+                              "sellableRooms": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "inHouse",
+                              "arrivalsCheckedIn",
+                              "sellableRooms"
+                            ]
+                          },
+                          "summary": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "revenue": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountCode": {
+                                      "type": "string"
+                                    },
+                                    "accountName": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "accountCode",
+                                    "accountName",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "revenueTotal": {
+                                "type": "string"
+                              },
+                              "accrued": {
+                                "type": "object",
+                                "properties": {
+                                  "nights": {
+                                    "type": "integer"
+                                  },
+                                  "net": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "nights",
+                                  "net"
+                                ]
+                              },
+                              "occupancy": {
+                                "type": "object",
+                                "properties": {
+                                  "occupied": {
+                                    "type": "integer"
+                                  },
+                                  "sellable": {
+                                    "type": "integer"
+                                  },
+                                  "percent": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "occupied",
+                                  "sellable",
+                                  "percent"
+                                ]
+                              },
+                              "arrivals": {
+                                "type": "integer"
+                              },
+                              "departures": {
+                                "type": "integer"
+                              },
+                              "inHouse": {
+                                "type": "integer"
+                              },
+                              "receipts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "method": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "method",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "refunds": {
+                                "type": "string"
+                              },
+                              "cashierVariances": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "drawer": {
+                                      "type": "string"
+                                    },
+                                    "cashier": {
+                                      "type": "string"
+                                    },
+                                    "variance": {
+                                      "type": "string"
+                                    },
+                                    "status": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "drawer",
+                                    "cashier",
+                                    "variance",
+                                    "status"
+                                  ]
+                                }
+                              },
+                              "cashOutsideShift": {
+                                "type": "object",
+                                "properties": {
+                                  "lines": {
+                                    "type": "integer"
+                                  },
+                                  "in": {
+                                    "type": "string"
+                                  },
+                                  "out": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "lines",
+                                  "in",
+                                  "out"
+                                ]
+                              },
+                              "foliosOnAccount": {
+                                "type": "object",
+                                "properties": {
+                                  "count": {
+                                    "type": "integer"
+                                  },
+                                  "balance": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "count",
+                                  "balance"
+                                ]
+                              },
+                              "depositsToRefund": {
+                                "type": "object",
+                                "properties": {
+                                  "count": {
+                                    "type": "integer"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "count",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "revenue",
+                              "revenueTotal",
+                              "accrued",
+                              "occupancy",
+                              "arrivals",
+                              "departures",
+                              "inHouse",
+                              "receipts",
+                              "refunds",
+                              "cashierVariances",
+                              "cashOutsideShift",
+                              "foliosOnAccount",
+                              "depositsToRefund"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "kind",
+                          "businessDate",
+                          "nextDate",
+                          "closedAt",
+                          "closedByName",
+                          "noShowsMarked",
+                          "unresolved",
+                          "reason",
+                          "snapshot",
+                          "summary"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/night-audit": {
+      "post": {
+        "tags": [
+          "Night audit"
+        ],
+        "summary": "Run the night audit once per date (Idempotency-Key): no-shows with deposit decisions (409 DEPOSIT_HANDLING_REQUIRED), a reason to override open items, room revenue accrued, summary stored, date advanced by one day",
+        "description": "Requires permission `night_audit.run` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "businessDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "markNoShows": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "deposits": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "enum": [
+                        "refund",
+                        "forfeit"
+                      ]
+                    },
+                    "default": {}
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "businessDate"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "day_close",
+                            "night_audit"
+                          ]
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "nextDate": {
+                          "type": "string"
+                        },
+                        "closedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "closedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "noShowsMarked": {
+                          "type": "integer"
+                        },
+                        "unresolved": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "check": {
+                                "type": "string",
+                                "enum": [
+                                  "arrivals_pending",
+                                  "overstays",
+                                  "rooms_not_clean",
+                                  "open_tasks",
+                                  "open_shifts"
+                                ]
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "detail": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reservationId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "check",
+                              "label",
+                              "detail",
+                              "reservationId",
+                              "roomId"
+                            ]
+                          }
+                        },
+                        "reason": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "snapshot": {
+                          "type": "object",
+                          "properties": {
+                            "inHouse": {
+                              "type": "integer"
+                            },
+                            "arrivalsCheckedIn": {
+                              "type": "integer"
+                            },
+                            "sellableRooms": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "inHouse",
+                            "arrivalsCheckedIn",
+                            "sellableRooms"
+                          ]
+                        },
+                        "summary": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "revenue": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "accountCode": {
+                                    "type": "string"
+                                  },
+                                  "accountName": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "accountCode",
+                                  "accountName",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "revenueTotal": {
+                              "type": "string"
+                            },
+                            "accrued": {
+                              "type": "object",
+                              "properties": {
+                                "nights": {
+                                  "type": "integer"
+                                },
+                                "net": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "nights",
+                                "net"
+                              ]
+                            },
+                            "occupancy": {
+                              "type": "object",
+                              "properties": {
+                                "occupied": {
+                                  "type": "integer"
+                                },
+                                "sellable": {
+                                  "type": "integer"
+                                },
+                                "percent": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "occupied",
+                                "sellable",
+                                "percent"
+                              ]
+                            },
+                            "arrivals": {
+                              "type": "integer"
+                            },
+                            "departures": {
+                              "type": "integer"
+                            },
+                            "inHouse": {
+                              "type": "integer"
+                            },
+                            "receipts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "method": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "method",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "refunds": {
+                              "type": "string"
+                            },
+                            "cashierVariances": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "drawer": {
+                                    "type": "string"
+                                  },
+                                  "cashier": {
+                                    "type": "string"
+                                  },
+                                  "variance": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "drawer",
+                                  "cashier",
+                                  "variance",
+                                  "status"
+                                ]
+                              }
+                            },
+                            "cashOutsideShift": {
+                              "type": "object",
+                              "properties": {
+                                "lines": {
+                                  "type": "integer"
+                                },
+                                "in": {
+                                  "type": "string"
+                                },
+                                "out": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "lines",
+                                "in",
+                                "out"
+                              ]
+                            },
+                            "foliosOnAccount": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "balance": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "balance"
+                              ]
+                            },
+                            "depositsToRefund": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "amount"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "revenue",
+                            "revenueTotal",
+                            "accrued",
+                            "occupancy",
+                            "arrivals",
+                            "departures",
+                            "inHouse",
+                            "receipts",
+                            "refunds",
+                            "cashierVariances",
+                            "cashOutsideShift",
+                            "foliosOnAccount",
+                            "depositsToRefund"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "kind",
+                        "businessDate",
+                        "nextDate",
+                        "closedAt",
+                        "closedByName",
+                        "noShowsMarked",
+                        "unresolved",
+                        "reason",
+                        "snapshot",
+                        "summary"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/day-close/preview": {
+      "get": {
+        "tags": [
+          "Night audit"
+        ],
+        "summary": "Alias of GET …/night-audit/preview, kept for one release",
+        "description": "Requires permission `night_audit.run` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "nextDate": {
+                          "type": "string"
+                        },
+                        "issues": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "check": {
+                                "type": "string",
+                                "enum": [
+                                  "arrivals_pending",
+                                  "overstays",
+                                  "rooms_not_clean",
+                                  "open_tasks",
+                                  "open_shifts"
+                                ]
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "detail": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reservationId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "roomId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              }
+                            },
+                            "required": [
+                              "check",
+                              "label",
+                              "detail",
+                              "reservationId",
+                              "roomId"
+                            ]
+                          }
+                        },
+                        "serviceChanges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "roomId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "roomNumber": {
+                                "type": "string"
+                              },
+                              "to": {
+                                "type": "string",
+                                "enum": [
+                                  "in_service",
+                                  "out_of_order"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "roomId",
+                              "roomNumber",
+                              "to"
+                            ]
+                          }
+                        },
+                        "counts": {
+                          "type": "object",
+                          "properties": {
+                            "inHouse": {
+                              "type": "integer"
+                            },
+                            "arrivalsCheckedIn": {
+                              "type": "integer"
+                            },
+                            "arrivalsPending": {
+                              "type": "integer"
+                            },
+                            "sellableRooms": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "inHouse",
+                            "arrivalsCheckedIn",
+                            "arrivalsPending",
+                            "sellableRooms"
+                          ]
+                        },
+                        "noShowDeposits": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "reservationId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "bookingReference": {
+                                "type": "string"
+                              },
+                              "guestName": {
+                                "type": "string"
+                              },
+                              "held": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "reservationId",
+                              "bookingReference",
+                              "guestName",
+                              "held"
+                            ]
+                          }
+                        },
+                        "accruals": {
+                          "type": "object",
+                          "properties": {
+                            "nights": {
+                              "type": "integer"
+                            },
+                            "net": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "nights",
+                            "net"
+                          ]
+                        },
+                        "summary": {
+                          "type": "object",
+                          "properties": {
+                            "revenue": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "accountCode": {
+                                    "type": "string"
+                                  },
+                                  "accountName": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "accountCode",
+                                  "accountName",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "revenueTotal": {
+                              "type": "string"
+                            },
+                            "accrued": {
+                              "type": "object",
+                              "properties": {
+                                "nights": {
+                                  "type": "integer"
+                                },
+                                "net": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "nights",
+                                "net"
+                              ]
+                            },
+                            "occupancy": {
+                              "type": "object",
+                              "properties": {
+                                "occupied": {
+                                  "type": "integer"
+                                },
+                                "sellable": {
+                                  "type": "integer"
+                                },
+                                "percent": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "occupied",
+                                "sellable",
+                                "percent"
+                              ]
+                            },
+                            "arrivals": {
+                              "type": "integer"
+                            },
+                            "departures": {
+                              "type": "integer"
+                            },
+                            "inHouse": {
+                              "type": "integer"
+                            },
+                            "receipts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "method": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "method",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "refunds": {
+                              "type": "string"
+                            },
+                            "cashierVariances": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "drawer": {
+                                    "type": "string"
+                                  },
+                                  "cashier": {
+                                    "type": "string"
+                                  },
+                                  "variance": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "drawer",
+                                  "cashier",
+                                  "variance",
+                                  "status"
+                                ]
+                              }
+                            },
+                            "cashOutsideShift": {
+                              "type": "object",
+                              "properties": {
+                                "lines": {
+                                  "type": "integer"
+                                },
+                                "in": {
+                                  "type": "string"
+                                },
+                                "out": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "lines",
+                                "in",
+                                "out"
+                              ]
+                            },
+                            "foliosOnAccount": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "balance": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "balance"
+                              ]
+                            },
+                            "depositsToRefund": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "amount"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "revenue",
+                            "revenueTotal",
+                            "accrued",
+                            "occupancy",
+                            "arrivals",
+                            "departures",
+                            "inHouse",
+                            "receipts",
+                            "refunds",
+                            "cashierVariances",
+                            "cashOutsideShift",
+                            "foliosOnAccount",
+                            "depositsToRefund"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "businessDate",
+                        "nextDate",
+                        "issues",
+                        "serviceChanges",
+                        "counts",
+                        "noShowDeposits",
+                        "accruals",
+                        "summary"
                       ]
                     },
                     "meta": {
@@ -16260,9 +17883,9 @@
     "/properties/{propertyId}/day-close/history": {
       "get": {
         "tags": [
-          "Day close"
+          "Night audit"
         ],
-        "summary": "Last 30 closed business dates",
+        "summary": "Alias of GET …/night-audit/history, kept for one release",
         "description": "Requires permission `night_audit.run` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
         "security": [
           {
@@ -16285,6 +17908,13 @@
                           "id": {
                             "type": "string",
                             "format": "uuid"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "day_close",
+                              "night_audit"
+                            ]
                           },
                           "businessDate": {
                             "type": "string"
@@ -16316,7 +17946,8 @@
                                     "arrivals_pending",
                                     "overstays",
                                     "rooms_not_clean",
-                                    "open_tasks"
+                                    "open_tasks",
+                                    "open_shifts"
                                   ]
                                 },
                                 "label": {
@@ -16376,10 +18007,198 @@
                               "arrivalsCheckedIn",
                               "sellableRooms"
                             ]
+                          },
+                          "summary": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "revenue": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountCode": {
+                                      "type": "string"
+                                    },
+                                    "accountName": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "accountCode",
+                                    "accountName",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "revenueTotal": {
+                                "type": "string"
+                              },
+                              "accrued": {
+                                "type": "object",
+                                "properties": {
+                                  "nights": {
+                                    "type": "integer"
+                                  },
+                                  "net": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "nights",
+                                  "net"
+                                ]
+                              },
+                              "occupancy": {
+                                "type": "object",
+                                "properties": {
+                                  "occupied": {
+                                    "type": "integer"
+                                  },
+                                  "sellable": {
+                                    "type": "integer"
+                                  },
+                                  "percent": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "occupied",
+                                  "sellable",
+                                  "percent"
+                                ]
+                              },
+                              "arrivals": {
+                                "type": "integer"
+                              },
+                              "departures": {
+                                "type": "integer"
+                              },
+                              "inHouse": {
+                                "type": "integer"
+                              },
+                              "receipts": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "method": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "method",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "refunds": {
+                                "type": "string"
+                              },
+                              "cashierVariances": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "drawer": {
+                                      "type": "string"
+                                    },
+                                    "cashier": {
+                                      "type": "string"
+                                    },
+                                    "variance": {
+                                      "type": "string"
+                                    },
+                                    "status": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "drawer",
+                                    "cashier",
+                                    "variance",
+                                    "status"
+                                  ]
+                                }
+                              },
+                              "cashOutsideShift": {
+                                "type": "object",
+                                "properties": {
+                                  "lines": {
+                                    "type": "integer"
+                                  },
+                                  "in": {
+                                    "type": "string"
+                                  },
+                                  "out": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "lines",
+                                  "in",
+                                  "out"
+                                ]
+                              },
+                              "foliosOnAccount": {
+                                "type": "object",
+                                "properties": {
+                                  "count": {
+                                    "type": "integer"
+                                  },
+                                  "balance": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "count",
+                                  "balance"
+                                ]
+                              },
+                              "depositsToRefund": {
+                                "type": "object",
+                                "properties": {
+                                  "count": {
+                                    "type": "integer"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "count",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "revenue",
+                              "revenueTotal",
+                              "accrued",
+                              "occupancy",
+                              "arrivals",
+                              "departures",
+                              "inHouse",
+                              "receipts",
+                              "refunds",
+                              "cashierVariances",
+                              "cashOutsideShift",
+                              "foliosOnAccount",
+                              "depositsToRefund"
+                            ]
                           }
                         },
                         "required": [
                           "id",
+                          "kind",
                           "businessDate",
                           "nextDate",
                           "closedAt",
@@ -16387,7 +18206,8 @@
                           "noShowsMarked",
                           "unresolved",
                           "reason",
-                          "snapshot"
+                          "snapshot",
+                          "summary"
                         ]
                       }
                     },
@@ -16504,9 +18324,9 @@
     "/properties/{propertyId}/day-close": {
       "post": {
         "tags": [
-          "Day close"
+          "Night audit"
         ],
-        "summary": "Close the business date once (Idempotency-Key): optional no-show marking, a reason if items remain, then the date advances by one day",
+        "summary": "Alias of POST …/night-audit, kept for one release (Idempotency-Key)",
         "description": "Requires permission `night_audit.run` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
         "security": [
           {
@@ -16526,6 +18346,17 @@
                   "markNoShows": {
                     "type": "boolean",
                     "default": false
+                  },
+                  "deposits": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "enum": [
+                        "refund",
+                        "forfeit"
+                      ]
+                    },
+                    "default": {}
                   },
                   "reason": {
                     "type": "string",
@@ -16555,6 +18386,13 @@
                         "id": {
                           "type": "string",
                           "format": "uuid"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "day_close",
+                            "night_audit"
+                          ]
                         },
                         "businessDate": {
                           "type": "string"
@@ -16586,7 +18424,8 @@
                                   "arrivals_pending",
                                   "overstays",
                                   "rooms_not_clean",
-                                  "open_tasks"
+                                  "open_tasks",
+                                  "open_shifts"
                                 ]
                               },
                               "label": {
@@ -16646,10 +18485,198 @@
                             "arrivalsCheckedIn",
                             "sellableRooms"
                           ]
+                        },
+                        "summary": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "revenue": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "accountCode": {
+                                    "type": "string"
+                                  },
+                                  "accountName": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "accountCode",
+                                  "accountName",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "revenueTotal": {
+                              "type": "string"
+                            },
+                            "accrued": {
+                              "type": "object",
+                              "properties": {
+                                "nights": {
+                                  "type": "integer"
+                                },
+                                "net": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "nights",
+                                "net"
+                              ]
+                            },
+                            "occupancy": {
+                              "type": "object",
+                              "properties": {
+                                "occupied": {
+                                  "type": "integer"
+                                },
+                                "sellable": {
+                                  "type": "integer"
+                                },
+                                "percent": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "occupied",
+                                "sellable",
+                                "percent"
+                              ]
+                            },
+                            "arrivals": {
+                              "type": "integer"
+                            },
+                            "departures": {
+                              "type": "integer"
+                            },
+                            "inHouse": {
+                              "type": "integer"
+                            },
+                            "receipts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "method": {
+                                    "type": "string"
+                                  },
+                                  "amount": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "method",
+                                  "amount"
+                                ]
+                              }
+                            },
+                            "refunds": {
+                              "type": "string"
+                            },
+                            "cashierVariances": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "drawer": {
+                                    "type": "string"
+                                  },
+                                  "cashier": {
+                                    "type": "string"
+                                  },
+                                  "variance": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "drawer",
+                                  "cashier",
+                                  "variance",
+                                  "status"
+                                ]
+                              }
+                            },
+                            "cashOutsideShift": {
+                              "type": "object",
+                              "properties": {
+                                "lines": {
+                                  "type": "integer"
+                                },
+                                "in": {
+                                  "type": "string"
+                                },
+                                "out": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "lines",
+                                "in",
+                                "out"
+                              ]
+                            },
+                            "foliosOnAccount": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "balance": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "balance"
+                              ]
+                            },
+                            "depositsToRefund": {
+                              "type": "object",
+                              "properties": {
+                                "count": {
+                                  "type": "integer"
+                                },
+                                "amount": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "count",
+                                "amount"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "revenue",
+                            "revenueTotal",
+                            "accrued",
+                            "occupancy",
+                            "arrivals",
+                            "departures",
+                            "inHouse",
+                            "receipts",
+                            "refunds",
+                            "cashierVariances",
+                            "cashOutsideShift",
+                            "foliosOnAccount",
+                            "depositsToRefund"
+                          ]
                         }
                       },
                       "required": [
                         "id",
+                        "kind",
                         "businessDate",
                         "nextDate",
                         "closedAt",
@@ -16657,7 +18684,8 @@
                         "noShowsMarked",
                         "unresolved",
                         "reason",
-                        "snapshot"
+                        "snapshot",
+                        "summary"
                       ]
                     },
                     "meta": {

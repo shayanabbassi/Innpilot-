@@ -139,3 +139,14 @@ Also for your accountant: the variance threshold, the opening balances, and whet
   nothing is posted; a completed reconciliation and its ticks are locked. One in progress may be abandoned.
   Permission `bank.reconcile` (owner, accountant). Card settlements (`cash.transfer`): Dr bank (net), Dr bank
   charges (fee), Cr card clearing (gross), never more than the clearing balance.
+- **4.5:** the night audit writes the same once-per-date record as the interim close (now with `kind` and a stored
+  `summary`), so OPS-004 keeps its unique key, expected-date check and row lock; `/day-close` stays as an alias for
+  one release and the old web page redirects. Every open item (arrivals, overstays, rooms not clean, open tasks,
+  open cashier shifts) still needs a reason to override, as before. No-shows holding a deposit need the same
+  refund-or-keep decision as the manual no-show (409 `DEPOSIT_HANDLING_REQUIRED` otherwise), closing the Phase 3
+  known limit. Folios on account, deposits waiting to be refunded, cash outside a shift and cashier variances are
+  reported in the summary rather than blocking.
+- **4.5 (D9):** each night slept is accrued once (unique per booked room and night), dated the night: Dr Unbilled
+  guest revenue (new system account 1210), Cr room revenue, net of tax. At check-out the room-night charge credits
+  Unbilled for the accrued amount and revenue only for any difference; voiding a billed accrued night reverses it
+  out of revenue, so nothing is left in Unbilled. Tax is still charged on the guest's bill (accountant to confirm).
