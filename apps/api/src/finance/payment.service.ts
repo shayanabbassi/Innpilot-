@@ -137,92 +137,113 @@ export class PaymentService {
     key: string | undefined,
     meta: RequestMeta,
   ) {
-    return this.command(auth, `POST /properties/${propertyId}/payments`, key, body, async (tx) => {
-      const property = await this.property(tx, propertyId);
-      let folioId = body.folioId;
-      if (!folioId) {
-        const res = await this.reservation(tx, propertyId, body.reservationId!);
-        if (!['pending', 'confirmed', 'checked_in'].includes(res.status)) {
-          throw new AppError('CONFLICT', `A ${res.status.replace('_', '-')} booking cannot take a deposit.`);
-        }
-        folioId = await this.folios.ensurePrimary(tx, auth, property, res.id);
-      }
-      const folio = await this.folios.openFolio(tx, propertyId, folioId);
-      const res = await this.reservation(tx, propertyId, folio.reservationId);
-      const kind = res.status === 'checked_in' ? 'payment' : 'deposit';
-      const currency = property.currencyCode;
-      const amount = Money.of(body.amount, currency);
+    return this.command(auth, `POST /properties/${propertyId}/payments`, key, body, async (tx) => ({
+      status: 201,
+      body: await this.receiveInTx(tx, auth, propertyId, body, key, meta),
+    }));
+  }
 
-      // A folio can take what is owed plus the room nights still to post (D7), never more: over-payments would
-      // only have to be refunded again.
-      const view = await this.folios.load(tx, property, folio.id);
-      const due = Money.of(view.balance, currency).add(Money.of(view.stayEstimate.gross, currency));
-      if (amount.compare(due) > 0) {
-        throw new AppError(
-          'PAYMENT_EXCEEDS_BALANCE',
-          due.isPositive()
-            ? `This folio can take at most ${due.toString()} ${currency} (balance plus nights still to post).`
-            : 'Nothing is owed on this folio.',
-          [{ path: 'amount', message: `At most ${due.isPositive() ? due.toString() : '0.00'}` }],
-        );
+  /** Records money received inside the caller's transaction (also used by check-out). Returns the payment. */
+  async receiveInTx(
+    tx: Tx,
+    auth: AuthContext,
+    propertyId: string,
+    body: RecordPaymentRequest,
+    key: string | undefined,
+    meta: RequestMeta,
+  ): Promise<PaymentDto> {
+    const property = await this.property(tx, propertyId);
+    let folioId = body.folioId;
+    if (!folioId) {
+      const res = await this.reservation(tx, propertyId, body.reservationId!);
+      if (!['pending', 'confirmed', 'checked_in'].includes(res.status)) {
+        throw new AppError('CONFLICT', `A ${res.status.replace('_', '-')} booking cannot take a deposit.`);
       }
+      folioId = await this.folios.ensurePrimary(tx, auth, property, res.id);
+    }
+    const folio = await this.folios.openFolio(tx, propertyId, folioId, { allowOnAccount: true });
+    const res = await this.reservation(tx, propertyId, folio.reservationId);
+    // Before check-in money is a deposit; from check-in on (including after check-out) it pays the bill.
+    const kind = res.status === 'checked_in' || res.status === 'checked_out' ? 'payment' : 'deposit';
+    const currency = property.currencyCode;
+    const amount = Money.of(body.amount, currency);
 
-      const cash = await this.cashAccount(tx, propertyId, body.method, body.cashAccountId);
-      const guestAccount = await this.systemAccount(
-        tx,
-        kind === 'deposit' ? 'guest_deposits' : 'guest_receivable',
+    // A folio can take what is owed plus the room nights still to post (D7), never more: over-payments would
+    // only have to be refunded again.
+    const view = await this.folios.load(tx, property, folio.id);
+    const due = Money.of(view.balance, currency).add(Money.of(view.stayEstimate.gross, currency));
+    if (amount.compare(due) > 0) {
+      throw new AppError(
+        'PAYMENT_EXCEEDS_BALANCE',
+        due.isPositive()
+          ? `This folio can take at most ${due.toString()} ${currency} (balance plus nights still to post).`
+          : 'Nothing is owed on this folio.',
+        [{ path: 'amount', message: `At most ${due.isPositive() ? due.toString() : '0.00'}` }],
       );
-      const receiptNumber = `${await this.prefix(tx, propertyId)}${pad(
-        await this.posting.nextNumber(tx, auth.tenantId, propertyId, 'receipt'),
-      )}`;
-      const id = randomUUID();
-      const journalId = await this.posting.post(tx, auth, {
-        propertyId,
-        sourceType: 'payment',
-        sourceId: id,
-        reference: receiptNumber,
-        narration: `${kind === 'deposit' ? 'Deposit' : 'Payment'} ${receiptNumber} (${res.bookingReference}, ${folio.label})`,
-        lines: [
-          { accountId: cash.ledgerAccountId, debit: amount.toString(), credit: '0' },
-          { accountId: guestAccount, debit: '0', credit: amount.toString(), folioId: folio.id },
-        ],
-        idempotencyKey: key ?? null,
-      });
-      await tx.insert(p).values({
-        id,
-        tenantId: auth.tenantId,
-        propertyId,
-        folioId: folio.id,
-        reservationId: res.id,
-        kind,
-        method: body.method,
-        cashAccountId: cash.id,
-        amount: amount.toStorage(),
-        currencyCode: currency,
-        businessDate: property.businessDate,
-        externalReference: body.externalReference || null,
-        notes: body.notes || null,
-        receiptNumber,
-        journalEntryId: journalId,
-        idempotencyKey: key ?? null,
-        createdBy: auth.userId,
-      });
-      await this.recordAudit(
-        tx,
-        auth,
-        propertyId,
-        meta,
-        `payment.${kind === 'deposit' ? 'deposit_received' : 'received'}`,
-        id,
-        {
-          receiptNumber,
-          amount: amount.toString(),
-          method: body.method,
-          folioId: folio.id,
-        },
-      );
-      return { status: 201, body: await this.one(tx, propertyId, id) };
+    }
+
+    const cash = await this.cashAccount(tx, propertyId, body.method, body.cashAccountId);
+    const guestAccount = await this.systemAccount(
+      tx,
+      kind === 'deposit' ? 'guest_deposits' : 'guest_receivable',
+    );
+    const receiptNumber = `${await this.prefix(tx, propertyId)}${pad(
+      await this.posting.nextNumber(tx, auth.tenantId, propertyId, 'receipt'),
+    )}`;
+    const id = randomUUID();
+    const journalId = await this.posting.post(tx, auth, {
+      propertyId,
+      sourceType: 'payment',
+      sourceId: id,
+      reference: receiptNumber,
+      narration: `${kind === 'deposit' ? 'Deposit' : 'Payment'} ${receiptNumber} (${res.bookingReference}, ${folio.label})`,
+      lines: [
+        { accountId: cash.ledgerAccountId, debit: amount.toString(), credit: '0' },
+        { accountId: guestAccount, debit: '0', credit: amount.toString(), folioId: folio.id },
+      ],
+      idempotencyKey: key ?? null,
     });
+    await tx.insert(p).values({
+      id,
+      tenantId: auth.tenantId,
+      propertyId,
+      folioId: folio.id,
+      reservationId: res.id,
+      kind,
+      method: body.method,
+      cashAccountId: cash.id,
+      amount: amount.toStorage(),
+      currencyCode: currency,
+      businessDate: property.businessDate,
+      externalReference: body.externalReference || null,
+      notes: body.notes || null,
+      receiptNumber,
+      journalEntryId: journalId,
+      idempotencyKey: key ?? null,
+      createdBy: auth.userId,
+    });
+    await this.recordAudit(
+      tx,
+      auth,
+      propertyId,
+      meta,
+      `payment.${kind === 'deposit' ? 'deposit_received' : 'received'}`,
+      id,
+      {
+        receiptNumber,
+        amount: amount.toString(),
+        method: body.method,
+        folioId: folio.id,
+      },
+    );
+    // A folio left on account closes once it is paid.
+    if (folio.status === 'on_account') {
+      const after = await this.folios.load(tx, property, folio.id);
+      if (Money.of(after.balance, currency).isZero()) {
+        await tx.update(schema.folios).set({ status: 'settled' }).where(eq(schema.folios.id, folio.id));
+      }
+    }
+    return this.one(tx, propertyId, id);
   }
 
   // ------------------------------------------------------------------------------------------- refund
@@ -235,86 +256,100 @@ export class PaymentService {
     key: string | undefined,
     meta: RequestMeta,
   ) {
-    return this.command(auth, `POST /payments/${paymentId}/refunds`, key, body, async (tx) => {
-      const property = await this.property(tx, propertyId);
-      const payment = await this.lockPayment(tx, propertyId, paymentId);
-      const folio = await this.folios.openFolio(tx, propertyId, payment.folioId);
-      const currency = property.currencyCode;
-      const amount = Money.of(body.amount, currency);
+    return this.command(auth, `POST /payments/${paymentId}/refunds`, key, body, async (tx) => ({
+      status: 201,
+      body: await this.refundInTx(tx, auth, propertyId, paymentId, body, key, meta),
+    }));
+  }
 
-      const left = await this.remainder(tx, payment);
-      if (amount.compare(left) > 0) {
-        throw new AppError(
-          'REFUND_EXCEEDS_REMAINDER',
-          `Only ${left.toString()} ${currency} of receipt ${payment.receiptNumber} can still be refunded.`,
-          [{ path: 'amount', message: `At most ${left.toString()}` }],
-        );
-      }
-      // Never refund money the guest still owes: the folio must stay at or below zero, nights to post included.
-      const view = await this.folios.load(tx, property, folio.id);
-      const credit = Money.of(view.balanceWithPending, currency).negate();
-      if (amount.compare(credit) > 0) {
-        throw new AppError(
-          'CONFLICT',
-          credit.isPositive()
-            ? `The guest is only in credit by ${credit.toString()} ${currency}. A larger refund would leave a balance owed.`
-            : 'The guest is not in credit on this folio, so there is nothing to refund.',
-          [{ path: 'amount', message: `At most ${credit.isPositive() ? credit.toString() : '0.00'}` }],
-        );
-      }
+  /** Refunds part of a payment inside the caller's transaction (also used by check-out). */
+  async refundInTx(
+    tx: Tx,
+    auth: AuthContext,
+    propertyId: string,
+    paymentId: string,
+    body: RefundRequest,
+    key: string | undefined,
+    meta: RequestMeta,
+  ): Promise<PaymentDto> {
+    const property = await this.property(tx, propertyId);
+    const payment = await this.lockPayment(tx, propertyId, paymentId);
+    const folio = await this.folios.openFolio(tx, propertyId, payment.folioId);
+    const currency = property.currencyCode;
+    const amount = Money.of(body.amount, currency);
 
-      const method = body.method ?? (payment.method as PaymentMethod);
-      const cash = await this.cashAccount(tx, propertyId, method, body.cashAccountId);
-      // What is left of a deposit is still held as a liability; a stay payment sits against the receivable.
-      const guestAccount = await this.systemAccount(
-        tx,
-        payment.kind === 'deposit' ? 'guest_deposits' : 'guest_receivable',
+    const left = await this.remainder(tx, payment);
+    if (amount.compare(left) > 0) {
+      throw new AppError(
+        'REFUND_EXCEEDS_REMAINDER',
+        `Only ${left.toString()} ${currency} of receipt ${payment.receiptNumber} can still be refunded.`,
+        [{ path: 'amount', message: `At most ${left.toString()}` }],
       );
-      const refundNumber = `RF-${pad(await this.posting.nextNumber(tx, auth.tenantId, propertyId, 'refund'))}`;
-      const id = randomUUID();
-      const journalId = await this.posting.post(tx, auth, {
-        propertyId,
-        sourceType: 'refund',
-        sourceId: id,
-        reference: refundNumber,
-        narration: `Refund ${refundNumber} of ${payment.receiptNumber}: ${body.reason}`,
-        lines: [
-          { accountId: guestAccount, debit: amount.toString(), credit: '0', folioId: folio.id },
-          { accountId: cash.ledgerAccountId, debit: '0', credit: amount.toString() },
-        ],
-        idempotencyKey: key ?? null,
-      });
-      await tx.insert(rf).values({
-        id,
+    }
+    // Never refund money the guest still owes: the folio must stay at or below zero, nights to post included.
+    const view = await this.folios.load(tx, property, folio.id);
+    const credit = Money.of(view.balanceWithPending, currency).negate();
+    if (amount.compare(credit) > 0) {
+      throw new AppError(
+        'CONFLICT',
+        credit.isPositive()
+          ? `The guest is only in credit by ${credit.toString()} ${currency}. A larger refund would leave a balance owed.`
+          : 'The guest is not in credit on this folio, so there is nothing to refund.',
+        [{ path: 'amount', message: `At most ${credit.isPositive() ? credit.toString() : '0.00'}` }],
+      );
+    }
+
+    const method = body.method ?? (payment.method as PaymentMethod);
+    const cash = await this.cashAccount(tx, propertyId, method, body.cashAccountId);
+    // What is left of a deposit is still held as a liability; a stay payment sits against the receivable.
+    const guestAccount = await this.systemAccount(
+      tx,
+      payment.kind === 'deposit' ? 'guest_deposits' : 'guest_receivable',
+    );
+    const refundNumber = `RF-${pad(await this.posting.nextNumber(tx, auth.tenantId, propertyId, 'refund'))}`;
+    const id = randomUUID();
+    const journalId = await this.posting.post(tx, auth, {
+      propertyId,
+      sourceType: 'refund',
+      sourceId: id,
+      reference: refundNumber,
+      narration: `Refund ${refundNumber} of ${payment.receiptNumber}: ${body.reason}`,
+      lines: [
+        { accountId: guestAccount, debit: amount.toString(), credit: '0', folioId: folio.id },
+        { accountId: cash.ledgerAccountId, debit: '0', credit: amount.toString() },
+      ],
+      idempotencyKey: key ?? null,
+    });
+    await tx.insert(rf).values({
+      id,
+      tenantId: auth.tenantId,
+      propertyId,
+      paymentId,
+      amount: amount.toStorage(),
+      method,
+      cashAccountId: cash.id,
+      externalReference: body.externalReference || null,
+      reason: body.reason,
+      businessDate: property.businessDate,
+      refundNumber,
+      journalEntryId: journalId,
+      createdBy: auth.userId,
+    });
+    await this.audit.record(
+      tx,
+      {
         tenantId: auth.tenantId,
         propertyId,
-        paymentId,
-        amount: amount.toStorage(),
-        method,
-        cashAccountId: cash.id,
-        externalReference: body.externalReference || null,
+        actor: { type: 'user', userId: auth.userId },
+        action: 'payment.refunded',
+        entityType: 'payment',
+        entityId: paymentId,
+        changes: { refundNumber, amount: amount.toString(), receiptNumber: payment.receiptNumber },
         reason: body.reason,
-        businessDate: property.businessDate,
-        refundNumber,
-        journalEntryId: journalId,
-        createdBy: auth.userId,
-      });
-      await this.audit.record(
-        tx,
-        {
-          tenantId: auth.tenantId,
-          propertyId,
-          actor: { type: 'user', userId: auth.userId },
-          action: 'payment.refunded',
-          entityType: 'payment',
-          entityId: paymentId,
-          changes: { refundNumber, amount: amount.toString(), receiptNumber: payment.receiptNumber },
-          reason: body.reason,
-        },
-        meta,
-      );
-      return { status: 201, body: await this.one(tx, propertyId, paymentId) };
-    });
+      },
+      meta,
+    );
+    return this.one(tx, propertyId, paymentId);
   }
 
   // ------------------------------------------------------------------------------------------- deposits

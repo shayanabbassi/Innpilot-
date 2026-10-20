@@ -68,6 +68,10 @@ import {
   ticketListQuery,
   updateTaskRequest,
   accountDto,
+  checkOutRequest,
+  checkOutResultDto,
+  checkoutPreviewDto,
+  invoiceDto,
   cashAccountDto,
   paymentDto,
   paymentListQueryObject,
@@ -662,6 +666,25 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     body: voidChargeRequest,
     data: z.object({ amount: z.string() }),
     status: 200,
+  },
+  'GET /properties/{propertyId}/stays/{stayId}/checkout-preview': {
+    tag: 'Check-out',
+    summary:
+      'What check-out will do: room nights to post, deposits to apply, and what each folio needs to settle',
+    data: checkoutPreviewDto,
+  },
+  'POST /properties/{propertyId}/stays/{stayId}/check-out': {
+    tag: 'Check-out',
+    summary:
+      'Check out (Idempotency-Key): post room nights, apply deposits, settle every folio (409 SETTLEMENT_REQUIRED otherwise), issue invoices',
+    body: checkOutRequest,
+    data: checkOutResultDto,
+    status: 200,
+  },
+  'GET /properties/{propertyId}/invoices/{id}': {
+    tag: 'Check-out',
+    summary: 'An issued invoice, frozen at check-out',
+    data: invoiceDto,
   },
   'GET /finance/accounts': {
     tag: 'Ledger',

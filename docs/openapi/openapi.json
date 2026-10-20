@@ -132,6 +132,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -263,6 +264,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -603,6 +605,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -746,6 +749,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -895,6 +899,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1044,6 +1049,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1266,6 +1272,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1485,6 +1492,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1765,6 +1773,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1984,6 +1993,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2195,6 +2205,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2449,6 +2460,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2705,6 +2717,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2865,6 +2878,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3043,6 +3057,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3174,6 +3189,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3359,6 +3375,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3567,6 +3584,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3789,6 +3807,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4001,6 +4020,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4238,6 +4258,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4435,6 +4456,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4810,6 +4832,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5050,6 +5073,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5312,6 +5336,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5648,6 +5673,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5952,6 +5978,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6214,6 +6241,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6378,6 +6406,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6612,6 +6641,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7004,6 +7034,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7439,6 +7470,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7772,6 +7804,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8134,6 +8167,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8357,6 +8391,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8690,6 +8725,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9050,6 +9086,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9406,6 +9443,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9799,6 +9837,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10192,6 +10231,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10523,6 +10563,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10878,6 +10919,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11465,6 +11507,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11766,6 +11809,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12216,6 +12260,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12496,6 +12541,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12806,6 +12852,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12978,6 +13025,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13252,6 +13300,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13528,6 +13577,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13675,6 +13725,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13941,6 +13992,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14181,6 +14233,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14440,6 +14493,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14680,6 +14734,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14954,6 +15009,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15280,6 +15336,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15533,6 +15590,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15806,6 +15864,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16049,6 +16108,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16291,6 +16351,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16558,6 +16619,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16749,6 +16811,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16987,6 +17050,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17202,6 +17266,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17539,6 +17604,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17842,6 +17908,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18209,6 +18276,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18347,6 +18415,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18716,6 +18785,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19019,6 +19089,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19346,6 +19417,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19655,6 +19727,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19932,6 +20005,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20133,6 +20207,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20334,6 +20409,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20555,6 +20631,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20794,6 +20871,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21083,6 +21161,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21350,6 +21429,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21614,6 +21694,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21850,6 +21931,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22037,6 +22119,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22257,6 +22340,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22473,6 +22557,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22703,6 +22788,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22909,6 +22995,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23186,6 +23273,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23594,6 +23682,28 @@
                           "refunded": {
                             "type": "string"
                           },
+                          "writtenOff": {
+                            "type": "string"
+                          },
+                          "invoices": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "invoiceNumber": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "invoiceNumber"
+                              ]
+                            }
+                          },
                           "depositHeld": {
                             "type": "string"
                           },
@@ -23698,6 +23808,8 @@
                           "posted",
                           "received",
                           "refunded",
+                          "writtenOff",
+                          "invoices",
                           "depositHeld",
                           "balance",
                           "pendingNights",
@@ -23759,6 +23871,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24183,6 +24296,28 @@
                         "refunded": {
                           "type": "string"
                         },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber"
+                            ]
+                          }
+                        },
                         "depositHeld": {
                           "type": "string"
                         },
@@ -24287,6 +24422,8 @@
                         "posted",
                         "received",
                         "refunded",
+                        "writtenOff",
+                        "invoices",
                         "depositHeld",
                         "balance",
                         "pendingNights",
@@ -24347,6 +24484,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24522,6 +24660,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24928,6 +25067,28 @@
                         "refunded": {
                           "type": "string"
                         },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber"
+                            ]
+                          }
+                        },
                         "depositHeld": {
                           "type": "string"
                         },
@@ -25032,6 +25193,8 @@
                         "posted",
                         "received",
                         "refunded",
+                        "writtenOff",
+                        "invoices",
                         "depositHeld",
                         "balance",
                         "pendingNights",
@@ -25092,6 +25255,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -25537,6 +25701,28 @@
                         "refunded": {
                           "type": "string"
                         },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber"
+                            ]
+                          }
+                        },
                         "depositHeld": {
                           "type": "string"
                         },
@@ -25641,6 +25827,8 @@
                         "posted",
                         "received",
                         "refunded",
+                        "writtenOff",
+                        "invoices",
                         "depositHeld",
                         "balance",
                         "pendingNights",
@@ -25701,6 +25889,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -26147,6 +26336,28 @@
                         "refunded": {
                           "type": "string"
                         },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber"
+                            ]
+                          }
+                        },
                         "depositHeld": {
                           "type": "string"
                         },
@@ -26251,6 +26462,8 @@
                         "posted",
                         "received",
                         "refunded",
+                        "writtenOff",
+                        "invoices",
                         "depositHeld",
                         "balance",
                         "pendingNights",
@@ -26311,6 +26524,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -26737,6 +26951,28 @@
                         "refunded": {
                           "type": "string"
                         },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber"
+                            ]
+                          }
+                        },
                         "depositHeld": {
                           "type": "string"
                         },
@@ -26841,6 +27077,8 @@
                         "posted",
                         "received",
                         "refunded",
+                        "writtenOff",
+                        "invoices",
                         "depositHeld",
                         "balance",
                         "pendingNights",
@@ -26901,6 +27139,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27332,6 +27571,28 @@
                         "refunded": {
                           "type": "string"
                         },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber"
+                            ]
+                          }
+                        },
                         "depositHeld": {
                           "type": "string"
                         },
@@ -27436,6 +27697,8 @@
                         "posted",
                         "received",
                         "refunded",
+                        "writtenOff",
+                        "invoices",
                         "depositHeld",
                         "balance",
                         "pendingNights",
@@ -27496,6 +27759,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27661,6 +27925,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28018,6 +28283,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28388,6 +28654,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28711,6 +28978,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29094,6 +29362,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29459,6 +29728,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29618,6 +29888,898 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/stays/{stayId}/checkout-preview": {
+      "get": {
+        "tags": [
+          "Check-out"
+        ],
+        "summary": "What check-out will do: room nights to post, deposits to apply, and what each folio needs to settle",
+        "description": "Requires permission `stay.checkout` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "stayId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "guestName": {
+                          "type": "string"
+                        },
+                        "roomNumber": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "isLastStay": {
+                          "type": "boolean"
+                        },
+                        "nights": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "date": {
+                                "type": "string"
+                              },
+                              "roomNumber": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "date",
+                              "roomNumber",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "nightsTotal": {
+                          "type": "object",
+                          "properties": {
+                            "net": {
+                              "type": "string"
+                            },
+                            "tax": {
+                              "type": "string"
+                            },
+                            "gross": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "net",
+                            "tax",
+                            "gross"
+                          ]
+                        },
+                        "folios": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "folioId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "isPrimary": {
+                                "type": "boolean"
+                              },
+                              "currentBalance": {
+                                "type": "string"
+                              },
+                              "nightsToPost": {
+                                "type": "string"
+                              },
+                              "depositToApply": {
+                                "type": "string"
+                              },
+                              "balanceAfter": {
+                                "type": "string"
+                              },
+                              "needs": {
+                                "type": "string",
+                                "enum": [
+                                  "none",
+                                  "payment",
+                                  "refund"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "folioId",
+                              "label",
+                              "isPrimary",
+                              "currentBalance",
+                              "nightsToPost",
+                              "depositToApply",
+                              "balanceAfter",
+                              "needs"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "stayId",
+                        "reservationId",
+                        "bookingReference",
+                        "guestName",
+                        "roomNumber",
+                        "businessDate",
+                        "isLastStay",
+                        "nights",
+                        "nightsTotal",
+                        "folios"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/stays/{stayId}/check-out": {
+      "post": {
+        "tags": [
+          "Check-out"
+        ],
+        "summary": "Check out (Idempotency-Key): post room nights, apply deposits, settle every folio (409 SETTLEMENT_REQUIRED otherwise), issue invoices",
+        "description": "Requires permission `stay.checkout` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "settlements": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "folioId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "action": {
+                          "type": "string",
+                          "enum": [
+                            "pay",
+                            "refund",
+                            "write_off",
+                            "on_account"
+                          ]
+                        },
+                        "method": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bank_transfer",
+                            "card",
+                            "other"
+                          ]
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "externalReference": {
+                          "type": "string",
+                          "maxLength": 60
+                        },
+                        "reason": {
+                          "type": "string",
+                          "minLength": 3,
+                          "maxLength": 500
+                        }
+                      },
+                      "required": [
+                        "folioId",
+                        "action"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "maxItems": 10,
+                    "default": []
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "stayId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "reservationStatus": {
+                          "type": "string"
+                        },
+                        "nightsPosted": {
+                          "type": "integer"
+                        },
+                        "invoices": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "invoiceNumber": {
+                                "type": "string"
+                              },
+                              "folioId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "issueDate": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              },
+                              "balanceDue": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "invoiceNumber",
+                              "folioId",
+                              "issueDate",
+                              "gross",
+                              "balanceDue"
+                            ]
+                          }
+                        },
+                        "folios": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "folioId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "open",
+                                  "settled",
+                                  "on_account"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "folioId",
+                              "status"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "stayId",
+                        "reservationId",
+                        "reservationStatus",
+                        "nightsPosted",
+                        "invoices",
+                        "folios"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/invoices/{id}": {
+      "get": {
+        "tags": [
+          "Check-out"
+        ],
+        "summary": "An issued invoice, frozen at check-out",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "invoiceNumber": {
+                          "type": "string"
+                        },
+                        "issueDate": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "billTo": {
+                          "type": "string"
+                        },
+                        "bookingReference": {
+                          "type": "string"
+                        },
+                        "folioId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "folioLabel": {
+                          "type": "string"
+                        },
+                        "reservationId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "net": {
+                          "type": "string"
+                        },
+                        "tax": {
+                          "type": "string"
+                        },
+                        "gross": {
+                          "type": "string"
+                        },
+                        "paid": {
+                          "type": "string"
+                        },
+                        "writtenOff": {
+                          "type": "string"
+                        },
+                        "balanceDue": {
+                          "type": "string"
+                        },
+                        "taxSummary": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "ratePercent": {
+                                "type": "string"
+                              },
+                              "inclusive": {
+                                "type": "boolean"
+                              },
+                              "base": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "code",
+                              "name",
+                              "ratePercent",
+                              "inclusive",
+                              "base",
+                              "amount"
+                            ]
+                          }
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "lineNo": {
+                                "type": "integer"
+                              },
+                              "kind": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "serviceDate": {
+                                "type": "string"
+                              },
+                              "quantity": {
+                                "type": "string"
+                              },
+                              "unitPrice": {
+                                "type": "string"
+                              },
+                              "net": {
+                                "type": "string"
+                              },
+                              "tax": {
+                                "type": "string"
+                              },
+                              "gross": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "lineNo",
+                              "kind",
+                              "description",
+                              "serviceDate",
+                              "quantity",
+                              "unitPrice",
+                              "net",
+                              "tax",
+                              "gross"
+                            ]
+                          }
+                        },
+                        "hotel": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "legalName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "address": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "registrationFields": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "label",
+                                  "value"
+                                ]
+                              }
+                            },
+                            "footer": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "legalName",
+                            "address",
+                            "registrationFields",
+                            "footer"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "invoiceNumber",
+                        "issueDate",
+                        "currencyCode",
+                        "billTo",
+                        "bookingReference",
+                        "folioId",
+                        "folioLabel",
+                        "reservationId",
+                        "net",
+                        "tax",
+                        "gross",
+                        "paid",
+                        "writtenOff",
+                        "balanceDue",
+                        "taxSummary",
+                        "lines",
+                        "hotel",
+                        "createdByName",
+                        "createdAt"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29821,6 +30983,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30085,6 +31248,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30333,6 +31497,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30561,6 +31726,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30781,6 +31947,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -31051,6 +32218,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -31189,6 +32357,7 @@
                             "PAYMENT_EXCEEDS_BALANCE",
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",

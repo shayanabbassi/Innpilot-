@@ -351,7 +351,9 @@ describe('pending room nights and tax snapshots', () => {
   });
 
   it('refuses changes on a closed folio', async () => {
-    await h.admin.query(`UPDATE folios SET status = 'settled' WHERE id = $1`, [companyFolioId]);
+    await h.admin.query(`UPDATE folios SET status = 'settled', settled_at = now() WHERE id = $1`, [
+      companyFolioId,
+    ]);
     const res = await withKey(desk, `/folios/${companyFolioId}/charges`, {
       categoryId: cat['fnb'],
       description: 'Late',

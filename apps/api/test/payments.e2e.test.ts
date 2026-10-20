@@ -294,7 +294,9 @@ describe('payments during the stay', () => {
 
   it('refuses payments on a closed folio', async () => {
     const extra = await desk.post(`${base}/reservations/${reservation}/folios`, { label: 'Extras' });
-    await h.admin.query(`UPDATE folios SET status = 'settled' WHERE id = $1`, [extra.body.data.id]);
+    await h.admin.query(`UPDATE folios SET status = 'settled', settled_at = now() WHERE id = $1`, [
+      extra.body.data.id,
+    ]);
     const res = await withKey(desk, '/payments', {
       folioId: extra.body.data.id,
       amount: '10',

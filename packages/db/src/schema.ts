@@ -546,6 +546,11 @@ export const folios = pgTable('folios', {
   createdBy: uuid('created_by'),
   createdAt: tsz('created_at').notNull().defaultNow(),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
+  writtenOff: numeric('written_off', { precision: 19, scale: 4 }).notNull().default('0'),
+  writeOffJournalId: uuid('write_off_journal_id'),
+  settledAt: tsz('settled_at'),
+  settledBy: uuid('settled_by'),
+  settlementReason: text('settlement_reason'),
 });
 
 export const folioCharges = pgTable('folio_charges', {
@@ -648,4 +653,52 @@ export const refunds = pgTable('refunds', {
   journalEntryId: uuid('journal_entry_id').notNull(),
   createdBy: uuid('created_by').notNull(),
   createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const roomNightCharges = pgTable('room_night_charges', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  chargeId: uuid('charge_id').notNull(),
+  reservationRoomId: uuid('reservation_room_id').notNull(),
+  night: date('night', { mode: 'string' }).notNull(),
+});
+
+export const invoices = pgTable('invoices', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  folioId: uuid('folio_id').notNull(),
+  reservationId: uuid('reservation_id').notNull(),
+  invoiceNumber: text('invoice_number').notNull(),
+  issueDate: date('issue_date', { mode: 'string' }).notNull(),
+  currencyCode: char('currency_code', { length: 3 }).notNull(),
+  billTo: text('bill_to').notNull(),
+  netAmount: numeric('net_amount', { precision: 19, scale: 4 }).notNull(),
+  taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull(),
+  grossAmount: numeric('gross_amount', { precision: 19, scale: 4 }).notNull(),
+  paidAmount: numeric('paid_amount', { precision: 19, scale: 4 }).notNull(),
+  writtenOff: numeric('written_off', { precision: 19, scale: 4 }).notNull().default('0'),
+  balanceDue: numeric('balance_due', { precision: 19, scale: 4 }).notNull(),
+  taxSummary: jsonb('tax_summary').$type<unknown[]>().notNull().default([]),
+  hotel: jsonb('hotel').$type<Record<string, unknown>>().notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const invoiceLines = pgTable('invoice_lines', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  invoiceId: uuid('invoice_id').notNull(),
+  lineNo: smallint('line_no').notNull(),
+  kind: text('kind').notNull(),
+  description: text('description').notNull(),
+  serviceDate: date('service_date', { mode: 'string' }).notNull(),
+  quantity: numeric('quantity', { precision: 9, scale: 2 }).notNull(),
+  unitPrice: numeric('unit_price', { precision: 19, scale: 4 }).notNull(),
+  netAmount: numeric('net_amount', { precision: 19, scale: 4 }).notNull(),
+  taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull(),
+  grossAmount: numeric('gross_amount', { precision: 19, scale: 4 }).notNull(),
+  taxes: jsonb('taxes').$type<unknown[]>().notNull().default([]),
 });

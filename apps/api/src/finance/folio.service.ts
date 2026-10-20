@@ -428,6 +428,60 @@ export class FolioService {
     });
   }
 
+  /**
+   * Posts one room night (D7) on the folio with the tax of that night, and records it against the booked room so the
+   * same night can never be posted twice (unique key). Returns false if the night was already posted.
+   */
+  async postRoomNight(
+    tx: Tx,
+    auth: AuthContext,
+    property: PropertyRow,
+    folio: FolioRow,
+    night: { date: string; reservationRoomId: string; rate: Money; roomNumber: string | null },
+  ): Promise<boolean> {
+    const [done] = await tx
+      .select({ id: schema.roomNightCharges.id })
+      .from(schema.roomNightCharges)
+      .where(
+        and(
+          eq(schema.roomNightCharges.reservationRoomId, night.reservationRoomId),
+          eq(schema.roomNightCharges.night, night.date),
+        ),
+      );
+    if (done) return false;
+    const [category] = await tx
+      .select({ id: schema.chargeCategories.id })
+      .from(schema.chargeCategories)
+      .where(
+        and(
+          eq(schema.chargeCategories.propertyId, property.id),
+          eq(schema.chargeCategories.systemKind, 'room'),
+        ),
+      );
+    if (!category) throw AppError.notFound('room charge category');
+    const chargeId = await this.postItem(tx, auth, property, folio, {
+      kind: 'room_night',
+      categoryId: category.id,
+      description: night.roomNumber
+        ? `Room ${night.roomNumber}, night of ${night.date}`
+        : `Room, night of ${night.date}`,
+      serviceDate: night.date,
+      quantity: '1',
+      unitPrice: night.rate.toString(),
+      amount: night.rate,
+      reason: null,
+      key: undefined,
+    });
+    await tx.insert(schema.roomNightCharges).values({
+      tenantId: auth.tenantId,
+      propertyId: property.id,
+      chargeId,
+      reservationRoomId: night.reservationRoomId,
+      night: night.date,
+    });
+    return true;
+  }
+
   // ------------------------------------------------------------------------------------------- internals
 
   private async postItem(
@@ -436,7 +490,7 @@ export class FolioService {
     property: PropertyRow,
     folio: FolioRow,
     item: {
-      kind: 'charge' | 'allowance';
+      kind: 'charge' | 'allowance' | 'room_night';
       categoryId: string;
       description: string;
       serviceDate?: string;
@@ -467,7 +521,7 @@ export class FolioService {
         { path: 'categoryId', message: 'Choose a category.' },
       ]);
     }
-    if (category.cat.systemKind === 'room' && item.kind === 'charge') {
+    if ((category.cat.systemKind === 'room') !== (item.kind === 'room_night') && item.kind !== 'allowance') {
       throw AppError.validation('Room nights are posted at check-out. Use another category for extras.', [
         { path: 'categoryId', message: 'Choose another category.' },
       ]);
@@ -607,14 +661,20 @@ export class FolioService {
   }
 
   /** Locks the folio and refuses a closed one (FOLIO_CLOSED). */
-  async openFolio(tx: Tx, propertyId: string, folioId: string): Promise<FolioRow> {
+  async openFolio(
+    tx: Tx,
+    propertyId: string,
+    folioId: string,
+    opts: { allowOnAccount?: boolean } = {},
+  ): Promise<FolioRow> {
     const [folio] = await tx
       .select()
       .from(f)
       .where(and(eq(f.propertyId, propertyId), eq(f.id, folioId)))
       .for('update');
     if (!folio) throw AppError.notFound('folio');
-    if (folio.status !== 'open') {
+    // A folio left on the guest's account after check-out can still take payments, nothing else.
+    if (folio.status !== 'open' && !(opts.allowOnAccount && folio.status === 'on_account')) {
       throw new AppError(
         'FOLIO_CLOSED',
         'This folio is closed. Corrections after check-out use a refund or adjustment.',
@@ -683,7 +743,13 @@ export class FolioService {
       payments.filter((p) => p.kind === 'deposit').map((p) => Money.of(p.refundable, currency)),
       currency,
     );
-    const balance = posted.gross.subtract(received).add(refunded);
+    const writtenOff = Money.of(row.f.writtenOff, currency).round();
+    const balance = posted.gross.subtract(received).add(refunded).subtract(writtenOff);
+    const invoices = await tx
+      .select({ id: schema.invoices.id, invoiceNumber: schema.invoices.invoiceNumber })
+      .from(schema.invoices)
+      .where(eq(schema.invoices.folioId, folioId))
+      .orderBy(asc(schema.invoices.createdAt));
     return {
       id: row.f.id,
       reservationId: row.f.reservationId,
@@ -698,6 +764,8 @@ export class FolioService {
       payments,
       posted: { net: posted.net.toString(), tax: posted.tax.toString(), gross: posted.gross.toString() },
       received: received.toString(),
+      writtenOff: writtenOff.toString(),
+      invoices,
       refunded: refunded.toString(),
       depositHeld: depositHeld.toString(),
       balance: balance.toString(),
@@ -731,7 +799,8 @@ export class FolioService {
    * night's date. Pending: nights already slept (from check-in up to, not including, the business date). Estimate:
    * every booked night to departure.
    */
-  private async nights(tx: Tx, property: PropertyRow, reservationId: string) {
+  /** Room nights of a booking not yet posted. Used by the folio view and by check-out. */
+  async nights(tx: Tx, property: PropertyRow, reservationId: string) {
     const currency = property.currencyCode;
     const [roomCategory] = await tx
       .select({ id: schema.chargeCategories.id })
@@ -754,8 +823,26 @@ export class FolioService {
       .leftJoin(schema.rooms, eq(schema.rooms.id, rr.roomId))
       .where(and(eq(rr.reservationId, reservationId), eq(rr.status, 'active')))
       .orderBy(asc(rr.arrival));
+    // Nights already posted (at an earlier check-out of the booking) are never offered again.
+    const postedRows = segments.length
+      ? await tx
+          .select({ rr: schema.roomNightCharges.reservationRoomId, night: schema.roomNightCharges.night })
+          .from(schema.roomNightCharges)
+          .where(
+            inArray(
+              schema.roomNightCharges.reservationRoomId,
+              segments.map((x) => x.rr.id),
+            ),
+          )
+      : [];
+    const posted = new Set(postedRows.map((x) => `${x.rr}|${x.night}`));
     const taxCache = new Map<string, Awaited<ReturnType<TaxService['ratesFor']>>['rates']>();
-    const night = async (date: string, rate: Money, roomNumber: string | null) => {
+    const night = async (
+      date: string,
+      rate: Money,
+      roomNumber: string | null,
+      segment: typeof rr.$inferSelect,
+    ) => {
       if (!taxCache.has(date)) {
         taxCache.set(
           date,
@@ -763,7 +850,17 @@ export class FolioService {
         );
       }
       const t = calculateTax(rate, taxCache.get(date)!);
-      return { date, roomNumber, rate, net: t.net, tax: t.taxTotal, gross: t.gross };
+      return {
+        date,
+        roomNumber,
+        rate,
+        net: t.net,
+        tax: t.taxTotal,
+        gross: t.gross,
+        reservationRoomId: segment.id,
+        stayId: segment.stayId,
+        roomId: segment.roomId,
+      };
     };
     const pending: Awaited<ReturnType<typeof night>>[] = [];
     const estimate = {
@@ -776,7 +873,8 @@ export class FolioService {
       const rate = Money.of(s.rr.nightlyRate, currency).round();
       const start = s.rr.stayId && s.checkedIn && s.checkedIn > s.rr.arrival ? s.checkedIn : s.rr.arrival;
       for (let d = start; d < s.rr.departure; d = addDays(d, 1)) {
-        const n = await night(d, rate, s.roomNumber);
+        if (posted.has(`${s.rr.id}|${d}`)) continue;
+        const n = await night(d, rate, s.roomNumber, s.rr);
         estimate.nights += 1;
         estimate.net = estimate.net.add(n.net);
         estimate.tax = estimate.tax.add(n.tax);

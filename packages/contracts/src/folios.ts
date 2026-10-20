@@ -145,9 +145,12 @@ export const folioDto = z.object({
   /** Money received on this folio (deposits and payments) and refunded from it. */
   received: z.string(),
   refunded: z.string(),
+  /** Written off at check-out (an expense, not revenue lost from the books). */
+  writtenOff: z.string(),
+  invoices: z.array(z.object({ id: uuid, invoiceNumber: z.string() })),
   /** Deposits not yet applied to the bill: still a liability in the ledger. */
   depositHeld: z.string(),
-  /** Positive: the guest owes; negative: the guest is in credit. Charges − allowances − received + refunded. */
+  /** Positive: the guest owes; negative: the guest is in credit. Charges − allowances − received + refunded − written off. */
   balance: z.string(),
   /** Primary folio only: nights stayed so far, not yet posted. */
   pendingNights: z.array(pendingNightDto),
