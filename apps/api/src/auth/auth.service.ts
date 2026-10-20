@@ -157,6 +157,7 @@ export class AuthService {
           timezone: p.timezone,
           currencyCode: p.currencyCode,
           businessDate: p.businessDate,
+          cashVarianceThreshold: p.cashVarianceThreshold.replace(/^(\d+)\.(\d{2})\d*$/, '$1.$2'),
           onboardingCompleted: p.onboardingCompletedAt !== null,
           roles: [
             ...new Set(

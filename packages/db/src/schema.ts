@@ -53,6 +53,10 @@ export const properties = pgTable('properties', {
   checkInTime: time('check_in_time').notNull().default('14:00'),
   checkOutTime: time('check_out_time').notNull().default('12:00'),
   businessDate: date('business_date', { mode: 'string' }).notNull(),
+  /** A cash closing variance above this needs approval (P4-5). */
+  cashVarianceThreshold: numeric('cash_variance_threshold', { precision: 19, scale: 4 })
+    .notNull()
+    .default('500'),
   status: text('status', { enum: ['active', 'archived'] })
     .notNull()
     .default('active'),
@@ -467,6 +471,8 @@ export const journalLines = pgTable('journal_lines', {
   description: text('description'),
   folioId: uuid('folio_id'),
   cashAccountId: uuid('cash_account_id'),
+  /** The open cashier shift on that drawer when the line was posted (P4-4). */
+  cashierShiftId: uuid('cashier_shift_id'),
 });
 
 export const taxCodes = pgTable('tax_codes', {
@@ -728,4 +734,43 @@ export const openingBalances = pgTable('opening_balances', {
   journalEntryId: uuid('journal_entry_id').notNull(),
   createdBy: uuid('created_by').notNull(),
   createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const cashierShifts = pgTable('cashier_shifts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  cashAccountId: uuid('cash_account_id').notNull(),
+  userId: uuid('user_id').notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  openedAt: tsz('opened_at').notNull().defaultNow(),
+  openingCount: numeric('opening_count', { precision: 19, scale: 4 }).notNull(),
+  bookBalanceAtOpen: numeric('book_balance_at_open', { precision: 19, scale: 4 }).notNull(),
+  status: text('status').notNull().default('open'),
+  closedAt: tsz('closed_at'),
+});
+
+export const cashClosings = pgTable('cash_closings', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  shiftId: uuid('shift_id').notNull(),
+  cashAccountId: uuid('cash_account_id').notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  expectedAmount: numeric('expected_amount', { precision: 19, scale: 4 }).notNull(),
+  countedAmount: numeric('counted_amount', { precision: 19, scale: 4 }).notNull(),
+  variance: numeric('variance', { precision: 19, scale: 4 }).notNull(),
+  explanation: text('explanation'),
+  threshold: numeric('threshold', { precision: 19, scale: 4 }).notNull(),
+  approvalRequired: boolean('approval_required').notNull(),
+  status: text('status').notNull(),
+  submittedBy: uuid('submitted_by').notNull(),
+  submittedAt: tsz('submitted_at').notNull().defaultNow(),
+  approvedBy: uuid('approved_by'),
+  approvedAt: tsz('approved_at'),
+  approvalNote: text('approval_note'),
+  varianceJournalEntryId: uuid('variance_journal_entry_id'),
+  reopenedBy: uuid('reopened_by'),
+  reopenedAt: tsz('reopened_at'),
+  reopenReason: text('reopen_reason'),
 });

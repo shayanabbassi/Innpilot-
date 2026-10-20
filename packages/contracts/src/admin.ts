@@ -19,6 +19,8 @@ export const propertyDto = z.object({
   checkOutTime: z.string(),
   /** YYYY-MM-DD; the hotel's operating date. */
   businessDate: z.string(),
+  /** A cash closing variance above this needs approval by someone with cashier.approve (P4-5). */
+  cashVarianceThreshold: z.string(),
   status: z.enum(['active', 'archived']),
   /** null while the setup wizard is unfinished. */
   onboardingCompletedAt: z.string().datetime().nullable(),
@@ -53,6 +55,11 @@ export const updatePropertyRequest = z
       .optional(),
     checkInTime: timeOfDay.optional(),
     checkOutTime: timeOfDay.optional(),
+    cashVarianceThreshold: z
+      .string()
+      .trim()
+      .regex(/^\d{1,13}(\.\d{1,2})?$/, 'Enter an amount such as 500 (at most 2 decimal places).')
+      .optional(),
   })
   .strict()
   .refine((v) => Object.keys(v).length > 0, { message: 'Change at least one field.' });

@@ -74,7 +74,9 @@
     "accounts": "Chart of accounts",
     "periods": "Accounting periods",
     "taxes": "Taxes & charges",
-    "invoice": "Invoice details"
+    "invoice": "Invoice details",
+    "myShift": "My shift",
+    "cashClosings": "Cash closings"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -158,7 +160,9 @@
     "currency": "Currency",
     "currencyNote": "Fixed at setup. Every amount stores its own currency.",
     "businessDate": "Business date",
-    "businessDateNote": "Advances only when the daily close runs."
+    "businessDateNote": "Advances only when the daily close runs.",
+    "cashVarianceThreshold": "Cash variance needing approval (above)",
+    "cashVarianceThresholdHint": "A cashier closing that is short or over by more than this waits for a supervisor. 0 means every variance does."
   },
   "account": {
     "title": "My account",
@@ -296,6 +300,12 @@
     },
     "finance": {
       "opening_balances_posted": "Opening balances entered"
+    },
+    "cashier": {
+      "shift_opened": "Cashier shift opened",
+      "closing_submitted": "Cash closing submitted",
+      "closing_approved": "Cash closing approved",
+      "closing_reopened": "Cash closing reopened"
     }
   },
   "onboarding": {
@@ -779,7 +789,8 @@
       "refund": "Refund",
       "deposit_application": "Deposit applied",
       "cash_transfer": "Transfer",
-      "opening_balance": "Opening balances"
+      "opening_balance": "Opening balances",
+      "cash_closing": "Cash over or short"
     },
     "createdBy": "Created",
     "postedBy": "Posted",
@@ -1144,5 +1155,78 @@
     "writtenOff": "Written off",
     "balanceDue": "Balance due",
     "notCertified": "Issued by InnPilot. Not a certified tax invoice: check local requirements with your tax adviser."
+  },
+  "cashier": {
+    "title": "My shift",
+    "subtitle": "Count the drawer when you start and when you finish. The difference is worked out from what was recorded.",
+    "history": "Shift history",
+    "openTitle": "Open a shift",
+    "openExplain": "Count the cash in the drawer and enter it. Cash you take or pay out on this drawer is then counted in your shift.",
+    "drawer": "Cash drawer",
+    "chooseDrawer": "Choose a drawer",
+    "openingCount": "Opening count",
+    "openingCountHint": "The cash in the drawer now, counted.",
+    "openShift": "Open shift",
+    "openedBy": "{name} on {drawer}, opened {time}",
+    "cashIn": "Cash in",
+    "cashOut": "Cash out",
+    "expected": "Expected in the drawer",
+    "openingDifference": "The books said the drawer held {book} when you opened; you counted {count}.",
+    "movements": "Cash in this shift",
+    "noMovements": "No cash has moved in this shift yet.",
+    "closeTitle": "Close the shift",
+    "closeExplain": "Count the drawer and enter what is there. If it differs from the expected amount, say why.",
+    "counted": "Counted cash",
+    "varianceLive": "Difference",
+    "noVariance": "No difference",
+    "short": "Short by {amount}",
+    "over": "Over by {amount}",
+    "needsApproval": "This is more than {threshold}, so a supervisor must approve the closing.",
+    "explanationRequired": "Why is there a difference? (required)",
+    "explanationOptional": "Notes (optional)",
+    "submitClosing": "Submit closing",
+    "submittedWaiting": "Closing submitted. It is waiting for a supervisor to approve the difference.",
+    "closedDone": "Shift closed.",
+    "openAnother": "Open a new shift",
+    "closing": "Closing",
+    "earlierClosing": "Earlier closing (reopened)",
+    "closingStatus": {
+      "submitted": "Waiting for approval",
+      "approved": "Approved",
+      "reopened": "Reopened"
+    },
+    "aboveThreshold": "More than {threshold}",
+    "variance": "Difference",
+    "explanation": "Reason",
+    "submittedBy": "Submitted by {name}, {time}",
+    "approvedBy": "Approved by {name}, {time}",
+    "autoApproved": "Within the limit: accepted without approval.",
+    "varianceJournal": "Posted in journal {n}",
+    "reopenedBy": "Reopened by {name}, {time}: {reason}",
+    "statusOpen": "Open",
+    "statusAwaiting": "Waiting for approval",
+    "statusClosed": "Closed",
+    "shiftsTitle": "Cash closings",
+    "myShiftsTitle": "My shifts",
+    "shiftsSubtitle": "Every shift with its expected and counted cash.",
+    "filter": "Show",
+    "filters": {
+      "open": "Open",
+      "awaiting_approval": "Waiting for approval",
+      "closed": "Closed",
+      "all": "All"
+    },
+    "noShifts": "No shifts here.",
+    "expectedShort": "expected {amount}",
+    "allShifts": "All shifts",
+    "stillOpen": "This shift is still open.",
+    "approve": "Approve",
+    "reopen": "Reopen",
+    "approveTitle": "Approve this closing?",
+    "approveExplain": "The difference will be posted to Cash over and short, so the books match the count.",
+    "approvalNote": "Note (optional)",
+    "reopenTitle": "Reopen this closing?",
+    "reopenExplain": "Any posted difference is reversed and the shift opens again for a recount. The closing stays in the history.",
+    "reopenReason": "Reason"
   }
 }

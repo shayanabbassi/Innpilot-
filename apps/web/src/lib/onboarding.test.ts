@@ -16,6 +16,7 @@ const complete: PropertyDto = {
   checkInTime: '14:00',
   checkOutTime: '12:00',
   businessDate: '2026-10-19',
+  cashVarianceThreshold: '500.00',
   status: 'active',
   onboardingCompletedAt: null,
 };

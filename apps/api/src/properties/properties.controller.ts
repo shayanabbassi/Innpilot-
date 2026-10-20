@@ -31,6 +31,7 @@ function toDto(p: PropertyRow): PropertyDto {
     checkInTime: p.checkInTime.slice(0, 5),
     checkOutTime: p.checkOutTime.slice(0, 5),
     businessDate: p.businessDate,
+    cashVarianceThreshold: p.cashVarianceThreshold.replace(/^(\d+)\.(\d{2})\d*$/, '$1.$2'),
     status: p.status,
     onboardingCompletedAt: p.onboardingCompletedAt?.toISOString() ?? null,
   };
@@ -46,6 +47,7 @@ const AUDITED_FIELDS = [
   'email',
   'checkInTime',
   'checkOutTime',
+  'cashVarianceThreshold',
 ] as const;
 
 @Controller('properties')

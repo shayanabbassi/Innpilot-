@@ -106,3 +106,20 @@ Also for your accountant: the variance threshold, the opening balances, and whet
 ## Order
 
 4.1 → 4.2 → 4.3 → 4.4 → 4.5 → 4.6. 4.2 and 4.5 are the largest. Work continues on branch `phase-1-foundation`.
+
+## Notes from the build
+
+- **4.1:** new cash accounts post to the system ledger account for their kind (1000, 1100, 1150) unless another
+  asset account is chosen; several drawers or banks can share one ledger account and are told apart by the cash
+  dimension. A cash ledger line must name its drawer or bank when the property has more than one on that ledger
+  account. Permission `cash.transfer` added (owner, manager, accountant, cashier).
+- **4.2 (P4-4 refined):** cash is linked to the shift **open on the drawer**, whoever records it, not only to the
+  cash the shift's own cashier records. The drawer physically holds all of it, so this is what makes expected cash
+  match the count; with one open shift per drawer there is never a doubt which shift it belongs to. Cash recorded
+  while no shift is open on the drawer stays outside any shift (D11).
+- **4.2:** a variance within the threshold is accepted at once and posted on submit; above it, the closing waits for
+  someone other than the submitter with `cashier.approve`, and the variance is posted on approval. Reopening
+  (owner, `cashier.reopen`, reason) reverses any posted variance and opens the shift again; the reopened closing
+  stays as history. The threshold is a property setting (default Rs 500), changed with `property.manage`.
+- **4.2:** the opening count is compared with the drawer's ledger balance; a difference is shown on the shift, not
+  posted. The night audit (4.5) will list it with cash recorded outside any shift.

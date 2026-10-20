@@ -74,6 +74,13 @@ import {
   invoiceDto,
   cashAccountDto,
   cashMovementsDto,
+  approveClosingRequest,
+  cashierShiftDetailDto,
+  cashierShiftDto,
+  openShiftRequest,
+  reopenClosingRequest,
+  shiftListQueryObject,
+  submitClosingRequest,
   cashMovementsQueryObject,
   createCashAccountRequest,
   openingBalancesDto,
@@ -688,6 +695,54 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     body: openingBalancesRequest,
     data: openingBalancesDto,
     status: 201,
+  },
+  'GET /properties/{propertyId}/cashier-shifts/current': {
+    tag: 'Cashier shifts',
+    summary: 'Your open shift on this property with live expected cash, or null',
+    data: cashierShiftDto.nullable(),
+  },
+  'GET /properties/{propertyId}/cashier-shifts': {
+    tag: 'Cashier shifts',
+    summary: "Shifts, newest first: everyone's for supervisors and ledger readers, otherwise your own",
+    query: shiftListQueryObject,
+    data: z.array(cashierShiftDto),
+  },
+  'GET /properties/{propertyId}/cashier-shifts/{id}': {
+    tag: 'Cashier shifts',
+    summary: 'One shift with its cash movements and closings',
+    data: cashierShiftDetailDto,
+  },
+  'POST /properties/{propertyId}/cashier-shifts/open': {
+    tag: 'Cashier shifts',
+    summary:
+      'Open a shift on a cash drawer with the opening count (Idempotency-Key); one per cashier and drawer',
+    body: openShiftRequest,
+    data: cashierShiftDto,
+    status: 201,
+  },
+  'POST /properties/{propertyId}/cashier-shifts/{id}/submit-closing': {
+    tag: 'Cashier shifts',
+    summary:
+      'Close your shift with the counted cash (Idempotency-Key): variance needs an explanation; above the threshold it waits for approval; 409 CASH_CLOSING_ALREADY_SUBMITTED',
+    body: submitClosingRequest,
+    data: cashierShiftDto,
+    status: 200,
+  },
+  'POST /properties/{propertyId}/cashier-shifts/{id}/approve-closing': {
+    tag: 'Cashier shifts',
+    summary:
+      'Approve a closing (cashier.approve, not the submitter); posts the variance to cash over and short',
+    body: approveClosingRequest,
+    data: cashierShiftDto,
+    status: 200,
+  },
+  'POST /properties/{propertyId}/cashier-shifts/{id}/reopen': {
+    tag: 'Cashier shifts',
+    summary:
+      'Reopen a closing (cashier.reopen, reason): the variance entry is reversed and the shift opens again',
+    body: reopenClosingRequest,
+    data: cashierShiftDto,
+    status: 200,
   },
   'GET /properties/{propertyId}/payments': {
     tag: 'Payments',

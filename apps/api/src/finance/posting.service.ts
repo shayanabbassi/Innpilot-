@@ -171,6 +171,18 @@ export class PostingService {
         untagged,
       );
     }
+    // Cash on a drawer with an open cashier shift belongs to that shift (P4-4). The shift is share-locked, so a
+    // closing cannot fix its expected cash while this posting is in flight; once closed, it takes no more lines.
+    await tx.execute(sql`
+      select s.id from cashier_shifts s
+      where s.status = 'open'
+        and s.cash_account_id in (select cash_account_id from journal_lines where journal_entry_id = ${entryId})
+      for share`);
+    await tx.execute(sql`
+      update journal_lines l set cashier_shift_id = s.id
+      from cashier_shifts s
+      where l.journal_entry_id = ${entryId} and l.cashier_shift_id is null
+        and s.cash_account_id = l.cash_account_id and s.status = 'open'`);
     const inactive = lines.filter((x) => !x.account.active).map((x) => x.account.code);
     if (inactive.length > 0) {
       throw AppError.validation(

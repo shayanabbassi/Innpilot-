@@ -19,6 +19,8 @@ interface NavItem {
     | 'maintenance'
     | 'dayClose'
     | 'cash'
+    | 'myShift'
+    | 'cashClosings'
     | 'journals'
     | 'trialBalance'
     | 'accounts'
@@ -45,6 +47,12 @@ const NAV: NavItem[] = [
   { href: '/housekeeping', label: 'housekeeping', visible: (s) => s.can('housekeeping.read') },
   { href: '/maintenance', label: 'maintenance', visible: (s) => s.can('housekeeping.read') },
   { href: '/day-close', label: 'dayClose', visible: (s) => s.can('night_audit.run') },
+  { href: '/cashier', label: 'myShift', visible: (s) => s.can('cashier.operate') },
+  {
+    href: '/cashier/shifts',
+    label: 'cashClosings',
+    visible: (s) => s.can('cashier.approve') || s.can('journal.read'),
+  },
   { href: '/finance/cash', label: 'cash', visible: (s) => s.can('journal.read') || s.can('cash.transfer') },
   { href: '/finance/journals', label: 'journals', visible: tenant('journal.read') },
   { href: '/finance/trial-balance', label: 'trialBalance', visible: tenant('journal.read') },

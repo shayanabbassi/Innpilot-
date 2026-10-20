@@ -133,6 +133,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -265,6 +266,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -417,6 +419,9 @@
                               "businessDate": {
                                 "type": "string"
                               },
+                              "cashVarianceThreshold": {
+                                "type": "string"
+                              },
                               "onboardingCompleted": {
                                 "type": "boolean"
                               },
@@ -467,6 +472,7 @@
                                     "cashier.operate",
                                     "cashier.approve",
                                     "cash.transfer",
+                                    "cashier.reopen",
                                     "journal.read",
                                     "account.manage",
                                     "journal.post",
@@ -491,6 +497,7 @@
                               "timezone",
                               "currencyCode",
                               "businessDate",
+                              "cashVarianceThreshold",
                               "onboardingCompleted",
                               "roles",
                               "permissions"
@@ -529,6 +536,7 @@
                               "cashier.operate",
                               "cashier.approve",
                               "cash.transfer",
+                              "cashier.reopen",
                               "journal.read",
                               "account.manage",
                               "journal.post",
@@ -608,6 +616,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -752,6 +761,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -902,6 +912,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1052,6 +1063,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1188,6 +1200,9 @@
                           "businessDate": {
                             "type": "string"
                           },
+                          "cashVarianceThreshold": {
+                            "type": "string"
+                          },
                           "status": {
                             "type": "string",
                             "enum": [
@@ -1217,6 +1232,7 @@
                           "checkInTime",
                           "checkOutTime",
                           "businessDate",
+                          "cashVarianceThreshold",
                           "status",
                           "onboardingCompletedAt"
                         ]
@@ -1275,6 +1291,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1409,6 +1426,9 @@
                         "businessDate": {
                           "type": "string"
                         },
+                        "cashVarianceThreshold": {
+                          "type": "string"
+                        },
                         "status": {
                           "type": "string",
                           "enum": [
@@ -1438,6 +1458,7 @@
                         "checkInTime",
                         "checkOutTime",
                         "businessDate",
+                        "cashVarianceThreshold",
                         "status",
                         "onboardingCompletedAt"
                       ]
@@ -1495,6 +1516,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1617,6 +1639,10 @@
                   "checkOutTime": {
                     "type": "string",
                     "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "cashVarianceThreshold": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
                   }
                 },
                 "additionalProperties": false
@@ -1690,6 +1716,9 @@
                         "businessDate": {
                           "type": "string"
                         },
+                        "cashVarianceThreshold": {
+                          "type": "string"
+                        },
                         "status": {
                           "type": "string",
                           "enum": [
@@ -1719,6 +1748,7 @@
                         "checkInTime",
                         "checkOutTime",
                         "businessDate",
+                        "cashVarianceThreshold",
                         "status",
                         "onboardingCompletedAt"
                       ]
@@ -1776,6 +1806,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -1910,6 +1941,9 @@
                         "businessDate": {
                           "type": "string"
                         },
+                        "cashVarianceThreshold": {
+                          "type": "string"
+                        },
                         "status": {
                           "type": "string",
                           "enum": [
@@ -1939,6 +1973,7 @@
                         "checkInTime",
                         "checkOutTime",
                         "businessDate",
+                        "cashVarianceThreshold",
                         "status",
                         "onboardingCompletedAt"
                       ]
@@ -1996,6 +2031,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2208,6 +2244,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2463,6 +2500,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2720,6 +2758,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -2881,6 +2920,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3060,6 +3100,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3192,6 +3233,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3378,6 +3420,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3587,6 +3630,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -3810,6 +3854,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4023,6 +4068,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4261,6 +4307,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4459,6 +4506,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -4835,6 +4883,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5076,6 +5125,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5339,6 +5389,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5676,6 +5727,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -5981,6 +6033,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6244,6 +6297,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6409,6 +6463,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -6644,6 +6699,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7037,6 +7093,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7473,6 +7530,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -7807,6 +7865,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8170,6 +8229,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8394,6 +8454,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -8728,6 +8789,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9089,6 +9151,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9446,6 +9509,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -9840,6 +9904,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10234,6 +10299,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10566,6 +10632,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -10922,6 +10989,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11510,6 +11578,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -11812,6 +11881,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12263,6 +12333,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12544,6 +12615,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -12855,6 +12927,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13028,6 +13101,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13303,6 +13377,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13580,6 +13655,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13728,6 +13804,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -13995,6 +14072,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14236,6 +14314,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14496,6 +14575,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -14737,6 +14817,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15012,6 +15093,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15339,6 +15421,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15593,6 +15676,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -15867,6 +15951,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16111,6 +16196,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16354,6 +16440,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16622,6 +16709,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -16814,6 +16902,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17053,6 +17142,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17269,6 +17359,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17607,6 +17698,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -17926,6 +18018,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18313,6 +18406,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18452,6 +18546,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -18841,6 +18936,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19160,6 +19256,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19503,6 +19600,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -19813,6 +19911,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20091,6 +20190,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20293,6 +20393,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20495,6 +20596,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20717,6 +20819,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -20957,6 +21060,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21247,6 +21351,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21515,6 +21620,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -21780,6 +21886,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22017,6 +22124,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22205,6 +22313,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22426,6 +22535,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22643,6 +22753,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -22874,6 +22985,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23081,6 +23193,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23359,6 +23472,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -23957,6 +24071,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24570,6 +24685,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -24746,6 +24862,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -25341,6 +25458,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -25975,6 +26093,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -26610,6 +26729,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27225,6 +27345,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -27845,6 +27966,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28203,6 +28325,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28574,6 +28697,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -28898,6 +29022,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29282,6 +29407,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29648,6 +29774,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29808,6 +29935,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -29997,6 +30125,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30219,6 +30348,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30432,6 +30562,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30728,6 +30859,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -30966,6 +31098,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -31205,6 +31338,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -31388,6 +31522,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -31622,6 +31757,3377 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts/current": {
+      "get": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "Your open shift on this property with live expected cash, or null",
+        "description": "Requires permission `cashier.operate` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "openedAt": {
+                          "type": "string"
+                        },
+                        "openingCount": {
+                          "type": "string"
+                        },
+                        "bookBalanceAtOpen": {
+                          "type": "string"
+                        },
+                        "openingDifference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "closedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashIn": {
+                          "type": "string"
+                        },
+                        "cashOut": {
+                          "type": "string"
+                        },
+                        "expected": {
+                          "type": "string"
+                        },
+                        "closing": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "expectedAmount": {
+                              "type": "string"
+                            },
+                            "countedAmount": {
+                              "type": "string"
+                            },
+                            "variance": {
+                              "type": "string"
+                            },
+                            "explanation": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "threshold": {
+                              "type": "string"
+                            },
+                            "approvalRequired": {
+                              "type": "boolean"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "submitted",
+                                "approved",
+                                "reopened"
+                              ]
+                            },
+                            "submittedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "submittedAt": {
+                              "type": "string"
+                            },
+                            "approvedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvalNote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "varianceJournalEntryId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "varianceJournalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "reopenedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenReason": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "businessDate",
+                            "expectedAmount",
+                            "countedAmount",
+                            "variance",
+                            "explanation",
+                            "threshold",
+                            "approvalRequired",
+                            "status",
+                            "submittedByName",
+                            "submittedAt",
+                            "approvedByName",
+                            "approvedAt",
+                            "approvalNote",
+                            "varianceJournalEntryId",
+                            "varianceJournalNumber",
+                            "reopenedByName",
+                            "reopenedAt",
+                            "reopenReason"
+                          ]
+                        },
+                        "reopenedClosings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "userId",
+                        "userName",
+                        "businessDate",
+                        "openedAt",
+                        "openingCount",
+                        "bookBalanceAtOpen",
+                        "openingDifference",
+                        "status",
+                        "closedAt",
+                        "cashIn",
+                        "cashOut",
+                        "expected",
+                        "closing",
+                        "reopenedClosings"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts": {
+      "get": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "Shifts, newest first: everyone's for supervisors and ledger readers, otherwise your own",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "awaiting_approval",
+                "closed",
+                "all"
+              ],
+              "default": "all"
+            },
+            "required": false,
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "cashAccountId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "cashAccountName": {
+                            "type": "string"
+                          },
+                          "userId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "userName": {
+                            "type": "string"
+                          },
+                          "businessDate": {
+                            "type": "string"
+                          },
+                          "openedAt": {
+                            "type": "string"
+                          },
+                          "openingCount": {
+                            "type": "string"
+                          },
+                          "bookBalanceAtOpen": {
+                            "type": "string"
+                          },
+                          "openingDifference": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "open",
+                              "closed"
+                            ]
+                          },
+                          "closedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "cashIn": {
+                            "type": "string"
+                          },
+                          "cashOut": {
+                            "type": "string"
+                          },
+                          "expected": {
+                            "type": "string"
+                          },
+                          "closing": {
+                            "type": [
+                              "object",
+                              "null"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          },
+                          "reopenedClosings": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                },
+                                "businessDate": {
+                                  "type": "string"
+                                },
+                                "expectedAmount": {
+                                  "type": "string"
+                                },
+                                "countedAmount": {
+                                  "type": "string"
+                                },
+                                "variance": {
+                                  "type": "string"
+                                },
+                                "explanation": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "threshold": {
+                                  "type": "string"
+                                },
+                                "approvalRequired": {
+                                  "type": "boolean"
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "enum": [
+                                    "submitted",
+                                    "approved",
+                                    "reopened"
+                                  ]
+                                },
+                                "submittedByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "submittedAt": {
+                                  "type": "string"
+                                },
+                                "approvedByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "approvedAt": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "approvalNote": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "varianceJournalEntryId": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ],
+                                  "format": "uuid"
+                                },
+                                "varianceJournalNumber": {
+                                  "type": [
+                                    "integer",
+                                    "null"
+                                  ]
+                                },
+                                "reopenedByName": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "reopenedAt": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                },
+                                "reopenReason": {
+                                  "type": [
+                                    "string",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "businessDate",
+                                "expectedAmount",
+                                "countedAmount",
+                                "variance",
+                                "explanation",
+                                "threshold",
+                                "approvalRequired",
+                                "status",
+                                "submittedByName",
+                                "submittedAt",
+                                "approvedByName",
+                                "approvedAt",
+                                "approvalNote",
+                                "varianceJournalEntryId",
+                                "varianceJournalNumber",
+                                "reopenedByName",
+                                "reopenedAt",
+                                "reopenReason"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "cashAccountId",
+                          "cashAccountName",
+                          "userId",
+                          "userName",
+                          "businessDate",
+                          "openedAt",
+                          "openingCount",
+                          "bookBalanceAtOpen",
+                          "openingDifference",
+                          "status",
+                          "closedAt",
+                          "cashIn",
+                          "cashOut",
+                          "expected",
+                          "closing",
+                          "reopenedClosings"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts/{id}": {
+      "get": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "One shift with its cash movements and closings",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "openedAt": {
+                          "type": "string"
+                        },
+                        "openingCount": {
+                          "type": "string"
+                        },
+                        "bookBalanceAtOpen": {
+                          "type": "string"
+                        },
+                        "openingDifference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "closedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashIn": {
+                          "type": "string"
+                        },
+                        "cashOut": {
+                          "type": "string"
+                        },
+                        "expected": {
+                          "type": "string"
+                        },
+                        "closing": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "expectedAmount": {
+                              "type": "string"
+                            },
+                            "countedAmount": {
+                              "type": "string"
+                            },
+                            "variance": {
+                              "type": "string"
+                            },
+                            "explanation": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "threshold": {
+                              "type": "string"
+                            },
+                            "approvalRequired": {
+                              "type": "boolean"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "submitted",
+                                "approved",
+                                "reopened"
+                              ]
+                            },
+                            "submittedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "submittedAt": {
+                              "type": "string"
+                            },
+                            "approvedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvalNote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "varianceJournalEntryId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "varianceJournalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "reopenedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenReason": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "businessDate",
+                            "expectedAmount",
+                            "countedAmount",
+                            "variance",
+                            "explanation",
+                            "threshold",
+                            "approvalRequired",
+                            "status",
+                            "submittedByName",
+                            "submittedAt",
+                            "approvedByName",
+                            "approvedAt",
+                            "approvalNote",
+                            "varianceJournalEntryId",
+                            "varianceJournalNumber",
+                            "reopenedByName",
+                            "reopenedAt",
+                            "reopenReason"
+                          ]
+                        },
+                        "reopenedClosings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        },
+                        "movements": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "in": {
+                                "type": "string"
+                              },
+                              "out": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "sourceType",
+                              "narration",
+                              "reference",
+                              "in",
+                              "out"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "userId",
+                        "userName",
+                        "businessDate",
+                        "openedAt",
+                        "openingCount",
+                        "bookBalanceAtOpen",
+                        "openingDifference",
+                        "status",
+                        "closedAt",
+                        "cashIn",
+                        "cashOut",
+                        "expected",
+                        "closing",
+                        "reopenedClosings",
+                        "movements"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts/open": {
+      "post": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "Open a shift on a cash drawer with the opening count (Idempotency-Key); one per cashier and drawer",
+        "description": "Requires permission `cashier.operate` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "openingCount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  }
+                },
+                "required": [
+                  "cashAccountId",
+                  "openingCount"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "openedAt": {
+                          "type": "string"
+                        },
+                        "openingCount": {
+                          "type": "string"
+                        },
+                        "bookBalanceAtOpen": {
+                          "type": "string"
+                        },
+                        "openingDifference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "closedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashIn": {
+                          "type": "string"
+                        },
+                        "cashOut": {
+                          "type": "string"
+                        },
+                        "expected": {
+                          "type": "string"
+                        },
+                        "closing": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "expectedAmount": {
+                              "type": "string"
+                            },
+                            "countedAmount": {
+                              "type": "string"
+                            },
+                            "variance": {
+                              "type": "string"
+                            },
+                            "explanation": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "threshold": {
+                              "type": "string"
+                            },
+                            "approvalRequired": {
+                              "type": "boolean"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "submitted",
+                                "approved",
+                                "reopened"
+                              ]
+                            },
+                            "submittedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "submittedAt": {
+                              "type": "string"
+                            },
+                            "approvedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvalNote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "varianceJournalEntryId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "varianceJournalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "reopenedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenReason": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "businessDate",
+                            "expectedAmount",
+                            "countedAmount",
+                            "variance",
+                            "explanation",
+                            "threshold",
+                            "approvalRequired",
+                            "status",
+                            "submittedByName",
+                            "submittedAt",
+                            "approvedByName",
+                            "approvedAt",
+                            "approvalNote",
+                            "varianceJournalEntryId",
+                            "varianceJournalNumber",
+                            "reopenedByName",
+                            "reopenedAt",
+                            "reopenReason"
+                          ]
+                        },
+                        "reopenedClosings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "userId",
+                        "userName",
+                        "businessDate",
+                        "openedAt",
+                        "openingCount",
+                        "bookBalanceAtOpen",
+                        "openingDifference",
+                        "status",
+                        "closedAt",
+                        "cashIn",
+                        "cashOut",
+                        "expected",
+                        "closing",
+                        "reopenedClosings"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts/{id}/submit-closing": {
+      "post": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "Close your shift with the counted cash (Idempotency-Key): variance needs an explanation; above the threshold it waits for approval; 409 CASH_CLOSING_ALREADY_SUBMITTED",
+        "description": "Requires permission `cashier.operate` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "countedAmount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "explanation": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                },
+                "required": [
+                  "countedAmount"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "openedAt": {
+                          "type": "string"
+                        },
+                        "openingCount": {
+                          "type": "string"
+                        },
+                        "bookBalanceAtOpen": {
+                          "type": "string"
+                        },
+                        "openingDifference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "closedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashIn": {
+                          "type": "string"
+                        },
+                        "cashOut": {
+                          "type": "string"
+                        },
+                        "expected": {
+                          "type": "string"
+                        },
+                        "closing": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "expectedAmount": {
+                              "type": "string"
+                            },
+                            "countedAmount": {
+                              "type": "string"
+                            },
+                            "variance": {
+                              "type": "string"
+                            },
+                            "explanation": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "threshold": {
+                              "type": "string"
+                            },
+                            "approvalRequired": {
+                              "type": "boolean"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "submitted",
+                                "approved",
+                                "reopened"
+                              ]
+                            },
+                            "submittedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "submittedAt": {
+                              "type": "string"
+                            },
+                            "approvedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvalNote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "varianceJournalEntryId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "varianceJournalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "reopenedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenReason": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "businessDate",
+                            "expectedAmount",
+                            "countedAmount",
+                            "variance",
+                            "explanation",
+                            "threshold",
+                            "approvalRequired",
+                            "status",
+                            "submittedByName",
+                            "submittedAt",
+                            "approvedByName",
+                            "approvedAt",
+                            "approvalNote",
+                            "varianceJournalEntryId",
+                            "varianceJournalNumber",
+                            "reopenedByName",
+                            "reopenedAt",
+                            "reopenReason"
+                          ]
+                        },
+                        "reopenedClosings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "userId",
+                        "userName",
+                        "businessDate",
+                        "openedAt",
+                        "openingCount",
+                        "bookBalanceAtOpen",
+                        "openingDifference",
+                        "status",
+                        "closedAt",
+                        "cashIn",
+                        "cashOut",
+                        "expected",
+                        "closing",
+                        "reopenedClosings"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts/{id}/approve-closing": {
+      "post": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "Approve a closing (cashier.approve, not the submitter); posts the variance to cash over and short",
+        "description": "Requires permission `cashier.approve` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "note": {
+                    "type": "string",
+                    "maxLength": 500
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "openedAt": {
+                          "type": "string"
+                        },
+                        "openingCount": {
+                          "type": "string"
+                        },
+                        "bookBalanceAtOpen": {
+                          "type": "string"
+                        },
+                        "openingDifference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "closedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashIn": {
+                          "type": "string"
+                        },
+                        "cashOut": {
+                          "type": "string"
+                        },
+                        "expected": {
+                          "type": "string"
+                        },
+                        "closing": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "expectedAmount": {
+                              "type": "string"
+                            },
+                            "countedAmount": {
+                              "type": "string"
+                            },
+                            "variance": {
+                              "type": "string"
+                            },
+                            "explanation": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "threshold": {
+                              "type": "string"
+                            },
+                            "approvalRequired": {
+                              "type": "boolean"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "submitted",
+                                "approved",
+                                "reopened"
+                              ]
+                            },
+                            "submittedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "submittedAt": {
+                              "type": "string"
+                            },
+                            "approvedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvalNote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "varianceJournalEntryId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "varianceJournalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "reopenedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenReason": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "businessDate",
+                            "expectedAmount",
+                            "countedAmount",
+                            "variance",
+                            "explanation",
+                            "threshold",
+                            "approvalRequired",
+                            "status",
+                            "submittedByName",
+                            "submittedAt",
+                            "approvedByName",
+                            "approvedAt",
+                            "approvalNote",
+                            "varianceJournalEntryId",
+                            "varianceJournalNumber",
+                            "reopenedByName",
+                            "reopenedAt",
+                            "reopenReason"
+                          ]
+                        },
+                        "reopenedClosings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "userId",
+                        "userName",
+                        "businessDate",
+                        "openedAt",
+                        "openingCount",
+                        "bookBalanceAtOpen",
+                        "openingDifference",
+                        "status",
+                        "closedAt",
+                        "cashIn",
+                        "cashOut",
+                        "expected",
+                        "closing",
+                        "reopenedClosings"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cashier-shifts/{id}/reopen": {
+      "post": {
+        "tags": [
+          "Cashier shifts"
+        ],
+        "summary": "Reopen a closing (cashier.reopen, reason): the variance entry is reversed and the shift opens again",
+        "description": "Requires permission `cashier.reopen` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "userId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "userName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "openedAt": {
+                          "type": "string"
+                        },
+                        "openingCount": {
+                          "type": "string"
+                        },
+                        "bookBalanceAtOpen": {
+                          "type": "string"
+                        },
+                        "openingDifference": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "closedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "cashIn": {
+                          "type": "string"
+                        },
+                        "cashOut": {
+                          "type": "string"
+                        },
+                        "expected": {
+                          "type": "string"
+                        },
+                        "closing": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "businessDate": {
+                              "type": "string"
+                            },
+                            "expectedAmount": {
+                              "type": "string"
+                            },
+                            "countedAmount": {
+                              "type": "string"
+                            },
+                            "variance": {
+                              "type": "string"
+                            },
+                            "explanation": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "threshold": {
+                              "type": "string"
+                            },
+                            "approvalRequired": {
+                              "type": "boolean"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "submitted",
+                                "approved",
+                                "reopened"
+                              ]
+                            },
+                            "submittedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "submittedAt": {
+                              "type": "string"
+                            },
+                            "approvedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "approvalNote": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "varianceJournalEntryId": {
+                              "type": [
+                                "string",
+                                "null"
+                              ],
+                              "format": "uuid"
+                            },
+                            "varianceJournalNumber": {
+                              "type": [
+                                "integer",
+                                "null"
+                              ]
+                            },
+                            "reopenedByName": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "reopenReason": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "businessDate",
+                            "expectedAmount",
+                            "countedAmount",
+                            "variance",
+                            "explanation",
+                            "threshold",
+                            "approvalRequired",
+                            "status",
+                            "submittedByName",
+                            "submittedAt",
+                            "approvedByName",
+                            "approvedAt",
+                            "approvalNote",
+                            "varianceJournalEntryId",
+                            "varianceJournalNumber",
+                            "reopenedByName",
+                            "reopenedAt",
+                            "reopenReason"
+                          ]
+                        },
+                        "reopenedClosings": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "expectedAmount": {
+                                "type": "string"
+                              },
+                              "countedAmount": {
+                                "type": "string"
+                              },
+                              "variance": {
+                                "type": "string"
+                              },
+                              "explanation": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "threshold": {
+                                "type": "string"
+                              },
+                              "approvalRequired": {
+                                "type": "boolean"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "submitted",
+                                  "approved",
+                                  "reopened"
+                                ]
+                              },
+                              "submittedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "submittedAt": {
+                                "type": "string"
+                              },
+                              "approvedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "approvalNote": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "varianceJournalEntryId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "varianceJournalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "businessDate",
+                              "expectedAmount",
+                              "countedAmount",
+                              "variance",
+                              "explanation",
+                              "threshold",
+                              "approvalRequired",
+                              "status",
+                              "submittedByName",
+                              "submittedAt",
+                              "approvedByName",
+                              "approvedAt",
+                              "approvalNote",
+                              "varianceJournalEntryId",
+                              "varianceJournalNumber",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "userId",
+                        "userName",
+                        "businessDate",
+                        "openedAt",
+                        "openingCount",
+                        "bookBalanceAtOpen",
+                        "openingDifference",
+                        "status",
+                        "closedAt",
+                        "cashIn",
+                        "cashOut",
+                        "expected",
+                        "closing",
+                        "reopenedClosings"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -31891,6 +35397,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -32169,6 +35676,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -32513,6 +36021,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -32717,6 +36226,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -32982,6 +36492,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -33231,6 +36742,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -33460,6 +36972,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -33681,6 +37194,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -33952,6 +37466,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",
@@ -34091,6 +37606,7 @@
                             "REFUND_EXCEEDS_REMAINDER",
                             "DEPOSIT_HANDLING_REQUIRED",
                             "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
                             "RATE_LIMITED",

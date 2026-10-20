@@ -23,6 +23,8 @@ import { FolioController } from './finance/folio.controller';
 import { FolioService } from './finance/folio.service';
 import { CashController } from './finance/cash.controller';
 import { CashService } from './finance/cash.service';
+import { CashierController } from './finance/cashier.controller';
+import { CashierService } from './finance/cashier.service';
 import { PaymentController } from './finance/payment.controller';
 import { PaymentService } from './finance/payment.service';
 import { InvoiceService } from './finance/invoice.service';
@@ -140,6 +142,7 @@ export class AppModule {
         FolioController,
         PaymentController,
         CashController,
+        CashierController,
         CheckoutController,
         UsersController,
         AuditController,
@@ -171,6 +174,7 @@ export class AppModule {
         FolioService,
         PaymentService,
         CashService,
+        CashierService,
         InvoiceService,
         CheckoutService,
         PiiService,
