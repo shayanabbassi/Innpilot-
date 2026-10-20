@@ -466,6 +466,7 @@ export const journalLines = pgTable('journal_lines', {
   credit: numeric('credit', { precision: 19, scale: 4 }).notNull().default('0'),
   description: text('description'),
   folioId: uuid('folio_id'),
+  cashAccountId: uuid('cash_account_id'),
 });
 
 export const taxCodes = pgTable('tax_codes', {
@@ -602,6 +603,7 @@ export const cashAccounts = pgTable('cash_accounts', {
   name: text('name').notNull(),
   kind: text('kind').notNull(),
   ledgerAccountId: uuid('ledger_account_id').notNull(),
+  details: text('details'),
   active: boolean('active').notNull().default(true),
   createdAt: tsz('created_at').notNull().defaultNow(),
 });
@@ -701,4 +703,29 @@ export const invoiceLines = pgTable('invoice_lines', {
   taxAmount: numeric('tax_amount', { precision: 19, scale: 4 }).notNull(),
   grossAmount: numeric('gross_amount', { precision: 19, scale: 4 }).notNull(),
   taxes: jsonb('taxes').$type<unknown[]>().notNull().default([]),
+});
+
+export const cashTransfers = pgTable('cash_transfers', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  fromCashAccountId: uuid('from_cash_account_id').notNull(),
+  toCashAccountId: uuid('to_cash_account_id').notNull(),
+  amount: numeric('amount', { precision: 19, scale: 4 }).notNull(),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  reference: text('reference'),
+  notes: text('notes'),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const openingBalances = pgTable('opening_balances', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  asOf: date('as_of', { mode: 'string' }).notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
 });

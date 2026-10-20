@@ -62,7 +62,7 @@ describe('chart of accounts', () => {
   it('starts every tenant with the template, system accounts marked', async () => {
     const res = await acc.get('/finance/accounts');
     expect(res.status).toBe(200);
-    expect(res.body.data).toHaveLength(45);
+    expect(res.body.data).toHaveLength(46);
     expect(res.body.data.find((a: { code: string }) => a.code === '1200')).toMatchObject({
       name: 'Guest receivables',
       accountClass: 'asset',
@@ -278,7 +278,7 @@ describe('reports', () => {
   it('FIN-006: the trial balance covers every account and balances', async () => {
     const res = await acc.get('/finance/trial-balance?from=2026-10-01&to=2026-10-31');
     expect(res.status).toBe(200);
-    expect(res.body.data.rows).toHaveLength(46);
+    expect(res.body.data.rows).toHaveLength(47);
     expect(res.body.data.balanced).toBe(true);
     expect(res.body.data.totals.debit).toBe(res.body.data.totals.credit);
     const cash = res.body.data.rows.find((r: { code: string }) => r.code === '1000');

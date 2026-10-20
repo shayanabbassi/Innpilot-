@@ -10,6 +10,8 @@ let testDb: TestDatabase;
 let admin: Client;
 const ids = { tenant: '', other: '', property: '', user: '', period: '', closedPeriod: '' };
 const acct: Record<string, string> = {};
+/** The property's cash account on each cash ledger account (lines there must name it). */
+const cashFor: Record<string, string> = {};
 let nextNumber = 1;
 
 beforeAll(async () => {
@@ -48,6 +50,11 @@ beforeAll(async () => {
     [ids.tenant],
   );
   for (const r of rows.rows) acct[r.code] = r.id;
+  const cash = await admin.query<{ id: string; ledger_account_id: string }>(
+    'SELECT id, ledger_account_id FROM cash_accounts WHERE property_id = $1',
+    [ids.property],
+  );
+  for (const c of cash.rows) cashFor[c.ledger_account_id] = c.id;
 });
 
 afterAll(async () => {
@@ -57,6 +64,8 @@ afterAll(async () => {
 
 interface Line {
   code: string;
+  /** Leave the cash account off a cash ledger line (to test that it is refused). */
+  noCash?: boolean;
   debit?: string;
   credit?: string;
 }
@@ -79,9 +88,17 @@ async function post(
     let n = 1;
     for (const l of lines) {
       await admin.query(
-        `INSERT INTO journal_lines (tenant_id, journal_entry_id, line_no, account_id, debit, credit)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [ids.tenant, id, n++, acct[l.code], l.debit ?? '0', l.credit ?? '0'],
+        `INSERT INTO journal_lines (tenant_id, journal_entry_id, line_no, account_id, debit, credit, cash_account_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [
+          ids.tenant,
+          id,
+          n++,
+          acct[l.code],
+          l.debit ?? '0',
+          l.credit ?? '0',
+          l.noCash ? null : (cashFor[acct[l.code]!] ?? null),
+        ],
       );
     }
     await admin.query(
@@ -107,7 +124,7 @@ describe('chart of accounts', () => {
        FROM accounts WHERE tenant_id = $1`,
       [ids.tenant],
     );
-    expect(rows[0]!.n).toBe(45);
+    expect(rows[0]!.n).toBe(46);
     expect(rows[0]!.roles).toEqual(
       expect.arrayContaining([
         'guest_receivable',
@@ -307,6 +324,51 @@ describe('journal entries', () => {
   });
 });
 
+describe('cash dimension (Phase 4.1)', () => {
+  it('refuses a posted line on a cash ledger account that does not name its cash account', async () => {
+    const before = await entryCount();
+    await expect(
+      post([
+        { code: '1000', debit: '75.00', noCash: true },
+        { code: '4900', credit: '75.00' },
+      ]),
+    ).rejects.toThrow(/without its cash account/);
+    expect(await entryCount()).toBe(before);
+  });
+
+  it('refuses a cash account that does not belong to the line ledger account', async () => {
+    await admin.query('BEGIN');
+    try {
+      const { rows } = await admin.query<{ id: string }>(
+        `INSERT INTO journal_entries (tenant_id, property_id, accounting_date, currency_code, source_type, narration, created_by)
+         VALUES ($1, $2, '2026-10-19', 'PKR', 'manual', 'Wrong drawer', $3) RETURNING id`,
+        [ids.tenant, ids.property, ids.user],
+      );
+      await admin.query(
+        `INSERT INTO journal_lines (tenant_id, journal_entry_id, line_no, account_id, debit, credit, cash_account_id)
+         VALUES ($1, $2, 1, $3, 10, 0, $4), ($1, $2, 2, $5, 0, 10, NULL)`,
+        [ids.tenant, rows[0]!.id, acct['1000'], cashFor[acct['1100']!], acct['4900']],
+      );
+      await admin.query(
+        `UPDATE journal_entries SET status = 'posted', journal_number = $2, period_id = $3, total_debit = 10,
+           total_credit = 10, posted_by = $4, posted_at = now() WHERE id = $1`,
+        [rows[0]!.id, nextNumber++, ids.period, ids.user],
+      );
+      await expect(admin.query('COMMIT')).rejects.toThrow(/without its cash account/);
+    } finally {
+      await admin.query('ROLLBACK').catch(() => undefined);
+    }
+  });
+
+  it('seeds the opening balance equity account', async () => {
+    const { rows } = await admin.query(
+      `SELECT code FROM accounts WHERE tenant_id = $1 AND system_role = 'opening_balance_equity'`,
+      [ids.tenant],
+    );
+    expect(rows[0].code).toBe('3900');
+  });
+});
+
 describe('ledger isolation', () => {
   it("hides one tenant's accounts and journals from another", async () => {
     const app = new Client({ connectionString: testDb.appUrl });
@@ -322,7 +384,7 @@ describe('ledger isolation', () => {
       const own = await app.query<{ n: number }>('SELECT count(*)::int AS n FROM accounts');
       expect(accounts.rows[0]!.n).toBe(0);
       expect(journals.rows[0]!.n).toBe(0);
-      expect(own.rows[0]!.n).toBe(45);
+      expect(own.rows[0]!.n).toBe(46);
       await app.query('ROLLBACK');
     } finally {
       await app.end();

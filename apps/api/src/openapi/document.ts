@@ -73,6 +73,15 @@ import {
   checkoutPreviewDto,
   invoiceDto,
   cashAccountDto,
+  cashMovementsDto,
+  cashMovementsQueryObject,
+  createCashAccountRequest,
+  openingBalancesDto,
+  openingBalancesRequest,
+  transferDto,
+  transferListQueryObject,
+  transferRequest,
+  updateCashAccountRequest,
   paymentDto,
   paymentListQueryObject,
   receiptDto,
@@ -628,9 +637,57 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     status: 200,
   },
   'GET /properties/{propertyId}/cash-accounts': {
-    tag: 'Payments',
-    summary: 'Cash drawer, bank and card accounts that payments go to',
+    tag: 'Cash and bank',
+    summary:
+      'Cash drawers, bank and card accounts, with balances from the ledger (balance needs journal.read)',
     data: z.array(cashAccountDto),
+  },
+  'POST /properties/{propertyId}/cash-accounts': {
+    tag: 'Cash and bank',
+    summary:
+      'Add a cash drawer or bank account (posts to the system account for its kind unless one is chosen)',
+    body: createCashAccountRequest,
+    data: cashAccountDto,
+    status: 201,
+  },
+  'PATCH /properties/{propertyId}/cash-accounts/{id}': {
+    tag: 'Cash and bank',
+    summary: 'Rename, change details, or close an account (only when its balance is zero)',
+    body: updateCashAccountRequest,
+    data: cashAccountDto,
+  },
+  'GET /properties/{propertyId}/cash-accounts/{id}/movements': {
+    tag: 'Cash and bank',
+    summary: 'Money in and out of one account with a running balance, read from the posted journal lines',
+    query: cashMovementsQueryObject,
+    data: cashMovementsDto,
+  },
+  'GET /properties/{propertyId}/transfers': {
+    tag: 'Cash and bank',
+    summary: 'Transfers between cash and bank accounts, newest first',
+    query: transferListQueryObject,
+    data: z.array(transferDto),
+  },
+  'POST /properties/{propertyId}/transfers': {
+    tag: 'Cash and bank',
+    summary:
+      'Move money between two accounts (Idempotency-Key): one journal, never revenue or expense; a drawer cannot go below zero',
+    body: transferRequest,
+    data: transferDto,
+    status: 201,
+  },
+  'GET /properties/{propertyId}/opening-balances': {
+    tag: 'Cash and bank',
+    summary: 'The opening balances entry of the property, or null before it is entered',
+    data: openingBalancesDto.nullable(),
+  },
+  'POST /properties/{propertyId}/opening-balances': {
+    tag: 'Cash and bank',
+    summary:
+      'Enter the opening balances once (Idempotency-Key, journal.post): balance sheet accounts, difference to opening balance equity',
+    body: openingBalancesRequest,
+    data: openingBalancesDto,
+    status: 201,
   },
   'GET /properties/{propertyId}/payments': {
     tag: 'Payments',

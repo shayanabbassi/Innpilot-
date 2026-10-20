@@ -5,7 +5,6 @@ import {
   recordPaymentRequest,
   refundRequest,
   voidChargeRequest,
-  type CashAccountDto,
   type PaymentDto,
   type PaymentListQuery,
   type ReceiptDto,
@@ -29,15 +28,6 @@ const uuid = (what: string) => new ParseUUIDPipe({ exceptionFactory: () => AppEr
 @Controller('properties/:propertyId')
 export class PaymentController {
   constructor(private readonly payments: PaymentService) {}
-
-  @Get('cash-accounts')
-  @RequirePermission('folio.read', P)
-  cashAccounts(
-    @CurrentAuth() auth: AuthContext,
-    @Param('propertyId') propertyId: string,
-  ): Promise<CashAccountDto[]> {
-    return this.payments.cashAccounts(auth, propertyId);
-  }
 
   @Get('payments')
   @RequirePermission('folio.read', P)

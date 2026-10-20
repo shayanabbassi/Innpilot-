@@ -117,7 +117,7 @@ export class JournalsService {
           reference: body.reference ?? null,
         })
         .where(eq(e.id, entry.id));
-      await this.posting.writeLines(tx, auth, id, property.currency, body.lines);
+      await this.posting.writeLines(tx, auth, id, body.propertyId, property.currency, body.lines);
       return this.load(tx, id);
     });
   }
@@ -220,6 +220,7 @@ export class JournalsService {
                 credit: x.debit,
                 description: x.description,
                 folioId: x.folioId,
+                cashAccountId: x.cashAccountId,
               })),
             });
             await tx.update(e).set({ status: 'reversed', reversedById: reversalId }).where(eq(e.id, id));
@@ -309,14 +310,20 @@ export class JournalsService {
     const [head] = await this.heads(tx, eq(e.id, id), 1, 0);
     if (!head) throw AppError.notFound('journal entry');
     const lines = await tx
-      .select({ line: l, code: schema.accounts.code, name: schema.accounts.name })
+      .select({
+        line: l,
+        code: schema.accounts.code,
+        name: schema.accounts.name,
+        cashName: schema.cashAccounts.name,
+      })
       .from(l)
       .innerJoin(schema.accounts, eq(schema.accounts.id, l.accountId))
+      .leftJoin(schema.cashAccounts, eq(schema.cashAccounts.id, l.cashAccountId))
       .where(eq(l.journalEntryId, id))
       .orderBy(asc(l.lineNo));
     return {
       ...head,
-      lines: lines.map(({ line, code, name }): JournalLineDto => ({
+      lines: lines.map(({ line, code, name, cashName }): JournalLineDto => ({
         id: line.id,
         lineNo: line.lineNo,
         accountId: line.accountId,
@@ -325,6 +332,8 @@ export class JournalsService {
         debit: money(line.debit),
         credit: money(line.credit),
         description: line.description,
+        cashAccountId: line.cashAccountId,
+        cashAccountName: cashName,
       })),
     };
   }

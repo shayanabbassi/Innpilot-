@@ -185,6 +185,7 @@ export default function JournalPage() {
                   <tr key={l.id} className="border-b border-line/60 align-top">
                     <td className="py-2 pr-3">
                       <span className="tabular font-medium">{l.accountCode}</span> {l.accountName}
+                      {l.cashAccountName && <p className="text-xs text-muted">{l.cashAccountName}</p>}
                       {l.description && <p className="text-xs text-muted">{l.description}</p>}
                     </td>
                     <td className="tabular py-2 pr-3 text-right">

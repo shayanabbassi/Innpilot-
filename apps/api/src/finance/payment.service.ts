@@ -1,7 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import type {
-  CashAccountDto,
   PaymentDto,
   PaymentListQuery,
   PaymentMethod,
@@ -58,25 +57,6 @@ export class PaymentService {
   ) {}
 
   // ------------------------------------------------------------------------------------------- reads
-
-  cashAccounts(auth: AuthContext, propertyId: string): Promise<CashAccountDto[]> {
-    return this.db.tenant(auth.tenantId, async (tx) => {
-      await this.property(tx, propertyId);
-      const rows = await tx
-        .select({ c: ca, code: schema.accounts.code })
-        .from(ca)
-        .innerJoin(schema.accounts, eq(schema.accounts.id, ca.ledgerAccountId))
-        .where(eq(ca.propertyId, propertyId))
-        .orderBy(asc(schema.accounts.code));
-      return rows.map(({ c, code }) => ({
-        id: c.id,
-        name: c.name,
-        kind: c.kind as CashAccountDto['kind'],
-        ledgerAccountCode: code,
-        active: c.active,
-      }));
-    });
-  }
 
   list(auth: AuthContext, propertyId: string, q: PaymentListQuery): Promise<PaymentDto[]> {
     return this.db.tenant(auth.tenantId, async (tx) => {
@@ -198,7 +178,7 @@ export class PaymentService {
       reference: receiptNumber,
       narration: `${kind === 'deposit' ? 'Deposit' : 'Payment'} ${receiptNumber} (${res.bookingReference}, ${folio.label})`,
       lines: [
-        { accountId: cash.ledgerAccountId, debit: amount.toString(), credit: '0' },
+        { accountId: cash.ledgerAccountId, debit: amount.toString(), credit: '0', cashAccountId: cash.id },
         { accountId: guestAccount, debit: '0', credit: amount.toString(), folioId: folio.id },
       ],
       idempotencyKey: key ?? null,
@@ -316,7 +296,7 @@ export class PaymentService {
       narration: `Refund ${refundNumber} of ${payment.receiptNumber}: ${body.reason}`,
       lines: [
         { accountId: guestAccount, debit: amount.toString(), credit: '0', folioId: folio.id },
-        { accountId: cash.ledgerAccountId, debit: '0', credit: amount.toString() },
+        { accountId: cash.ledgerAccountId, debit: '0', credit: amount.toString(), cashAccountId: cash.id },
       ],
       idempotencyKey: key ?? null,
     });

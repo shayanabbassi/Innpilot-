@@ -97,6 +97,11 @@ export const journalLineInput = z
     debit: lineAmount.default('0'),
     credit: lineAmount.default('0'),
     description: z.string().trim().max(300).optional(),
+    /**
+     * The cash drawer or bank account, for a line on a cash ledger account. Optional when the property has only one
+     * cash account on that ledger account.
+     */
+    cashAccountId: uuid.optional(),
   })
   .strict()
   .superRefine((l, ctx) => {
@@ -146,6 +151,8 @@ export const journalLineDto = z.object({
   debit: z.string(),
   credit: z.string(),
   description: z.string().nullable(),
+  cashAccountId: uuid.nullable(),
+  cashAccountName: z.string().nullable(),
 });
 export type JournalLineDto = z.infer<typeof journalLineDto>;
 

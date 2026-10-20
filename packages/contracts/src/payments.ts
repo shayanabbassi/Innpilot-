@@ -110,12 +110,22 @@ export const paymentListQuery = paymentListQueryObject.refine((q) => !q.from || 
 });
 export type PaymentListQuery = z.infer<typeof paymentListQuery>;
 
+export const CASH_ACCOUNT_KINDS = ['cash', 'bank', 'card_clearing', 'other'] as const;
+export type CashAccountKind = (typeof CASH_ACCOUNT_KINDS)[number];
+export const cashAccountKind = z.enum(CASH_ACCOUNT_KINDS);
+
 export const cashAccountDto = z.object({
   id: uuid,
   name: z.string(),
-  kind: z.enum(['cash', 'bank', 'card_clearing', 'other']),
+  kind: cashAccountKind,
+  /** Bank name and account title, or where the drawer is. Never a full card number. */
+  details: z.string().nullable(),
+  ledgerAccountId: uuid,
   ledgerAccountCode: z.string(),
+  ledgerAccountName: z.string(),
   active: z.boolean(),
+  /** Debit minus credit of the journal lines tagged with this account; null without `journal.read`. */
+  balance: z.string().nullable(),
 });
 export type CashAccountDto = z.infer<typeof cashAccountDto>;
 

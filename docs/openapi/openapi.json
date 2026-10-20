@@ -466,6 +466,7 @@
                                     "payment.refund",
                                     "cashier.operate",
                                     "cashier.approve",
+                                    "cash.transfer",
                                     "journal.read",
                                     "account.manage",
                                     "journal.post",
@@ -527,6 +528,7 @@
                               "payment.refund",
                               "cashier.operate",
                               "cashier.approve",
+                              "cash.transfer",
                               "journal.read",
                               "account.manage",
                               "journal.post",
@@ -17817,6 +17819,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "cashAccountId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -17827,7 +17842,9 @@
                               "accountName",
                               "debit",
                               "credit",
-                              "description"
+                              "description",
+                              "cashAccountId",
+                              "cashAccountName"
                             ]
                           }
                         }
@@ -18020,6 +18037,10 @@
                         "description": {
                           "type": "string",
                           "maxLength": 300
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
                         }
                       },
                       "required": [
@@ -18185,6 +18206,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "cashAccountId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -18195,7 +18229,9 @@
                               "accountName",
                               "debit",
                               "credit",
-                              "description"
+                              "description",
+                              "cashAccountId",
+                              "cashAccountName"
                             ]
                           }
                         }
@@ -18529,6 +18565,10 @@
                         "description": {
                           "type": "string",
                           "maxLength": 300
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
                         }
                       },
                       "required": [
@@ -18694,6 +18734,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "cashAccountId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -18704,7 +18757,9 @@
                               "accountName",
                               "debit",
                               "credit",
-                              "description"
+                              "description",
+                              "cashAccountId",
+                              "cashAccountName"
                             ]
                           }
                         }
@@ -18998,6 +19053,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "cashAccountId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -19008,7 +19076,9 @@
                               "accountName",
                               "debit",
                               "credit",
-                              "description"
+                              "description",
+                              "cashAccountId",
+                              "cashAccountName"
                             ]
                           }
                         }
@@ -19326,6 +19396,19 @@
                                   "string",
                                   "null"
                                 ]
+                              },
+                              "cashAccountId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "cashAccountName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
                               }
                             },
                             "required": [
@@ -19336,7 +19419,9 @@
                               "accountName",
                               "debit",
                               "credit",
-                              "description"
+                              "description",
+                              "cashAccountId",
+                              "cashAccountName"
                             ]
                           }
                         }
@@ -27816,172 +27901,6 @@
         }
       }
     },
-    "/properties/{propertyId}/cash-accounts": {
-      "get": {
-        "tags": [
-          "Payments"
-        ],
-        "summary": "Cash drawer, bank and card accounts that payments go to",
-        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
-        "security": [
-          {
-            "session": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string",
-                            "format": "uuid"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "kind": {
-                            "type": "string",
-                            "enum": [
-                              "cash",
-                              "bank",
-                              "card_clearing",
-                              "other"
-                            ]
-                          },
-                          "ledgerAccountCode": {
-                            "type": "string"
-                          },
-                          "active": {
-                            "type": "boolean"
-                          }
-                        },
-                        "required": [
-                          "id",
-                          "name",
-                          "kind",
-                          "ledgerAccountCode",
-                          "active"
-                        ]
-                      }
-                    },
-                    "meta": {
-                      "type": "object",
-                      "properties": {
-                        "requestId": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "requestId"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "data",
-                    "meta"
-                  ]
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "enum": [
-                            "VALIDATION_ERROR",
-                            "UNAUTHENTICATED",
-                            "INVALID_CREDENTIALS",
-                            "ACCOUNT_LOCKED",
-                            "MFA_REQUIRED",
-                            "MFA_ENROLLMENT_REQUIRED",
-                            "INVALID_MFA_CODE",
-                            "FORBIDDEN",
-                            "CSRF_FAILED",
-                            "NOT_FOUND",
-                            "CONFLICT",
-                            "ROOM_UNAVAILABLE",
-                            "ROOM_NOT_READY",
-                            "JOURNAL_UNBALANCED",
-                            "PERIOD_CLOSED",
-                            "FOLIO_CLOSED",
-                            "PAYMENT_EXCEEDS_BALANCE",
-                            "REFUND_EXCEEDS_REMAINDER",
-                            "DEPOSIT_HANDLING_REQUIRED",
-                            "SETTLEMENT_REQUIRED",
-                            "IDEMPOTENCY_KEY_REUSED",
-                            "IDEMPOTENCY_IN_PROGRESS",
-                            "RATE_LIMITED",
-                            "INTERNAL_ERROR"
-                          ]
-                        },
-                        "message": {
-                          "type": "string"
-                        },
-                        "details": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "path": {
-                                "type": "string"
-                              },
-                              "message": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "path",
-                              "message"
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "message"
-                      ]
-                    },
-                    "meta": {
-                      "type": "object",
-                      "properties": {
-                        "requestId": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "requestId"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error",
-                    "meta"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/properties/{propertyId}/payments": {
       "get": {
         "tags": [
@@ -29834,6 +29753,1820 @@
                       },
                       "required": [
                         "amount"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cash-accounts": {
+      "get": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Cash drawers, bank and card accounts, with balances from the ledger (balance needs journal.read)",
+        "description": "Requires permission `folio.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "cash",
+                              "bank",
+                              "card_clearing",
+                              "other"
+                            ]
+                          },
+                          "details": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "ledgerAccountId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "ledgerAccountCode": {
+                            "type": "string"
+                          },
+                          "ledgerAccountName": {
+                            "type": "string"
+                          },
+                          "active": {
+                            "type": "boolean"
+                          },
+                          "balance": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "kind",
+                          "details",
+                          "ledgerAccountId",
+                          "ledgerAccountCode",
+                          "ledgerAccountName",
+                          "active",
+                          "balance"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Add a cash drawer or bank account (posts to the system account for its kind unless one is chosen)",
+        "description": "Requires permission `account.manage` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "cash",
+                      "bank",
+                      "card_clearing",
+                      "other"
+                    ]
+                  },
+                  "details": {
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  "ledgerAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": [
+                  "name",
+                  "kind"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bank",
+                            "card_clearing",
+                            "other"
+                          ]
+                        },
+                        "details": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "ledgerAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "ledgerAccountCode": {
+                          "type": "string"
+                        },
+                        "ledgerAccountName": {
+                          "type": "string"
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "balance": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "kind",
+                        "details",
+                        "ledgerAccountId",
+                        "ledgerAccountCode",
+                        "ledgerAccountName",
+                        "active",
+                        "balance"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cash-accounts/{id}": {
+      "patch": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Rename, change details, or close an account (only when its balance is zero)",
+        "description": "Requires permission `account.manage` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "details": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 120
+                  },
+                  "active": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "cash",
+                            "bank",
+                            "card_clearing",
+                            "other"
+                          ]
+                        },
+                        "details": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "ledgerAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "ledgerAccountCode": {
+                          "type": "string"
+                        },
+                        "ledgerAccountName": {
+                          "type": "string"
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "balance": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "kind",
+                        "details",
+                        "ledgerAccountId",
+                        "ledgerAccountCode",
+                        "ledgerAccountName",
+                        "active",
+                        "balance"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/cash-accounts/{id}/movements": {
+      "get": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Money in and out of one account with a running balance, read from the posted journal lines",
+        "description": "Requires permission `journal.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "to",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "account": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "cash",
+                                "bank",
+                                "card_clearing",
+                                "other"
+                              ]
+                            },
+                            "details": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "ledgerAccountId": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "ledgerAccountCode": {
+                              "type": "string"
+                            },
+                            "ledgerAccountName": {
+                              "type": "string"
+                            },
+                            "active": {
+                              "type": "boolean"
+                            },
+                            "balance": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "name",
+                            "kind",
+                            "details",
+                            "ledgerAccountId",
+                            "ledgerAccountCode",
+                            "ledgerAccountName",
+                            "active",
+                            "balance"
+                          ]
+                        },
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "openingBalance": {
+                          "type": "string"
+                        },
+                        "totalIn": {
+                          "type": "string"
+                        },
+                        "totalOut": {
+                          "type": "string"
+                        },
+                        "closingBalance": {
+                          "type": "string"
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": "integer"
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "in": {
+                                "type": "string"
+                              },
+                              "out": {
+                                "type": "string"
+                              },
+                              "balance": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "description",
+                              "reference",
+                              "sourceType",
+                              "in",
+                              "out",
+                              "balance"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "account",
+                        "from",
+                        "to",
+                        "openingBalance",
+                        "totalIn",
+                        "totalOut",
+                        "closingBalance",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/transfers": {
+      "get": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Transfers between cash and bank accounts, newest first",
+        "description": "Requires permission `cash.transfer` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "fromCashAccountId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "fromCashAccountName": {
+                            "type": "string"
+                          },
+                          "toCashAccountId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "toCashAccountName": {
+                            "type": "string"
+                          },
+                          "amount": {
+                            "type": "string"
+                          },
+                          "businessDate": {
+                            "type": "string"
+                          },
+                          "reference": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "notes": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "journalEntryId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "journalNumber": {
+                            "type": [
+                              "integer",
+                              "null"
+                            ]
+                          },
+                          "createdByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fromCashAccountId",
+                          "fromCashAccountName",
+                          "toCashAccountId",
+                          "toCashAccountName",
+                          "amount",
+                          "businessDate",
+                          "reference",
+                          "notes",
+                          "journalEntryId",
+                          "journalNumber",
+                          "createdByName",
+                          "createdAt"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Move money between two accounts (Idempotency-Key): one journal, never revenue or expense; a drawer cannot go below zero",
+        "description": "Requires permission `cash.transfer` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fromCashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "toCashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "reference": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "notes": {
+                    "type": "string",
+                    "maxLength": 300
+                  }
+                },
+                "required": [
+                  "fromCashAccountId",
+                  "toCashAccountId",
+                  "amount"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "fromCashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "fromCashAccountName": {
+                          "type": "string"
+                        },
+                        "toCashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "toCashAccountName": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "notes": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "fromCashAccountId",
+                        "fromCashAccountName",
+                        "toCashAccountId",
+                        "toCashAccountName",
+                        "amount",
+                        "businessDate",
+                        "reference",
+                        "notes",
+                        "journalEntryId",
+                        "journalNumber",
+                        "createdByName",
+                        "createdAt"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/opening-balances": {
+      "get": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "The opening balances entry of the property, or null before it is entered",
+        "description": "Requires permission `journal.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "asOf": {
+                          "type": "string"
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "equityAmount": {
+                          "type": "string"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "asOf",
+                        "journalEntryId",
+                        "journalNumber",
+                        "totalDebit",
+                        "totalCredit",
+                        "equityAmount",
+                        "createdByName",
+                        "createdAt"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Enter the opening balances once (Idempotency-Key, journal.post): balance sheet accounts, difference to opening balance equity",
+        "description": "Requires permission `journal.post` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "asOf": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "debit": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "credit": {
+                          "type": "string",
+                          "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                          "default": "0"
+                        },
+                        "description": {
+                          "type": "string",
+                          "maxLength": 300
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      },
+                      "required": [
+                        "accountId"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 200
+                  }
+                },
+                "required": [
+                  "asOf",
+                  "lines"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "asOf": {
+                          "type": "string"
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "journalNumber": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "totalDebit": {
+                          "type": "string"
+                        },
+                        "totalCredit": {
+                          "type": "string"
+                        },
+                        "equityAmount": {
+                          "type": "string"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "asOf",
+                        "journalEntryId",
+                        "journalNumber",
+                        "totalDebit",
+                        "totalCredit",
+                        "equityAmount",
+                        "createdByName",
+                        "createdAt"
                       ]
                     },
                     "meta": {

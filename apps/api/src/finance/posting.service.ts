@@ -18,6 +18,11 @@ export interface PostingLine {
   description?: string | null;
   /** Set on guest receivable lines, so every folio can be reconciled to the ledger. */
   folioId?: string | null;
+  /**
+   * The cash drawer or bank account of a line on a cash ledger account (P4-1). Filled in when the property has only
+   * one cash account on that ledger account; required when it has several.
+   */
+  cashAccountId?: string | null;
 }
 
 export interface PostingRequest {
@@ -78,14 +83,42 @@ export class PostingService {
         createdBy: auth.userId,
       })
       .returning({ id: e.id });
-    await this.writeLines(tx, auth, row!.id, property.currencyCode, req.lines);
+    await this.writeLines(tx, auth, row!.id, req.propertyId, property.currencyCode, req.lines);
     return row!.id;
   }
 
-  /** Replaces the lines of a draft. */
-  async writeLines(tx: Tx, auth: AuthContext, entryId: string, currency: string, lines: PostingLine[]) {
+  /** Replaces the lines of a draft, tagging lines on cash ledger accounts with their cash account. */
+  async writeLines(
+    tx: Tx,
+    auth: AuthContext,
+    entryId: string,
+    propertyId: string,
+    currency: string,
+    lines: PostingLine[],
+  ) {
     await tx.delete(l).where(eq(l.journalEntryId, entryId));
     if (lines.length === 0) return;
+    const cash = await this.cashAccounts(tx, propertyId);
+    const issues: { path: string; message: string }[] = [];
+    const cashIds = lines.map((line, i) => {
+      if (line.cashAccountId) {
+        const c = cash.find((x) => x.id === line.cashAccountId);
+        if (!c || c.ledgerAccountId !== line.accountId) {
+          issues.push({
+            path: `lines.${i}.cashAccountId`,
+            message: 'This cash or bank account does not post to the chosen ledger account.',
+          });
+        }
+        return line.cashAccountId;
+      }
+      const onLedger = cash.filter((x) => x.ledgerAccountId === line.accountId);
+      const active = onLedger.filter((x) => x.active);
+      const candidates = active.length > 0 ? active : onLedger;
+      // Several drawers or banks on one ledger account: the person must say which (checked again on posting).
+      return candidates.length === 1 ? candidates[0]!.id : null;
+    });
+    if (issues.length > 0)
+      throw AppError.validation('Some lines name the wrong cash or bank account.', issues);
     await tx.insert(l).values(
       lines.map((line, i) => ({
         tenantId: auth.tenantId,
@@ -96,6 +129,7 @@ export class PostingService {
         credit: this.amount(line.credit, currency),
         description: line.description ?? null,
         folioId: line.folioId ?? null,
+        cashAccountId: cashIds[i] ?? null,
       })),
     );
   }
@@ -119,6 +153,23 @@ export class PostingService {
       .orderBy(asc(l.lineNo));
     if (lines.length < 2) {
       throw new AppError('JOURNAL_UNBALANCED', 'A journal entry needs at least two lines.');
+    }
+    const cashLedger = new Set((await this.cashAccounts(tx, entry.propertyId)).map((x) => x.ledgerAccountId));
+    const untagged = lines.flatMap((x, i) =>
+      cashLedger.has(x.line.accountId) && !x.line.cashAccountId
+        ? [
+            {
+              path: `lines.${i}.cashAccountId`,
+              message: 'Choose the cash drawer or bank account for this line.',
+            },
+          ]
+        : [],
+    );
+    if (untagged.length > 0) {
+      throw AppError.validation(
+        'Lines on cash and bank ledger accounts must say which drawer or bank account.',
+        untagged,
+      );
     }
     const inactive = lines.filter((x) => !x.account.active).map((x) => x.account.code);
     if (inactive.length > 0) {
@@ -200,6 +251,14 @@ export class PostingService {
     return Number(result.rows[0]!.n);
   }
 
+  private cashAccounts(tx: Tx, propertyId: string) {
+    const c = schema.cashAccounts;
+    return tx
+      .select({ id: c.id, ledgerAccountId: c.ledgerAccountId, active: c.active })
+      .from(c)
+      .where(eq(c.propertyId, propertyId));
+  }
+
   /** Rejects amounts finer than the currency's minor unit (D5) instead of rounding them silently. */
   private amount(value: string, currency: string): string {
     const m = Money.of(value || '0', currency);
@@ -247,6 +306,11 @@ export async function ledgerErrors<T>(fn: () => Promise<T>): Promise<T> {
       throw new AppError('JOURNAL_UNBALANCED', 'The journal entry does not balance.');
     }
     if (hint === 'PERIOD_CLOSED') throw new AppError('PERIOD_CLOSED', 'The accounting period is closed.');
+    if (hint === 'CASH_ACCOUNT_REQUIRED') {
+      throw AppError.validation(
+        'Lines on cash and bank ledger accounts must say which drawer or bank account.',
+      );
+    }
     throw err;
   }
 }

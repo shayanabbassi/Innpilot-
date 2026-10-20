@@ -1,6 +1,6 @@
 'use client';
 
-import type { AccountDto, JournalDraftRequest, JournalEntryDto } from '@innpilot/contracts';
+import type { AccountDto, CashAccountDto, JournalDraftRequest, JournalEntryDto } from '@innpilot/contracts';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -16,6 +16,7 @@ interface LineState {
   debit: string;
   credit: string;
   description: string;
+  cashAccountId: string;
 }
 
 const blank = (): LineState => ({
@@ -24,6 +25,7 @@ const blank = (): LineState => ({
   debit: '',
   credit: '',
   description: '',
+  cashAccountId: '',
 });
 
 export const ACCOUNTS_QUERY_KEY = ['finance', 'accounts'] as const;
@@ -33,6 +35,15 @@ export function useAccounts(enabled = true) {
     queryKey: ACCOUNTS_QUERY_KEY,
     queryFn: () => api.get<AccountDto[]>('/finance/accounts'),
     enabled,
+  });
+}
+
+/** Cash drawers and bank accounts of a property (balances only for ledger readers). */
+export function useCashAccounts(propertyId: string | undefined, enabled = true) {
+  return useQuery({
+    queryKey: ['finance', 'cash-accounts', propertyId],
+    queryFn: () => api.get<CashAccountDto[]>(`/properties/${propertyId}/cash-accounts`),
+    enabled: enabled && !!propertyId,
   });
 }
 
@@ -59,6 +70,7 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
           debit: /[1-9]/.test(l.debit) ? l.debit : '',
           credit: /[1-9]/.test(l.credit) ? l.credit : '',
           description: l.description ?? '',
+          cashAccountId: l.cashAccountId ?? '',
         }))
       : [blank(), blank()],
   );
@@ -68,6 +80,10 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
   const [busy, setBusy] = useState<'save' | 'post' | null>(null);
   const [error, setError] = useState<unknown>(null);
 
+  const cashAccounts = useCashAccounts(propertyId);
+  // A line on a ledger account shared by several drawers or banks must say which one.
+  const cashChoices = (accountId: string) =>
+    (cashAccounts.data ?? []).filter((c) => c.ledgerAccountId === accountId && c.active);
   const totals = journalTotals(lines, currency);
   const active = useMemo(() => (accounts.data ?? []).filter((a) => a.active), [accounts.data]);
   const lineErrors = useMemo(() => {
@@ -96,6 +112,7 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
         debit: l.debit.trim() || '0',
         credit: l.credit.trim() || '0',
         description: l.description.trim() || undefined,
+        cashAccountId: cashChoices(l.accountId).length > 1 ? l.cashAccountId || undefined : undefined,
       })),
   });
 
@@ -189,7 +206,7 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
               <SelectField
                 label={t('lineAccount', { n: i + 1 })}
                 value={l.accountId}
-                onChange={(e) => update(l.key, { accountId: e.target.value })}
+                onChange={(e) => update(l.key, { accountId: e.target.value, cashAccountId: '' })}
                 error={lineErrors.get(l.key)}
               >
                 <option value="">{t('chooseAccount')}</option>
@@ -225,6 +242,21 @@ export function JournalForm({ draft, onSaved }: { draft?: JournalEntryDto; onSav
               >
                 {t('remove')}
               </Button>
+              {cashChoices(l.accountId).length > 1 && (
+                <SelectField
+                  label={t('lineCashAccount', { n: i + 1 })}
+                  value={l.cashAccountId}
+                  onChange={(e) => update(l.key, { cashAccountId: e.target.value })}
+                  className="md:col-span-4"
+                >
+                  <option value="">{t('chooseCashAccount')}</option>
+                  {cashChoices(l.accountId).map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </SelectField>
+              )}
               <TextField
                 label={t('lineDescription')}
                 value={l.description}

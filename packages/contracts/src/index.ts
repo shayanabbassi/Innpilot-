@@ -1,5 +1,6 @@
 export * from './admin';
 export * from './auth';
+export * from './cash';
 export * from './checkout';
 export * from './common';
 export * from './day-close';
