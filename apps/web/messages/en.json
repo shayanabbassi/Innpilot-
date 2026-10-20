@@ -78,7 +78,8 @@
     "myShift": "My shift",
     "cashClosings": "Cash closings",
     "expenses": "Expenses",
-    "suppliers": "Suppliers"
+    "suppliers": "Suppliers",
+    "reconciliation": "Bank reconciliation"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -298,7 +299,8 @@
       "updated": "Cash or bank account changed"
     },
     "cash": {
-      "transferred": "Money transferred between accounts"
+      "transferred": "Money transferred between accounts",
+      "card_settled": "Card settlement recorded"
     },
     "finance": {
       "opening_balances_posted": "Opening balances entered"
@@ -321,6 +323,11 @@
       "approved": "Expense approved",
       "payment_made": "Bill payment made",
       "voided": "Expense voided"
+    },
+    "reconciliation": {
+      "started": "Bank reconciliation started",
+      "completed": "Bank reconciliation completed",
+      "abandoned": "Bank reconciliation abandoned"
     }
   },
   "onboarding": {
@@ -807,7 +814,8 @@
       "opening_balance": "Opening balances",
       "cash_closing": "Cash over or short",
       "expense": "Expense",
-      "expense_payment": "Bill payment"
+      "expense_payment": "Bill payment",
+      "card_settlement": "Card settlement"
     },
     "createdBy": "Created",
     "postedBy": "Posted",
@@ -948,7 +956,19 @@
     "openingEquity": "To opening balance equity",
     "openingSubmit": "Post opening balances",
     "openingConfirm": "This can be done only once. Check the amounts before posting.",
-    "viewJournal": "View journal {n}"
+    "viewJournal": "View journal {n}",
+    "settle": "Card settlement",
+    "settleTitle": "Card settlement",
+    "settleExplain": "Record what the card company paid into the bank. Its fee goes to bank charges; the clearing account goes down by the full amount.",
+    "settleFrom": "Card account",
+    "settleTo": "Paid into",
+    "waiting": "Waiting to be settled",
+    "grossAmount": "Amount settled (before fee)",
+    "feeAmount": "Card fee",
+    "feeHint": "As shown on the settlement report; leave empty if none.",
+    "netToBank": "Into the bank",
+    "settleReferenceHint": "Optional, e.g. the batch or settlement number.",
+    "settleDone": "{net} paid into {to}; fee {fee} posted to bank charges."
   },
   "taxes": {
     "title": "Taxes & charges",
@@ -1367,5 +1387,43 @@
     "paymentTermsHint": "Used for the due date of new bills. 0 = on receipt.",
     "notes": "Notes",
     "activeLabel": "Active (inactive suppliers cannot get new bills)"
+  },
+  "reconciliation": {
+    "title": "Bank reconciliation",
+    "subtitle": "Match bank and card statements with the books. A difference is explained, never booked away.",
+    "none": "No reconciliations yet.",
+    "startTitle": "Reconcile a statement",
+    "startExplain": "Choose the account, then enter the date and closing balance printed on the statement.",
+    "account": "Account",
+    "chooseAccount": "Choose an account",
+    "statementDate": "Statement date",
+    "statementBalance": "Statement closing balance",
+    "statementBalanceHint": "Use a minus sign if the account is overdrawn.",
+    "start": "Start",
+    "statementShort": "Statement {amount}",
+    "differenceShort": "difference {amount}",
+    "statuses": {
+      "in_progress": "In progress",
+      "completed": "Completed"
+    },
+    "all": "All reconciliations",
+    "since": "Continues from the statement of {date}",
+    "firstOne": "First reconciliation of this account",
+    "cleared": "Ticked in the books",
+    "difference": "Difference",
+    "noDifference": "None — it matches",
+    "explanation": "Why is there a difference?",
+    "completedBy": "Completed by {name}, {time}",
+    "lines": "Tick what is on the statement",
+    "tickAll": "Tick all",
+    "untickAll": "Untick all",
+    "noLines": "Nothing waiting to be reconciled up to this date.",
+    "complete": "Finish",
+    "completeTitle": "Finish this reconciliation?",
+    "completeBalanced": "The ticked lines match the statement. It will be locked.",
+    "completeDifference": "The statement and the ticked lines differ by {amount}. Say why; nothing is posted, and it will be locked.",
+    "abandon": "Abandon",
+    "abandonTitle": "Abandon this reconciliation?",
+    "abandonExplain": "The ticks are removed. Nothing in the books changes."
   }
 }

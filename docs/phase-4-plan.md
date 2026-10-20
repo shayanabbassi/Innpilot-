@@ -133,3 +133,9 @@ Also for your accountant: the variance threshold, the opening balances, and whet
   or non-system asset accounts other than cash; cashiers get that list from `GET …/expenses/accounts`.
 - **4.3:** a bill with payments cannot be voided; reversing a supplier payment comes with bank reconciliation (4.4)
   if needed.
+- **4.4:** reconciliation works on bank and card-clearing accounts (cash drawers are counted in shifts). The
+  cleared balance is every line reconciled before plus the lines ticked now; statements move forward only; a
+  line is reconciled once (unique key). Finishing with a difference needs an explanation, which is stored, and
+  nothing is posted; a completed reconciliation and its ticks are locked. One in progress may be abandoned.
+  Permission `bank.reconcile` (owner, accountant). Card settlements (`cash.transfer`): Dr bank (net), Dr bank
+  charges (fee), Cr card clearing (gross), never more than the clearing balance.

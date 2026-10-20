@@ -13,6 +13,7 @@ export * from './payments';
 export * from './guests';
 export * from './housekeeping';
 export * from './rbac';
+export * from './reconciliation';
 export * from './reservations';
 export * from './rooms';
 export * from './stays';

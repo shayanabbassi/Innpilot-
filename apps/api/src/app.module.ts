@@ -28,6 +28,8 @@ import { CashierService } from './finance/cashier.service';
 import { ExpenseController, SuppliersController } from './finance/expense.controller';
 import { ExpenseService } from './finance/expense.service';
 import { SuppliersService } from './finance/suppliers.service';
+import { ReconciliationController } from './finance/reconciliation.controller';
+import { ReconciliationService } from './finance/reconciliation.service';
 import { PaymentController } from './finance/payment.controller';
 import { PaymentService } from './finance/payment.service';
 import { InvoiceService } from './finance/invoice.service';
@@ -148,6 +150,7 @@ export class AppModule {
         CashierController,
         SuppliersController,
         ExpenseController,
+        ReconciliationController,
         CheckoutController,
         UsersController,
         AuditController,
@@ -182,6 +185,7 @@ export class AppModule {
         CashierService,
         SuppliersService,
         ExpenseService,
+        ReconciliationService,
         InvoiceService,
         CheckoutService,
         PiiService,

@@ -474,6 +474,7 @@
                                     "cash.transfer",
                                     "cashier.reopen",
                                     "supplier.manage",
+                                    "bank.reconcile",
                                     "journal.read",
                                     "account.manage",
                                     "journal.post",
@@ -539,6 +540,7 @@
                               "cash.transfer",
                               "cashier.reopen",
                               "supplier.manage",
+                              "bank.reconcile",
                               "journal.read",
                               "account.manage",
                               "journal.post",
@@ -39870,6 +39872,2278 @@
                         "voidReason",
                         "lines",
                         "payments"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reconciliations": {
+      "get": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "Reconciliations of bank and card accounts, latest statement first",
+        "description": "Requires permission `journal.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "cashAccountId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "cashAccountId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "cashAccountName": {
+                            "type": "string"
+                          },
+                          "statementDate": {
+                            "type": "string"
+                          },
+                          "statementBalance": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "in_progress",
+                              "completed"
+                            ]
+                          },
+                          "clearedBalance": {
+                            "type": "string"
+                          },
+                          "difference": {
+                            "type": "string"
+                          },
+                          "differenceExplanation": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "previousStatementDate": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "tickedCount": {
+                            "type": "integer"
+                          },
+                          "createdByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "completedByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "completedAt": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "cashAccountId",
+                          "cashAccountName",
+                          "statementDate",
+                          "statementBalance",
+                          "status",
+                          "clearedBalance",
+                          "difference",
+                          "differenceExplanation",
+                          "previousStatementDate",
+                          "tickedCount",
+                          "createdByName",
+                          "createdAt",
+                          "completedByName",
+                          "completedAt"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "Start a reconciliation for a statement (bank.reconcile); one in progress per account",
+        "description": "Requires permission `bank.reconcile` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cashAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "statementDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "statementBalance": {
+                    "type": "string",
+                    "pattern": "^-?\\d{1,13}(\\.\\d{1,2})?$"
+                  }
+                },
+                "required": [
+                  "cashAccountId",
+                  "statementDate",
+                  "statementBalance"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "statementDate": {
+                          "type": "string"
+                        },
+                        "statementBalance": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "in_progress",
+                            "completed"
+                          ]
+                        },
+                        "clearedBalance": {
+                          "type": "string"
+                        },
+                        "difference": {
+                          "type": "string"
+                        },
+                        "differenceExplanation": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "previousStatementDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "tickedCount": {
+                          "type": "integer"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "completedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "completedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "journalLineId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "ticked": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "journalLineId",
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "description",
+                              "reference",
+                              "sourceType",
+                              "amount",
+                              "ticked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "statementDate",
+                        "statementBalance",
+                        "status",
+                        "clearedBalance",
+                        "difference",
+                        "differenceExplanation",
+                        "previousStatementDate",
+                        "tickedCount",
+                        "createdByName",
+                        "createdAt",
+                        "completedByName",
+                        "completedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reconciliations/{id}": {
+      "get": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "One reconciliation with its ticked lines and (in progress) the unreconciled lines to the statement date",
+        "description": "Requires permission `journal.read` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "statementDate": {
+                          "type": "string"
+                        },
+                        "statementBalance": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "in_progress",
+                            "completed"
+                          ]
+                        },
+                        "clearedBalance": {
+                          "type": "string"
+                        },
+                        "difference": {
+                          "type": "string"
+                        },
+                        "differenceExplanation": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "previousStatementDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "tickedCount": {
+                          "type": "integer"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "completedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "completedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "journalLineId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "ticked": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "journalLineId",
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "description",
+                              "reference",
+                              "sourceType",
+                              "amount",
+                              "ticked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "statementDate",
+                        "statementBalance",
+                        "status",
+                        "clearedBalance",
+                        "difference",
+                        "differenceExplanation",
+                        "previousStatementDate",
+                        "tickedCount",
+                        "createdByName",
+                        "createdAt",
+                        "completedByName",
+                        "completedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "Change the statement date or balance while in progress",
+        "description": "Requires permission `bank.reconcile` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "statementDate": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "statementBalance": {
+                    "type": "string",
+                    "pattern": "^-?\\d{1,13}(\\.\\d{1,2})?$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "statementDate": {
+                          "type": "string"
+                        },
+                        "statementBalance": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "in_progress",
+                            "completed"
+                          ]
+                        },
+                        "clearedBalance": {
+                          "type": "string"
+                        },
+                        "difference": {
+                          "type": "string"
+                        },
+                        "differenceExplanation": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "previousStatementDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "tickedCount": {
+                          "type": "integer"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "completedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "completedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "journalLineId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "ticked": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "journalLineId",
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "description",
+                              "reference",
+                              "sourceType",
+                              "amount",
+                              "ticked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "statementDate",
+                        "statementBalance",
+                        "status",
+                        "clearedBalance",
+                        "difference",
+                        "differenceExplanation",
+                        "previousStatementDate",
+                        "tickedCount",
+                        "createdByName",
+                        "createdAt",
+                        "completedByName",
+                        "completedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "Abandon a reconciliation still in progress",
+        "description": "Requires permission `bank.reconcile` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reconciliations/{id}/items": {
+      "put": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "Replace the ticked ledger lines; a line can be reconciled only once",
+        "description": "Requires permission `bank.reconcile` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "journalLineIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "maxItems": 5000
+                  }
+                },
+                "required": [
+                  "journalLineIds"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "statementDate": {
+                          "type": "string"
+                        },
+                        "statementBalance": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "in_progress",
+                            "completed"
+                          ]
+                        },
+                        "clearedBalance": {
+                          "type": "string"
+                        },
+                        "difference": {
+                          "type": "string"
+                        },
+                        "differenceExplanation": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "previousStatementDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "tickedCount": {
+                          "type": "integer"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "completedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "completedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "journalLineId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "ticked": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "journalLineId",
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "description",
+                              "reference",
+                              "sourceType",
+                              "amount",
+                              "ticked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "statementDate",
+                        "statementBalance",
+                        "status",
+                        "clearedBalance",
+                        "difference",
+                        "differenceExplanation",
+                        "previousStatementDate",
+                        "tickedCount",
+                        "createdByName",
+                        "createdAt",
+                        "completedByName",
+                        "completedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/reconciliations/{id}/complete": {
+      "post": {
+        "tags": [
+          "Bank reconciliation"
+        ],
+        "summary": "Finish (Idempotency-Key): the difference must be zero or explained; the reconciliation and its lines are then locked",
+        "description": "Requires permission `bank.reconcile` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "explanation": {
+                    "type": "string",
+                    "maxLength": 1000
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "cashAccountName": {
+                          "type": "string"
+                        },
+                        "statementDate": {
+                          "type": "string"
+                        },
+                        "statementBalance": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "in_progress",
+                            "completed"
+                          ]
+                        },
+                        "clearedBalance": {
+                          "type": "string"
+                        },
+                        "difference": {
+                          "type": "string"
+                        },
+                        "differenceExplanation": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "previousStatementDate": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "tickedCount": {
+                          "type": "integer"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "completedByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "completedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "lines": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "journalLineId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "entryId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "journalNumber": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "accountingDate": {
+                                "type": "string"
+                              },
+                              "narration": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reference": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "sourceType": {
+                                "type": "string"
+                              },
+                              "amount": {
+                                "type": "string"
+                              },
+                              "ticked": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "journalLineId",
+                              "entryId",
+                              "journalNumber",
+                              "accountingDate",
+                              "narration",
+                              "description",
+                              "reference",
+                              "sourceType",
+                              "amount",
+                              "ticked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "cashAccountId",
+                        "cashAccountName",
+                        "statementDate",
+                        "statementBalance",
+                        "status",
+                        "clearedBalance",
+                        "difference",
+                        "differenceExplanation",
+                        "previousStatementDate",
+                        "tickedCount",
+                        "createdByName",
+                        "createdAt",
+                        "completedByName",
+                        "completedAt",
+                        "lines"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/properties/{propertyId}/card-settlements": {
+      "get": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Card settlements, newest first",
+        "description": "Requires permission `cash.transfer` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "clearingAccountName": {
+                            "type": "string"
+                          },
+                          "bankAccountName": {
+                            "type": "string"
+                          },
+                          "grossAmount": {
+                            "type": "string"
+                          },
+                          "feeAmount": {
+                            "type": "string"
+                          },
+                          "netAmount": {
+                            "type": "string"
+                          },
+                          "businessDate": {
+                            "type": "string"
+                          },
+                          "reference": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "journalEntryId": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "createdByName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "clearingAccountName",
+                          "bankAccountName",
+                          "grossAmount",
+                          "feeAmount",
+                          "netAmount",
+                          "businessDate",
+                          "reference",
+                          "journalEntryId",
+                          "createdByName",
+                          "createdAt"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cash and bank"
+        ],
+        "summary": "Record a card settlement (Idempotency-Key, cash.transfer): Dr bank (net), Dr bank charges (fee), Cr card clearing (gross)",
+        "description": "Requires permission `cash.transfer` on the property in path parameter `propertyId`. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clearingAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "bankAccountId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "grossAmount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$"
+                  },
+                  "feeAmount": {
+                    "type": "string",
+                    "pattern": "^\\d{1,13}(\\.\\d{1,2})?$",
+                    "default": "0"
+                  },
+                  "reference": {
+                    "type": "string",
+                    "maxLength": 80
+                  }
+                },
+                "required": [
+                  "clearingAccountId",
+                  "bankAccountId",
+                  "grossAmount"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "clearingAccountName": {
+                          "type": "string"
+                        },
+                        "bankAccountName": {
+                          "type": "string"
+                        },
+                        "grossAmount": {
+                          "type": "string"
+                        },
+                        "feeAmount": {
+                          "type": "string"
+                        },
+                        "netAmount": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "reference": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "journalEntryId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "createdByName": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "clearingAccountName",
+                        "bankAccountName",
+                        "grossAmount",
+                        "feeAmount",
+                        "netAmount",
+                        "businessDate",
+                        "reference",
+                        "journalEntryId",
+                        "createdByName",
+                        "createdAt"
                       ]
                     },
                     "meta": {

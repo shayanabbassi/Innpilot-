@@ -2,6 +2,7 @@
 
 import {
   CASH_ACCOUNT_KINDS,
+  type CardSettlementDto,
   type CashAccountDto,
   type CashAccountKind,
   type TransferDto,
@@ -10,6 +11,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useState } from 'react';
+import { CardSettlementDialog } from '@/components/card-settlement';
 import { useAccounts, useCashAccounts } from '@/components/journal-form';
 import {
   Alert,
@@ -51,6 +53,8 @@ export default function CashPage() {
   const [editing, setEditing] = useState<Editing>(null);
   const [transferOpen, setTransferOpen] = useState(false);
   const [done, setDone] = useState<TransferDto | null>(null);
+  const [settleOpen, setSettleOpen] = useState(false);
+  const [settled, setSettled] = useState<CardSettlementDto | null>(null);
 
   if (!allowed) return <PermissionDenied />;
   if (accounts.isPending) return <PageSkeleton />;
@@ -77,6 +81,17 @@ export default function CashPage() {
                 {t('addAccount')}
               </Button>
             )}
+            {canTransfer && accounts.data?.some((a) => a.kind === 'card_clearing' && a.active) && (
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setSettled(null);
+                  setSettleOpen(true);
+                }}
+              >
+                {t('settle')}
+              </Button>
+            )}
             {canTransfer && (
               <Button
                 onClick={() => {
@@ -97,6 +112,15 @@ export default function CashPage() {
               amount: formatAmount(done.amount, cur),
               from: done.fromCashAccountName,
               to: done.toCashAccountName,
+            })}
+          </Alert>
+        )}
+        {settled && (
+          <Alert tone="success">
+            {t('settleDone', {
+              net: formatAmount(settled.netAmount, cur),
+              to: settled.bankAccountName,
+              fee: formatAmount(settled.feeAmount, cur),
             })}
           </Alert>
         )}
@@ -168,6 +192,15 @@ export default function CashPage() {
         )}
       </div>
       <AccountDialog editing={editing} onClose={() => setEditing(null)} />
+      <CardSettlementDialog
+        open={settleOpen}
+        accounts={accounts.data}
+        onClose={() => setSettleOpen(false)}
+        onDone={(s) => {
+          setSettleOpen(false);
+          setSettled(s);
+        }}
+      />
       <TransferDialog
         open={transferOpen}
         accounts={accounts.data.filter((a) => a.active)}

@@ -844,3 +844,42 @@ export const expensePayments = pgTable('expense_payments', {
   createdBy: uuid('created_by').notNull(),
   createdAt: tsz('created_at').notNull().defaultNow(),
 });
+
+export const bankReconciliations = pgTable('bank_reconciliations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  cashAccountId: uuid('cash_account_id').notNull(),
+  statementDate: date('statement_date', { mode: 'string' }).notNull(),
+  statementBalance: numeric('statement_balance', { precision: 19, scale: 4 }).notNull(),
+  status: text('status').notNull().default('in_progress'),
+  clearedBalance: numeric('cleared_balance', { precision: 19, scale: 4 }),
+  difference: numeric('difference', { precision: 19, scale: 4 }),
+  differenceExplanation: text('difference_explanation'),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  completedBy: uuid('completed_by'),
+  completedAt: tsz('completed_at'),
+});
+
+export const reconciliationItems = pgTable('reconciliation_items', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  reconciliationId: uuid('reconciliation_id').notNull(),
+  journalLineId: uuid('journal_line_id').notNull(),
+});
+
+export const cardSettlements = pgTable('card_settlements', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  clearingAccountId: uuid('clearing_account_id').notNull(),
+  bankAccountId: uuid('bank_account_id').notNull(),
+  grossAmount: numeric('gross_amount', { precision: 19, scale: 4 }).notNull(),
+  feeAmount: numeric('fee_amount', { precision: 19, scale: 4 }).notNull().default('0'),
+  businessDate: date('business_date', { mode: 'string' }).notNull(),
+  reference: text('reference'),
+  journalEntryId: uuid('journal_entry_id').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
