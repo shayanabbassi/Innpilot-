@@ -30,6 +30,7 @@ import { ExpenseService } from './finance/expense.service';
 import { SuppliersService } from './finance/suppliers.service';
 import { ReconciliationController } from './finance/reconciliation.controller';
 import { ReconciliationService } from './finance/reconciliation.service';
+import { YearEndService } from './finance/year-end.service';
 import { PaymentController } from './finance/payment.controller';
 import { PaymentService } from './finance/payment.service';
 import { InvoiceService } from './finance/invoice.service';
@@ -187,6 +188,7 @@ export class AppModule {
         SuppliersService,
         ExpenseService,
         ReconciliationService,
+        YearEndService,
         InvoiceService,
         CheckoutService,
         PiiService,

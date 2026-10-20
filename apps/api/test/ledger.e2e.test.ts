@@ -238,31 +238,43 @@ describe('journals', () => {
 
 describe('periods', () => {
   it('FIN-005: blocks posting into a closed month until it is reopened with a reason (audited)', async () => {
+    // October still has a draft and business dates in it: the month-end checklist (4.6) refuses to close it.
     const d = await draft([line('1000', '300'), line('4900', '0', '300')]);
-    const close = await acc.post('/finance/periods/2026-10/close');
+    const refused = await acc.post('/finance/periods/2026-10/close', {});
+    expect(refused.status).toBe(409);
+    const blockers = refused.body.error.details.map((x: { path: string }) => x.path);
+    expect(blockers).toEqual(expect.arrayContaining(['business_dates_open', 'draft_journals']));
+
+    // September is clean, so it closes; a draft dated in it then cannot be posted.
+    const close = await acc.post('/finance/periods/2026-09/close', {});
     expect(close.status).toBe(200);
-    expect(close.body.data.find((p: { month: string }) => p.month === '2026-10')).toMatchObject({
+    expect(close.body.data.find((p: { month: string }) => p.month === '2026-09')).toMatchObject({
       status: 'closed',
       closedByName: 'accountant@a.test',
     });
-    expect((await acc.post('/finance/periods/2026-10/close')).status).toBe(409);
-
-    const blocked = await postEntry(d.body.data.id);
+    expect((await acc.post('/finance/periods/2026-09/close', {})).status).toBe(409);
+    const late = await draft([line('6100', '300'), line('2300', '0', '300')], {
+      accountingDate: '2026-09-30',
+    });
+    expect(late.status).toBe(201);
+    const blocked = await postEntry(late.body.data.id);
     expect(blocked.status).toBe(409);
     expect(blocked.body.error.code).toBe('PERIOD_CLOSED');
 
-    expect((await acc.post('/finance/periods/2026-10/reopen', {})).status).toBe(400);
-    const reopen = await acc.post('/finance/periods/2026-10/reopen', {
+    expect((await acc.post('/finance/periods/2026-09/reopen', {})).status).toBe(400);
+    const reopen = await acc.post('/finance/periods/2026-09/reopen', {
       reason: 'Late supplier bill to record',
     });
     expect(reopen.status).toBe(200);
     const [period] = (
       await h.admin.query<{ id: string }>(
-        `SELECT id FROM fiscal_periods WHERE tenant_id = $1 AND start_date = '2026-10-01'`,
+        `SELECT id FROM fiscal_periods WHERE tenant_id = $1 AND start_date = '2026-09-01'`,
         [h.fx.tenantA],
       )
     ).rows;
     expect((await audits('period.reopened', period!.id))[0]?.reason).toBe('Late supplier bill to record');
+    expect((await postEntry(late.body.data.id)).status).toBe(200);
+    // October stays open, so its draft still posts.
     expect((await postEntry(d.body.data.id)).status).toBe(200);
   });
 
@@ -325,7 +337,7 @@ describe('ledger permissions and isolation', () => {
     const manager = await browser(h).loginActive(h.fx.users.managerA);
     expect((await manager.get('/finance/trial-balance?from=2026-10-01&to=2026-10-31')).status).toBe(200);
     expect((await draft([line('1000', '1'), line('4900', '0', '1')], {}, manager)).status).toBe(403);
-    expect((await manager.post('/finance/periods/2026-10/close')).status).toBe(403);
+    expect((await manager.post('/finance/periods/2026-10/close', {})).status).toBe(403);
     expect(
       (await manager.post('/finance/accounts', { code: '6170', name: 'X', accountClass: 'expense' })).status,
     ).toBe(403);

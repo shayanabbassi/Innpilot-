@@ -150,3 +150,14 @@ Also for your accountant: the variance threshold, the opening balances, and whet
   guest revenue (new system account 1210), Cr room revenue, net of tax. At check-out the room-night charge credits
   Unbilled for the accrued amount and revenue only for any difference; voiding a billed accrued night reverses it
   out of revenue, so nothing is left in Unbilled. Tax is still charged on the guest's bill (accountant to confirm).
+- **4.6:** month-end checklist — blockers: a property's business date not past the month end (night audits not
+  run), draft journals dated in the month, open cashier shifts, closings waiting for approval; warnings: a bank
+  account with movements not reconciled to month end, earlier months with postings still open. Warnings accepted
+  with a reason, stored with the period together with the checklist as it stood. FIN-005's API test now closes a
+  clean September (October has a draft and open business dates, which the checklist rightly refuses).
+- **4.6 (D10):** the fiscal year is fixed to the calendar year, so no setting was added. Year-end needs January to
+  November closed and December's checklist clear; it posts one closing entry per property dated 31 December
+  (revenue, cost of sales, expense and other accounts to Retained earnings 3100), then closes December. Months of a
+  closed year cannot be reopened one by one. Reopening the year needs the new owner-only permission
+  `fiscal_year.reopen` and a reason; it reopens December and reverses the closing entries on 31 December; the
+  earlier close stays as history and the year can be closed again.

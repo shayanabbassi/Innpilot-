@@ -292,6 +292,8 @@ export const fiscalPeriodDto = z.object({
   reopenedAt: z.string().nullable(),
   reopenedByName: z.string().nullable(),
   reopenReason: z.string().nullable(),
+  /** Warnings accepted when the month was closed. */
+  closeReason: z.string().nullable(),
   postedEntries: z.number().int(),
   draftEntries: z.number().int(),
 });

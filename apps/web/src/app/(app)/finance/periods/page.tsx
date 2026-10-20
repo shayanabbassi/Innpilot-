@@ -1,9 +1,11 @@
 'use client';
 
-import type { FiscalPeriodDto } from '@innpilot/contracts';
+import type { FiscalPeriodDto, PeriodChecklistDto } from '@innpilot/contracts';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useState } from 'react';
+import { CloseChecklist } from '@/components/close-checklist';
 import {
   ApiErrorAlert,
   Button,
@@ -22,6 +24,7 @@ const PERIODS_KEY = ['finance', 'periods'] as const;
 
 export default function PeriodsPage() {
   const t = useTranslations('finance');
+  const tClose = useTranslations('close');
   const tCommon = useTranslations('common');
   const format = useFormatter();
   const queryClient = useQueryClient();
@@ -33,6 +36,12 @@ export default function PeriodsPage() {
     enabled: allowed,
   });
   const [confirm, setConfirm] = useState<{ kind: 'close' | 'reopen'; month: string } | null>(null);
+  // The month-end checklist (P4-10), loaded when the close dialog opens.
+  const checklist = useQuery({
+    queryKey: ['finance', 'checklist', confirm?.month],
+    queryFn: () => api.get<PeriodChecklistDto>(`/finance/periods/${confirm!.month}/checklist`),
+    enabled: confirm?.kind === 'close',
+  });
   const [reason, setReason] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>(null);
@@ -44,7 +53,16 @@ export default function PeriodsPage() {
   const monthName = (m: string) =>
     format.dateTime(new Date(`${m}-01T00:00:00Z`), { month: 'long', year: 'numeric', timeZone: 'UTC' });
   const when = (iso: string) => format.dateTime(new Date(iso), { dateStyle: 'medium' });
+  const c = checklist.data;
+  const closing = confirm?.kind === 'close';
+  const needsReason = closing ? (c?.warnings ?? 0) > 0 : true;
+  const blocked = closing && (!c || c.blockers > 0);
 
+  const open = (kind: 'close' | 'reopen', month: string) => {
+    setError(null);
+    setReason('');
+    setConfirm({ kind, month });
+  };
   const submit = async () => {
     if (!confirm) return;
     setBusy(true);
@@ -52,7 +70,7 @@ export default function PeriodsPage() {
     try {
       const updated = await api.post<FiscalPeriodDto[]>(
         `/finance/periods/${confirm.month}/${confirm.kind}`,
-        confirm.kind === 'reopen' ? { reason: reason.trim() } : {},
+        reason.trim() ? { reason: reason.trim() } : {},
       );
       queryClient.setQueryData(PERIODS_KEY, updated);
       await queryClient.invalidateQueries({ queryKey: ['finance'] });
@@ -60,6 +78,7 @@ export default function PeriodsPage() {
       setReason('');
     } catch (err) {
       setError(err);
+      void checklist.refetch();
     } finally {
       setBusy(false);
     }
@@ -67,7 +86,15 @@ export default function PeriodsPage() {
 
   return (
     <>
-      <PageHeader title={t('periodsTitle')} subtitle={t('periodsSubtitle')} />
+      <PageHeader
+        title={t('periodsTitle')}
+        subtitle={t('periodsSubtitle')}
+        actions={
+          <Link href="/finance/year-end" className="text-sm text-teal-700 underline">
+            {tClose('yearEndLink')}
+          </Link>
+        }
+      />
       <ul className="divide-y divide-line rounded-lg border border-line bg-white">
         {periods.data.map((p) => (
           <li key={p.month} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 text-sm">
@@ -77,6 +104,9 @@ export default function PeriodsPage() {
                 {t('periodCounts', { posted: p.postedEntries, drafts: p.draftEntries })}
                 {p.status === 'closed' && p.closedAt && (
                   <> · {t('closedBy', { name: p.closedByName ?? tCommon('none'), date: when(p.closedAt) })}</>
+                )}
+                {p.status === 'closed' && p.closeReason && (
+                  <> · {tClose('acceptedBecause', { reason: p.closeReason })}</>
                 )}
                 {p.status === 'open' && p.reopenedAt && (
                   <>
@@ -95,13 +125,13 @@ export default function PeriodsPage() {
               {t(`periodStatus.${p.status}`)}
             </StatusBadge>
             {p.status === 'open' && canTenant('period.close') && (
-              <Button variant="secondary" onClick={() => setConfirm({ kind: 'close', month: p.month })}>
+              <Button variant="secondary" onClick={() => open('close', p.month)}>
                 {t('closePeriod')}
                 <span className="sr-only"> {monthName(p.month)}</span>
               </Button>
             )}
             {p.status === 'closed' && canTenant('period.reopen') && (
-              <Button variant="secondary" onClick={() => setConfirm({ kind: 'reopen', month: p.month })}>
+              <Button variant="secondary" onClick={() => open('reopen', p.month)}>
                 {t('reopenPeriod')}
                 <span className="sr-only"> {monthName(p.month)}</span>
               </Button>
@@ -123,9 +153,17 @@ export default function PeriodsPage() {
           <p className="text-sm text-muted">
             {t(confirm?.kind === 'reopen' ? 'reopenExplain' : 'closeExplain')}
           </p>
-          {confirm?.kind === 'reopen' && (
+          {closing &&
+            (checklist.isPending ? (
+              <p className="text-sm text-muted">{tClose('checking')}</p>
+            ) : checklist.isError ? (
+              <ApiErrorAlert error={checklist.error} />
+            ) : (
+              <CloseChecklist items={c!.items} />
+            ))}
+          {needsReason && !(closing && c && c.blockers > 0) && (
             <TextField
-              label={t('reason')}
+              label={closing ? tClose('acceptReason') : t('reason')}
               value={reason}
               maxLength={500}
               onChange={(e) => setReason(e.target.value)}
@@ -137,7 +175,7 @@ export default function PeriodsPage() {
             </Button>
             <Button
               busy={busy}
-              disabled={confirm?.kind === 'reopen' && reason.trim().length < 3}
+              disabled={blocked || (needsReason && reason.trim().length < 3)}
               onClick={() => void submit()}
             >
               {confirm?.kind === 'reopen' ? t('reopenPeriod') : t('closePeriod')}

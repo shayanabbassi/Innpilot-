@@ -475,6 +475,7 @@
                                     "cashier.reopen",
                                     "supplier.manage",
                                     "bank.reconcile",
+                                    "fiscal_year.reopen",
                                     "journal.read",
                                     "account.manage",
                                     "journal.post",
@@ -541,6 +542,7 @@
                               "cashier.reopen",
                               "supplier.manage",
                               "bank.reconcile",
+                              "fiscal_year.reopen",
                               "journal.read",
                               "account.manage",
                               "journal.post",
@@ -22433,6 +22435,12 @@
                               "null"
                             ]
                           },
+                          "closeReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
                           "postedEntries": {
                             "type": "integer"
                           },
@@ -22450,10 +22458,211 @@
                           "reopenedAt",
                           "reopenedByName",
                           "reopenReason",
+                          "closeReason",
                           "postedEntries",
                           "draftEntries"
                         ]
                       }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/periods/{month}/checklist": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Month-end checklist: business dates past the month, no drafts, cashier shifts and closings done (blockers); bank reconciled, earlier months closed (warnings)",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "month": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "check": {
+                                "type": "string",
+                                "enum": [
+                                  "business_dates_open",
+                                  "draft_journals",
+                                  "open_shifts",
+                                  "closings_pending",
+                                  "months_open",
+                                  "bank_not_reconciled",
+                                  "earlier_months_open"
+                                ]
+                              },
+                              "severity": {
+                                "type": "string",
+                                "enum": [
+                                  "blocker",
+                                  "warning"
+                                ]
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "detail": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "check",
+                              "severity",
+                              "label",
+                              "detail"
+                            ]
+                          }
+                        },
+                        "blockers": {
+                          "type": "integer"
+                        },
+                        "warnings": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "month",
+                        "status",
+                        "items",
+                        "blockers",
+                        "warnings"
+                      ]
                     },
                     "meta": {
                       "type": "object",
@@ -22570,13 +22779,30 @@
         "tags": [
           "Ledger"
         ],
-        "summary": "Close a month: no more postings into it",
+        "summary": "Close a month after its checklist: 409 with the blockers if any; warnings need a reason. No more postings into it",
         "description": "Requires permission `period.close` from a tenant-wide role. Session must be fully verified (MFA).",
         "security": [
           {
             "session": []
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -22636,6 +22862,12 @@
                               "null"
                             ]
                           },
+                          "closeReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
                           "postedEntries": {
                             "type": "integer"
                           },
@@ -22653,10 +22885,1014 @@
                           "reopenedAt",
                           "reopenedByName",
                           "reopenReason",
+                          "closeReason",
                           "postedEntries",
                           "draftEntries"
                         ]
                       }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/years/{year}": {
+      "get": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Year-end preview (calendar year): checks, the closing entries per property and the result, with history",
+        "description": "Requires permission `journal.read` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "year": {
+                          "type": "integer"
+                        },
+                        "startDate": {
+                          "type": "string"
+                        },
+                        "endDate": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "check": {
+                                "type": "string",
+                                "enum": [
+                                  "business_dates_open",
+                                  "draft_journals",
+                                  "open_shifts",
+                                  "closings_pending",
+                                  "months_open",
+                                  "bank_not_reconciled",
+                                  "earlier_months_open"
+                                ]
+                              },
+                              "severity": {
+                                "type": "string",
+                                "enum": [
+                                  "blocker",
+                                  "warning"
+                                ]
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "detail": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "check",
+                              "severity",
+                              "label",
+                              "detail"
+                            ]
+                          }
+                        },
+                        "entries": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "propertyId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "propertyName": {
+                                "type": "string"
+                              },
+                              "lines": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountCode": {
+                                      "type": "string"
+                                    },
+                                    "accountName": {
+                                      "type": "string"
+                                    },
+                                    "balance": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "accountCode",
+                                    "accountName",
+                                    "balance"
+                                  ]
+                                }
+                              },
+                              "result": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "propertyId",
+                              "propertyName",
+                              "lines",
+                              "result"
+                            ]
+                          }
+                        },
+                        "result": {
+                          "type": "string"
+                        },
+                        "history": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "year": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "closed",
+                                  "reopened"
+                                ]
+                              },
+                              "result": {
+                                "type": "string"
+                              },
+                              "closeReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "closedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "closedAt": {
+                                "type": "string"
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "year",
+                              "status",
+                              "result",
+                              "closeReason",
+                              "closedByName",
+                              "closedAt",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "year",
+                        "startDate",
+                        "endDate",
+                        "status",
+                        "items",
+                        "entries",
+                        "result",
+                        "history"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/years/{year}/close": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Close the year (Idempotency-Key, period.close): revenue, cost and expense balances to retained earnings on 31 December, then December closes",
+        "description": "Requires permission `period.close` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "year": {
+                          "type": "integer"
+                        },
+                        "startDate": {
+                          "type": "string"
+                        },
+                        "endDate": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "check": {
+                                "type": "string",
+                                "enum": [
+                                  "business_dates_open",
+                                  "draft_journals",
+                                  "open_shifts",
+                                  "closings_pending",
+                                  "months_open",
+                                  "bank_not_reconciled",
+                                  "earlier_months_open"
+                                ]
+                              },
+                              "severity": {
+                                "type": "string",
+                                "enum": [
+                                  "blocker",
+                                  "warning"
+                                ]
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "detail": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "check",
+                              "severity",
+                              "label",
+                              "detail"
+                            ]
+                          }
+                        },
+                        "entries": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "propertyId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "propertyName": {
+                                "type": "string"
+                              },
+                              "lines": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountCode": {
+                                      "type": "string"
+                                    },
+                                    "accountName": {
+                                      "type": "string"
+                                    },
+                                    "balance": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "accountCode",
+                                    "accountName",
+                                    "balance"
+                                  ]
+                                }
+                              },
+                              "result": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "propertyId",
+                              "propertyName",
+                              "lines",
+                              "result"
+                            ]
+                          }
+                        },
+                        "result": {
+                          "type": "string"
+                        },
+                        "history": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "year": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "closed",
+                                  "reopened"
+                                ]
+                              },
+                              "result": {
+                                "type": "string"
+                              },
+                              "closeReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "closedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "closedAt": {
+                                "type": "string"
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "year",
+                              "status",
+                              "result",
+                              "closeReason",
+                              "closedByName",
+                              "closedAt",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "year",
+                        "startDate",
+                        "endDate",
+                        "status",
+                        "items",
+                        "entries",
+                        "result",
+                        "history"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/finance/years/{year}/reopen": {
+      "post": {
+        "tags": [
+          "Ledger"
+        ],
+        "summary": "Reopen the year (Idempotency-Key, owner, reason): the closing entries are reversed and December reopens",
+        "description": "Requires permission `fiscal_year.reopen` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "year": {
+                          "type": "integer"
+                        },
+                        "startDate": {
+                          "type": "string"
+                        },
+                        "endDate": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "open",
+                            "closed"
+                          ]
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "check": {
+                                "type": "string",
+                                "enum": [
+                                  "business_dates_open",
+                                  "draft_journals",
+                                  "open_shifts",
+                                  "closings_pending",
+                                  "months_open",
+                                  "bank_not_reconciled",
+                                  "earlier_months_open"
+                                ]
+                              },
+                              "severity": {
+                                "type": "string",
+                                "enum": [
+                                  "blocker",
+                                  "warning"
+                                ]
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "detail": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "check",
+                              "severity",
+                              "label",
+                              "detail"
+                            ]
+                          }
+                        },
+                        "entries": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "propertyId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "propertyName": {
+                                "type": "string"
+                              },
+                              "lines": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountCode": {
+                                      "type": "string"
+                                    },
+                                    "accountName": {
+                                      "type": "string"
+                                    },
+                                    "balance": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "accountCode",
+                                    "accountName",
+                                    "balance"
+                                  ]
+                                }
+                              },
+                              "result": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "propertyId",
+                              "propertyName",
+                              "lines",
+                              "result"
+                            ]
+                          }
+                        },
+                        "result": {
+                          "type": "string"
+                        },
+                        "history": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "year": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "string",
+                                "enum": [
+                                  "closed",
+                                  "reopened"
+                                ]
+                              },
+                              "result": {
+                                "type": "string"
+                              },
+                              "closeReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "closedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "closedAt": {
+                                "type": "string"
+                              },
+                              "reopenedByName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "reopenReason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "year",
+                              "status",
+                              "result",
+                              "closeReason",
+                              "closedByName",
+                              "closedAt",
+                              "reopenedByName",
+                              "reopenedAt",
+                              "reopenReason"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "year",
+                        "startDate",
+                        "endDate",
+                        "status",
+                        "items",
+                        "entries",
+                        "result",
+                        "history"
+                      ]
                     },
                     "meta": {
                       "type": "object",
@@ -22859,6 +24095,12 @@
                               "null"
                             ]
                           },
+                          "closeReason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
                           "postedEntries": {
                             "type": "integer"
                           },
@@ -22876,6 +24118,7 @@
                           "reopenedAt",
                           "reopenedByName",
                           "reopenReason",
+                          "closeReason",
                           "postedEntries",
                           "draftEntries"
                         ]

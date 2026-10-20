@@ -74,6 +74,11 @@ import {
   invoiceDto,
   cashAccountDto,
   cashMovementsDto,
+  closePeriodRequest,
+  closeYearRequest,
+  periodChecklistDto,
+  reopenYearRequest,
+  yearEndPreviewDto,
   cardSettlementDto,
   cardSettlementRequest,
   completeReconciliationRequest,
@@ -918,6 +923,34 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     data: cardSettlementDto,
     status: 201,
   },
+  'GET /finance/periods/{month}/checklist': {
+    tag: 'Ledger',
+    summary:
+      'Month-end checklist: business dates past the month, no drafts, cashier shifts and closings done (blockers); bank reconciled, earlier months closed (warnings)',
+    data: periodChecklistDto,
+  },
+  'GET /finance/years/{year}': {
+    tag: 'Ledger',
+    summary:
+      'Year-end preview (calendar year): checks, the closing entries per property and the result, with history',
+    data: yearEndPreviewDto,
+  },
+  'POST /finance/years/{year}/close': {
+    tag: 'Ledger',
+    summary:
+      'Close the year (Idempotency-Key, period.close): revenue, cost and expense balances to retained earnings on 31 December, then December closes',
+    body: closeYearRequest,
+    data: yearEndPreviewDto,
+    status: 200,
+  },
+  'POST /finance/years/{year}/reopen': {
+    tag: 'Ledger',
+    summary:
+      'Reopen the year (Idempotency-Key, owner, reason): the closing entries are reversed and December reopens',
+    body: reopenYearRequest,
+    data: yearEndPreviewDto,
+    status: 200,
+  },
   'GET /properties/{propertyId}/payments': {
     tag: 'Payments',
     summary: 'Payments and deposits, newest first, with their refunds',
@@ -1053,7 +1086,9 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
   },
   'POST /finance/periods/{month}/close': {
     tag: 'Ledger',
-    summary: 'Close a month: no more postings into it',
+    summary:
+      'Close a month after its checklist: 409 with the blockers if any; warnings need a reason. No more postings into it',
+    body: closePeriodRequest,
     data: z.array(fiscalPeriodDto),
     status: 200,
   },

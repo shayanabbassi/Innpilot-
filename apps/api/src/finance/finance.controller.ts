@@ -13,7 +13,16 @@ import {
   Req,
 } from '@nestjs/common';
 import {
+  closePeriodRequest,
+  closeYearRequest,
   createAccountRequest,
+  fiscalYearParam,
+  reopenYearRequest,
+  type ClosePeriodRequest,
+  type CloseYearRequest,
+  type PeriodChecklistDto,
+  type ReopenYearRequest,
+  type YearEndPreviewDto,
   IDEMPOTENCY_HEADER,
   journalDraftRequest,
   journalListQuery,
@@ -46,6 +55,7 @@ import { AccountsService } from './accounts.service';
 import { JournalsService } from './journals.service';
 import { PeriodsService } from './periods.service';
 import { ReportsService } from './reports.service';
+import { YearEndService } from './year-end.service';
 
 const uuid = (what: string) => new ParseUUIDPipe({ exceptionFactory: () => AppError.notFound(what) });
 
@@ -60,6 +70,7 @@ export class FinanceController {
     private readonly journals: JournalsService,
     private readonly periods: PeriodsService,
     private readonly reports: ReportsService,
+    private readonly years: YearEndService,
   ) {}
 
   // ------------------------------------------------------------------------------------------- accounts
@@ -196,15 +207,63 @@ export class FinanceController {
     return this.periods.list(auth);
   }
 
+  /** The month-end checklist (P4-10): blockers stop the close, warnings need a reason. */
+  @Get('periods/:month/checklist')
+  @RequirePermission('journal.read')
+  checklist(
+    @CurrentAuth() auth: AuthContext,
+    @Param('month', new ZodPipe(periodMonth)) month: string,
+  ): Promise<PeriodChecklistDto> {
+    return this.periods.checklist(auth, month);
+  }
+
   @Post('periods/:month/close')
   @HttpCode(200)
   @RequirePermission('period.close')
   closePeriod(
     @CurrentAuth() auth: AuthContext,
     @Param('month', new ZodPipe(periodMonth)) month: string,
+    @Body(new ZodPipe(closePeriodRequest)) body: ClosePeriodRequest,
     @Req() req: AppRequest,
   ): Promise<FiscalPeriodDto[]> {
-    return this.periods.close(auth, month, requestMeta(req));
+    return this.periods.close(auth, month, body, requestMeta(req));
+  }
+
+  // ------------------------------------------------------------------------------------------- year end
+
+  @Get('years/:year')
+  @RequirePermission('journal.read')
+  year(
+    @CurrentAuth() auth: AuthContext,
+    @Param('year', new ZodPipe(fiscalYearParam)) year: number,
+  ): Promise<YearEndPreviewDto> {
+    return this.years.preview(auth, year);
+  }
+
+  /** Requires an Idempotency-Key header. */
+  @Post('years/:year/close')
+  @HttpCode(200)
+  @RequirePermission('period.close')
+  async closeYear(
+    @CurrentAuth() auth: AuthContext,
+    @Param('year', new ZodPipe(fiscalYearParam)) year: number,
+    @Body(new ZodPipe(closeYearRequest)) body: CloseYearRequest,
+    @Req() req: AppRequest,
+  ): Promise<YearEndPreviewDto> {
+    return (await this.years.close(auth, year, body, req.get(IDEMPOTENCY_HEADER), requestMeta(req))).body;
+  }
+
+  /** Requires an Idempotency-Key header. */
+  @Post('years/:year/reopen')
+  @HttpCode(200)
+  @RequirePermission('fiscal_year.reopen')
+  async reopenYear(
+    @CurrentAuth() auth: AuthContext,
+    @Param('year', new ZodPipe(fiscalYearParam)) year: number,
+    @Body(new ZodPipe(reopenYearRequest)) body: ReopenYearRequest,
+    @Req() req: AppRequest,
+  ): Promise<YearEndPreviewDto> {
+    return (await this.years.reopen(auth, year, body, req.get(IDEMPOTENCY_HEADER), requestMeta(req))).body;
   }
 
   @Post('periods/:month/reopen')

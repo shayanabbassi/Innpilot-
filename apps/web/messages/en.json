@@ -328,6 +328,10 @@
       "started": "Bank reconciliation started",
       "completed": "Bank reconciliation completed",
       "abandoned": "Bank reconciliation abandoned"
+    },
+    "fiscal_year": {
+      "closed": "Year-end close",
+      "reopened": "Year reopened"
     }
   },
   "onboarding": {
@@ -811,7 +815,8 @@
       "expense": "Expense",
       "expense_payment": "Bill payment",
       "card_settlement": "Card settlement",
-      "night_audit": "Night audit (room revenue earned)"
+      "night_audit": "Night audit (room revenue earned)",
+      "year_end_close": "Year-end close"
     },
     "createdBy": "Created",
     "postedBy": "Posted",
@@ -886,7 +891,7 @@
     "reopenPeriod": "Reopen",
     "closeTitle": "Close {month}?",
     "reopenTitle": "Reopen {month}?",
-    "closeExplain": "Nothing can be posted into this month while it is closed. Drafts dated in it can still be edited.",
+    "closeExplain": "Nothing can be posted into this month once it is closed. Drafts dated in it can still be edited.",
     "reopenExplain": "Postings into this month will be allowed again. Your reason is kept in the audit log.",
     "lineSupplier": "Line {n} supplier",
     "chooseSupplier": "Choose the supplier"
@@ -1469,5 +1474,47 @@
     "foliosOnAccount": "Folios on account",
     "depositsToRefund": "Deposits waiting to be refunded",
     "countAmount": "{count} · {amount}"
+  },
+  "close": {
+    "allClear": "Everything is ready to close.",
+    "checking": "Checking the month…",
+    "blockers": "Must be done first",
+    "warnings": "Can be accepted with a reason",
+    "checks": {
+      "business_dates_open": "Night audit not run to month end",
+      "draft_journals": "Draft journal",
+      "open_shifts": "Cashier shift still open",
+      "closings_pending": "Cash closing waiting for approval",
+      "months_open": "Month still open",
+      "bank_not_reconciled": "Bank not reconciled to month end",
+      "earlier_months_open": "Earlier month still open"
+    },
+    "acceptReason": "Reason for closing with these warnings",
+    "acceptedBecause": "warnings accepted: {reason}",
+    "yearEndLink": "Year-end close",
+    "periodsLink": "Accounting periods",
+    "yearTitle": "Year-end close",
+    "yearSubtitle": "The financial year is January to December. Closing moves the year’s result to retained earnings and locks the year.",
+    "year": "Year",
+    "yearStatus": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "closeYear": "Close {year}",
+    "reopenYear": "Reopen {year}",
+    "profit": "Profit {amount}",
+    "loss": "Loss {amount}",
+    "willMoveToRetained": "Closing posts this to retained earnings on 31 December, per property.",
+    "movedToRetained": "Posted to retained earnings on 31 December.",
+    "checksTitle": "Before closing",
+    "propertyResult": "Result",
+    "noActivity": "Nothing was posted to revenue, costs or expenses in {year}.",
+    "history": "History",
+    "noHistory": "This year has not been closed.",
+    "closedLine": "Closed by {name}, {date}: {amount}",
+    "reopenedLine": "Reopened by {name}, {date}: {reason}",
+    "closeExplain": "Revenue, cost and expense accounts are brought to zero for {year} against retained earnings, and December closes. Posting into {year} is then refused.",
+    "reopenExplain": "The closing entries are reversed on 31 December and December reopens. Earlier months stay closed. Your reason is kept in the audit log.",
+    "reopenReason": "Reason"
   }
 }

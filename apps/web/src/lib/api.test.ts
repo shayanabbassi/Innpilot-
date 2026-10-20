@@ -165,6 +165,8 @@ describe('messages', () => {
       'reconciliation.completed',
       'reconciliation.abandoned',
       'cash.card_settled',
+      'fiscal_year.closed',
+      'fiscal_year.reopened',
       'tenant.created',
       'room_type.created',
       'room_type.updated',

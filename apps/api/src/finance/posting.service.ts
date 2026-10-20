@@ -255,10 +255,17 @@ export class PostingService {
   }
 
   /**
-   * Posts the equal and opposite entry of a posted one (FIN-004), dated on the business date, with every line's
+   * Posts the equal and opposite entry of a posted one (FIN-004), dated on the business date (or `accountingDate`),
+   * with every line's
    * folio, cash account and supplier kept, and marks the original reversed. Returns the reversal's id.
    */
-  async reverse(tx: Tx, auth: AuthContext, entryId: string, narration: string): Promise<string> {
+  async reverse(
+    tx: Tx,
+    auth: AuthContext,
+    entryId: string,
+    narration: string,
+    accountingDate?: string,
+  ): Promise<string> {
     const [original] = await tx.select().from(e).where(eq(e.id, entryId)).for('update');
     if (!original) throw AppError.notFound('journal entry');
     if (original.status !== 'posted') {
@@ -267,6 +274,7 @@ export class PostingService {
     const lines = await tx.select().from(l).where(eq(l.journalEntryId, entryId)).orderBy(asc(l.lineNo));
     const reversalId = await this.post(tx, auth, {
       propertyId: original.propertyId,
+      accountingDate,
       sourceType: 'reversal',
       sourceId: original.id,
       purpose: 'reversal',

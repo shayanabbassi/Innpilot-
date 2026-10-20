@@ -3,6 +3,7 @@ export * from './auth';
 export * from './cash';
 export * from './cashier';
 export * from './checkout';
+export * from './close';
 export * from './common';
 export * from './day-close';
 export * from './errors';

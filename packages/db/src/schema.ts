@@ -429,6 +429,8 @@ export const fiscalPeriods = pgTable('fiscal_periods', {
   reopenedAt: tsz('reopened_at'),
   reopenReason: text('reopen_reason'),
   createdAt: tsz('created_at').notNull().defaultNow(),
+  closeReason: text('close_reason'),
+  closeChecklist: jsonb('close_checklist').$type<unknown[]>(),
 });
 
 export const documentSequences = pgTable('document_sequences', {
@@ -898,4 +900,26 @@ export const roomRevenueAccruals = pgTable('room_revenue_accruals', {
   revenueAccountId: uuid('revenue_account_id').notNull(),
   journalEntryId: uuid('journal_entry_id').notNull(),
   createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const fiscalYears = pgTable('fiscal_years', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  year: integer('year').notNull(),
+  status: text('status').notNull().default('closed'),
+  result: numeric('result', { precision: 19, scale: 4 }).notNull(),
+  closeReason: text('close_reason'),
+  closedBy: uuid('closed_by').notNull(),
+  closedAt: tsz('closed_at').notNull().defaultNow(),
+  reopenedBy: uuid('reopened_by'),
+  reopenedAt: tsz('reopened_at'),
+  reopenReason: text('reopen_reason'),
+});
+
+export const fiscalYearEntries = pgTable('fiscal_year_entries', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  fiscalYearId: uuid('fiscal_year_id').notNull(),
+  propertyId: uuid('property_id').notNull(),
+  journalEntryId: uuid('journal_entry_id').notNull(),
 });
