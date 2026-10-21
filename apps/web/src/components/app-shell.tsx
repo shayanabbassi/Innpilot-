@@ -64,7 +64,11 @@ const NAV: NavItem[] = [
   {
     href: '/reports',
     label: 'reports',
-    visible: (s) => s.me.properties.some((p) => p.permissions.includes('report.financial')),
+    visible: (s) =>
+      s.canTenant('audit.read') ||
+      s.me.properties.some(
+        (p) => p.permissions.includes('report.financial') || p.permissions.includes('report.operational'),
+      ),
   },
   { href: '/finance/journals', label: 'journals', visible: tenant('journal.read') },
   { href: '/finance/trial-balance', label: 'trialBalance', visible: tenant('journal.read') },

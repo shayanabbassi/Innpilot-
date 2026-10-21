@@ -150,3 +150,16 @@ branch `phase-1-foundation`.
   entered by journal show as "not linked to a bill", not aged).
 - **5.3:** fixed in passing: an impossible date such as 2026-13-01 made the shared date check throw and the API
   answer 500 on any endpoint taking a date; it is now a validation error (400).
+- **5.4:** occupancy counts a night as sold before the business date when the night audit accrued it or it was
+  billed at check-out; from the business date on, rooms sold are the bookings on the books and carry no revenue,
+  so ADR and RevPAR cover passed nights only. Rooms out of order count by their period (a resolved ticket up to
+  its resolution date). Room revenue is the posted 4000 amount of the night, as in the P&L.
+- **5.4:** permissions: occupancy, arrivals and departures and cash closings are operational reports (front desk
+  and cashiers see them; a user without `cashier.approve` or `journal.read` sees only their own closings);
+  expenses and discrepancies need `report.financial`; user activity needs a tenant-wide `audit.read`. Operational
+  ranges are limited to a year.
+- **5.4:** "cash outside a shift" lists drawer movements with no shift, leaving out opening balances and the
+  shift's own variance posting (and its reversal on reopen).
+- **5.4:** because room revenue is read by posting date, a night billed at check-out without a nightly accrual
+  (stays before slice 4.5, or a check-out before the night audit ran) shows its revenue on the check-out date;
+  ADR for those two nights is skewed, while the totals over the range are right.

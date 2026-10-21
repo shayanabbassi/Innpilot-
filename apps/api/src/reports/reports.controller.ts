@@ -1,5 +1,15 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import {
+  operationalQuery,
+  userActivityQuery,
+  type CashierClosingsDto,
+  type DiscrepanciesDto,
+  type ExpensesReportDto,
+  type MovementsDto,
+  type OccupancyDto,
+  type OperationalQuery,
+  type UserActivityDto,
+  type UserActivityQuery,
   agingQuery,
   type AgingQuery,
   type PayablesAgingDto,
@@ -31,6 +41,7 @@ import type { AuthContext } from '../common/request';
 import { ZodPipe } from '../common/zod.pipe';
 import { AgingService } from './aging.service';
 import { CashReportsService } from './cash-reports.service';
+import { OperationalReportsService } from './operational.service';
 import { StatementsService } from './statements.service';
 
 /**
@@ -43,6 +54,7 @@ export class ReportsController {
     private readonly statements: StatementsService,
     private readonly cash: CashReportsService,
     private readonly aging: AgingService,
+    private readonly ops: OperationalReportsService,
   ) {}
 
   @Get('trial-balance')
@@ -124,5 +136,59 @@ export class ReportsController {
     @Query(new ZodPipe(agingQuery)) q: AgingQuery,
   ): Promise<PayablesAgingDto> {
     return this.aging.payables(auth, q);
+  }
+
+  @Get('occupancy')
+  @RequirePermission('report.operational', 'any')
+  occupancy(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(operationalQuery)) q: OperationalQuery,
+  ): Promise<OccupancyDto> {
+    return this.ops.occupancy(auth, q);
+  }
+
+  @Get('arrivals-departures')
+  @RequirePermission('report.operational', 'any')
+  movements(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(operationalQuery)) q: OperationalQuery,
+  ): Promise<MovementsDto> {
+    return this.ops.movements(auth, q);
+  }
+
+  @Get('cashier-closings')
+  @RequirePermission('report.operational', 'any')
+  cashierClosings(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(operationalQuery)) q: OperationalQuery,
+  ): Promise<CashierClosingsDto> {
+    return this.ops.cashierClosings(auth, q);
+  }
+
+  @Get('expenses')
+  @RequirePermission('report.financial', 'any')
+  expenses(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(operationalQuery)) q: OperationalQuery,
+  ): Promise<ExpensesReportDto> {
+    return this.ops.expenses(auth, q);
+  }
+
+  @Get('discrepancies')
+  @RequirePermission('report.financial', 'any')
+  discrepancies(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(operationalQuery)) q: OperationalQuery,
+  ): Promise<DiscrepanciesDto> {
+    return this.ops.discrepancies(auth, q);
+  }
+
+  @Get('user-activity')
+  @RequirePermission('audit.read', 'tenant')
+  userActivity(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(userActivityQuery)) q: UserActivityQuery,
+  ): Promise<UserActivityDto> {
+    return this.ops.userActivity(auth, q);
   }
 }

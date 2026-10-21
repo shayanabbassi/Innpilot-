@@ -399,3 +399,217 @@ export const payablesAgingDto = z.object({
   ledger: z.array(ledgerTie),
 });
 export type PayablesAgingDto = z.infer<typeof payablesAgingDto>;
+
+// ------------------------------------------------------------------------------------------------ operational
+
+export const operationalQueryObject = z.object({
+  from: businessDate,
+  to: businessDate,
+  propertyId: uuid.optional(),
+});
+/** A range of hotel dates, at most a year (operational reports list days and items). */
+export const operationalQuery = operationalQueryObject
+  .refine(rangeCheck, rangeIssue)
+  .refine((q) => Date.parse(q.to) - Date.parse(q.from) <= 366 * 86_400_000, {
+    path: ['to'],
+    message: 'Choose at most a year.',
+  });
+export type OperationalQuery = z.infer<typeof operationalQuery>;
+
+/** P5-12: occupancy, ADR and RevPAR by night. */
+export const occupancyDto = z.object({
+  ...reportContext,
+  from: z.string(),
+  to: z.string(),
+  nights: z.array(
+    z.object({
+      night: z.string(),
+      /** actual: before the business date (nights audited or billed); on_the_books: today and later, from bookings. */
+      basis: z.enum(['actual', 'on_the_books']),
+      rooms: z.number().int(),
+      outOfService: z.number().int(),
+      available: z.number().int(),
+      sold: z.number().int(),
+      /** Percent with 1 decimal, as a string; null when no room was available. */
+      occupancy: z.string().nullable(),
+      roomRevenue: z.string(),
+      adr: z.string().nullable(),
+      revpar: z.string().nullable(),
+    }),
+  ),
+  /** Actual nights only: on-the-books nights have no posted revenue yet. */
+  totals: z.object({
+    available: z.number().int(),
+    sold: z.number().int(),
+    occupancy: z.string().nullable(),
+    roomRevenue: z.string(),
+    adr: z.string().nullable(),
+    revpar: z.string().nullable(),
+  }),
+});
+export type OccupancyDto = z.infer<typeof occupancyDto>;
+
+const movement = z.object({
+  reservationId: uuid,
+  propertyId: uuid,
+  bookingReference: z.string(),
+  guestName: z.string(),
+  roomNumber: z.string().nullable(),
+  roomType: z.string(),
+  arrival: z.string(),
+  departure: z.string(),
+  nights: z.number().int(),
+  adults: z.number().int(),
+  status: z.string(),
+});
+
+/** Arrivals and departures by date, with the booking's status. */
+export const movementsDto = z.object({
+  ...reportContext,
+  from: z.string(),
+  to: z.string(),
+  arrivals: z.array(movement),
+  departures: z.array(movement),
+});
+export type MovementsDto = z.infer<typeof movementsDto>;
+
+/** 01 §6 cashier variance: every closing in the range with its approval trail. */
+export const cashierClosingsDto = z.object({
+  ...reportContext,
+  from: z.string(),
+  to: z.string(),
+  /** False when the user sees only their own closings. */
+  allCashiers: z.boolean(),
+  closings: z.array(
+    z.object({
+      closingId: uuid,
+      shiftId: uuid,
+      propertyId: uuid,
+      businessDate: z.string(),
+      cashierName: z.string(),
+      cashAccountName: z.string(),
+      expected: z.string(),
+      counted: z.string(),
+      variance: z.string(),
+      explanation: z.string().nullable(),
+      status: z.enum(['submitted', 'approved', 'reopened']),
+      approvalRequired: z.boolean(),
+      approvedByName: z.string().nullable(),
+      approvalNote: z.string().nullable(),
+      reopenReason: z.string().nullable(),
+    }),
+  ),
+  totals: z.object({
+    closings: z.number().int(),
+    shortages: z.string(),
+    overages: z.string(),
+    net: z.string(),
+    awaitingApproval: z.number().int(),
+  }),
+});
+export type CashierClosingsDto = z.infer<typeof cashierClosingsDto>;
+
+/** Posted expenses by account and by supplier or payee, for the expense dates in the range. */
+export const expensesReportDto = z.object({
+  ...reportContext,
+  from: z.string(),
+  to: z.string(),
+  byAccount: z.array(
+    z.object({
+      accountId: uuid,
+      code: z.string(),
+      name: z.string(),
+      amount: z.string(),
+      tax: z.string(),
+      total: z.string(),
+    }),
+  ),
+  byPayee: z.array(
+    z.object({
+      supplierId: uuid.nullable(),
+      name: z.string(),
+      cash: z.string(),
+      bills: z.string(),
+      total: z.string(),
+      vouchers: z.number().int(),
+    }),
+  ),
+  total: z.string(),
+  /** Tax kept as recoverable (1300), not part of the cost. */
+  recoverableTax: z.string(),
+});
+export type ExpensesReportDto = z.infer<typeof expensesReportDto>;
+
+/** Exceptions to look into: variances, opening count differences, cash outside shifts, night audit overrides. */
+export const discrepanciesDto = z.object({
+  ...reportContext,
+  from: z.string(),
+  to: z.string(),
+  variances: z.array(
+    z.object({
+      shiftId: uuid,
+      businessDate: z.string(),
+      cashierName: z.string(),
+      cashAccountName: z.string(),
+      variance: z.string(),
+      explanation: z.string().nullable(),
+      status: z.string(),
+    }),
+  ),
+  openingDifferences: z.array(
+    z.object({
+      shiftId: uuid,
+      businessDate: z.string(),
+      cashierName: z.string(),
+      cashAccountName: z.string(),
+      openingCount: z.string(),
+      bookBalance: z.string(),
+      difference: z.string(),
+    }),
+  ),
+  cashOutsideShifts: z.array(
+    z.object({
+      entryId: uuid,
+      journalNumber: z.number().int(),
+      accountingDate: z.string(),
+      narration: z.string(),
+      cashAccountName: z.string(),
+      amountIn: z.string(),
+      amountOut: z.string(),
+    }),
+  ),
+  auditOverrides: z.array(
+    z.object({
+      businessDate: z.string(),
+      reason: z.string(),
+      issues: z.number().int(),
+      closedByName: z.string(),
+    }),
+  ),
+});
+export type DiscrepanciesDto = z.infer<typeof discrepanciesDto>;
+
+export const userActivityQueryObject = z.object({ from: businessDate, to: businessDate });
+export const userActivityQuery = userActivityQueryObject.refine(rangeCheck, rangeIssue);
+export type UserActivityQuery = z.infer<typeof userActivityQuery>;
+
+/** PRD §6.9 user activity, from the audit log, for the hotel dates in the range (property timezone). */
+export const userActivityDto = z.object({
+  ...reportContext,
+  from: z.string(),
+  to: z.string(),
+  users: z.array(
+    z.object({
+      userId: uuid.nullable(),
+      name: z.string(),
+      events: z.number().int(),
+      signIns: z.number().int(),
+      failedSignIns: z.number().int(),
+      firstAt: z.string(),
+      lastAt: z.string(),
+      topActions: z.array(z.object({ action: z.string(), count: z.number().int() })),
+    }),
+  ),
+  totalEvents: z.number().int(),
+});
+export type UserActivityDto = z.infer<typeof userActivityDto>;

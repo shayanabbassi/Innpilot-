@@ -44,6 +44,7 @@ import { ReportsController } from './reports/reports.controller';
 import { StatementsService } from './reports/statements.service';
 import { AgingService } from './reports/aging.service';
 import { CashReportsService } from './reports/cash-reports.service';
+import { OperationalReportsService } from './reports/operational.service';
 import { TaxController } from './finance/tax.controller';
 import { TaxService } from './finance/tax.service';
 import { HealthController } from './health/health.controller';
@@ -188,6 +189,7 @@ export class AppModule {
         StatementsService,
         CashReportsService,
         AgingService,
+        OperationalReportsService,
         TaxService,
         FolioService,
         PaymentService,

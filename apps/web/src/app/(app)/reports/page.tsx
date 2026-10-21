@@ -17,7 +17,26 @@ export default function ReportsPage() {
   const t = useTranslations('reports');
   const { me, canTenant } = useSession();
   const financial = me.properties.some((p) => p.permissions.includes('report.financial'));
+  const operational = me.properties.some((p) => p.permissions.includes('report.operational'));
   const groups: [string, ReportLink[]][] = [
+    [
+      t('opsGroup'),
+      [
+        { href: '/reports/occupancy', title: t('occTitle'), text: t('occSubtitle'), visible: operational },
+        {
+          href: '/reports/arrivals-departures',
+          title: t('movTitle'),
+          text: t('movSubtitle'),
+          visible: operational,
+        },
+        {
+          href: '/reports/cashier-closings',
+          title: t('ccTitle'),
+          text: t('ccSubtitle'),
+          visible: operational,
+        },
+      ],
+    ],
     [
       t('financialGroup'),
       [
@@ -45,6 +64,24 @@ export default function ReportsPage() {
       [
         { href: '/reports/receivables', title: t('arTitle'), text: t('arSubtitle'), visible: financial },
         { href: '/reports/payables', title: t('apTitle'), text: t('apSubtitle'), visible: financial },
+      ],
+    ],
+    [
+      t('controlGroup'),
+      [
+        { href: '/reports/expenses', title: t('exTitle'), text: t('exSubtitle'), visible: financial },
+        {
+          href: '/reports/discrepancies',
+          title: t('discTitle'),
+          text: t('discSubtitle'),
+          visible: financial,
+        },
+        {
+          href: '/reports/user-activity',
+          title: t('uaTitle'),
+          text: t('uaSubtitle'),
+          visible: canTenant('audit.read'),
+        },
       ],
     ],
   ];
