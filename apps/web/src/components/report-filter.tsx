@@ -3,7 +3,8 @@
 import type { Permission } from '@innpilot/contracts';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
-import { Card, SelectField } from '@/components/ui';
+import { Card, SelectField, TextField } from '@/components/ui';
+import { monthRange } from '@/lib/finance';
 import { useSession } from '@/lib/session';
 
 const ALL = 'all';
@@ -105,5 +106,44 @@ export function Definitions({ items }: { items: [label: string, text: string][] 
         ))}
       </dl>
     </details>
+  );
+}
+
+/** A from–to range starting on the month of the hotel date, checked like the API checks it. */
+export function useDateRange(businessDate: string) {
+  const initial = monthRange(businessDate);
+  const [from, setFrom] = useState(initial.from);
+  const [to, setTo] = useState(initial.to);
+  return { from, to, setFrom, setTo, valid: !!from && !!to && from <= to, query: `from=${from}&to=${to}` };
+}
+
+export function DateRangeFields({ range }: { range: ReturnType<typeof useDateRange> }) {
+  const t = useTranslations('reports');
+  return (
+    <>
+      <TextField
+        label={t('from')}
+        type="date"
+        value={range.from}
+        onChange={(e) => range.setFrom(e.target.value)}
+      />
+      <TextField
+        label={t('to')}
+        type="date"
+        value={range.to}
+        onChange={(e) => range.setTo(e.target.value)}
+        error={range.valid ? undefined : t('rangeError')}
+      />
+    </>
+  );
+}
+
+/** A figure with its label, for summaries that would be too wide as table columns on a phone. */
+export function Figure({ label, value, strong = false }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <div>
+      <dt className="text-xs text-muted">{label}</dt>
+      <dd className={`tabular ${strong ? 'font-semibold text-ink' : 'text-ink'}`}>{value}</dd>
+    </div>
   );
 }

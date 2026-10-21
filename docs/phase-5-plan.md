@@ -131,3 +131,15 @@ branch `phase-1-foundation`.
 - **5.1:** the balance sheet reads the result not yet closed from what is left on revenue, cost and expense
   accounts, split into the year of the date and earlier years, so it balances whether or not a year-end close has
   run. The P&L leaves out year-end closing entries and their reversals.
+- **5.2:** "cash" in the cashbook and cash flow means every drawer, bank and card-clearing account (lines tagged
+  with a cash account). The cash flow classifies the other lines of each journal that moves cash, so the lines add
+  up to the net change by construction; within one journal, money moved between the hotel's own accounts is a
+  transfer (a card settlement is a transfer plus its fee under expenses paid). Opening-balance journals are shown
+  as "opening balances at go-live" whatever account they were balanced against.
+- **5.2:** the tax summary counts each guest charge's tax snapshot on the date the charge was posted and takes a
+  void off on the void date; a charge moved to another folio is counted once. Other postings to a tax account
+  (payments to the authority, adjustments) are shown next to it, not mixed in. Purchase tax has no tax code yet,
+  so recoverable purchase tax is one figure from account 1300.
+- **5.2:** the revenue summary uses revenue accounts as its categories (room, food and beverage, other) and
+  matches the P&L; money received is listed by payment method from the payments and refunds on their business
+  date, kept apart from revenue.
