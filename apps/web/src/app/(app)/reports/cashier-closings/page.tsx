@@ -48,7 +48,7 @@ export default function CashierClosingsPage() {
   return (
     <>
       <PageHeader title={t('ccTitle')} subtitle={t('ccSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="cashier-closings" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : res.isPending ? (

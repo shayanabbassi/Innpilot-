@@ -43,7 +43,7 @@ export default function CashFlowPage() {
   return (
     <>
       <PageHeader title={t('cfTitle')} subtitle={t('cfSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="cash-flow" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : flow.isPending ? (

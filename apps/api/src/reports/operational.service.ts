@@ -68,39 +68,62 @@ export class OperationalReportsService {
         sold: number;
         revenue: string;
       }>(sql`
-        select n.night::text, n.night < p.business_date as actual,
-               (select count(*) from rooms rm where rm.property_id = p.id and rm.active)::int as rooms,
-               (select count(*) from rooms rm where rm.property_id = p.id and rm.active and exists (
+        -- Revenue and nights sold are aggregated once over the range, then joined to the nights (P5-16: a
+        -- lookup per night against a year of lines was the slow part).
+        with p as (
+          select id, business_date, timezone from properties
+          where true ${propertyId ? sql`and id = ${propertyId}` : sql``}
+        ),
+        nights as (
+          select p.id as pid, p.business_date, p.timezone, g::date as night
+          from p cross join generate_series(${q.from}::date, ${q.to}::date, interval '1 day') g
+        ),
+        revenue as (
+          select e.property_id as pid, e.accounting_date as night, sum(l.credit - l.debit) as amount
+          from journal_lines l
+          join journal_entries e on e.id = l.journal_entry_id
+          join accounts a on a.id = l.account_id
+          where a.system_role = 'room_revenue' and e.status <> 'draft' and ${notYearEndClose}
+            and e.accounting_date between ${q.from}::date and ${q.to}::date
+            and e.property_id in (select id from p)
+          group by 1, 2
+        ),
+        occupied as (
+          select pid, night, count(distinct rr)::int as sold from (
+            select a.property_id as pid, a.night, a.reservation_room_id as rr from room_revenue_accruals a
+            where a.night between ${q.from}::date and ${q.to}::date and a.property_id in (select id from p)
+            union
+            select c.property_id, c.night, c.reservation_room_id from room_night_charges c
+            join folio_charges fc on fc.id = c.charge_id
+            where fc.status <> 'voided' and c.night between ${q.from}::date and ${q.to}::date
+              and c.property_id in (select id from p)
+          ) x group by 1, 2
+        ),
+        room_count as (
+          select property_id as pid, count(*)::int as rooms from rooms
+          where active and property_id in (select id from p) group by 1
+        )
+        select n.night::text, n.night < n.business_date as actual,
+               coalesce(rc.rooms, 0) as rooms,
+               (select count(*) from rooms rm where rm.property_id = n.pid and rm.active and exists (
                   select 1 from maintenance_tickets mt
                   where mt.room_id = rm.id and mt.out_of_order_from <= n.night
                     and (mt.out_of_order_to is null or mt.out_of_order_to > n.night)
                     and (mt.status in ('open', 'in_progress')
-                         or (mt.status = 'resolved' and n.night < (mt.resolved_at at time zone p.timezone)::date))
+                         or (mt.status = 'resolved' and n.night < (mt.resolved_at at time zone n.timezone)::date))
                ))::int as ooo,
-               (case when n.night < p.business_date then
-                  (select count(*) from (
-                     select a.reservation_room_id from room_revenue_accruals a
-                     where a.property_id = p.id and a.night = n.night
-                     union
-                     select c.reservation_room_id from room_night_charges c
-                     join folio_charges fc on fc.id = c.charge_id
-                     where c.property_id = p.id and c.night = n.night and fc.status <> 'voided') x)
+               (case when n.night < n.business_date then coalesce(o.sold, 0)
                 else
                   (select count(*) from reservation_rooms x join reservations r on r.id = x.reservation_id
-                   where x.property_id = p.id and x.status = 'active'
+                   where x.property_id = n.pid and x.status = 'active'
                      and r.status in ('pending', 'confirmed', 'checked_in')
-                     and x.arrival <= n.night and x.departure > n.night)
-                end)::int as sold,
-               coalesce((select sum(l.credit - l.debit) from journal_lines l
-                         join journal_entries e on e.id = l.journal_entry_id
-                         join accounts a on a.id = l.account_id
-                         where a.system_role = 'room_revenue' and e.property_id = p.id and e.status <> 'draft'
-                           and e.accounting_date = n.night and ${notYearEndClose}), 0)::text as revenue
-        from properties p
-        cross join lateral (
-          select g::date as night from generate_series(${q.from}::date, ${q.to}::date, interval '1 day') g
-        ) n
-        where true ${propertyId ? sql`and p.id = ${propertyId}` : sql``}
+                     and x.arrival <= n.night and x.departure > n.night)::int
+                end) as sold,
+               coalesce(rv.amount, 0)::text as revenue
+        from nights n
+        left join room_count rc on rc.pid = n.pid
+        left join occupied o on o.pid = n.pid and o.night = n.night
+        left join revenue rv on rv.pid = n.pid and rv.night = n.night
         order by n.night`);
 
       // One row per night, summed over the properties in scope.

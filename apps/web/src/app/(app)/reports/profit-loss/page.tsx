@@ -51,7 +51,7 @@ export default function ProfitLossPage() {
   return (
     <>
       <PageHeader title={t('plTitle')} subtitle={t('plSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="profit-loss" query={`from=${from}&to=${to}&compare=${compare}`}>
         <TextField label={t('from')} type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
         <TextField
           label={t('to')}

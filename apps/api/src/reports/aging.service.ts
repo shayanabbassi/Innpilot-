@@ -50,7 +50,10 @@ export class AgingService {
         join accounts a on a.id = l.account_id
         where l.folio_id is not null and a.system_role in ('guest_receivable', 'guest_deposits')
           and e.status <> 'draft' and e.accounting_date <= ${q.asOf}::date ${propertyFilter(propertyId)}
-        group by l.folio_id`;
+        group by l.folio_id
+        -- Filtered before the joins (P5-16); folios whose receivable and deposits offset stay for the ledger tie.
+        having sum(l.debit - l.credit) filter (where a.system_role = 'guest_receivable') <> 0
+            or sum(l.debit - l.credit) filter (where a.system_role = 'guest_deposits') <> 0`;
       const rows = await tx.execute<{
         folio_id: string;
         property_id: string;
@@ -75,7 +78,6 @@ export class AgingService {
           where i.folio_id = f.id and i.issue_date <= ${q.asOf}::date
           order by i.issue_date desc, i.created_at desc limit 1
         ) inv on true
-        where b.recv + b.dep <> 0
         order by g.full_name, r.booking_reference, f.label`);
       const ledger = await tx.execute<{
         id: string;
@@ -107,6 +109,8 @@ export class AgingService {
         const balance = recv.add(dep);
         recvAged = recvAged.add(recv);
         depAged = depAged.add(dep);
+        // Counted in the tie above; listed only when something is still owed or held.
+        if (balance.isZero()) continue;
         const days = r.issue_date ? daysBetween(r.issue_date, q.asOf) : 0;
         const bucket = agingBucket(days);
         const g = guests.get(r.guest_id) ?? {

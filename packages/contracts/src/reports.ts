@@ -622,3 +622,32 @@ export const userActivityDto = z.object({
   totalEvents: z.number().int(),
 });
 export type UserActivityDto = z.infer<typeof userActivityDto>;
+
+// ------------------------------------------------------------------------------------------------ exports
+
+/** Reports that can be exported (P5-14, D15), by their path under /reports. */
+export const EXPORT_REPORTS = [
+  'trial-balance',
+  'profit-loss',
+  'balance-sheet',
+  'cashbook',
+  'cash-flow',
+  'tax-summary',
+  'revenue',
+  'receivables-aging',
+  'payables-aging',
+  'occupancy',
+  'arrivals-departures',
+  'cashier-closings',
+  'expenses',
+  'discrepancies',
+  'user-activity',
+] as const;
+export type ExportReport = (typeof EXPORT_REPORTS)[number];
+
+/** D15: CSV and Excel from the server; PDF by printing the report page. */
+export const EXPORT_FORMATS = ['csv', 'xlsx'] as const;
+export type ExportFormat = (typeof EXPORT_FORMATS)[number];
+
+/** Rows above this are refused with EXPORT_TOO_LARGE until background exports arrive (Phase 6). */
+export const EXPORT_ROW_LIMIT = 50_000;

@@ -4,7 +4,7 @@ import type { UserActivityDto } from '@innpilot/contracts';
 import { useQuery } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { DateRangeFields, ReportFootnote, useDateRange } from '@/components/report-filter';
+import { DateRangeFields, ExportMenu, ReportFootnote, useDateRange } from '@/components/report-filter';
 import { Card, EmptyState, PageError, PageHeader, PageSkeleton, PermissionDenied } from '@/components/ui';
 import { api } from '@/lib/api';
 import { useSession } from '@/lib/session';
@@ -37,6 +37,9 @@ export default function UserActivityPage() {
     <>
       <PageHeader title={t('uaTitle')} subtitle={t('uaSubtitle')} />
       <Card className="no-print mb-4">
+        <div className="mb-4 flex justify-end">
+          <ExportMenu report="user-activity" query={range.query} all />
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
           <DateRangeFields range={range} />
         </div>

@@ -83,6 +83,17 @@ beforeAll(async () => {
   const bilal = await book(await guest('Bilal Deposit'), '2026-10-25', '2026-10-26', null);
   await ok(withKey(desk, `${base}/payments`, { reservationId: bilal.id, amount: '500', method: 'cash' }));
   ids.bilalFolio = await folioOf(bilal.id);
+  // Dana's deposit exactly covers her dinner: receivable 700 and deposit −700 on one folio, balance zero.
+  const dana = await book(await guest('Dana Offset'), '2026-10-19', '2026-10-22', rooms[2].id);
+  await ok(withKey(desk, `${base}/payments`, { reservationId: dana.id, amount: '700', method: 'cash' }));
+  await ok(withKey(desk, `${base}/reservations/${dana.id}/rooms/${dana.rooms[0]!.id}/check-in`), 200);
+  await ok(
+    withKey(desk, `${base}/folios/${await folioOf(dana.id)}/charges`, {
+      categoryId: cat['fnb'],
+      description: 'Dinner',
+      unitPrice: '700',
+    }),
+  );
   // Chaudhry Traders' guest stays one night and leaves the bill on account.
   const company = await book(await guest('Company Guest'), '2026-10-19', '2026-10-20', rooms[1].id);
   const stay = await ok(
@@ -208,8 +219,14 @@ describe('receivables aging (guest ledger)', () => {
   it('ties to the guest receivable and deposit accounts', async () => {
     const d = (await receivables('2026-10-20')).body.data;
     expect(d.ledger).toEqual([
-      expect.objectContaining({ code: '1200', ledgerBalance: '7000.00', aged: '7000.00', notLinked: '0.00' }),
-      expect.objectContaining({ code: '2100', ledgerBalance: '-500.00', aged: '-500.00', notLinked: '0.00' }),
+      // Dana's offsetting folio counts in both accounts, so nothing shows as not linked.
+      expect.objectContaining({ code: '1200', ledgerBalance: '7700.00', aged: '7700.00', notLinked: '0.00' }),
+      expect.objectContaining({
+        code: '2100',
+        ledgerBalance: '-1200.00',
+        aged: '-1200.00',
+        notLinked: '0.00',
+      }),
     ]);
   });
 

@@ -155,6 +155,8 @@ import {
   profitLossDto,
   profitLossQueryObject,
   agingQuery,
+  EXPORT_FORMATS,
+  EXPORT_REPORTS,
   dashboardDto,
   dashboardQueryObject,
   cashierClosingsDto,
@@ -195,6 +197,10 @@ interface RouteDoc {
   data: ZodTypeAny | null;
   paged?: boolean;
   status?: number;
+  /** Path parameters that are not UUIDs. */
+  params?: z.AnyZodObject;
+  /** A file download instead of the JSON envelope: the media types it can be sent as. */
+  file?: string[];
 }
 
 /** Every {placeholder} in our paths is a UUID. */
@@ -1111,6 +1117,15 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     query: dashboardQueryObject,
     data: dashboardDto,
   },
+  'GET /reports/{report}/export': {
+    tag: 'Reports',
+    summary:
+      'Export a report as CSV or Excel (D15). Takes the report’s own query plus `format`, needs export.run and the report’s permission, is audited, and refuses more than 50,000 rows (EXPORT_TOO_LARGE)',
+    params: z.object({ report: z.enum(EXPORT_REPORTS) }),
+    query: z.object({ format: z.enum(EXPORT_FORMATS) }).passthrough(),
+    data: null,
+    file: ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  },
   'GET /reports/trial-balance': {
     tag: 'Reports',
     summary: 'Trial balance under the report permission, for one property or all of them',
@@ -1306,14 +1321,22 @@ export function buildOpenApiDocument() {
       description: describePolicy(route.policy),
       security: route.policy.kind === 'public' ? [] : [{ session: [] }],
       request: {
-        ...(pathParams(route.path) ? { params: pathParams(route.path)! } : {}),
+        ...(doc.params
+          ? { params: doc.params }
+          : pathParams(route.path)
+            ? { params: pathParams(route.path)! }
+            : {}),
         ...(doc.query ? { query: doc.query } : {}),
         ...(doc.body ? { body: { content: { 'application/json': { schema: doc.body } } } } : {}),
       },
       responses: {
         [status]: {
           description: 'Success',
-          content: { 'application/json': { schema: successBody(doc.data, doc.paged ?? false) } },
+          content: doc.file
+            ? Object.fromEntries(
+                doc.file.map((t) => [t, { schema: z.string().openapi({ format: 'binary' }) }]),
+              )
+            : { 'application/json': { schema: successBody(doc.data, doc.paged ?? false) } },
         },
         default: {
           description: 'Error. `code` is stable and machine-readable; `message` is safe to show to users.',

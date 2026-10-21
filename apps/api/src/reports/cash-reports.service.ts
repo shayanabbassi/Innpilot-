@@ -80,16 +80,26 @@ export class CashReportsService {
         ledger_account_id: string;
         code: string;
         opening: string;
+        closing: string;
       }>(sql`
+        -- One pass over the tagged lines up to the end date gives every account's opening and closing (P5-16).
+        with bal as (
+          select l.cash_account_id as id,
+                 sum(l.debit - l.credit) filter (where e.accounting_date < ${q.from}::date) as opening,
+                 sum(l.debit - l.credit) as closing
+          from journal_lines l join journal_entries e on e.id = l.journal_entry_id
+          where l.cash_account_id is not null and e.status <> 'draft'
+            and e.accounting_date <= ${q.to}::date ${propertyFilter(propertyId)}
+          group by 1
+        )
         select c.id, c.property_id, c.name, c.kind, c.active, c.ledger_account_id, a.code,
-               coalesce((select sum(l.debit - l.credit) from journal_lines l
-                         join journal_entries e on e.id = l.journal_entry_id
-                         where l.cash_account_id = c.id and e.status <> 'draft'
-                           and e.accounting_date < ${q.from}::date), 0)::text as opening
+               coalesce(b.opening, 0)::text as opening, coalesce(b.closing, 0)::text as closing
         from cash_accounts c join accounts a on a.id = c.ledger_account_id
+        left join bal b on b.id = c.id
         where true ${propertyId ? sql`and c.property_id = ${propertyId}` : sql``}
-          ${q.kind ? sql`and c.kind = ${q.kind}` : sql``}
         order by c.kind, c.name`);
+      // Every account in scope counts for the ledger check; the kind filter only chooses what is listed.
+      const shown = accounts.rows.filter((c) => !q.kind || c.kind === q.kind);
       const days = await tx.execute<{ id: string; d: string; dr: string; cr: string }>(sql`
         select l.cash_account_id as id, e.accounting_date::text as d, sum(l.debit)::text as dr, sum(l.credit)::text as cr
         from journal_lines l join journal_entries e on e.id = l.journal_entry_id
@@ -102,7 +112,7 @@ export class CashReportsService {
 
       const zero = Money.zero(currency);
       const totals = { opening: zero, receipts: zero, payments: zero, closing: zero };
-      const rows = accounts.rows.map((c) => {
+      const rows = shown.map((c) => {
         let balance = m(c.opening);
         let receipts = zero;
         let payments = zero;
@@ -131,42 +141,41 @@ export class CashReportsService {
         };
       });
 
-      // Control check: the tagged lines against everything on each ledger account the shown drawers use.
-      const ledgerIds = [...new Set(accounts.rows.map((c) => c.ledger_account_id))];
-      const controls =
+      // Control check: the drawers and banks on each ledger account the shown ones use, against the account. A line
+      // tagged with a drawer is always on that drawer's ledger account (checked at commit), so the account's balance
+      // is the drawers' balances plus whatever was posted to it untagged.
+      const ledgerIds = [...new Set(shown.map((c) => c.ledger_account_id))];
+      const untagged =
         ledgerIds.length === 0
           ? []
           : (
-              await tx.execute<{
-                id: string;
-                code: string;
-                name: string;
-                ledger: string;
-                tagged: string;
-              }>(sql`
+              await tx.execute<{ id: string; code: string; name: string; amount: string }>(sql`
             select a.id, a.code, a.name,
-                   coalesce(sum(x.debit - x.credit), 0)::text as ledger,
-                   coalesce(sum(x.debit - x.credit) filter (where x.cash_account_id is not null), 0)::text as tagged
+                   coalesce((select sum(l.debit - l.credit) from journal_lines l
+                             join journal_entries e on e.id = l.journal_entry_id
+                             where l.account_id = a.id and l.cash_account_id is null and e.status <> 'draft'
+                               and e.accounting_date <= ${q.to}::date ${propertyFilter(propertyId)}), 0)::text as amount
             from accounts a
-            left join (
-              select l.account_id, l.debit, l.credit, l.cash_account_id
-              from journal_lines l join journal_entries e on e.id = l.journal_entry_id
-              where e.status <> 'draft' and e.accounting_date <= ${q.to}::date ${propertyFilter(propertyId)}
-            ) x on x.account_id = a.id
             where a.id in (${sql.join(
               ledgerIds.map((id) => sql`${id}::uuid`),
               sql`, `,
             )})
-            group by a.id
             order by a.code`)
-            ).rows.map((r) => ({
-              accountId: r.id,
-              code: r.code,
-              name: r.name,
-              cashAccountsTotal: s(m(r.tagged)),
-              ledgerBalance: s(m(r.ledger)),
-              difference: s(m(r.ledger).subtract(m(r.tagged))),
-            }));
+            ).rows;
+      const controls = untagged.map((r) => {
+        const tagged = Money.sum(
+          accounts.rows.filter((c) => c.ledger_account_id === r.id).map((c) => m(c.closing)),
+          currency,
+        );
+        return {
+          accountId: r.id,
+          code: r.code,
+          name: r.name,
+          cashAccountsTotal: s(tagged),
+          ledgerBalance: s(tagged.add(m(r.amount))),
+          difference: s(m(r.amount)),
+        };
+      });
 
       return {
         propertyId,

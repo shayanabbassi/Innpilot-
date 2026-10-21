@@ -52,7 +52,7 @@ export default function CashbookPage() {
   return (
     <>
       <PageHeader title={t('cbTitle')} subtitle={t('cbSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="cashbook" query={`${range.query}${kind ? `&kind=${kind}` : ''}`}>
         <DateRangeFields range={range} />
         <SelectField label={t('cbKind')} value={kind} onChange={(e) => setKind(e.target.value)}>
           <option value="">{t('cbAllKinds')}</option>

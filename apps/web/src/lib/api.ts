@@ -91,4 +91,29 @@ export const api = {
   put: async <T>(path: string, body: unknown) => (await request<T>('PUT', path, body)).data,
   patch: async <T>(path: string, body: unknown) => (await request<T>('PATCH', path, body)).data,
   del: async <T>(path: string) => (await request<T>('DELETE', path)).data,
+  /** A file download (report exports). Errors come back as the usual JSON error and are thrown as ApiError. */
+  download: async (path: string): Promise<{ blob: Blob; fileName: string }> => {
+    let res: Response;
+    try {
+      res = await fetch(`/api/v1${path}`, { credentials: 'same-origin' });
+    } catch {
+      throw new ApiError(
+        0,
+        'INTERNAL_ERROR',
+        'Cannot reach the server. Check your internet connection and try again.',
+      );
+    }
+    if (!res.ok) {
+      const err = (await res.json().catch(() => null)) as ErrorBody | null;
+      throw new ApiError(
+        res.status,
+        err?.error.code ?? 'INTERNAL_ERROR',
+        err?.error.message ?? 'Something went wrong. Try again.',
+        err?.error.details ?? [],
+        err?.meta.requestId ?? res.headers.get('x-request-id'),
+      );
+    }
+    const name = /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ?? 'export';
+    return { blob: await res.blob(), fileName: name };
+  },
 };

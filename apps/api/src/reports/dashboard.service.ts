@@ -65,6 +65,11 @@ export class DashboardService {
     const cmp = comparisonRange({ from, to, compare: 'previous_period' })!;
     const one = { from: today, to: today, propertyId: pid };
 
+    // Every read starts at once: the financial ones do not wait for the operational ones.
+    const range = { from, to, propertyId: pid };
+    const financialReads = financial ? this.financialReads(auth, range, cmp, one, to === today) : null;
+    // Awaited below; this only keeps an early failure here from being reported as unhandled.
+    void financialReads?.catch(() => undefined);
     const [occupancy, movements, closings] = await Promise.all([
       this.ops.occupancy(auth, one),
       this.ops.movements(auth, one),
@@ -142,16 +147,8 @@ export class DashboardService {
     ];
 
     let finance: DashboardDto['finance'] = null;
-    if (financial) {
-      const range = { from, to, propertyId: pid };
-      const [pl, revenue, revenueBefore, balances, todayCash, receivables] = await Promise.all([
-        this.statements.profitLoss(auth, { ...range, compare: 'previous_period' }),
-        this.cash.revenue(auth, range),
-        this.cash.revenue(auth, { ...cmp, propertyId: pid }),
-        this.cash.cashbook(auth, { from: to, to, propertyId: pid }),
-        this.cash.cashbook(auth, one),
-        this.aging.receivables(auth, { asOf: to, propertyId: pid }),
-      ]);
+    if (financialReads) {
+      const [pl, revenue, revenueBefore, balances, todayCash, receivables] = await financialReads;
       const cur = pl.currencyCode;
       const total = (k: PlSection) => pl.sections.find((s) => s.key === k)!.total;
       const m = (v: string | null) => Money.fromStorage(v ?? '0', cur);
@@ -300,5 +297,25 @@ export class DashboardService {
       },
       finance,
     };
+  }
+
+  /** The financial reports the dashboard reads, started together. */
+  private financialReads(
+    auth: AuthContext,
+    range: { from: string; to: string; propertyId: string },
+    cmp: { from: string; to: string },
+    today: { from: string; to: string; propertyId: string },
+    periodEndsToday: boolean,
+  ) {
+    const balances = this.cash.cashbook(auth, { from: range.to, to: range.to, propertyId: range.propertyId });
+    return Promise.all([
+      this.statements.profitLoss(auth, { ...range, compare: 'previous_period' }),
+      this.cash.revenue(auth, range),
+      this.cash.revenue(auth, { ...cmp, propertyId: range.propertyId }),
+      balances,
+      // The same query when the period ends today.
+      periodEndsToday ? balances : this.cash.cashbook(auth, today),
+      this.aging.receivables(auth, { asOf: range.to, propertyId: range.propertyId }),
+    ]);
   }
 }

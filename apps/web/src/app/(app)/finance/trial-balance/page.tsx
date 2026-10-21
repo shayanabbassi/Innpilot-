@@ -16,6 +16,7 @@ import {
   StatusBadge,
   TextField,
 } from '@/components/ui';
+import { ExportMenu } from '@/components/report-filter';
 import { api } from '@/lib/api';
 import { formatAmount, monthRange } from '@/lib/finance';
 import { useSession } from '@/lib/session';
@@ -52,7 +53,11 @@ export default function TrialBalancePage() {
 
   return (
     <>
-      <PageHeader title={t('tbTitle')} subtitle={t('tbSubtitle')} />
+      <PageHeader
+        title={t('tbTitle')}
+        subtitle={t('tbSubtitle')}
+        actions={valid && <ExportMenu report="trial-balance" query={`from=${from}&to=${to}`} all />}
+      />
       <Card className="mb-4">
         <div className="grid gap-4 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
           <TextField label={t('from')} type="date" value={from} onChange={(e) => setFrom(e.target.value)} />

@@ -170,3 +170,13 @@ branch `phase-1-foundation`.
   disagree. "Today" figures use the business date; money figures use a period (month to date by default) compared
   with the previous period of equal length; balances are on the period's end date. Users without operational
   reports (housekeeping) keep the simple overview.
+- **5.6:** exports are produced by a small writer in the API (CSV with a byte-order mark; Excel as a minimal Office
+  Open XML zip built with Node's zlib), so no spreadsheet package was added. Text a spreadsheet would run as a
+  formula (starting with = + - @) is prefixed with an apostrophe in both formats; amount columns are numbers. A CSV
+  holds several tables one after another; the workbook has one sheet per table. Every export is audited as
+  `report.exported` with its filters and row count; above 50,000 rows it is refused (EXPORT_TOO_LARGE). PDF is the
+  printable report page (D15), with print styles that drop the sidebar and show wide tables whole.
+- **5.6:** the 100-room measurements (docs/phase-5-performance.md) led to a faster occupancy query, the dashboard
+  starting all its reads together, a single-pass cashbook and two indexes (0021); every target is met.
+- **5.6:** found while doing this: a folio whose deposit exactly offset its charges was left out of the guest
+  balances ledger tie, which would have shown a false "not linked" amount; fixed and covered by a test.

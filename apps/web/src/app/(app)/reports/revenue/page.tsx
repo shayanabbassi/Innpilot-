@@ -39,7 +39,7 @@ export default function RevenuePage() {
   return (
     <>
       <PageHeader title={t('revTitle')} subtitle={t('revSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="revenue" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : rev.isPending ? (

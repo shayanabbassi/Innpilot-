@@ -136,6 +136,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -269,6 +270,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -625,6 +627,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -770,6 +773,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -921,6 +925,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -1072,6 +1077,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -1300,6 +1306,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -1525,6 +1532,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -1815,6 +1823,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -2040,6 +2049,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -2253,6 +2263,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -2509,6 +2520,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -2767,6 +2779,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -2929,6 +2942,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -3109,6 +3123,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -3242,6 +3257,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -3429,6 +3445,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -3639,6 +3656,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -3863,6 +3881,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -4077,6 +4096,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -4316,6 +4336,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -4515,6 +4536,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -4892,6 +4914,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -5134,6 +5157,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -5398,6 +5422,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -5736,6 +5761,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -6042,6 +6068,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -6306,6 +6333,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -6472,6 +6500,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -6708,6 +6737,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -7102,6 +7132,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -7539,6 +7570,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -7874,6 +7906,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -8238,6 +8271,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -8463,6 +8497,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -8798,6 +8833,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -9160,6 +9196,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -9518,6 +9555,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -9913,6 +9951,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -10308,6 +10347,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -10641,6 +10681,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -10998,6 +11039,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -11587,6 +11629,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -11890,6 +11933,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -12342,6 +12386,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -12624,6 +12669,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -12936,6 +12982,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -13110,6 +13157,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -13386,6 +13434,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -13664,6 +13713,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -13813,6 +13863,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -14081,6 +14132,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -14323,6 +14375,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -14584,6 +14637,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -14826,6 +14880,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -15102,6 +15157,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -15430,6 +15486,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -15685,6 +15742,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -15960,6 +16018,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -16435,6 +16494,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -16876,6 +16936,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -17353,6 +17414,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -17828,6 +17890,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -18269,6 +18332,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -18746,6 +18810,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -18954,6 +19019,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -19223,6 +19289,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -19469,6 +19536,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -19808,6 +19876,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -20143,6 +20212,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -20550,6 +20620,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -20690,6 +20761,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -21099,6 +21171,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -21434,6 +21507,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -21793,6 +21867,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -22119,6 +22194,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -22398,6 +22474,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -22608,6 +22685,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -22808,6 +22886,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -23035,6 +23114,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -23357,6 +23437,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -23696,6 +23777,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -24038,6 +24120,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -24268,6 +24351,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -24509,6 +24593,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -24800,6 +24885,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -25069,6 +25155,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -25335,6 +25422,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -25573,6 +25661,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -25762,6 +25851,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -25984,6 +26074,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -26202,6 +26293,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -26434,6 +26526,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -26642,6 +26735,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -26921,6 +27015,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -27520,6 +27615,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -28134,6 +28230,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -28311,6 +28408,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -28907,6 +29005,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -29542,6 +29641,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -30178,6 +30278,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -30794,6 +30895,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -31415,6 +31517,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -31774,6 +31877,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -32146,6 +32250,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -32471,6 +32576,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -32856,6 +32962,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -33223,6 +33330,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -33384,6 +33492,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -33574,6 +33683,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -33797,6 +33907,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -34011,6 +34122,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -34308,6 +34420,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -34547,6 +34660,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -34787,6 +34901,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -34971,6 +35086,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -35210,6 +35326,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -35668,6 +35785,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -36172,6 +36290,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -36677,6 +36796,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -37156,6 +37276,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -37634,6 +37755,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -38105,6 +38227,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -38580,6 +38703,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -38766,6 +38890,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -38988,6 +39113,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -39220,6 +39346,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -39731,6 +39858,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -40274,6 +40402,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -40427,6 +40556,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -40878,6 +41008,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -41421,6 +41552,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -41888,6 +42020,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -42339,6 +42472,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -42818,6 +42952,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -43289,6 +43424,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -43521,6 +43657,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -43828,6 +43965,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -44108,6 +44246,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -44406,6 +44545,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -44545,6 +44685,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -44848,6 +44989,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -45144,6 +45286,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -45336,6 +45479,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -45561,6 +45705,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -45831,6 +45976,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -46110,6 +46256,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -46455,6 +46602,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -46660,6 +46808,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -46926,6 +47075,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -47176,6 +47326,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -47406,6 +47557,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -47628,6 +47780,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -47907,6 +48060,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -48280,6 +48434,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -48557,6 +48712,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -48925,6 +49081,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -49212,6 +49369,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -49507,6 +49665,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -49817,6 +49976,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -50211,6 +50371,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -50601,6 +50762,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -50910,6 +51072,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -51234,6 +51397,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -51561,6 +51725,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -51848,6 +52013,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -52202,6 +52368,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -52463,6 +52630,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -52998,6 +53166,167 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{report}/export": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Export a report as CSV or Excel (D15). Takes the report’s own query plus `format`, needs export.run and the report’s permission, is audited, and refuses more than 50,000 rows (EXPORT_TOO_LARGE)",
+        "description": "Requires permission `export.run` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "trial-balance",
+                "profit-loss",
+                "balance-sheet",
+                "cashbook",
+                "cash-flow",
+                "tax-summary",
+                "revenue",
+                "receivables-aging",
+                "payables-aging",
+                "occupancy",
+                "arrivals-departures",
+                "cashier-closings",
+                "expenses",
+                "discrepancies",
+                "user-activity"
+              ]
+            },
+            "required": true,
+            "name": "report",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "csv",
+                "xlsx"
+              ]
+            },
+            "required": true,
+            "name": "format",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -53270,6 +53599,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]
@@ -53410,6 +53740,7 @@
                             "CASH_CLOSING_ALREADY_SUBMITTED",
                             "IDEMPOTENCY_KEY_REUSED",
                             "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
                             "RATE_LIMITED",
                             "INTERNAL_ERROR"
                           ]

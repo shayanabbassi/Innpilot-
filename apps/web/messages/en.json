@@ -1760,7 +1760,10 @@
     "uaEvents": "{count, plural, one {# event} other {# events}}",
     "uaLine": "signed in {signIns} times · {failed} failed · first {first} · last {last}",
     "uaFullLog": "Open the full audit log",
-    "uaNote": "From the audit log; nothing in it can be changed."
+    "uaNote": "From the audit log; nothing in it can be changed.",
+    "export_csv": "Export CSV",
+    "export_xlsx": "Export Excel",
+    "print": "Print"
   },
   "dashboard": {
     "today": "Today, {date}",

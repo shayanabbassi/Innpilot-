@@ -37,7 +37,7 @@ export default function OccupancyPage() {
   return (
     <>
       <PageHeader title={t('occTitle')} subtitle={t('occSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="occupancy" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : occ.isPending ? (

@@ -38,7 +38,7 @@ export default function ExpensesReportPage() {
   return (
     <>
       <PageHeader title={t('exTitle')} subtitle={t('exSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="expenses" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : res.isPending ? (

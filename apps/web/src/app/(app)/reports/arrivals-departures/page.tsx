@@ -69,7 +69,7 @@ export default function MovementsPage() {
   return (
     <>
       <PageHeader title={t('movTitle')} subtitle={t('movSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="arrivals-departures" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : res.isPending ? (

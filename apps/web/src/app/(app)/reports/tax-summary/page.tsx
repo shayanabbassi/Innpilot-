@@ -47,7 +47,7 @@ export default function TaxSummaryPage() {
   return (
     <>
       <PageHeader title={t('taxTitle')} subtitle={t('taxSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="tax-summary" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : tax.isPending ? (

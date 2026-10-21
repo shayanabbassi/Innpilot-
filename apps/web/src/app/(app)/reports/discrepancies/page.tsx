@@ -56,7 +56,7 @@ export default function DiscrepanciesPage() {
   return (
     <>
       <PageHeader title={t('discTitle')} subtitle={t('discSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="discrepancies" query={range.query}>
         <DateRangeFields range={range} />
       </ReportFilterBar>
       {!range.valid ? null : res.isPending ? (

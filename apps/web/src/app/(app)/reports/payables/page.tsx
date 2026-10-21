@@ -40,7 +40,7 @@ export default function PayablesPage() {
   return (
     <>
       <PageHeader title={t('apTitle')} subtitle={t('apSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="payables-aging" query={`asOf=${asOf}`}>
         <TextField label={t('asOf')} type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} />
       </ReportFilterBar>
       {!asOf ? null : aging.isPending ? (

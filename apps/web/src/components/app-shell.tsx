@@ -118,7 +118,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[15rem_1fr]">
+    <div className="app-shell min-h-dvh lg:grid lg:grid-cols-[15rem_1fr]">
       {/* Sidebar: fixed on desktop, slide-over on tablet and phone. */}
       <aside
         className={`no-print fixed inset-y-0 left-0 z-30 w-64 bg-navy-800 transition-transform lg:static lg:w-auto lg:translate-x-0 ${

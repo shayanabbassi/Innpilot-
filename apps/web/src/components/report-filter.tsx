@@ -1,9 +1,10 @@
 'use client';
 
-import type { Permission } from '@innpilot/contracts';
+import type { ExportFormat, ExportReport, Permission } from '@innpilot/contracts';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
-import { Card, SelectField, TextField } from '@/components/ui';
+import { ApiErrorAlert, Button, Card, SelectField, TextField } from '@/components/ui';
+import { api } from '@/lib/api';
 import { monthRange } from '@/lib/finance';
 import { useSession } from '@/lib/session';
 
@@ -34,17 +35,80 @@ export function useReportScope(permission: Permission) {
   };
 }
 
-/** One filter bar for every report (UX §6.13): property first, then the report's own fields. */
+/**
+ * Export and print (P5-14, D15). The file comes from the same query as the screen; the server checks
+ * `export.run` and audits it. Export buttons show only to users who hold `export.run` for the chosen scope.
+ */
+export function ExportMenu({ report, query, all }: { report: ExportReport; query: string; all: boolean }) {
+  const t = useTranslations('reports');
+  const { property, canTenant, me } = useSession();
+  const propertyId = /propertyId=([0-9a-f-]+)/.exec(query)?.[1];
+  const canExport = all
+    ? canTenant('export.run')
+    : (me.properties.find((p) => p.id === (propertyId ?? property?.id))?.permissions.includes('export.run') ??
+      false);
+  const [busy, setBusy] = useState<ExportFormat | null>(null);
+  const [error, setError] = useState<unknown>(null);
+
+  const run = async (format: ExportFormat) => {
+    setBusy(format);
+    setError(null);
+    try {
+      const { blob, fileName } = await api.download(`/reports/${report}/export?format=${format}&${query}`);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <div className="no-print flex flex-col gap-2">
+      <div className="flex flex-wrap gap-2">
+        {canExport &&
+          (['csv', 'xlsx'] as const).map((f) => (
+            <Button key={f} variant="secondary" busy={busy === f} onClick={() => void run(f)}>
+              {t(`export_${f}`)}
+            </Button>
+          ))}
+        <Button variant="ghost" onClick={() => window.print()}>
+          {t('print')}
+        </Button>
+      </div>
+      {error !== null && <ApiErrorAlert error={error} />}
+    </div>
+  );
+}
+
+/** One filter bar for every report (UX §6.13): property first, then the report's own fields, then export. */
 export function ReportFilterBar({
   scope,
+  report,
+  query,
   children,
 }: {
   scope: ReturnType<typeof useReportScope>;
+  /** With `query` (the report's own filters, without the property), shows the export menu. */
+  report?: ExportReport;
+  query?: string;
   children: ReactNode;
 }) {
   const t = useTranslations('reports');
   return (
     <Card className="no-print mb-4">
+      {report && query !== undefined && (
+        <div className="mb-4 flex justify-end">
+          <ExportMenu report={report} query={`${query}${scope.param}`} all={scope.param === ''} />
+        </div>
+      )}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
         <SelectField
           label={t('property')}

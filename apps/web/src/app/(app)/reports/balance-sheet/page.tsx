@@ -83,7 +83,7 @@ export default function BalanceSheetPage() {
   return (
     <>
       <PageHeader title={t('bsTitle')} subtitle={t('bsSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="balance-sheet" query={`asOf=${asOf}`}>
         <TextField label={t('asOf')} type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} />
       </ReportFilterBar>
       {!asOf ? null : bs.isPending ? (

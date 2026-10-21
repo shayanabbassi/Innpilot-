@@ -38,7 +38,7 @@ export default function ReceivablesPage() {
   return (
     <>
       <PageHeader title={t('arTitle')} subtitle={t('arSubtitle')} />
-      <ReportFilterBar scope={scope}>
+      <ReportFilterBar scope={scope} report="receivables-aging" query={`asOf=${asOf}`}>
         <TextField label={t('asOf')} type="date" value={asOf} onChange={(e) => setAsOf(e.target.value)} />
       </ReportFilterBar>
       {!asOf ? null : aging.isPending ? (
