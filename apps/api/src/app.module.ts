@@ -40,6 +40,8 @@ import { JournalsService } from './finance/journals.service';
 import { PeriodsService } from './finance/periods.service';
 import { PostingService } from './finance/posting.service';
 import { ReportsService } from './finance/reports.service';
+import { ReportsController } from './reports/reports.controller';
+import { StatementsService } from './reports/statements.service';
 import { TaxController } from './finance/tax.controller';
 import { TaxService } from './finance/tax.service';
 import { HealthController } from './health/health.controller';
@@ -155,6 +157,7 @@ export class AppModule {
         ReconciliationController,
         CheckoutController,
         UsersController,
+        ReportsController,
         AuditController,
         HealthController,
       ],
@@ -180,6 +183,7 @@ export class AppModule {
         JournalsService,
         PeriodsService,
         ReportsService,
+        StatementsService,
         TaxService,
         FolioService,
         PaymentService,

@@ -150,6 +150,10 @@ import {
   trialBalanceDto,
   trialBalanceQueryObject,
   updateAccountRequest,
+  balanceSheetDto,
+  balanceSheetQuery,
+  profitLossDto,
+  profitLossQueryObject,
   dayClosePreviewDto,
   dayCloseRequest,
   z,
@@ -1078,6 +1082,25 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Trial balance for a date range, all accounts, from posted entries only',
     query: trialBalanceQueryObject,
     data: trialBalanceDto,
+  },
+  'GET /reports/trial-balance': {
+    tag: 'Reports',
+    summary: 'Trial balance under the report permission, for one property or all of them',
+    query: trialBalanceQueryObject,
+    data: trialBalanceDto,
+  },
+  'GET /reports/profit-loss': {
+    tag: 'Reports',
+    summary:
+      'Profit and loss for a date range, with an optional comparison column; year-end closing entries left out',
+    query: profitLossQueryObject,
+    data: profitLossDto,
+  },
+  'GET /reports/balance-sheet': {
+    tag: 'Reports',
+    summary: 'Balance sheet as of a date, with the current-year result in equity and a balance check',
+    query: balanceSheetQuery,
+    data: balanceSheetDto,
   },
   'GET /finance/periods': {
     tag: 'Ledger',

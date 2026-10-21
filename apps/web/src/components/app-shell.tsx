@@ -25,6 +25,7 @@ interface NavItem {
     | 'suppliers'
     | 'reconciliation'
     | 'journals'
+    | 'reports'
     | 'trialBalance'
     | 'accounts'
     | 'periods'
@@ -60,6 +61,11 @@ const NAV: NavItem[] = [
   { href: '/suppliers', label: 'suppliers', visible: (s) => s.can('expense.write') },
   { href: '/finance/cash', label: 'cash', visible: (s) => s.can('journal.read') || s.can('cash.transfer') },
   { href: '/finance/reconciliations', label: 'reconciliation', visible: (s) => s.can('journal.read') },
+  {
+    href: '/reports',
+    label: 'reports',
+    visible: (s) => s.me.properties.some((p) => p.permissions.includes('report.financial')),
+  },
   { href: '/finance/journals', label: 'journals', visible: tenant('journal.read') },
   { href: '/finance/trial-balance', label: 'trialBalance', visible: tenant('journal.read') },
   { href: '/finance/accounts', label: 'accounts', visible: tenant('journal.read') },

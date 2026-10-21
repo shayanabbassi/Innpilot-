@@ -34,6 +34,39 @@ export function defaultNormalBalance(cls: AccountClass): NormalBalance {
   return cls === 'asset' || cls === 'cost_of_sales' || cls === 'expense' ? 'debit' : 'credit';
 }
 
+/**
+ * Where an account's balance is shown on the statements (P5-4). Only assets and liabilities have a choice
+ * (current or non-current); every other class has exactly one group.
+ */
+export const REPORT_GROUPS = [
+  'current_asset',
+  'non_current_asset',
+  'current_liability',
+  'non_current_liability',
+  'equity',
+  'revenue',
+  'cost_of_sales',
+  'operating_expense',
+  'other',
+] as const;
+export type ReportGroup = (typeof REPORT_GROUPS)[number];
+export const reportGroup = z.enum(REPORT_GROUPS);
+
+export function reportGroupsFor(cls: AccountClass): ReportGroup[] {
+  switch (cls) {
+    case 'asset':
+      return ['current_asset', 'non_current_asset'];
+    case 'liability':
+      return ['current_liability', 'non_current_liability'];
+    case 'expense':
+      return ['operating_expense'];
+    default:
+      return [cls];
+  }
+}
+
+const groupIssue = { path: ['reportGroup'], message: 'Choose a report group that fits the account class.' };
+
 export const accountCode = z
   .string()
   .trim()
@@ -46,9 +79,14 @@ export const createAccountRequest = z
     accountClass,
     normalBalance: z.enum(NORMAL_BALANCES).optional(),
     parentId: uuid.nullable().optional(),
+    /** Defaults to the usual group for the class (current, for assets and liabilities). */
+    reportGroup: reportGroup.optional(),
   })
   .strict()
   .superRefine((v, ctx) => {
+    if (v.reportGroup && !reportGroupsFor(v.accountClass).includes(v.reportGroup)) {
+      ctx.addIssue({ code: 'custom', ...groupIssue });
+    }
     if (v.code[0] !== CLASS_CODE_DIGIT[v.accountClass]) {
       ctx.addIssue({
         code: 'custom',
@@ -65,6 +103,8 @@ export const updateAccountRequest = z
     name: z.string().trim().min(1, 'Enter a name.').max(120).optional(),
     parentId: uuid.nullable().optional(),
     active: z.boolean().optional(),
+    /** Changes where the balance is shown, never a posted amount; checked against the class by the server. */
+    reportGroup: reportGroup.optional(),
   })
   .strict()
   .refine((v) => Object.keys(v).length > 0, { message: 'Change at least one field.' });
@@ -80,6 +120,7 @@ export const accountDto = z.object({
   /** Set on accounts the posting rules use; these cannot be deactivated. */
   systemRole: z.string().nullable(),
   active: z.boolean(),
+  reportGroup,
 });
 export type AccountDto = z.infer<typeof accountDto>;
 

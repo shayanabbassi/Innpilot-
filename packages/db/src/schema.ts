@@ -19,6 +19,7 @@ import {
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
 const citext = customType<{ data: string }>({ dataType: () => 'citext' });
 const bytea = customType<{ data: Buffer }>({ dataType: () => 'bytea' });
@@ -413,6 +414,10 @@ export const accounts = pgTable('accounts', {
   parentId: uuid('parent_id'),
   systemRole: text('system_role'),
   active: boolean('active').notNull().default(true),
+  /** Set by a trigger from the class when not given (0020); the default only lets inserts leave it out. */
+  reportGroup: text('report_group')
+    .notNull()
+    .default(sql`null`),
   createdAt: tsz('created_at').notNull().defaultNow(),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
 });

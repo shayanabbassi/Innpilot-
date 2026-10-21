@@ -117,3 +117,17 @@ Also for your accountant: the report group of each account (P5-4) and the P&L la
 
 5.1 → 5.2 → 5.3 → 5.4 → 5.5 → 5.6 → 5.7. The dashboard comes after the reports it reuses. Work continues on
 branch `phase-1-foundation`.
+
+## Notes from the build
+
+- **5.1:** no new ledger indexes yet. The existing ones (account, accounting date, cash and folio dimensions)
+  serve the statements; indexes are added in 5.6 only where the 100-room measurements show a need (P5-16).
+- **5.1:** the trial balance keeps its accountant route (`/finance/trial-balance`, `journal.read`) and is also
+  served as `/reports/trial-balance` under `report.financial` with the property scope (P5-3), so a
+  property-scoped manager can run it for their own property.
+- **5.1:** a new account without a report group gets the usual one for its class from the database (current, for
+  assets and liabilities). Only assets and liabilities can be moved, between current and non-current; the change
+  is audited and moves no posted amount.
+- **5.1:** the balance sheet reads the result not yet closed from what is left on revenue, cost and expense
+  accounts, split into the year of the date and earlier years, so it balances whether or not a year-end close has
+  run. The P&L leaves out year-end closing entries and their reversals.

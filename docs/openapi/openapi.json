@@ -18869,6 +18869,20 @@
                           },
                           "active": {
                             "type": "boolean"
+                          },
+                          "reportGroup": {
+                            "type": "string",
+                            "enum": [
+                              "current_asset",
+                              "non_current_asset",
+                              "current_liability",
+                              "non_current_liability",
+                              "equity",
+                              "revenue",
+                              "cost_of_sales",
+                              "operating_expense",
+                              "other"
+                            ]
                           }
                         },
                         "required": [
@@ -18879,7 +18893,8 @@
                           "normalBalance",
                           "parentId",
                           "systemRole",
-                          "active"
+                          "active",
+                          "reportGroup"
                         ]
                       }
                     },
@@ -19043,6 +19058,20 @@
                       "null"
                     ],
                     "format": "uuid"
+                  },
+                  "reportGroup": {
+                    "type": "string",
+                    "enum": [
+                      "current_asset",
+                      "non_current_asset",
+                      "current_liability",
+                      "non_current_liability",
+                      "equity",
+                      "revenue",
+                      "cost_of_sales",
+                      "operating_expense",
+                      "other"
+                    ]
                   }
                 },
                 "required": [
@@ -19110,6 +19139,20 @@
                         },
                         "active": {
                           "type": "boolean"
+                        },
+                        "reportGroup": {
+                          "type": "string",
+                          "enum": [
+                            "current_asset",
+                            "non_current_asset",
+                            "current_liability",
+                            "non_current_liability",
+                            "equity",
+                            "revenue",
+                            "cost_of_sales",
+                            "operating_expense",
+                            "other"
+                          ]
                         }
                       },
                       "required": [
@@ -19120,7 +19163,8 @@
                         "normalBalance",
                         "parentId",
                         "systemRole",
-                        "active"
+                        "active",
+                        "reportGroup"
                       ]
                     },
                     "meta": {
@@ -19265,6 +19309,20 @@
                   },
                   "active": {
                     "type": "boolean"
+                  },
+                  "reportGroup": {
+                    "type": "string",
+                    "enum": [
+                      "current_asset",
+                      "non_current_asset",
+                      "current_liability",
+                      "non_current_liability",
+                      "equity",
+                      "revenue",
+                      "cost_of_sales",
+                      "operating_expense",
+                      "other"
+                    ]
                   }
                 },
                 "additionalProperties": false
@@ -19327,6 +19385,20 @@
                         },
                         "active": {
                           "type": "boolean"
+                        },
+                        "reportGroup": {
+                          "type": "string",
+                          "enum": [
+                            "current_asset",
+                            "non_current_asset",
+                            "current_liability",
+                            "non_current_liability",
+                            "equity",
+                            "revenue",
+                            "cost_of_sales",
+                            "operating_expense",
+                            "other"
+                          ]
                         }
                       },
                       "required": [
@@ -19337,7 +19409,8 @@
                         "normalBalance",
                         "parentId",
                         "systemRole",
-                        "active"
+                        "active",
+                        "reportGroup"
                       ]
                     },
                     "meta": {
@@ -21882,6 +21955,20 @@
                             },
                             "active": {
                               "type": "boolean"
+                            },
+                            "reportGroup": {
+                              "type": "string",
+                              "enum": [
+                                "current_asset",
+                                "non_current_asset",
+                                "current_liability",
+                                "non_current_liability",
+                                "equity",
+                                "revenue",
+                                "cost_of_sales",
+                                "operating_expense",
+                                "other"
+                              ]
                             }
                           },
                           "required": [
@@ -21892,7 +21979,8 @@
                             "normalBalance",
                             "parentId",
                             "systemRole",
-                            "active"
+                            "active",
+                            "reportGroup"
                           ]
                         },
                         "from": {
@@ -47482,6 +47570,935 @@
                         "mfaEnabled",
                         "lastLoginAt",
                         "roles"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/trial-balance": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Trial balance under the report permission, for one property or all of them",
+        "description": "Requires permission `report.financial` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "rows": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "accountClass": {
+                                "type": "string",
+                                "enum": [
+                                  "asset",
+                                  "liability",
+                                  "equity",
+                                  "revenue",
+                                  "cost_of_sales",
+                                  "expense",
+                                  "other"
+                                ]
+                              },
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "openingDebit": {
+                                "type": "string"
+                              },
+                              "openingCredit": {
+                                "type": "string"
+                              },
+                              "debit": {
+                                "type": "string"
+                              },
+                              "credit": {
+                                "type": "string"
+                              },
+                              "closingDebit": {
+                                "type": "string"
+                              },
+                              "closingCredit": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "accountId",
+                              "code",
+                              "name",
+                              "accountClass",
+                              "active",
+                              "openingDebit",
+                              "openingCredit",
+                              "debit",
+                              "credit",
+                              "closingDebit",
+                              "closingCredit"
+                            ]
+                          }
+                        },
+                        "totals": {
+                          "type": "object",
+                          "properties": {
+                            "openingDebit": {
+                              "type": "string"
+                            },
+                            "openingCredit": {
+                              "type": "string"
+                            },
+                            "debit": {
+                              "type": "string"
+                            },
+                            "credit": {
+                              "type": "string"
+                            },
+                            "closingDebit": {
+                              "type": "string"
+                            },
+                            "closingCredit": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "openingDebit",
+                            "openingCredit",
+                            "debit",
+                            "credit",
+                            "closingDebit",
+                            "closingCredit"
+                          ]
+                        },
+                        "balanced": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to",
+                        "currencyCode",
+                        "rows",
+                        "totals",
+                        "balanced"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/profit-loss": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Profit and loss for a date range, with an optional comparison column; year-end closing entries left out",
+        "description": "Requires permission `report.financial` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "to",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "none",
+                "previous_period",
+                "previous_year"
+              ],
+              "default": "none"
+            },
+            "required": false,
+            "name": "compare",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "propertyId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "timezone": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "generatedAt": {
+                          "type": "string"
+                        },
+                        "definitions": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "compare": {
+                          "type": "string",
+                          "enum": [
+                            "none",
+                            "previous_period",
+                            "previous_year"
+                          ]
+                        },
+                        "comparisonFrom": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "comparisonTo": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "sections": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "enum": [
+                                  "revenue",
+                                  "cost_of_sales",
+                                  "operating_expense",
+                                  "other"
+                                ]
+                              },
+                              "rows": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    },
+                                    "comparison": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "accountId",
+                                    "code",
+                                    "name",
+                                    "amount",
+                                    "comparison"
+                                  ]
+                                }
+                              },
+                              "total": {
+                                "type": "object",
+                                "properties": {
+                                  "amount": {
+                                    "type": "string"
+                                  },
+                                  "comparison": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "amount",
+                                  "comparison"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "rows",
+                              "total"
+                            ]
+                          }
+                        },
+                        "grossProfit": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "string"
+                            },
+                            "comparison": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "amount",
+                            "comparison"
+                          ]
+                        },
+                        "operatingProfit": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "string"
+                            },
+                            "comparison": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "amount",
+                            "comparison"
+                          ]
+                        },
+                        "netProfit": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "string"
+                            },
+                            "comparison": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "amount",
+                            "comparison"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "propertyId",
+                        "currencyCode",
+                        "timezone",
+                        "generatedAt",
+                        "definitions",
+                        "from",
+                        "to",
+                        "compare",
+                        "comparisonFrom",
+                        "comparisonTo",
+                        "sections",
+                        "grossProfit",
+                        "operatingProfit",
+                        "netProfit"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/balance-sheet": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Balance sheet as of a date, with the current-year result in equity and a balance check",
+        "description": "Requires permission `report.financial` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "asOf",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "propertyId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "timezone": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "generatedAt": {
+                          "type": "string"
+                        },
+                        "definitions": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "asOf": {
+                          "type": "string"
+                        },
+                        "sections": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "enum": [
+                                  "current_asset",
+                                  "non_current_asset",
+                                  "current_liability",
+                                  "non_current_liability",
+                                  "equity"
+                                ]
+                              },
+                              "rows": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "code": {
+                                      "type": "string"
+                                    },
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "amount": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "accountId",
+                                    "code",
+                                    "name",
+                                    "amount"
+                                  ]
+                                }
+                              },
+                              "total": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "rows",
+                              "total"
+                            ]
+                          }
+                        },
+                        "currentYearResult": {
+                          "type": "string"
+                        },
+                        "earlierYearsResult": {
+                          "type": "string"
+                        },
+                        "totalAssets": {
+                          "type": "string"
+                        },
+                        "totalLiabilities": {
+                          "type": "string"
+                        },
+                        "totalEquity": {
+                          "type": "string"
+                        },
+                        "totalLiabilitiesAndEquity": {
+                          "type": "string"
+                        },
+                        "difference": {
+                          "type": "string"
+                        },
+                        "balanced": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "propertyId",
+                        "currencyCode",
+                        "timezone",
+                        "generatedAt",
+                        "definitions",
+                        "asOf",
+                        "sections",
+                        "currentYearResult",
+                        "earlierYearsResult",
+                        "totalAssets",
+                        "totalLiabilities",
+                        "totalEquity",
+                        "totalLiabilitiesAndEquity",
+                        "difference",
+                        "balanced"
                       ]
                     },
                     "meta": {

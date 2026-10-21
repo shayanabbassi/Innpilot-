@@ -1,6 +1,13 @@
 'use client';
 
-import { ACCOUNT_CLASSES, CLASS_CODE_DIGIT, type AccountClass, type AccountDto } from '@innpilot/contracts';
+import {
+  ACCOUNT_CLASSES,
+  CLASS_CODE_DIGIT,
+  reportGroupsFor,
+  type AccountClass,
+  type AccountDto,
+  type ReportGroup,
+} from '@innpilot/contracts';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
@@ -26,6 +33,7 @@ type Editing = { mode: 'new' } | { mode: 'edit'; account: AccountDto } | null;
 
 export default function AccountsPage() {
   const t = useTranslations('finance');
+  const tReports = useTranslations('reports');
   const { canTenant } = useSession();
   const allowed = canTenant('journal.read');
   const canManage = canTenant('account.manage');
@@ -59,6 +67,9 @@ export default function AccountsPage() {
                       <span className="tabular font-medium">{a.code}</span>{' '}
                       <span className="underline decoration-line underline-offset-2">{a.name}</span>
                     </Link>
+                    {reportGroupsFor(a.accountClass).length > 1 && (
+                      <span className="text-xs text-muted">{tReports(`group_${a.reportGroup}`)}</span>
+                    )}
                     {a.systemRole && <StatusBadge tone="neutral">{t('systemAccount')}</StatusBadge>}
                     {!a.active && <StatusBadge tone="warning">{t('inactive')}</StatusBadge>}
                     {canManage && (
@@ -90,6 +101,7 @@ function AccountDialog({
 }) {
   const t = useTranslations('finance');
   const tCommon = useTranslations('common');
+  const tReports = useTranslations('reports');
   const queryClient = useQueryClient();
   const existing = editing?.mode === 'edit' ? editing.account : null;
   const [code, setCode] = useState('');
@@ -97,6 +109,7 @@ function AccountDialog({
   const [cls, setCls] = useState<AccountClass>('expense');
   const [parentId, setParentId] = useState('');
   const [active, setActive] = useState(true);
+  const [group, setGroup] = useState<ReportGroup | ''>('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [openedFor, setOpenedFor] = useState<Editing>(null);
@@ -110,9 +123,11 @@ function AccountDialog({
     setCls((existing?.accountClass as AccountClass) ?? 'expense');
     setParentId(existing?.parentId ?? '');
     setActive(existing?.active ?? true);
+    setGroup(existing?.reportGroup ?? '');
   }
 
   const parents = accounts.filter((a) => a.accountClass === cls && a.id !== existing?.id);
+  const groups = reportGroupsFor(cls);
 
   const save = async () => {
     setBusy(true);
@@ -123,6 +138,7 @@ function AccountDialog({
           name: name.trim(),
           parentId: parentId || null,
           active,
+          ...(group ? { reportGroup: group } : {}),
         });
       } else {
         await api.post('/finance/accounts', {
@@ -130,6 +146,7 @@ function AccountDialog({
           name: name.trim(),
           accountClass: cls,
           parentId: parentId || null,
+          ...(group && groups.includes(group) ? { reportGroup: group } : {}),
         });
       }
       await queryClient.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY });
@@ -190,6 +207,20 @@ function AccountDialog({
             </option>
           ))}
         </SelectField>
+        {groups.length > 1 && (
+          <SelectField
+            label={tReports('reportGroup')}
+            value={group && groups.includes(group) ? group : groups[0]}
+            onChange={(e) => setGroup(e.target.value as ReportGroup)}
+            hint={t('reportGroupHint')}
+          >
+            {groups.map((g) => (
+              <option key={g} value={g}>
+                {tReports(`group_${g}`)}
+              </option>
+            ))}
+          </SelectField>
+        )}
         {existing && (
           <label className="flex items-center gap-2 text-sm">
             <input

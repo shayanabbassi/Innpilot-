@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {
   defaultNormalBalance,
+  reportGroupsFor,
   type AccountClass,
   type AccountDto,
+  type ReportGroup,
   type CreateAccountRequest,
   type UpdateAccountRequest,
 } from '@innpilot/contracts';
@@ -44,12 +46,14 @@ export class AccountsService {
             accountClass: body.accountClass,
             normalBalance: body.normalBalance ?? defaultNormalBalance(body.accountClass),
             parentId: body.parentId ?? null,
+            ...(body.reportGroup ? { reportGroup: body.reportGroup } : {}),
           })
           .returning();
         await this.record(tx, auth, meta, 'account.created', row!.id, {
           code: row!.code,
           name: row!.name,
           accountClass: row!.accountClass,
+          reportGroup: row!.reportGroup,
         });
         return dto(row!);
       });
@@ -73,16 +77,25 @@ export class AccountsService {
         );
       }
       if (body.parentId) await this.assertParent(tx, body.parentId, before.accountClass as AccountClass, id);
+      if (
+        body.reportGroup &&
+        !reportGroupsFor(before.accountClass as AccountClass).includes(body.reportGroup)
+      ) {
+        throw AppError.validation('Choose a report group that fits the account class.', [
+          { path: 'reportGroup', message: 'This group does not fit the account class.' },
+        ]);
+      }
       const set = {
         ...(body.name !== undefined ? { name: body.name } : {}),
         ...(body.parentId !== undefined ? { parentId: body.parentId } : {}),
         ...(body.active !== undefined ? { active: body.active } : {}),
+        ...(body.reportGroup !== undefined ? { reportGroup: body.reportGroup } : {}),
       };
       // Drizzle refuses an update with nothing to set; an empty PATCH simply changes nothing.
       const row = Object.keys(set).length
         ? (await tx.update(a).set(set).where(eq(a.id, id)).returning())[0]!
         : before;
-      const changes = changeSet(before, row, ['name', 'parentId', 'active']);
+      const changes = changeSet(before, row, ['name', 'parentId', 'active', 'reportGroup']);
       if (Object.keys(changes).length > 0) {
         await this.record(tx, auth, meta, 'account.updated', id, { code: before.code, ...changes });
       }
@@ -136,6 +149,7 @@ function dto(row: Row): AccountDto {
     parentId: row.parentId,
     systemRole: row.systemRole,
     active: row.active,
+    reportGroup: row.reportGroup as ReportGroup,
   };
 }
 
