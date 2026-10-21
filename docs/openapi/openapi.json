@@ -49659,6 +49659,12 @@
                               "name": {
                                 "type": "string"
                               },
+                              "systemRole": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
                               "total": {
                                 "type": "string"
                               }
@@ -49667,6 +49673,7 @@
                               "accountId",
                               "code",
                               "name",
+                              "systemRole",
                               "total"
                             ]
                           }
@@ -52398,6 +52405,541 @@
                         "to",
                         "users",
                         "totalEvents"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dashboard": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Owner dashboard: today’s operations and the period’s financial figures, each with its definition and the report it comes from",
+        "description": "Requires permission `report.operational` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "name": "propertyId",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "from",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": false,
+            "name": "to",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "propertyId": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "propertyName": {
+                          "type": "string"
+                        },
+                        "businessDate": {
+                          "type": "string"
+                        },
+                        "timezone": {
+                          "type": "string"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "generatedAt": {
+                          "type": "string"
+                        },
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "comparisonFrom": {
+                          "type": "string"
+                        },
+                        "comparisonTo": {
+                          "type": "string"
+                        },
+                        "financial": {
+                          "type": "boolean"
+                        },
+                        "kpis": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "key": {
+                                "type": "string",
+                                "enum": [
+                                  "occupancy",
+                                  "rooms_occupied",
+                                  "rooms_available",
+                                  "out_of_service",
+                                  "arrivals",
+                                  "departures",
+                                  "in_house",
+                                  "room_revenue",
+                                  "total_revenue",
+                                  "cash_received",
+                                  "cash_balance",
+                                  "expenses",
+                                  "net_profit",
+                                  "receivables"
+                                ]
+                              },
+                              "value": {
+                                "type": "string"
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "count",
+                                  "percent",
+                                  "money"
+                                ]
+                              },
+                              "scope": {
+                                "type": "string",
+                                "enum": [
+                                  "today",
+                                  "period",
+                                  "balance"
+                                ]
+                              },
+                              "comparison": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "definition": {
+                                "type": "string"
+                              },
+                              "href": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "value",
+                              "kind",
+                              "scope",
+                              "comparison",
+                              "definition",
+                              "href"
+                            ]
+                          }
+                        },
+                        "operations": {
+                          "type": "object",
+                          "properties": {
+                            "arrivals": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "reservationId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  },
+                                  "guestName": {
+                                    "type": "string"
+                                  },
+                                  "roomNumber": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "reservationId",
+                                  "bookingReference",
+                                  "guestName",
+                                  "roomNumber",
+                                  "status"
+                                ]
+                              }
+                            },
+                            "departures": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "reservationId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  },
+                                  "guestName": {
+                                    "type": "string"
+                                  },
+                                  "roomNumber": {
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ]
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "reservationId",
+                                  "bookingReference",
+                                  "guestName",
+                                  "roomNumber",
+                                  "status"
+                                ]
+                              }
+                            },
+                            "unassignedArrivals": {
+                              "type": "integer"
+                            },
+                            "roomsToClean": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "roomId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "roomNumber": {
+                                    "type": "string"
+                                  },
+                                  "state": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "roomId",
+                                  "roomNumber",
+                                  "state"
+                                ]
+                              }
+                            },
+                            "cashier": {
+                              "type": "object",
+                              "properties": {
+                                "openShifts": {
+                                  "type": "integer"
+                                },
+                                "awaitingApproval": {
+                                  "type": "integer"
+                                },
+                                "closings": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "shiftId": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                      },
+                                      "cashierName": {
+                                        "type": "string"
+                                      },
+                                      "cashAccountName": {
+                                        "type": "string"
+                                      },
+                                      "expected": {
+                                        "type": "string"
+                                      },
+                                      "counted": {
+                                        "type": "string"
+                                      },
+                                      "variance": {
+                                        "type": "string"
+                                      },
+                                      "status": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "shiftId",
+                                      "cashierName",
+                                      "cashAccountName",
+                                      "expected",
+                                      "counted",
+                                      "variance",
+                                      "status"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "openShifts",
+                                "awaitingApproval",
+                                "closings"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "arrivals",
+                            "departures",
+                            "unassignedArrivals",
+                            "roomsToClean",
+                            "cashier"
+                          ]
+                        },
+                        "finance": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "cashAccounts": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "cashAccountId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "kind": {
+                                    "type": "string"
+                                  },
+                                  "balance": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "cashAccountId",
+                                  "name",
+                                  "kind",
+                                  "balance"
+                                ]
+                              }
+                            },
+                            "todayReceipts": {
+                              "type": "string"
+                            },
+                            "todayPayments": {
+                              "type": "string"
+                            },
+                            "pendingExpenseApprovals": {
+                              "type": "integer"
+                            },
+                            "draftJournals": {
+                              "type": "integer"
+                            },
+                            "unresolvedBalances": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "reservationId": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "guestName": {
+                                    "type": "string"
+                                  },
+                                  "bookingReference": {
+                                    "type": "string"
+                                  },
+                                  "balance": {
+                                    "type": "string"
+                                  },
+                                  "bucket": {
+                                    "type": "string",
+                                    "enum": [
+                                      "current",
+                                      "d1_30",
+                                      "d31_60",
+                                      "d61_90",
+                                      "over_90"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "reservationId",
+                                  "guestName",
+                                  "bookingReference",
+                                  "balance",
+                                  "bucket"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "cashAccounts",
+                            "todayReceipts",
+                            "todayPayments",
+                            "pendingExpenseApprovals",
+                            "draftJournals",
+                            "unresolvedBalances"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "propertyId",
+                        "propertyName",
+                        "businessDate",
+                        "timezone",
+                        "currencyCode",
+                        "generatedAt",
+                        "from",
+                        "to",
+                        "comparisonFrom",
+                        "comparisonTo",
+                        "financial",
+                        "kpis",
+                        "operations",
+                        "finance"
                       ]
                     },
                     "meta": {

@@ -163,3 +163,10 @@ branch `phase-1-foundation`.
 - **5.4:** because room revenue is read by posting date, a night billed at check-out without a nightly accrual
   (stays before slice 4.5, or a check-out before the night audit ran) shows its revenue on the check-out date;
   ADR for those two nights is skewed, while the totals over the range are right.
+- **5.5:** the dashboard is one property at a time (the property chosen in the header) and needs
+  `report.operational` there; the financial cards and panel are computed, and returned, only with
+  `report.financial`. Each figure is read by calling the report service it links to with the same filters
+  (occupancy, arrivals and departures, cash closings, P&L, revenue, cashbook, receivables), so the two cannot
+  disagree. "Today" figures use the business date; money figures use a period (month to date by default) compared
+  with the previous period of equal length; balances are on the period's end date. Users without operational
+  reports (housekeeping) keep the simple overview.

@@ -155,6 +155,8 @@ import {
   profitLossDto,
   profitLossQueryObject,
   agingQuery,
+  dashboardDto,
+  dashboardQueryObject,
   cashierClosingsDto,
   discrepanciesDto,
   expensesReportDto,
@@ -1101,6 +1103,13 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Trial balance for a date range, all accounts, from posted entries only',
     query: trialBalanceQueryObject,
     data: trialBalanceDto,
+  },
+  'GET /dashboard': {
+    tag: 'Reports',
+    summary:
+      'Owner dashboard: today’s operations and the period’s financial figures, each with its definition and the report it comes from',
+    query: dashboardQueryObject,
+    data: dashboardDto,
   },
   'GET /reports/trial-balance': {
     tag: 'Reports',

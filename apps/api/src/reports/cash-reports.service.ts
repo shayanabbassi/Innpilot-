@@ -428,10 +428,12 @@ export class CashReportsService {
         id: string;
         code: string;
         name: string;
+        role: string | null;
         d: string;
         amount: string;
       }>(sql`
-        select a.id, a.code, a.name, e.accounting_date::text as d, sum(l.credit - l.debit)::text as amount
+        select a.id, a.code, a.name, a.system_role as role, e.accounting_date::text as d,
+               sum(l.credit - l.debit)::text as amount
         from journal_lines l join journal_entries e on e.id = l.journal_entry_id
         join accounts a on a.id = l.account_id
         where a.account_class = 'revenue' and e.status <> 'draft' and ${notYearEndClose}
@@ -456,9 +458,9 @@ export class CashReportsService {
         group by 1`);
 
       const zero = Money.zero(currency);
-      const totals = new Map<string, { code: string; name: string; total: Money }>();
+      const totals = new Map<string, { code: string; name: string; role: string | null; total: Money }>();
       for (const r of lines.rows) {
-        const t = totals.get(r.id) ?? { code: r.code, name: r.name, total: zero };
+        const t = totals.get(r.id) ?? { code: r.code, name: r.name, role: r.role, total: zero };
         totals.set(r.id, { ...t, total: t.total.add(m(r.amount)) });
       }
       // Every revenue account posted to in the range, even if its postings net to zero.
@@ -494,6 +496,7 @@ export class CashReportsService {
           accountId: id,
           code: v.code,
           name: v.name,
+          systemRole: v.role,
           total: s(v.total),
         })),
         days: [...days].map(([date, amounts]) => ({

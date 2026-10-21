@@ -270,7 +270,16 @@ export const revenueDto = z.object({
   ...reportContext,
   from: z.string(),
   to: z.string(),
-  categories: z.array(z.object({ accountId: uuid, code: z.string(), name: z.string(), total: z.string() })),
+  categories: z.array(
+    z.object({
+      accountId: uuid,
+      code: z.string(),
+      name: z.string(),
+      /** room_revenue for the room revenue account, so screens need no account code. */
+      systemRole: z.string().nullable(),
+      total: z.string(),
+    }),
+  ),
   days: z.array(
     z.object({
       date: z.string(),

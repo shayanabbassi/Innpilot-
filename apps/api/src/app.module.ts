@@ -40,6 +40,8 @@ import { JournalsService } from './finance/journals.service';
 import { PeriodsService } from './finance/periods.service';
 import { PostingService } from './finance/posting.service';
 import { ReportsService } from './finance/reports.service';
+import { DashboardController } from './reports/dashboard.controller';
+import { DashboardService } from './reports/dashboard.service';
 import { ReportsController } from './reports/reports.controller';
 import { StatementsService } from './reports/statements.service';
 import { AgingService } from './reports/aging.service';
@@ -161,6 +163,7 @@ export class AppModule {
         CheckoutController,
         UsersController,
         ReportsController,
+        DashboardController,
         AuditController,
         HealthController,
       ],
@@ -190,6 +193,7 @@ export class AppModule {
         CashReportsService,
         AgingService,
         OperationalReportsService,
+        DashboardService,
         TaxService,
         FolioService,
         PaymentService,

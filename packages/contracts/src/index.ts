@@ -5,6 +5,7 @@ export * from './cashier';
 export * from './checkout';
 export * from './close';
 export * from './common';
+export * from './dashboard';
 export * from './day-close';
 export * from './errors';
 export * from './expenses';
