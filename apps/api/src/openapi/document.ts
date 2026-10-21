@@ -154,6 +154,9 @@ import {
   balanceSheetQuery,
   profitLossDto,
   profitLossQueryObject,
+  agingQuery,
+  payablesAgingDto,
+  receivablesAgingDto,
   cashbookDto,
   cashbookQueryObject,
   cashFlowDto,
@@ -1134,6 +1137,19 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Daily revenue by revenue account, and guest receipts by payment method',
     query: revenueQueryObject,
     data: revenueDto,
+  },
+  'GET /reports/receivables-aging': {
+    tag: 'Reports',
+    summary:
+      'Guest ledger: folios with a balance on a date, aged from their invoice date, tied to the receivable and deposit accounts',
+    query: agingQuery,
+    data: receivablesAgingDto,
+  },
+  'GET /reports/payables-aging': {
+    tag: 'Reports',
+    summary: 'Supplier bills outstanding on a date, aged by due date, tied to accounts payable',
+    query: agingQuery,
+    data: payablesAgingDto,
   },
   'GET /finance/periods': {
     tag: 'Ledger',

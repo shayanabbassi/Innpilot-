@@ -143,3 +143,10 @@ branch `phase-1-foundation`.
 - **5.2:** the revenue summary uses revenue accounts as its categories (room, food and beverage, other) and
   matches the P&L; money received is listed by payment method from the payments and refunds on their business
   date, kept apart from revenue.
+- **5.3:** a folio's balance is its guest receivable less deposits held (the ledger lines tagged with it), aged
+  from the date of its latest invoice on or before the as-of date; open folios are current. Bills are aged from
+  their due date (bill date when none), outstanding = what their approval, any void and their payments left on
+  accounts payable. Both reports tie to their ledger accounts and list what is not linked (supplier balances
+  entered by journal show as "not linked to a bill", not aged).
+- **5.3:** fixed in passing: an impossible date such as 2026-13-01 made the shared date check throw and the API
+  answer 500 on any endpoint taking a date; it is now a validation error (400).

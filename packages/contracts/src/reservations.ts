@@ -11,7 +11,11 @@ const DAY_MS = 86_400_000;
 export const businessDate = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, 'Use a date like 2026-10-19.')
-  .refine((v) => new Date(`${v}T00:00:00Z`).toISOString().startsWith(v), 'Enter a real date.');
+  // An impossible date (2026-13-01) is an Invalid Date, whose toISOString() would throw: check it first.
+  .refine((v) => {
+    const d = new Date(`${v}T00:00:00Z`);
+    return !Number.isNaN(d.getTime()) && d.toISOString().startsWith(v);
+  }, 'Enter a real date.');
 
 function toUtc(date: string): number {
   return Date.parse(`${date}T00:00:00Z`);

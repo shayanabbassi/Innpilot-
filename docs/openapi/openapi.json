@@ -49864,6 +49864,790 @@
         }
       }
     },
+    "/reports/receivables-aging": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Guest ledger: folios with a balance on a date, aged from their invoice date, tied to the receivable and deposit accounts",
+        "description": "Requires permission `report.financial` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "asOf",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "propertyId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "timezone": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "generatedAt": {
+                          "type": "string"
+                        },
+                        "definitions": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "asOf": {
+                          "type": "string"
+                        },
+                        "guests": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "guestId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "guestName": {
+                                "type": "string"
+                              },
+                              "folios": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "folioId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "propertyId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "reservationId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "bookingReference": {
+                                      "type": "string"
+                                    },
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "state": {
+                                      "type": "string",
+                                      "enum": [
+                                        "open",
+                                        "checked_out"
+                                      ]
+                                    },
+                                    "invoiceNumber": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "invoiceDate": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "days": {
+                                      "type": "integer"
+                                    },
+                                    "bucket": {
+                                      "type": "string",
+                                      "enum": [
+                                        "current",
+                                        "d1_30",
+                                        "d31_60",
+                                        "d61_90",
+                                        "over_90"
+                                      ]
+                                    },
+                                    "receivable": {
+                                      "type": "string"
+                                    },
+                                    "deposits": {
+                                      "type": "string"
+                                    },
+                                    "balance": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "folioId",
+                                    "propertyId",
+                                    "reservationId",
+                                    "bookingReference",
+                                    "label",
+                                    "state",
+                                    "invoiceNumber",
+                                    "invoiceDate",
+                                    "days",
+                                    "bucket",
+                                    "receivable",
+                                    "deposits",
+                                    "balance"
+                                  ]
+                                }
+                              },
+                              "totals": {
+                                "type": "object",
+                                "properties": {
+                                  "current": {
+                                    "type": "string"
+                                  },
+                                  "d1_30": {
+                                    "type": "string"
+                                  },
+                                  "d31_60": {
+                                    "type": "string"
+                                  },
+                                  "d61_90": {
+                                    "type": "string"
+                                  },
+                                  "over_90": {
+                                    "type": "string"
+                                  },
+                                  "total": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "current",
+                                  "d1_30",
+                                  "d31_60",
+                                  "d61_90",
+                                  "over_90",
+                                  "total"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "guestId",
+                              "guestName",
+                              "folios",
+                              "totals"
+                            ]
+                          }
+                        },
+                        "totals": {
+                          "type": "object",
+                          "properties": {
+                            "current": {
+                              "type": "string"
+                            },
+                            "d1_30": {
+                              "type": "string"
+                            },
+                            "d31_60": {
+                              "type": "string"
+                            },
+                            "d61_90": {
+                              "type": "string"
+                            },
+                            "over_90": {
+                              "type": "string"
+                            },
+                            "total": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "current",
+                            "d1_30",
+                            "d31_60",
+                            "d61_90",
+                            "over_90",
+                            "total"
+                          ]
+                        },
+                        "ledger": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "ledgerBalance": {
+                                "type": "string"
+                              },
+                              "aged": {
+                                "type": "string"
+                              },
+                              "notLinked": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "accountId",
+                              "code",
+                              "name",
+                              "ledgerBalance",
+                              "aged",
+                              "notLinked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "propertyId",
+                        "currencyCode",
+                        "timezone",
+                        "generatedAt",
+                        "definitions",
+                        "asOf",
+                        "guests",
+                        "totals",
+                        "ledger"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/payables-aging": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Supplier bills outstanding on a date, aged by due date, tied to accounts payable",
+        "description": "Requires permission `report.financial` on at least one property (results filtered per property). Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "required": true,
+            "name": "asOf",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "name": "propertyId",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "propertyId": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "format": "uuid"
+                        },
+                        "currencyCode": {
+                          "type": "string"
+                        },
+                        "timezone": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "generatedAt": {
+                          "type": "string"
+                        },
+                        "definitions": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "asOf": {
+                          "type": "string"
+                        },
+                        "suppliers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "supplierId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "supplierName": {
+                                "type": "string"
+                              },
+                              "bills": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "voucherId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "propertyId": {
+                                      "type": "string",
+                                      "format": "uuid"
+                                    },
+                                    "voucherNumber": {
+                                      "type": "string"
+                                    },
+                                    "billReference": {
+                                      "type": [
+                                        "string",
+                                        "null"
+                                      ]
+                                    },
+                                    "billDate": {
+                                      "type": "string"
+                                    },
+                                    "dueDate": {
+                                      "type": "string"
+                                    },
+                                    "days": {
+                                      "type": "integer"
+                                    },
+                                    "bucket": {
+                                      "type": "string",
+                                      "enum": [
+                                        "current",
+                                        "d1_30",
+                                        "d31_60",
+                                        "d61_90",
+                                        "over_90"
+                                      ]
+                                    },
+                                    "total": {
+                                      "type": "string"
+                                    },
+                                    "paid": {
+                                      "type": "string"
+                                    },
+                                    "outstanding": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "voucherId",
+                                    "propertyId",
+                                    "voucherNumber",
+                                    "billReference",
+                                    "billDate",
+                                    "dueDate",
+                                    "days",
+                                    "bucket",
+                                    "total",
+                                    "paid",
+                                    "outstanding"
+                                  ]
+                                }
+                              },
+                              "notLinked": {
+                                "type": "string"
+                              },
+                              "totals": {
+                                "type": "object",
+                                "properties": {
+                                  "current": {
+                                    "type": "string"
+                                  },
+                                  "d1_30": {
+                                    "type": "string"
+                                  },
+                                  "d31_60": {
+                                    "type": "string"
+                                  },
+                                  "d61_90": {
+                                    "type": "string"
+                                  },
+                                  "over_90": {
+                                    "type": "string"
+                                  },
+                                  "total": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "current",
+                                  "d1_30",
+                                  "d31_60",
+                                  "d61_90",
+                                  "over_90",
+                                  "total"
+                                ]
+                              },
+                              "balance": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "supplierId",
+                              "supplierName",
+                              "bills",
+                              "notLinked",
+                              "totals",
+                              "balance"
+                            ]
+                          }
+                        },
+                        "totals": {
+                          "type": "object",
+                          "properties": {
+                            "current": {
+                              "type": "string"
+                            },
+                            "d1_30": {
+                              "type": "string"
+                            },
+                            "d31_60": {
+                              "type": "string"
+                            },
+                            "d61_90": {
+                              "type": "string"
+                            },
+                            "over_90": {
+                              "type": "string"
+                            },
+                            "total": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "current",
+                            "d1_30",
+                            "d31_60",
+                            "d61_90",
+                            "over_90",
+                            "total"
+                          ]
+                        },
+                        "notLinked": {
+                          "type": "string"
+                        },
+                        "ledger": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "ledgerBalance": {
+                                "type": "string"
+                              },
+                              "aged": {
+                                "type": "string"
+                              },
+                              "notLinked": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "accountId",
+                              "code",
+                              "name",
+                              "ledgerBalance",
+                              "aged",
+                              "notLinked"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "propertyId",
+                        "currencyCode",
+                        "timezone",
+                        "generatedAt",
+                        "definitions",
+                        "asOf",
+                        "suppliers",
+                        "totals",
+                        "notLinked",
+                        "ledger"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/audit-events": {
       "get": {
         "tags": [

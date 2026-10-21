@@ -292,3 +292,110 @@ export const revenueDto = z.object({
   receiptsTotal: z.string(),
 });
 export type RevenueDto = z.infer<typeof revenueDto>;
+
+// ------------------------------------------------------------------------------------------------ aging
+
+/** D14: current, 1–30, 31–60, 61–90 and over 90 days. */
+export const AGING_BUCKETS = ['current', 'd1_30', 'd31_60', 'd61_90', 'over_90'] as const;
+export type AgingBucket = (typeof AGING_BUCKETS)[number];
+
+/** The bucket for a number of days past the reference date (zero or less is current). */
+export function agingBucket(days: number): AgingBucket {
+  if (days <= 0) return 'current';
+  if (days <= 30) return 'd1_30';
+  if (days <= 60) return 'd31_60';
+  if (days <= 90) return 'd61_90';
+  return 'over_90';
+}
+
+const bucketTotals = z.object({
+  current: z.string(),
+  d1_30: z.string(),
+  d31_60: z.string(),
+  d61_90: z.string(),
+  over_90: z.string(),
+  total: z.string(),
+});
+
+export const agingQuery = z.object({ asOf: businessDate, propertyId: uuid.optional() });
+export type AgingQuery = z.infer<typeof agingQuery>;
+
+/** A ledger account against the items aged from it; what is not linked to an item is shown, not hidden. */
+const ledgerTie = z.object({
+  accountId: uuid,
+  code: z.string(),
+  name: z.string(),
+  ledgerBalance: z.string(),
+  aged: z.string(),
+  notLinked: z.string(),
+});
+
+/** 01 §6 guest ledger: folios with a balance on the date, aged from their invoice (check-out) date. */
+export const receivablesAgingDto = z.object({
+  ...reportContext,
+  asOf: z.string(),
+  guests: z.array(
+    z.object({
+      guestId: uuid,
+      guestName: z.string(),
+      folios: z.array(
+        z.object({
+          folioId: uuid,
+          propertyId: uuid,
+          reservationId: uuid,
+          bookingReference: z.string(),
+          label: z.string(),
+          /** The folio's status on the date: open (in house or not yet arrived), or checked out. */
+          state: z.enum(['open', 'checked_out']),
+          invoiceNumber: z.string().nullable(),
+          invoiceDate: z.string().nullable(),
+          days: z.number().int(),
+          bucket: z.enum(AGING_BUCKETS),
+          receivable: z.string(),
+          deposits: z.string(),
+          balance: z.string(),
+        }),
+      ),
+      totals: bucketTotals,
+    }),
+  ),
+  totals: bucketTotals,
+  /** Guest receivable (1200) and guest deposits (2100) against the folios. */
+  ledger: z.array(ledgerTie),
+});
+export type ReceivablesAgingDto = z.infer<typeof receivablesAgingDto>;
+
+/** 01 §6 payables aging: supplier bills outstanding on the date, aged by due date (bill date when none). */
+export const payablesAgingDto = z.object({
+  ...reportContext,
+  asOf: z.string(),
+  suppliers: z.array(
+    z.object({
+      supplierId: uuid,
+      supplierName: z.string(),
+      bills: z.array(
+        z.object({
+          voucherId: uuid,
+          propertyId: uuid,
+          voucherNumber: z.string(),
+          billReference: z.string().nullable(),
+          billDate: z.string(),
+          dueDate: z.string(),
+          days: z.number().int(),
+          bucket: z.enum(AGING_BUCKETS),
+          total: z.string(),
+          paid: z.string(),
+          outstanding: z.string(),
+        }),
+      ),
+      /** Payables of this supplier not linked to a bill (opening balances, manual journals); not aged. */
+      notLinked: z.string(),
+      totals: bucketTotals,
+      balance: z.string(),
+    }),
+  ),
+  totals: bucketTotals,
+  notLinked: z.string(),
+  ledger: z.array(ledgerTie),
+});
+export type PayablesAgingDto = z.infer<typeof payablesAgingDto>;

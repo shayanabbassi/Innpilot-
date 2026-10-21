@@ -1,5 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import {
+  agingQuery,
+  type AgingQuery,
+  type PayablesAgingDto,
+  type ReceivablesAgingDto,
   cashbookQuery,
   cashFlowQuery,
   revenueQuery,
@@ -25,6 +29,7 @@ import {
 import { CurrentAuth, RequirePermission } from '../auth/policy';
 import type { AuthContext } from '../common/request';
 import { ZodPipe } from '../common/zod.pipe';
+import { AgingService } from './aging.service';
 import { CashReportsService } from './cash-reports.service';
 import { StatementsService } from './statements.service';
 
@@ -37,6 +42,7 @@ export class ReportsController {
   constructor(
     private readonly statements: StatementsService,
     private readonly cash: CashReportsService,
+    private readonly aging: AgingService,
   ) {}
 
   @Get('trial-balance')
@@ -100,5 +106,23 @@ export class ReportsController {
     @Query(new ZodPipe(revenueQuery)) q: RevenueQuery,
   ): Promise<RevenueDto> {
     return this.cash.revenue(auth, q);
+  }
+
+  @Get('receivables-aging')
+  @RequirePermission('report.financial', 'any')
+  receivablesAging(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(agingQuery)) q: AgingQuery,
+  ): Promise<ReceivablesAgingDto> {
+    return this.aging.receivables(auth, q);
+  }
+
+  @Get('payables-aging')
+  @RequirePermission('report.financial', 'any')
+  payablesAging(
+    @CurrentAuth() auth: AuthContext,
+    @Query(new ZodPipe(agingQuery)) q: AgingQuery,
+  ): Promise<PayablesAgingDto> {
+    return this.aging.payables(auth, q);
   }
 }

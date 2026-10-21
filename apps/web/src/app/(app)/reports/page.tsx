@@ -40,6 +40,13 @@ export default function ReportsPage() {
         { href: '/reports/tax-summary', title: t('taxTitle'), text: t('taxSubtitle'), visible: financial },
       ],
     ],
+    [
+      t('agingGroup'),
+      [
+        { href: '/reports/receivables', title: t('arTitle'), text: t('arSubtitle'), visible: financial },
+        { href: '/reports/payables', title: t('apTitle'), text: t('apSubtitle'), visible: financial },
+      ],
+    ],
   ];
   const shown = groups
     .map(([title, links]) => [title, links.filter((r) => r.visible)] as const)

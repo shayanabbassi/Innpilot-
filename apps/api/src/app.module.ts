@@ -42,6 +42,7 @@ import { PostingService } from './finance/posting.service';
 import { ReportsService } from './finance/reports.service';
 import { ReportsController } from './reports/reports.controller';
 import { StatementsService } from './reports/statements.service';
+import { AgingService } from './reports/aging.service';
 import { CashReportsService } from './reports/cash-reports.service';
 import { TaxController } from './finance/tax.controller';
 import { TaxService } from './finance/tax.service';
@@ -186,6 +187,7 @@ export class AppModule {
         ReportsService,
         StatementsService,
         CashReportsService,
+        AgingService,
         TaxService,
         FolioService,
         PaymentService,
