@@ -1,6 +1,7 @@
 import {
   CSRF_HEADER,
   csrfCookieName,
+  platformCsrfCookieName,
   type ErrorBody,
   type ErrorCode,
   type FieldIssue,
@@ -26,9 +27,13 @@ function readCookie(name: string): string | null {
 }
 
 /** The API sets a __Host- prefixed cookie over HTTPS and a plain one in local http development. */
-function csrfToken(): string | null {
-  return readCookie(csrfCookieName(true)) ?? readCookie(csrfCookieName(false));
+function csrfToken(side: Side): string | null {
+  const name = side === 'platform' ? platformCsrfCookieName : csrfCookieName;
+  return readCookie(name(true)) ?? readCookie(name(false));
 }
+
+/** The hotel app and the operator console have separate sessions and CSRF cookies. */
+type Side = 'tenant' | 'platform';
 
 export interface Paged<T> {
   items: T[];
@@ -40,11 +45,12 @@ async function request<T>(
   path: string,
   body?: unknown,
   extraHeaders: Record<string, string> = {},
+  side: Side = 'tenant',
 ): Promise<{ data: T; nextCursor: string | null }> {
   const headers: Record<string, string> = { accept: 'application/json', ...extraHeaders };
   if (body !== undefined) headers['content-type'] = 'application/json';
   if (method !== 'GET') {
-    const token = csrfToken();
+    const token = csrfToken(side);
     if (token) headers[CSRF_HEADER] = token;
   }
 
@@ -116,4 +122,13 @@ export const api = {
     const name = /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ?? 'export';
     return { blob: await res.blob(), fileName: name };
   },
+};
+
+/** The operator console (slice 5.7): operator session and CSRF cookie, never the hotel ones. */
+export const platformApi = {
+  get: async <T>(path: string) => (await request<T>('GET', path, undefined, {}, 'platform')).data,
+  post: async <T>(path: string, body: unknown = {}) =>
+    (await request<T>('POST', path, body, {}, 'platform')).data,
+  patch: async <T>(path: string, body: unknown) =>
+    (await request<T>('PATCH', path, body, {}, 'platform')).data,
 };

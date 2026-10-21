@@ -180,3 +180,11 @@ branch `phase-1-foundation`.
   starting all its reads together, a single-pass cashbook and two indexes (0021); every target is met.
 - **5.6:** found while doing this: a folio whose deposit exactly offset its charges was left out of the guest
   balances ledger tie, which would have shown a false "not linked" amount; fixed and covered by a test.
+- **5.7:** operator sign-in takes the password and the authenticator code together, so there is no operator
+  session without MFA; operator sessions last 30 minutes idle and 8 hours at most. Operators are created with
+  `pnpm --filter @innpilot/api platform:operator <email> "<name>" <file>`, which writes the generated password and
+  authenticator secret to the file only. Plans are Starter or Growth with a room band (up to 20, 50 or 100 rooms);
+  a hotel over its band is flagged, not blocked. Suspending a hotel stops sign-in and ends every staff session on
+  its next request (the existing session check). Support grants last 15 to 240 minutes, can only be ended early,
+  never extended or deleted (database trigger), and show operators properties, staff accounts and recent activity
+  only.

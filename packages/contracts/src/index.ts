@@ -12,6 +12,7 @@ export * from './expenses';
 export * from './finance';
 export * from './folios';
 export * from './payments';
+export * from './platform';
 export * from './guests';
 export * from './housekeeping';
 export * from './rbac';

@@ -155,6 +155,15 @@ import {
   profitLossDto,
   profitLossQueryObject,
   agingQuery,
+  accessGrantDto,
+  grantAccessRequest,
+  operatorDto,
+  platformAuditEventDto,
+  platformLoginRequest,
+  platformTenantDetailDto,
+  platformTenantDto,
+  supportViewDto,
+  updateTenantRequest,
   EXPORT_FORMATS,
   EXPORT_REPORTS,
   dashboardDto,
@@ -1109,6 +1118,64 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Trial balance for a date range, all accounts, from posted entries only',
     query: trialBalanceQueryObject,
     data: trialBalanceDto,
+  },
+  'POST /platform/auth/login': {
+    tag: 'Platform',
+    summary:
+      'Operator sign-in with password and authenticator code together; sets the operator cookies (separate from hotel sessions)',
+    body: platformLoginRequest,
+    data: operatorDto,
+  },
+  'POST /platform/auth/logout': {
+    tag: 'Platform',
+    summary: 'End the operator session',
+    data: null,
+  },
+  'GET /platform/me': {
+    tag: 'Platform',
+    summary: 'The signed-in operator',
+    data: operatorDto,
+  },
+  'GET /platform/tenants': {
+    tag: 'Platform',
+    summary: 'Hotels with status, plan, room band and counts (metadata only)',
+    data: z.array(platformTenantDto),
+  },
+  'GET /platform/tenants/{tenantId}': {
+    tag: 'Platform',
+    summary: 'One hotel: metadata, support grants and the platform log for it',
+    data: platformTenantDetailDto,
+  },
+  'PATCH /platform/tenants/{tenantId}': {
+    tag: 'Platform',
+    summary:
+      'Change a hotel’s status, plan or room band, with a reason; recorded in the hotel’s own audit log',
+    body: updateTenantRequest,
+    data: platformTenantDto,
+  },
+  'POST /platform/tenants/{tenantId}/access': {
+    tag: 'Platform',
+    summary:
+      'Open time-bound support access to a hotel (15 to 240 minutes) with a reason; audited on both sides',
+    body: grantAccessRequest,
+    data: accessGrantDto,
+    status: 201,
+  },
+  'POST /platform/tenants/{tenantId}/access/end': {
+    tag: 'Platform',
+    summary: 'End the operator’s open support access to a hotel',
+    data: null,
+  },
+  'GET /platform/tenants/{tenantId}/support': {
+    tag: 'Platform',
+    summary:
+      'During open support access only: the hotel’s properties, staff accounts and recent activity (no guest or money records); each read audited',
+    data: supportViewDto,
+  },
+  'GET /platform/audit': {
+    tag: 'Platform',
+    summary: 'The platform audit log',
+    data: z.array(platformAuditEventDto),
   },
   'GET /dashboard': {
     tag: 'Reports',

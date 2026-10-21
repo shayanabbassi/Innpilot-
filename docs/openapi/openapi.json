@@ -53381,6 +53381,2071 @@
         }
       }
     },
+    "/platform/auth/login": {
+      "post": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "Operator sign-in with password and authenticator code together; sets the operator cookies (separate from hotel sessions)",
+        "description": "Public.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "code": {
+                    "type": "string",
+                    "pattern": "^\\d{6}$"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password",
+                  "code"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "fullName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "email",
+                        "fullName"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/auth/logout": {
+      "post": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "End the operator session",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "null"
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/me": {
+      "get": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "The signed-in operator",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "fullName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "email",
+                        "fullName"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/tenants": {
+      "get": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "Hotels with status, plan, room band and counts (metadata only)",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "legalName": {
+                            "type": "string"
+                          },
+                          "displayName": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "trial",
+                              "active",
+                              "suspended",
+                              "closed"
+                            ]
+                          },
+                          "plan": {
+                            "type": "string",
+                            "enum": [
+                              "starter",
+                              "growth"
+                            ]
+                          },
+                          "roomBand": {
+                            "type": "string",
+                            "enum": [
+                              "up_to_20",
+                              "up_to_50",
+                              "up_to_100"
+                            ]
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "properties": {
+                            "type": "integer"
+                          },
+                          "rooms": {
+                            "type": "integer"
+                          },
+                          "users": {
+                            "type": "integer"
+                          },
+                          "lastSignIn": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "overBand": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "slug",
+                          "legalName",
+                          "displayName",
+                          "status",
+                          "plan",
+                          "roomBand",
+                          "createdAt",
+                          "properties",
+                          "rooms",
+                          "users",
+                          "lastSignIn",
+                          "overBand"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/tenants/{tenantId}": {
+      "get": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "One hotel: metadata, support grants and the platform log for it",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "tenant": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "legalName": {
+                              "type": "string"
+                            },
+                            "displayName": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "trial",
+                                "active",
+                                "suspended",
+                                "closed"
+                              ]
+                            },
+                            "plan": {
+                              "type": "string",
+                              "enum": [
+                                "starter",
+                                "growth"
+                              ]
+                            },
+                            "roomBand": {
+                              "type": "string",
+                              "enum": [
+                                "up_to_20",
+                                "up_to_50",
+                                "up_to_100"
+                              ]
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "properties": {
+                              "type": "integer"
+                            },
+                            "rooms": {
+                              "type": "integer"
+                            },
+                            "users": {
+                              "type": "integer"
+                            },
+                            "lastSignIn": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "overBand": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "slug",
+                            "legalName",
+                            "displayName",
+                            "status",
+                            "plan",
+                            "roomBand",
+                            "createdAt",
+                            "properties",
+                            "rooms",
+                            "users",
+                            "lastSignIn",
+                            "overBand"
+                          ]
+                        },
+                        "activeGrant": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "operatorName": {
+                              "type": "string"
+                            },
+                            "reason": {
+                              "type": "string"
+                            },
+                            "grantedAt": {
+                              "type": "string"
+                            },
+                            "expiresAt": {
+                              "type": "string"
+                            },
+                            "endedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "active": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "operatorName",
+                            "reason",
+                            "grantedAt",
+                            "expiresAt",
+                            "endedAt",
+                            "active"
+                          ]
+                        },
+                        "grants": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "operatorName": {
+                                "type": "string"
+                              },
+                              "reason": {
+                                "type": "string"
+                              },
+                              "grantedAt": {
+                                "type": "string"
+                              },
+                              "expiresAt": {
+                                "type": "string"
+                              },
+                              "endedAt": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "active": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "operatorName",
+                              "reason",
+                              "grantedAt",
+                              "expiresAt",
+                              "endedAt",
+                              "active"
+                            ]
+                          }
+                        },
+                        "log": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "operatorName": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "action": {
+                                "type": "string"
+                              },
+                              "tenantId": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ],
+                                "format": "uuid"
+                              },
+                              "changes": {
+                                "type": "object",
+                                "additionalProperties": {}
+                              },
+                              "reason": {
+                                "type": [
+                                  "string",
+                                  "null"
+                                ]
+                              },
+                              "occurredAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "operatorName",
+                              "action",
+                              "tenantId",
+                              "changes",
+                              "reason",
+                              "occurredAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "tenant",
+                        "activeGrant",
+                        "grants",
+                        "log"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "Change a hotel’s status, plan or room band, with a reason; recorded in the hotel’s own audit log",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "trial",
+                      "active",
+                      "suspended",
+                      "closed"
+                    ]
+                  },
+                  "plan": {
+                    "type": "string",
+                    "enum": [
+                      "starter",
+                      "growth"
+                    ]
+                  },
+                  "roomBand": {
+                    "type": "string",
+                    "enum": [
+                      "up_to_20",
+                      "up_to_50",
+                      "up_to_100"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "legalName": {
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "trial",
+                            "active",
+                            "suspended",
+                            "closed"
+                          ]
+                        },
+                        "plan": {
+                          "type": "string",
+                          "enum": [
+                            "starter",
+                            "growth"
+                          ]
+                        },
+                        "roomBand": {
+                          "type": "string",
+                          "enum": [
+                            "up_to_20",
+                            "up_to_50",
+                            "up_to_100"
+                          ]
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "properties": {
+                          "type": "integer"
+                        },
+                        "rooms": {
+                          "type": "integer"
+                        },
+                        "users": {
+                          "type": "integer"
+                        },
+                        "lastSignIn": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "overBand": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "slug",
+                        "legalName",
+                        "displayName",
+                        "status",
+                        "plan",
+                        "roomBand",
+                        "createdAt",
+                        "properties",
+                        "rooms",
+                        "users",
+                        "lastSignIn",
+                        "overBand"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/tenants/{tenantId}/access": {
+      "post": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "Open time-bound support access to a hotel (15 to 240 minutes) with a reason; audited on both sides",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 500
+                  },
+                  "minutes": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "reason",
+                  "minutes"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "operatorName": {
+                          "type": "string"
+                        },
+                        "reason": {
+                          "type": "string"
+                        },
+                        "grantedAt": {
+                          "type": "string"
+                        },
+                        "expiresAt": {
+                          "type": "string"
+                        },
+                        "endedAt": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "active": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "operatorName",
+                        "reason",
+                        "grantedAt",
+                        "expiresAt",
+                        "endedAt",
+                        "active"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/tenants/{tenantId}/access/end": {
+      "post": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "End the operator’s open support access to a hotel",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "null"
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/tenants/{tenantId}/support": {
+      "get": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "During open support access only: the hotel’s properties, staff accounts and recent activity (no guest or money records); each read audited",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "grant": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid"
+                            },
+                            "operatorName": {
+                              "type": "string"
+                            },
+                            "reason": {
+                              "type": "string"
+                            },
+                            "grantedAt": {
+                              "type": "string"
+                            },
+                            "expiresAt": {
+                              "type": "string"
+                            },
+                            "endedAt": {
+                              "type": [
+                                "string",
+                                "null"
+                              ]
+                            },
+                            "active": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "operatorName",
+                            "reason",
+                            "grantedAt",
+                            "expiresAt",
+                            "endedAt",
+                            "active"
+                          ]
+                        },
+                        "properties": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "businessDate": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "timezone": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "businessDate",
+                              "status",
+                              "timezone"
+                            ]
+                          }
+                        },
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "fullName": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "roles": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "mfaEnabled": {
+                                "type": "boolean"
+                              },
+                              "locked": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "fullName",
+                              "email",
+                              "status",
+                              "roles",
+                              "mfaEnabled",
+                              "locked"
+                            ]
+                          }
+                        },
+                        "recentActivity": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "action": {
+                                "type": "string"
+                              },
+                              "entityType": {
+                                "type": "string"
+                              },
+                              "occurredAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "action",
+                              "entityType",
+                              "occurredAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "grant",
+                        "properties",
+                        "users",
+                        "recentActivity"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/audit": {
+      "get": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "The platform audit log",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "operatorName": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "action": {
+                            "type": "string"
+                          },
+                          "tenantId": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "uuid"
+                          },
+                          "changes": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "reason": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "occurredAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "operatorName",
+                          "action",
+                          "tenantId",
+                          "changes",
+                          "reason",
+                          "occurredAt"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/audit-events": {
       "get": {
         "tags": [

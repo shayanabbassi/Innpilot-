@@ -11,7 +11,8 @@
     "test": "vitest run --config vitest.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "test:perf": "vitest run --config vitest.perf.config.ts",
-    "openapi": "tsx src/openapi/write.ts"
+    "openapi": "tsx src/openapi/write.ts",
+    "platform:operator": "tsx --env-file-if-exists=../../.env src/platform/create-operator.ts"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "7.3.4",

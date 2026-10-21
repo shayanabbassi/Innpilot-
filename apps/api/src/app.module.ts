@@ -33,6 +33,9 @@ import { ReconciliationService } from './finance/reconciliation.service';
 import { YearEndService } from './finance/year-end.service';
 import { PaymentController } from './finance/payment.controller';
 import { PaymentService } from './finance/payment.service';
+import { PlatformController } from './platform/platform.controller';
+import { PlatformSessionService } from './platform/platform-session.service';
+import { PlatformService } from './platform/platform.service';
 import { InvoiceService } from './finance/invoice.service';
 import { CheckoutController } from './stays/checkout.controller';
 import { CheckoutService } from './stays/checkout.service';
@@ -167,6 +170,7 @@ export class AppModule {
         ReportsController,
         DashboardController,
         ExportController,
+        PlatformController,
         AuditController,
         HealthController,
       ],
@@ -211,6 +215,8 @@ export class AppModule {
         CheckoutService,
         PiiService,
         IdempotencyService,
+        PlatformSessionService,
+        PlatformService,
       ],
     };
   }

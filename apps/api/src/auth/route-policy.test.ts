@@ -13,6 +13,13 @@ describe('route access policies', () => {
       .filter((r) => r.policy?.kind === 'public')
       .map((r) => r.key)
       .sort();
-    expect(publicRoutes).toEqual(['GET /health', 'POST /auth/login']);
+    expect(publicRoutes).toEqual(['GET /health', 'POST /auth/login', 'POST /platform/auth/login']);
+  });
+
+  it('keeps platform routes for operators only and tenant routes for hotel sessions only', () => {
+    for (const r of collectRoutes()) {
+      if (r.key === 'POST /platform/auth/login') continue;
+      expect(r.policy?.kind === 'platform', r.key).toBe(r.path.startsWith('/platform'));
+    }
   });
 });

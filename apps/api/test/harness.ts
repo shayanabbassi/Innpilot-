@@ -11,7 +11,7 @@ import { loadConfig } from '../src/config';
 
 export const ORIGIN = 'http://localhost:3000';
 export const PASSWORD = 'correct-horse-battery';
-const MFA_KEY = Buffer.alloc(32, 9);
+export const MFA_KEY = Buffer.alloc(32, 9);
 export const PII_KEY = Buffer.alloc(32, 5);
 
 export interface FixtureUser {

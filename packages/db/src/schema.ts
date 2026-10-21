@@ -37,6 +37,12 @@ export const tenants = pgTable('tenants', {
   baseCurrency: char('base_currency', { length: 3 }).notNull().default('PKR'),
   createdAt: tsz('created_at').notNull().defaultNow(),
   updatedAt: tsz('updated_at').notNull().defaultNow(),
+  plan: text('plan', { enum: ['starter', 'growth'] })
+    .notNull()
+    .default('starter'),
+  roomBand: text('room_band', { enum: ['up_to_20', 'up_to_50', 'up_to_100'] })
+    .notNull()
+    .default('up_to_20'),
 });
 
 export const properties = pgTable('properties', {
@@ -927,4 +933,56 @@ export const fiscalYearEntries = pgTable('fiscal_year_entries', {
   fiscalYearId: uuid('fiscal_year_id').notNull(),
   propertyId: uuid('property_id').notNull(),
   journalEntryId: uuid('journal_entry_id').notNull(),
+});
+
+/** Platform operators (0022): a separate identity from tenant users. */
+export const platformOperators = pgTable('platform_operators', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: citext('email').notNull(),
+  fullName: text('full_name').notNull(),
+  passwordHash: text('password_hash').notNull(),
+  mfaSecretEnc: text('mfa_secret_enc').notNull(),
+  mfaLastUsedStep: bigint('mfa_last_used_step', { mode: 'number' }),
+  status: text('status', { enum: ['active', 'disabled'] })
+    .notNull()
+    .default('active'),
+  failedAttempts: integer('failed_attempts').notNull().default(0),
+  lockedUntil: tsz('locked_until'),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+});
+
+export const platformSessions = pgTable('platform_sessions', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  operatorId: uuid('operator_id').notNull(),
+  tokenHash: bytea('token_hash').notNull(),
+  csrfTokenHash: bytea('csrf_token_hash').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  lastSeenAt: tsz('last_seen_at').notNull().defaultNow(),
+  idleExpiresAt: tsz('idle_expires_at').notNull(),
+  absoluteExpiresAt: tsz('absolute_expires_at').notNull(),
+  revokedAt: tsz('revoked_at'),
+  ip: inet('ip'),
+  userAgent: text('user_agent'),
+});
+
+export const platformAuditEvents = pgTable('platform_audit_events', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  operatorId: uuid('operator_id'),
+  action: text('action').notNull(),
+  targetTenantId: uuid('target_tenant_id'),
+  changes: jsonb('changes').$type<Record<string, unknown>>().notNull().default({}),
+  reason: text('reason'),
+  requestId: text('request_id'),
+  ip: inet('ip'),
+  occurredAt: tsz('occurred_at').notNull().defaultNow(),
+});
+
+export const tenantAccessGrants = pgTable('tenant_access_grants', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  operatorId: uuid('operator_id').notNull(),
+  reason: text('reason').notNull(),
+  grantedAt: tsz('granted_at').notNull().defaultNow(),
+  expiresAt: tsz('expires_at').notNull(),
+  endedAt: tsz('ended_at'),
 });
