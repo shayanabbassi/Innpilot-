@@ -321,6 +321,35 @@ describe('user activity', () => {
   });
 });
 
+describe('timezone of hotel dates', () => {
+  it('counts activity by the property’s day (Asia/Karachi, UTC+5), not the UTC day', async () => {
+    // 00:01 and 23:59 on 20 October in Karachi belong to that day; 00:01 on the 21st does not.
+    for (const [at, action] of [
+      ['2026-10-19T19:01:00Z', 'probe.early_morning'],
+      ['2026-10-20T18:59:00Z', 'probe.late_evening'],
+      ['2026-10-20T19:01:00Z', 'probe.next_day'],
+    ]) {
+      await h.admin.query(
+        `INSERT INTO audit_events (tenant_id, actor_type, action, entity_type, occurred_at)
+         VALUES ($1, 'system', $2, 'probe', $3)`,
+        [h.fx.tenantA, action, at],
+      );
+    }
+    const d = (await acc.get('/reports/user-activity?from=2026-10-20&to=2026-10-20')).body.data;
+    const system = d.users.find((u: { userId: string | null }) => u.userId === null);
+    expect(system.topActions.map((a: { action: string }) => a.action).sort()).toEqual([
+      'probe.early_morning',
+      'probe.late_evening',
+    ]);
+    const next = (await acc.get('/reports/user-activity?from=2026-10-21&to=2026-10-21')).body.data;
+    expect(
+      next.users
+        .flatMap((u: { topActions: { action: string }[] }) => u.topActions)
+        .some((a: { action: string }) => a.action === 'probe.next_day'),
+    ).toBe(true);
+  });
+});
+
 describe('isolation and limits', () => {
   it('refuses another tenant and ranges over a year', async () => {
     const ownerB = await browser(h).loginActive(h.fx.users.ownerB);

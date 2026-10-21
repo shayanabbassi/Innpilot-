@@ -1,6 +1,6 @@
 # Phase 5 — Reporting: slice plan
 
-Status: **Plan agreed 2026-10-21 (D13–D16), awaiting go-ahead for 5.1** · Builds on: Phase 4 (accepted 2026-10-21, 854edb5)
+Status: **All slices delivered — exit report in [phase-5-exit-report.md](phase-5-exit-report.md)** · Builds on: Phase 4 (accepted 2026-10-21, 854edb5)
 
 Scope: financial statements, cashbook and bank ledger, cash flow, tax and revenue summaries, receivables and
 payables aging, operational reports, the owner dashboard and authorized exports. Sources: 01 Accounting & Ledger
