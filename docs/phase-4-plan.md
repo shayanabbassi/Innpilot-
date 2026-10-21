@@ -1,6 +1,6 @@
 # Phase 4 — Accounting operations: slice plan
 
-Status: **Decisions recorded 2026-10-20 (D9–D12) — awaiting go-ahead for slice 4.1** · Builds on: Phase 3
+Status: **All slices delivered — exit report in [phase-4-exit-report.md](phase-4-exit-report.md)** · Builds on: Phase 3
 (accepted 2026-10-20, c802f54)
 
 Scope: cash and bank accounts with transfers and opening balances, cashier shifts with counted cash and variance,
