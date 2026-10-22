@@ -5,6 +5,7 @@ import {
   DOCUMENT_TYPES,
   guestDocumentInput,
   type GuestDocumentDto,
+  type FileLinkDto,
   type GuestDto,
   type RevealedDocumentDto,
 } from '@innpilot/contracts';
@@ -15,6 +16,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
+import { AttachmentList } from '@/components/attachments';
 import { GuestForm } from '@/components/guest-form';
 import {
   ApiErrorAlert,
@@ -114,6 +116,7 @@ export default function GuestProfilePage() {
           <p className="mt-2 text-sm text-muted">{g.marketingConsent ? t('consentYes') : t('consentNo')}</p>
         </Card>
         <DocumentsPanel guest={g} onChange={update} />
+        <ScansPanel guest={g} onChange={update} />
       </div>
     </>
   );
@@ -229,6 +232,33 @@ function DocumentsPanel({ guest, onChange }: { guest: GuestDto; onChange: (g: Gu
           }}
         />
       )}
+    </Card>
+  );
+}
+
+/** Scans of identity documents (slice 6.2): same access as the numbers; opening one needs a reason. */
+function ScansPanel({ guest, onChange }: { guest: GuestDto; onChange: (g: GuestDto) => void }) {
+  const t = useTranslations('guests');
+  const { can } = useSession();
+  if (guest.scans === null) {
+    return (
+      <Card title={t('scans')}>
+        <p className="text-sm text-muted">{t('scansHidden')}</p>
+      </Card>
+    );
+  }
+  const canManage = can('guest.write') && can('guest.identity.read');
+  const base = `/guests/${guest.id}/scans`;
+  return (
+    <Card title={t('scans')}>
+      <AttachmentList
+        files={guest.scans}
+        emptyText={t('noScans')}
+        askReason
+        upload={canManage ? async (file) => onChange(await api.upload<GuestDto>(base, file)) : undefined}
+        link={(id, reason) => api.post<FileLinkDto>(`${base}/${id}/link`, { reason })}
+        remove={canManage ? async (id) => onChange(await api.del<GuestDto>(`${base}/${id}`)) : undefined}
+      />
     </Card>
   );
 }

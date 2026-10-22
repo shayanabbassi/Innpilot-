@@ -19,9 +19,11 @@ import {
   guestSearchQuery,
   revealRequest,
   updateGuestRequest,
+  uploadQuery,
   type CreateGuestRequest,
   type DuplicateCandidateDto,
   type DuplicateCheckRequest,
+  type FileLinkDto,
   type GuestDocumentInput,
   type GuestDto,
   type GuestSearchQuery,
@@ -29,11 +31,13 @@ import {
   type RevealedDocumentDto,
   type RevealRequest,
   type UpdateGuestRequest,
+  type UploadQuery,
 } from '@innpilot/contracts';
 import { CurrentAuth, RequirePermission } from '../auth/policy';
 import { AppError } from '../common/app-error';
 import { requestMeta, type AppRequest, type AuthContext } from '../common/request';
 import { ZodPipe } from '../common/zod.pipe';
+import { AttachmentsService } from '../storage/attachments.service';
 import { GuestsService } from './guests.service';
 
 const uuid = (what: string) => new ParseUUIDPipe({ exceptionFactory: () => AppError.notFound(what) });
@@ -41,7 +45,10 @@ const uuid = (what: string) => new ParseUUIDPipe({ exceptionFactory: () => AppEr
 /** Guests are shared by the tenant's properties, so permissions are checked on any property the caller holds. */
 @Controller('guests')
 export class GuestsController {
-  constructor(private readonly guests: GuestsService) {}
+  constructor(
+    private readonly guests: GuestsService,
+    private readonly files: AttachmentsService,
+  ) {}
 
   @Get()
   @RequirePermission('guest.read', 'any')
@@ -126,5 +133,51 @@ export class GuestsController {
     @Req() req: AppRequest,
   ): Promise<RevealedDocumentDto> {
     return this.guests.reveal(auth, id, documentId, body.reason, requestMeta(req));
+  }
+
+  /**
+   * Upload a scan of an identity document (slice 6.2): the body is the file (PDF, JPEG or PNG, at most 5 MB).
+   * Needs guest.write here plus guest.identity.read (checked in the service). The stored name is neutral.
+   */
+  @Post(':id/scans')
+  @HttpCode(200)
+  @RequirePermission('guest.write', 'any')
+  @Throttle({ default: { limit: 30, ttl: 60_000 } })
+  async addScan(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id', uuid('guest')) id: string,
+    // The name is accepted for the same upload shape as expenses, then replaced: it may hold guest data.
+    @Query(new ZodPipe(uploadQuery)) _q: UploadQuery,
+    @Req() req: AppRequest,
+  ): Promise<GuestDto> {
+    const file = await this.files.readUpload(req);
+    return this.guests.addScan(auth, id, file, requestMeta(req));
+  }
+
+  /** A five-minute download link for the caller only, with a reason; audited (SEC-003). */
+  @Post(':id/scans/:scanId/link')
+  @HttpCode(200)
+  @RequirePermission('guest.identity.read', 'any')
+  @Throttle({ default: { limit: 20, ttl: 60_000 } })
+  scanLink(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id', uuid('guest')) id: string,
+    @Param('scanId', uuid('file')) scanId: string,
+    @Body(new ZodPipe(revealRequest)) body: RevealRequest,
+    @Req() req: AppRequest,
+  ): Promise<FileLinkDto> {
+    return this.guests.scanLink(auth, id, scanId, body.reason, requestMeta(req));
+  }
+
+  @Delete(':id/scans/:scanId')
+  @HttpCode(200)
+  @RequirePermission('guest.write', 'any')
+  removeScan(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id', uuid('guest')) id: string,
+    @Param('scanId', uuid('file')) scanId: string,
+    @Req() req: AppRequest,
+  ): Promise<GuestDto> {
+    return this.guests.removeScan(auth, id, scanId, requestMeta(req));
   }
 }

@@ -1,4 +1,5 @@
 export * from './admin';
+export * from './attachments';
 export * from './auth';
 export * from './cash';
 export * from './cashier';

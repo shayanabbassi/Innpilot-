@@ -154,6 +154,11 @@ export async function startHarness(options: HarnessOptions = {}): Promise<Harnes
     PII_ENCRYPTION_KEY: PII_KEY.toString('base64url'),
     LOG_LEVEL: options.logStream ? 'trace' : 'silent',
     RATE_LIMIT_ENABLED: 'false',
+    // The local storage container (pnpm db:up), with its own bucket for tests.
+    STORAGE_ENDPOINT: process.env.STORAGE_ENDPOINT ?? 'http://localhost:7070',
+    STORAGE_BUCKET: 'innpilot-test',
+    STORAGE_ACCESS_KEY_ID: process.env.STORAGE_ACCESS_KEY_ID,
+    STORAGE_SECRET_ACCESS_KEY: process.env.STORAGE_SECRET_ACCESS_KEY,
   });
   const app = await createApp(
     config,
@@ -226,6 +231,20 @@ export class BrowserClient {
       .set('origin', ORIGIN)
       .set(CSRF_HEADER, this.csrf)
       .send(body as object);
+  }
+
+  /** Sends a file as the raw request body, the way the web app uploads attachments. */
+  upload(path: string, file: Buffer, contentType = 'application/octet-stream') {
+    return this.agent
+      .post(`/api/v1${path}`)
+      .set('origin', ORIGIN)
+      .set(CSRF_HEADER, this.csrf)
+      .set('content-type', contentType)
+      .send(file);
+  }
+
+  delete(path: string) {
+    return this.agent.delete(`/api/v1${path}`).set('origin', ORIGIN).set(CSRF_HEADER, this.csrf);
   }
 
   patch(path: string, body: unknown) {

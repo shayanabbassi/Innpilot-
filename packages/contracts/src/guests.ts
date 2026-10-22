@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { attachmentDto } from './attachments';
 
 /**
  * Digits-only phone key used for search and duplicate detection. Pakistani local formats are mapped to the
@@ -171,6 +172,8 @@ export const guestDto = guestSummaryDto.extend({
   documentCount: z.number().int(),
   /** Present only for callers with guest.identity.read; otherwise null and only the count is shown. */
   documents: z.array(guestDocumentDto).nullable(),
+  /** Identity document scans (slice 6.2): like documents, null without guest.identity.read. */
+  scans: z.array(attachmentDto).nullable(),
 });
 export type GuestDto = z.infer<typeof guestDto>;
 

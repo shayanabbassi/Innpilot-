@@ -5,6 +5,7 @@ import {
   type RouteConfig,
 } from '@asteasolutions/zod-to-openapi';
 import {
+  ATTACHMENT_TYPES,
   auditEventDto,
   auditEventsQuery,
   createUserRequest,
@@ -35,11 +36,13 @@ import {
   duplicateCandidateDto,
   duplicateCheckRequest,
   guestDocumentInput,
+  fileLinkDto,
   guestDto,
   guestSearchQuery,
   guestSummaryDto,
   revealedDocumentDto,
   revealRequest,
+  uploadQuery,
   updateGuestRequest,
   assignRoomRequest,
   availabilityDto,
@@ -213,11 +216,13 @@ interface RouteDoc {
   params?: z.AnyZodObject;
   /** A file download instead of the JSON envelope: the media types it can be sent as. */
   file?: string[];
+  /** The request body is a file itself (slice 6.2), in one of these media types. */
+  upload?: readonly string[];
 }
 
 /** Every {placeholder} in our paths is a UUID. */
 function pathParams(path: string) {
-  const names = [...path.matchAll(/{(w+)}/g)].map((m) => m[1]!);
+  const names = [...path.matchAll(/{(\w+)}/g)].map((m) => m[1]!);
   return names.length ? z.object(Object.fromEntries(names.map((n) => [n, z.string().uuid()]))) : undefined;
 }
 
@@ -409,6 +414,29 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     summary: 'Show one full document number; a reason is required and the reveal is audited',
     body: revealRequest,
     data: revealedDocumentDto,
+    status: 200,
+  },
+  'POST /guests/{id}/scans': {
+    tag: 'Guests',
+    summary:
+      'Upload a scan of an identity document (needs guest.identity.read too): the body is the file; stored under a neutral name',
+    query: uploadQuery,
+    upload: ATTACHMENT_TYPES,
+    data: guestDto,
+    status: 200,
+  },
+  'POST /guests/{id}/scans/{scanId}/link': {
+    tag: 'Guests',
+    summary:
+      'A five-minute download link for a scan, for the caller only; a reason is required and the link and each download are audited',
+    body: revealRequest,
+    data: fileLinkDto,
+    status: 200,
+  },
+  'DELETE /guests/{id}/scans/{scanId}': {
+    tag: 'Guests',
+    summary: 'Remove a scan and delete the stored file (audited)',
+    data: guestDto,
     status: 200,
   },
   'GET /properties/{propertyId}/availability': {
@@ -922,6 +950,28 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     data: expenseDto,
     status: 201,
   },
+  'POST /properties/{propertyId}/expenses/{id}/attachments': {
+    tag: 'Expenses',
+    summary:
+      'Attach a receipt or bill: the body is the file (PDF, JPEG or PNG, recognised from content, at most 5 MB); not on void expenses. The same file twice is kept once.',
+    query: uploadQuery,
+    upload: ATTACHMENT_TYPES,
+    data: expenseDto,
+    status: 200,
+  },
+  'POST /properties/{propertyId}/expenses/{id}/attachments/{attachmentId}/link': {
+    tag: 'Expenses',
+    summary: 'A download link for one file, valid five minutes and only for the caller (SEC-003)',
+    data: fileLinkDto,
+    status: 200,
+  },
+  'DELETE /properties/{propertyId}/expenses/{id}/attachments/{attachmentId}': {
+    tag: 'Expenses',
+    summary:
+      'Remove a file while the expense is a draft; 409 once submitted or posted (files stay with the record)',
+    data: expenseDto,
+    status: 200,
+  },
   'POST /properties/{propertyId}/expenses/{id}/void': {
     tag: 'Expenses',
     summary:
@@ -1380,6 +1430,14 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     data: auditEventDto,
     paged: true,
   },
+  'GET /files/{token}': {
+    tag: 'Files',
+    summary:
+      'Open a download link issued by a record. Works only for the signed-in person it was issued to, until it expires (410 LINK_EXPIRED).',
+    params: z.object({ token: z.string() }),
+    data: null,
+    file: [...ATTACHMENT_TYPES],
+  },
   'GET /health': {
     tag: 'Operations',
     summary: 'Liveness and database reachability',
@@ -1433,6 +1491,16 @@ export function buildOpenApiDocument() {
             : {}),
         ...(doc.query ? { query: doc.query } : {}),
         ...(doc.body ? { body: { content: { 'application/json': { schema: doc.body } } } } : {}),
+        ...(doc.upload
+          ? {
+              body: {
+                required: true,
+                content: Object.fromEntries(
+                  doc.upload.map((t) => [t, { schema: z.string().openapi({ format: 'binary' }) }]),
+                ),
+              },
+            }
+          : {}),
       },
       responses: {
         [status]: {

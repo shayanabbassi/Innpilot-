@@ -507,7 +507,10 @@
     "removeTitle": "Remove this {type}?",
     "removeBody": "The document is deleted; the removal is recorded in the audit log.",
     "nationalityLabel": "Nationality",
-    "countryLabel": "Country"
+    "countryLabel": "Country",
+    "scans": "Document scans",
+    "noScans": "No scans.",
+    "scansHidden": "Only staff with access to identity documents can see scans."
   },
   "reservations": {
     "title": "Reservations",
@@ -1324,7 +1327,7 @@
     "billReference": "Supplier's bill number",
     "receiptReference": "Receipt number",
     "attachmentRef": "Where the paper is kept",
-    "attachmentRefHint": "For example \"Petty cash file, slip 12\". Scans come later.",
+    "attachmentRefHint": "For example \"Petty cash file, slip 12\". After saving you can attach a photo or scan.",
     "lines": "Lines",
     "lineAccount": "Line {n} account",
     "chooseAccount": "Choose an account",
@@ -1383,7 +1386,10 @@
     "reason": "Reason",
     "voidTitle": "Void",
     "voidExplain": "The expense stops here and stays in the list as void.",
-    "voidPostedExplain": "What was posted is reversed with an equal and opposite entry. The expense stays in the list as void."
+    "voidPostedExplain": "What was posted is reversed with an equal and opposite entry. The expense stays in the list as void.",
+    "files": "Receipts and bills",
+    "noFiles": "No files attached.",
+    "filesKept": "Files stay with the expense once it is submitted; you can still add a receipt that arrives later."
   },
   "suppliers": {
     "title": "Suppliers",
@@ -1910,5 +1916,21 @@
     "thisDevice": "This device",
     "endSession": "Sign out",
     "endOthers": "Sign out everywhere else"
+  },
+  "files": {
+    "add": "Add a file",
+    "uploading": "Uploading…",
+    "hint": "PDF, JPEG or PNG, up to 5 MB.",
+    "open": "Open",
+    "remove": "Remove",
+    "line": "{size} · {name}, {date}",
+    "tooLarge": "This file is larger than 5 MB. Scan it at a lower resolution or as a PDF.",
+    "wrongType": "Only PDF, JPEG and PNG files can be attached.",
+    "reasonTitle": "Open {name}",
+    "reasonBody": "Identity scans are personal data. Say why you need to see this one; the reason and every opening are kept in the audit log.",
+    "reasonLabel": "Reason",
+    "openConfirm": "Open scan",
+    "removeTitle": "Remove {name}?",
+    "removeBody": "The file is deleted. The audit log keeps a record that it was attached and removed."
   }
 }

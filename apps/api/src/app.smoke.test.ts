@@ -20,6 +20,10 @@ beforeAll(async () => {
     MFA_ENCRYPTION_KEY: Buffer.alloc(32, 1).toString('base64url'),
     PII_ENCRYPTION_KEY: Buffer.alloc(32, 2).toString('base64url'),
     LOG_LEVEL: 'silent',
+    STORAGE_ENDPOINT: 'http://127.0.0.1:1',
+    STORAGE_BUCKET: 'innpilot-test',
+    STORAGE_ACCESS_KEY_ID: 'nobody',
+    STORAGE_SECRET_ACCESS_KEY: 'nothing-here',
   });
   app = await createApp(config, { logger: false });
   await app.init();

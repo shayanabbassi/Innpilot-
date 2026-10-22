@@ -5,6 +5,7 @@ import {
   type CreateGuestRequest,
   type DuplicateCandidateDto,
   type DuplicateCheckRequest,
+  type FileLinkDto,
   type GuestDocumentDto,
   type GuestDocumentInput,
   type GuestDto,
@@ -20,6 +21,7 @@ import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
+import { AttachmentsService } from '../storage/attachments.service';
 import { PiiService } from './pii.service';
 
 type GuestRow = typeof schema.guests.$inferSelect;
@@ -83,6 +85,7 @@ export class GuestsService {
     private readonly db: Db,
     private readonly audit: AuditService,
     private readonly pii: PiiService,
+    private readonly attachments: AttachmentsService,
   ) {}
 
   search(auth: AuthContext, query: GuestSearchQuery): Promise<GuestSummaryDto[]> {
@@ -194,6 +197,7 @@ export class GuestsService {
       createdAt: row.createdAt.toISOString(),
       documentCount: docs.length,
       documents: canSeeDocuments ? docs.map(documentDto) : null,
+      scans: canSeeDocuments ? await this.attachments.list(tx, { kind: 'guest', guestId: id }, true) : null,
     };
   }
 
@@ -390,6 +394,54 @@ export class GuestsService {
         meta,
       );
       return { id: doc.id, number: this.pii.decrypt(doc.numberEnc) };
+    });
+  }
+
+  /** Stores a scan of an identity document (slice 6.2). Same rules as adding a document. */
+  addScan(auth: AuthContext, guestId: string, file: Buffer, meta: RequestMeta): Promise<GuestDto> {
+    this.assertIdentityAccess(auth);
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const [guest] = await tx.select({ id: g.id }).from(g).where(eq(g.id, guestId)).for('update');
+      if (!guest) throw AppError.notFound('guest');
+      await this.attachments.store(tx, auth, { kind: 'guest', guestId }, 'identity-scan', file, meta);
+      return this.load(tx, auth, guestId);
+    });
+  }
+
+  /** Like revealing a number: a reason is required, and issuing the link and each download are audited. */
+  scanLink(
+    auth: AuthContext,
+    guestId: string,
+    scanId: string,
+    reason: string,
+    meta: RequestMeta,
+  ): Promise<FileLinkDto> {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const scan = await this.attachments.find(tx, { kind: 'guest', guestId }, scanId);
+      await this.audit.record(
+        tx,
+        {
+          tenantId: auth.tenantId,
+          actor: { type: 'user', userId: auth.userId },
+          action: 'guest.scan_link_issued',
+          entityType: 'guest',
+          entityId: guestId,
+          changes: { attachmentId: scan.id },
+          reason,
+        },
+        meta,
+      );
+      return this.attachments.link(auth, scan);
+    });
+  }
+
+  /** Removes the scan and deletes the stored file; the audit log keeps that it existed. */
+  removeScan(auth: AuthContext, guestId: string, scanId: string, meta: RequestMeta): Promise<GuestDto> {
+    this.assertIdentityAccess(auth);
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const scan = await this.attachments.find(tx, { kind: 'guest', guestId }, scanId);
+      await this.attachments.remove(tx, auth, scan, meta);
+      return this.load(tx, auth, guestId);
     });
   }
 

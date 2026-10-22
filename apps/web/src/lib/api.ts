@@ -48,7 +48,10 @@ async function request<T>(
   side: Side = 'tenant',
 ): Promise<{ data: T; nextCursor: string | null }> {
   const headers: Record<string, string> = { accept: 'application/json', ...extraHeaders };
-  if (body !== undefined) headers['content-type'] = 'application/json';
+  // A file is sent as the body itself (attachments, slice 6.2); everything else as JSON.
+  const isFile = typeof Blob !== 'undefined' && body instanceof Blob;
+  if (body !== undefined)
+    headers['content-type'] = isFile ? (body as Blob).type || 'application/octet-stream' : 'application/json';
   if (method !== 'GET') {
     const token = csrfToken(side);
     if (token) headers[CSRF_HEADER] = token;
@@ -60,7 +63,7 @@ async function request<T>(
       method,
       headers,
       credentials: 'same-origin',
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : isFile ? (body as Blob) : JSON.stringify(body),
     });
   } catch {
     throw new ApiError(
@@ -97,6 +100,15 @@ export const api = {
   put: async <T>(path: string, body: unknown) => (await request<T>('PUT', path, body)).data,
   patch: async <T>(path: string, body: unknown) => (await request<T>('PATCH', path, body)).data,
   del: async <T>(path: string) => (await request<T>('DELETE', path)).data,
+  /** Uploads one file as the request body; its name goes in the fileName query parameter. */
+  upload: async <T>(path: string, file: File) =>
+    (
+      await request<T>(
+        'POST',
+        `${path}${path.includes('?') ? '&' : '?'}fileName=${encodeURIComponent(file.name)}`,
+        file,
+      )
+    ).data,
   /** A file download (report exports). Errors come back as the usual JSON error and are thrown as ApiError. */
   download: async (path: string): Promise<{ blob: Blob; fileName: string }> => {
     let res: Response;

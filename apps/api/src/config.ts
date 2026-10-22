@@ -46,6 +46,15 @@ const schema = z.object({
   TRUST_PROXY: z.string().default('loopback'),
   /** Per-IP request rate limits. Only end-to-end tests switch this off. */
   RATE_LIMIT_ENABLED: bool.default('true'),
+  /** Private S3-compatible object storage for attachments (slice 6.2). Path-style addressing. */
+  STORAGE_ENDPOINT: z
+    .string()
+    .url()
+    .transform((v) => v.replace(/\/+$/, '')),
+  STORAGE_REGION: z.string().min(1).default('us-east-1'),
+  STORAGE_BUCKET: z.string().regex(/^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$/, 'Use a valid S3 bucket name.'),
+  STORAGE_ACCESS_KEY_ID: z.string().min(3),
+  STORAGE_SECRET_ACCESS_KEY: z.string().min(8),
 });
 
 export type AppConfig = z.infer<typeof schema>;
@@ -65,6 +74,9 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   }
   if (parsed.data.NODE_ENV === 'production' && !parsed.data.RATE_LIMIT_ENABLED) {
     throw new Error('RATE_LIMIT_ENABLED must be true in production.');
+  }
+  if (parsed.data.NODE_ENV === 'production' && !parsed.data.STORAGE_ENDPOINT.startsWith('https://')) {
+    throw new Error('STORAGE_ENDPOINT must use https in production.');
   }
   return parsed.data;
 }

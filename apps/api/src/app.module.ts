@@ -68,6 +68,8 @@ import { ReservationsService } from './reservations/reservations.service';
 import { RoomsController } from './rooms/rooms.controller';
 import { StaysController } from './stays/stays.controller';
 import { StaysService } from './stays/stays.service';
+import { AttachmentsService } from './storage/attachments.service';
+import { FilesController } from './storage/files.controller';
 import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
@@ -131,7 +133,8 @@ export class AppModule {
               req: (req: { id: string; method: string; url: string }) => ({
                 id: req.id,
                 method: req.method,
-                path: req.url.split('?')[0],
+                // Download links are credentials for five minutes: log that one was used, not the link.
+                path: req.url.split('?')[0]!.replace(/\/files\/[^/]+$/, '/files/[link]'),
               }),
             },
             customProps: (req) => {
@@ -172,6 +175,7 @@ export class AppModule {
         ExportController,
         PlatformController,
         AuditController,
+        FilesController,
         HealthController,
       ],
       providers: [
@@ -214,6 +218,7 @@ export class AppModule {
         InvoiceService,
         CheckoutService,
         PiiService,
+        AttachmentsService,
         IdempotencyService,
         PlatformSessionService,
         PlatformService,

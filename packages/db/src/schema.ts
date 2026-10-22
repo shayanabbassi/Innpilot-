@@ -988,3 +988,24 @@ export const tenantAccessGrants = pgTable('tenant_access_grants', {
   expiresAt: tsz('expires_at').notNull(),
   endedAt: tsz('ended_at'),
 });
+
+/** Files in private object storage (0024): receipts and bill scans on expenses, identity scans on guests. */
+export const attachments = pgTable('attachments', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  propertyId: uuid('property_id'),
+  ownerType: text('owner_type', { enum: ['expense', 'guest'] }).notNull(),
+  expenseId: uuid('expense_id'),
+  guestId: uuid('guest_id'),
+  objectKey: text('object_key').notNull(),
+  fileName: text('file_name').notNull(),
+  contentType: text('content_type', { enum: ['application/pdf', 'image/jpeg', 'image/png'] }).notNull(),
+  sizeBytes: integer('size_bytes').notNull(),
+  sha256: bytea('sha256').notNull(),
+  encIv: bytea('enc_iv').notNull(),
+  encTag: bytea('enc_tag').notNull(),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  removedAt: tsz('removed_at'),
+  removedBy: uuid('removed_by'),
+});

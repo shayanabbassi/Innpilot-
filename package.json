@@ -14,7 +14,7 @@
     "test:integration": "turbo run test:integration --concurrency=1",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "db:up": "docker compose up -d postgres",
+    "db:up": "docker compose up -d postgres storage",
     "db:down": "docker compose down",
     "db:migrate": "pnpm --filter @innpilot/db migrate",
     "db:seed": "pnpm --filter @innpilot/db seed",

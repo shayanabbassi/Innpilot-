@@ -19,6 +19,7 @@ import { AppError } from '../common/app-error';
 import type { AuthContext, RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 import { IdempotencyService } from '../idempotency/idempotency.service';
+import { AttachmentsService } from '../storage/attachments.service';
 import { ledgerErrors, PostingService, type PostingLine } from './posting.service';
 
 const v = schema.expenseVouchers;
@@ -47,6 +48,7 @@ export class ExpenseService {
     private readonly posting: PostingService,
     private readonly audit: AuditService,
     private readonly idempotency: IdempotencyService,
+    private readonly attachments: AttachmentsService,
   ) {}
 
   // ------------------------------------------------------------------------------------------- reads
@@ -91,6 +93,74 @@ export class ExpenseService {
       const property = await this.property(tx, propertyId);
       const row = await this.voucher(tx, propertyId, id);
       this.assertVisible(auth, propertyId, row);
+      return (await this.dtos(tx, property, [id]))[0]!;
+    });
+  }
+
+  /**
+   * Attaches a receipt or bill scan (slice 6.2). Any expense the caller can see, at any stage except void: a
+   * receipt often arrives after the payment. The same file twice is kept once.
+   */
+  addAttachment(
+    auth: AuthContext,
+    propertyId: string,
+    id: string,
+    fileName: string,
+    file: Buffer,
+    meta: RequestMeta,
+  ): Promise<ExpenseDto> {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const property = await this.property(tx, propertyId);
+      const row = await this.lock(tx, propertyId, id);
+      this.assertVisible(auth, propertyId, row);
+      if (row.status === 'void') throw new AppError('CONFLICT', `${row.voucherNumber} is void.`);
+      await this.attachments.store(
+        tx,
+        auth,
+        { kind: 'expense', expenseId: id, propertyId },
+        fileName,
+        file,
+        meta,
+      );
+      return (await this.dtos(tx, property, [id]))[0]!;
+    });
+  }
+
+  /** A five-minute download link for one of the expense's files, for the caller only. */
+  attachmentLink(auth: AuthContext, propertyId: string, id: string, attachmentId: string) {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const row = await this.voucher(tx, propertyId, id);
+      this.assertVisible(auth, propertyId, row);
+      const file = await this.attachments.find(
+        tx,
+        { kind: 'expense', expenseId: id, propertyId },
+        attachmentId,
+      );
+      return this.attachments.link(auth, file);
+    });
+  }
+
+  /** Only while the expense is a draft: once submitted, its files are part of the record. */
+  removeAttachment(
+    auth: AuthContext,
+    propertyId: string,
+    id: string,
+    attachmentId: string,
+    meta: RequestMeta,
+  ): Promise<ExpenseDto> {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const property = await this.property(tx, propertyId);
+      const row = await this.lock(tx, propertyId, id);
+      this.assertVisible(auth, propertyId, row);
+      if (row.status !== 'draft') {
+        throw new AppError('CONFLICT', 'Files stay with an expense once it is submitted or posted.');
+      }
+      const file = await this.attachments.find(
+        tx,
+        { kind: 'expense', expenseId: id, propertyId },
+        attachmentId,
+      );
+      await this.attachments.remove(tx, auth, file, meta);
       return (await this.dtos(tx, property, [id]))[0]!;
     });
   }
@@ -677,6 +747,11 @@ export class ExpenseService {
       .leftJoin(payer, eq(payer.id, ep.createdBy))
       .where(inArray(ep.voucherId, ids))
       .orderBy(asc(ep.createdAt));
+    const files = await this.attachments.listForExpenses(
+      tx,
+      ids,
+      new Set(rows.filter((r) => r.v.status === 'draft').map((r) => r.v.id)),
+    );
     return rows.map((r) => {
       const mine = payments.filter((p) => p.p.voucherId === r.v.id);
       const total = m(r.v.totalAmount);
@@ -703,6 +778,7 @@ export class ExpenseService {
         billReference: r.v.billReference,
         description: r.v.description,
         attachmentRef: r.v.attachmentRef,
+        attachments: files.get(r.v.id) ?? [],
         cashAccountId: r.v.cashAccountId,
         cashAccountName: r.cash,
         netAmount: m(r.v.netAmount).toString(),

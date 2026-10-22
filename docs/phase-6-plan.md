@@ -153,3 +153,20 @@ obligations before launch (05 §6), and the accountant's sign-off.
   others; operators change their own password in the console. The browser check found that finishing a sign-in
   step (two-step code, set-up, new password) could bounce back to the same step when the app had already cached
   the earlier session state; each step now refetches the session before moving on.
+- **6.2:** MinIO no longer publishes container images (both registries refused the pull), so local storage is
+  the Versity S3 Gateway (Apache 2.0, S3-compatible, checks request signatures), started by `pnpm db:up`. The
+  API talks to any S3-compatible bucket through a small built-in client (Signature Version 4, path-style; checked
+  against the AWS documentation's example), so the provider choice (D17) only changes four settings. Files are
+  encrypted by the API before they leave (AES-256-GCM, key derived from `PII_ENCRYPTION_KEY`, tied to the
+  attachment id), so the bucket on its own reveals nothing; rotating that key now also means re-encrypting files.
+  Object keys are `t/<tenant>/p/<property>/<random id>` (`shared` for guest scans): never a file name or guest data.
+  Downloads never go to the bucket directly: the API checks access, issues a link valid five minutes for that
+  person and tenant only, re-checks the basic permission when it is used, and streams the file with no-store
+  caching. Only PDF, JPEG and PNG are accepted, recognised from the content, at most 5 MB; PDFs that name
+  scripts, launch actions or embedded files are refused (a first filter, not a virus scanner; a scanning service
+  can be added once hosting is chosen). Receipts can be added to an expense at any stage except void, and removed
+  only while it is a draft. Identity scans follow the identity-number rules: hidden without
+  `guest.identity.read`, stored under a neutral name, a reason to open one, and the link and every download are
+  audited. A removed file's row stays (who, when) while the stored file is deleted. Download links are replaced by
+  `/files/[link]` in request logs. The same file sent twice to a record is kept once. Also fixed: the OpenAPI
+  document had never listed path parameters (a regular expression typo); it now does.

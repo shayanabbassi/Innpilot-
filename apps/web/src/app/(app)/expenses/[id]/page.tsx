@@ -1,12 +1,13 @@
 'use client';
 
-import type { ExpenseDto } from '@innpilot/contracts';
+import type { ExpenseDto, FileLinkDto } from '@innpilot/contracts';
 import { Money } from '@innpilot/money';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
+import { AttachmentList } from '@/components/attachments';
 import { ExpenseForm } from '@/components/expense-form';
 import { ExpenseStatusBadge } from '@/components/expense-status';
 import { useCashAccounts } from '@/components/journal-form';
@@ -154,6 +155,7 @@ function ExpenseDetail() {
               </div>
             </dl>
           </Card>
+          <ExpenseFiles expense={e} />
           {e.kind === 'bill' && (
             <Card title={t('payments')}>
               {e.payments.length === 0 ? (
@@ -218,6 +220,32 @@ function ExpenseDetail() {
       </div>
       <ActionDialog action={action} expense={e} onClose={() => setAction(null)} />
     </>
+  );
+}
+
+/** Receipts and bill scans (slice 6.2): added at any stage except void, removed only from a draft. */
+function ExpenseFiles({ expense: e }: { expense: ExpenseDto }) {
+  const t = useTranslations('expenses');
+  const { property } = useSession();
+  const queryClient = useQueryClient();
+  const base = `/properties/${property!.id}/expenses/${e.id}/attachments`;
+  const saved = (next: ExpenseDto) => {
+    queryClient.setQueryData(['expenses', 'one', e.id], next);
+    void queryClient.invalidateQueries({ queryKey: ['expenses', property!.id] });
+  };
+  return (
+    <Card title={t('files')}>
+      <AttachmentList
+        files={e.attachments}
+        emptyText={t('noFiles')}
+        note={e.status === 'draft' || e.status === 'void' ? undefined : t('filesKept')}
+        upload={
+          e.status === 'void' ? undefined : async (file) => saved(await api.upload<ExpenseDto>(base, file))
+        }
+        link={(id) => api.post<FileLinkDto>(`${base}/${id}/link`)}
+        remove={async (id) => saved(await api.del<ExpenseDto>(`${base}/${id}`))}
+      />
+    </Card>
   );
 }
 

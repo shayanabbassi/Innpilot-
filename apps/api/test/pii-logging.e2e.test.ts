@@ -135,4 +135,26 @@ describe('identity numbers in the application log', () => {
 
     for (const secret of SECRETS) expect(output, secret).not.toContain(secret);
   });
+
+  it('never logs a download link or the name of an uploaded identity scan (slice 6.2)', async () => {
+    const created = await desk.post('/guests', { fullName: 'Scan Log Guest' });
+    const guestId = created.body.data.id;
+    const scanName = 'Scan Log Guest CNIC 35202-7654321-9.jpg';
+    const scan = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.from(randomUUID())]);
+    const uploaded = await desk.upload(
+      `/guests/${guestId}/scans?fileName=${encodeURIComponent(scanName)}`,
+      scan,
+    );
+    expect(uploaded.status).toBe(200);
+    const scanId = uploaded.body.data.scans[0].id;
+    const link = await desk.post(`/guests/${guestId}/scans/${scanId}/link`, { reason: 'Log check' });
+    const token = (link.body.data.url as string).split('/').pop()!;
+    expect((await desk.agent.get(link.body.data.url)).status).toBe(200);
+
+    const output = log();
+    expect(output).toContain('/files/[link]');
+    expect(output).not.toContain(token);
+    expect(output).not.toContain(token.split('.')[1]!);
+    expect(output).not.toMatch(/Scan Log Guest CNIC|35202-7654321-9/);
+  });
 });

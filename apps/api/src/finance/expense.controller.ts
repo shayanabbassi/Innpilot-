@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -11,6 +12,7 @@ import {
   Query,
   Req,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import {
   createSupplierRequest,
   expenseDraftRequest,
@@ -19,22 +21,26 @@ import {
   payExpenseRequest,
   submitExpenseRequest,
   updateSupplierRequest,
+  uploadQuery,
   voidExpenseRequest,
   type CreateSupplierRequest,
   type ExpenseAccountDto,
   type ExpenseDraftRequest,
   type ExpenseDto,
   type ExpenseListQuery,
+  type FileLinkDto,
   type PayExpenseRequest,
   type SubmitExpenseRequest,
   type SupplierDto,
   type UpdateSupplierRequest,
+  type UploadQuery,
   type VoidExpenseRequest,
 } from '@innpilot/contracts';
 import { CurrentAuth, RequirePermission } from '../auth/policy';
 import { AppError } from '../common/app-error';
 import { requestMeta, type AppRequest, type AuthContext } from '../common/request';
 import { ZodPipe } from '../common/zod.pipe';
+import { AttachmentsService } from '../storage/attachments.service';
 import { ExpenseService } from './expense.service';
 import { SuppliersService } from './suppliers.service';
 
@@ -81,7 +87,10 @@ export class SuppliersController {
  */
 @Controller('properties/:propertyId/expenses')
 export class ExpenseController {
-  constructor(private readonly expenses: ExpenseService) {}
+  constructor(
+    private readonly expenses: ExpenseService,
+    private readonly files: AttachmentsService,
+  ) {}
 
   @Get()
   @RequirePermission('expense.write', P)
@@ -192,5 +201,50 @@ export class ExpenseController {
     return (
       await this.expenses.void(auth, propertyId, id, body, req.get(IDEMPOTENCY_HEADER), requestMeta(req))
     ).body;
+  }
+
+  /**
+   * Attach a receipt or bill (slice 6.2): the body is the file itself (PDF, JPEG or PNG, at most 5 MB), the name
+   * goes in `?fileName=`. Sending the same file again returns the expense unchanged.
+   */
+  @Post(':id/attachments')
+  @HttpCode(200)
+  @RequirePermission('expense.write', P)
+  @Throttle({ default: { limit: 30, ttl: 60_000 } })
+  async addAttachment(
+    @CurrentAuth() auth: AuthContext,
+    @Param('propertyId') propertyId: string,
+    @Param('id', uuid('expense')) id: string,
+    @Query(new ZodPipe(uploadQuery)) q: UploadQuery,
+    @Req() req: AppRequest,
+  ): Promise<ExpenseDto> {
+    const file = await this.files.readUpload(req);
+    return this.expenses.addAttachment(auth, propertyId, id, q.fileName, file, requestMeta(req));
+  }
+
+  /** A download link that works for five minutes, for the caller only (SEC-003). */
+  @Post(':id/attachments/:attachmentId/link')
+  @HttpCode(200)
+  @RequirePermission('expense.write', P)
+  link(
+    @CurrentAuth() auth: AuthContext,
+    @Param('propertyId') propertyId: string,
+    @Param('id', uuid('expense')) id: string,
+    @Param('attachmentId', uuid('file')) attachmentId: string,
+  ): Promise<FileLinkDto> {
+    return this.expenses.attachmentLink(auth, propertyId, id, attachmentId);
+  }
+
+  @Delete(':id/attachments/:attachmentId')
+  @HttpCode(200)
+  @RequirePermission('expense.write', P)
+  removeAttachment(
+    @CurrentAuth() auth: AuthContext,
+    @Param('propertyId') propertyId: string,
+    @Param('id', uuid('expense')) id: string,
+    @Param('attachmentId', uuid('file')) attachmentId: string,
+    @Req() req: AppRequest,
+  ): Promise<ExpenseDto> {
+    return this.expenses.removeAttachment(auth, propertyId, id, attachmentId, requestMeta(req));
   }
 }

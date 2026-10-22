@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { uuid } from './common';
+import { attachmentDto } from './attachments';
 import { lineAmount } from './finance';
 import { businessDate } from './reservations';
 
@@ -189,6 +190,8 @@ export const expenseDto = z.object({
   billReference: z.string().nullable(),
   description: z.string(),
   attachmentRef: z.string().nullable(),
+  /** Receipts and bill scans (slice 6.2). */
+  attachments: z.array(attachmentDto),
   cashAccountId: uuid.nullable(),
   cashAccountName: z.string().nullable(),
   netAmount: z.string(),
