@@ -1,6 +1,6 @@
 # Phase 6 — Deployment and testing: slice plan
 
-Status: **Plan agreed 2026-10-21 (D17–D20), awaiting go-ahead for 6.1** · Builds on: Phase 5 (accepted 2026-10-21, e3fd599)
+Status: **All slices delivered; exit report: [phase-6-exit-report.md](phase-6-exit-report.md)** · Builds on: Phase 5 (accepted 2026-10-21, e3fd599)
 
 Scope: what stands between the built product and a pilot hotel: account recovery, real file storage, background
 jobs, production builds and environments, backups with a tested restore, monitoring and alerts, a load test, and

@@ -7,6 +7,8 @@
  * posted, balanced journals: the database's own guards still check every entry at commit (balance, open period,
  * cash dimension). Guests are "Perf Guest nnnn": no real data.
  */
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { browser, startHarness, type BrowserClient, type Harness } from '../test/harness';
@@ -86,17 +88,16 @@ describe('100-room property, one year', () => {
         `| ${label} | ${kind} | ${p(0.5)} | ${p(0.95)} | ${times[times.length - 1]!.toFixed(0)} |`,
       );
     }
-    // Printed for the performance note; the run fails only if a response is not 200.
-    // The table is the output of this run: it goes into the performance note.
-    // eslint-disable-next-line no-console
-    console.log(
-      [
-        `Seeded: ${seeded.reservations} stays, ${seeded.roomNights} room nights, ${seeded.journals} journals, ${seeded.lines} lines, ${seeded.auditEvents} audit events`,
-        '| Read | Kind | p50 ms | p95 ms | max ms |',
-        '| --- | --- | --- | --- | --- |',
-        ...results,
-      ].join('\n'),
-    );
+    // The table is the output of this run: it goes into the performance note. Written to a file as well, since the
+    // test runner does not show a passing test's console output. The run fails only if a response is not 200.
+    const table = [
+      `Seeded: ${seeded.reservations} stays, ${seeded.roomNights} room nights, ${seeded.journals} journals, ${seeded.lines} lines, ${seeded.auditEvents} audit events`,
+      '| Read | Kind | p50 ms | p95 ms | max ms |',
+      '| --- | --- | --- | --- | --- |',
+      ...results,
+    ].join('\n');
+    writeFileSync(join(__dirname, 'reports.last.md'), `${table}\n`);
+    process.stdout.write(`${table}\n`);
     // The figures are consistent: the trial balance of the seeded year balances.
     expect((await owner.get(`/reports/trial-balance?${YEAR}&${P()}`)).body.data.balanced).toBe(true);
   }, 900_000);
