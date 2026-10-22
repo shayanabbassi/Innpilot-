@@ -586,12 +586,15 @@ export class StaysService {
       .innerJoin(rooms, eq(rooms.id, seg.roomId))
       .where(eq(seg.stayId, stayId))
       .orderBy(asc(seg.startedAt));
-    const booked = await tx
+    const linked = await tx
       .select({ b: rr, code: schema.roomTypes.code })
       .from(rr)
       .innerJoin(schema.roomTypes, eq(schema.roomTypes.id, rr.roomTypeId))
-      .where(and(eq(rr.stayId, stayId), eq(rr.status, 'active')))
+      .where(eq(rr.stayId, stayId))
       .orderBy(desc(rr.departure));
+    // An open stay is described by its active bookings; check-out releases them, so a closed stay uses all of its own.
+    const active = linked.filter((x) => x.b.status === 'active');
+    const booked = active.length > 0 ? active : linked;
     const current = segments.find((x) => x.s.endedAt === null) ?? segments[segments.length - 1]!;
     const latest = booked[0]!;
     return {

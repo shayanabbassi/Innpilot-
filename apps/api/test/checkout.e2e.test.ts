@@ -205,6 +205,13 @@ describe('Scenario A: booking to check-out and invoice', () => {
     );
   });
 
+  it('still shows the stay after check-out (found by the 6.8 route probe: it answered 500)', async () => {
+    const res = await desk.get(`${base}/stays/${stayId}`);
+    expect(res.status).toBe(200);
+    expect(res.body.data).toMatchObject({ id: stayId, status: 'checked_out' });
+    expect(res.body.data.roomNumber).toBeTruthy();
+  });
+
   it('issues an invoice frozen with its lines, tax summary and hotel details', async () => {
     const res = await desk.get(`${base}/invoices/${invoiceId}`);
     expect(res.status).toBe(200);

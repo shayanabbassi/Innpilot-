@@ -17,9 +17,8 @@ describe('scrub', () => {
   });
 
   it('removes credentials in URLs and token-like strings', () => {
-    expect(scrub('connect postgres://innpilot_app:s3cret@db.internal:5432/innpilot failed')).toBe(
-      'connect [url-with-credentials] failed',
-    );
+    const url = 'postgres://innpilot_app:s3cret@db.internal:5432/innpilot'; // secret-scan: allow fictional
+    expect(scrub(`connect ${url} failed`)).toBe('connect [url-with-credentials] failed');
     expect(
       scrub('link /api/v1/files/YS4xMjM0NTY3ODkwYWJjZGVmZ2hpams.Gju4-_bUjq_moRVPon4z7NukhJcya0JP6Y6'),
     ).toBe('link /api/v1/files/[secret]');

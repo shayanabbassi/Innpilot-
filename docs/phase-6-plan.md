@@ -231,3 +231,11 @@ obligations before launch (05 §6), and the accountant's sign-off.
   production-stack run against staging is yours once D17 is decided. Found while building: the 100-room seed did not
   advance the journal counter (fixed); and running k6 synchronously froze the in-process API, so it now runs
   asynchronously.
+- **6.8:** three reports: `docs/security-review.md` (Prompt D), `docs/accounting-review.md` (Prompt C) and
+  `docs/production-readiness.md` (Prompt E). The playbook's prompt texts are clipped in the extracted copy of the
+  PDF, so the reviews follow this plan's P6-11 scope. New automated evidence: a route probe over all 200 routes
+  (unauthenticated, cross-tenant with real tenant A ids, role bypass, CSRF, platform), a secret scan of the
+  repository and browser bundles, and a clean dependency audit; both run in CI. Fixed: a 500 when reading a stay
+  after check-out (found by the probe); `drizzle-orm` (SQL injection advisory), PostCSS (build-time advisories) and
+  Vitest (dev-only advisories) upgraded; GitHub Actions pinned to commits. Three low findings await your acceptance
+  (inline scripts in the CSP, per-process rate limits, download links in browser history).

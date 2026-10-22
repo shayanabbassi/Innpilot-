@@ -5,3 +5,7 @@ onlyBuiltDependencies:
   - '@swc/core'
   - esbuild
   - sharp
+# Security review (6.8): Next.js 15 pins an older PostCSS with source-map file-read advisories
+# (GHSA-6g55-p6wh-862q and follow-ups); 8.5.28 carries the fixes.
+overrides:
+  postcss: 8.5.28

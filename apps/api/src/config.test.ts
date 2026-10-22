@@ -7,7 +7,7 @@ const key = () => randomBytes(32).toString('base64url');
 /** A configuration a real production deployment would use. */
 const production = (): NodeJS.ProcessEnv => ({
   NODE_ENV: 'production',
-  DATABASE_URL: 'postgres://innpilot_app:long-random-password@db.internal.example:5432/innpilot',
+  DATABASE_URL: 'postgres://innpilot_app:long-random-password@db.internal.example:5432/innpilot', // secret-scan: allow fictional
   WEB_ORIGINS: 'https://app.innpilot.example',
   COOKIE_SECURE: 'true',
   MFA_ENCRYPTION_KEY: key(),
