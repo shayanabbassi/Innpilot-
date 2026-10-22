@@ -223,3 +223,11 @@ obligations before launch (05 §6), and the accountant's sign-off.
   CI). Readiness in production requires the storage bucket to exist; `node dist/ops/cli.js ensure-buckets`
   creates missing buckets at first set-up. Not done here: real alert destinations, owners and the legal answer on
   breach notification (yours, listed at the top of the runbook).
+- **6.7:** see `docs/phase-6-load-test.md`. k6 (Docker) against the 100-room year: 20 front desk, 8 cashier and 4
+  reporting users for three minutes, plus 30 simultaneous bookings of the last room and 20 simultaneous retries of
+  one deposit. Common reads p95 232 ms (target 500 ms), writes p95 340 ms, reports p95 635 ms; no unexpected
+  responses; one confirmed booking out of 30; one payment per idempotency key; gapless receipt numbers; ledger
+  intact. The API ran in the test process (plain http, rate limits off for the single load generator); the
+  production-stack run against staging is yours once D17 is decided. Found while building: the 100-room seed did not
+  advance the journal counter (fixed); and running k6 synchronously froze the in-process API, so it now runs
+  asynchronously.

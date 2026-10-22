@@ -11,7 +11,7 @@
     "dev": "nest start --watch",
     "start": "node dist/main.js",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src test perf",
+    "lint": "eslint src test perf load",
     "test": "vitest run --config vitest.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "test:perf": "vitest run --config vitest.perf.config.ts",

@@ -26,3 +26,6 @@ deploy/backups/
 
 # Output of the restore drill performance run (copied into docs/backup-and-restore.md)
 apps/api/perf/*.last.md
+
+# Load test working files (sessions are written here during a run, then cleared)
+apps/api/load/out/

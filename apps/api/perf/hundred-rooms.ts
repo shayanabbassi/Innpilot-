@@ -355,6 +355,15 @@ export async function seedHundredRoomYear(h: Harness, owner: BrowserClient): Pro
     `UPDATE journal_entries SET status = 'posted' WHERE tenant_id = $1 AND source_type = 'perf_seed'`,
     [tenant],
   );
+  // The numbers above were written directly: move the tenant's journal counter past them, as the posting service
+  // would have, so journals posted afterwards (the load test's deposits) get the next number, not number 1.
+  await h.admin.query(
+    `INSERT INTO document_sequences (tenant_id, property_id, series, next_number)
+     SELECT $1, NULL, 'journal', max(journal_number) + 1 FROM journal_entries WHERE tenant_id = $1
+     ON CONFLICT (tenant_id, property_id, series)
+       DO UPDATE SET next_number = GREATEST(document_sequences.next_number, EXCLUDED.next_number)`,
+    [tenant],
+  );
   await bulk(
     h,
     'room_revenue_accruals',
