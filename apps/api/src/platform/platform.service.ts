@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import {
   ROOM_BAND_LIMIT,
   type AccessGrantDto,
+  type ChangePasswordRequest,
   type GrantAccessRequest,
   type OperatorDto,
   type PlatformAuditEventDto,
@@ -11,8 +12,8 @@ import {
   type SupportViewDto,
   type UpdateTenantRequest,
 } from '@innpilot/contracts';
-import { schema, verifyAgainstDummy, verifyPassword } from '@innpilot/db';
-import { and, desc, eq, gt, isNull, sql } from 'drizzle-orm';
+import { hashPassword, schema, verifyAgainstDummy, verifyPassword } from '@innpilot/db';
+import { and, desc, eq, gt, isNull, ne, sql } from 'drizzle-orm';
 import { APP_CONFIG, type AppConfig } from '../config';
 import { AppError } from '../common/app-error';
 import type { OperatorContext, RequestMeta } from '../common/request';
@@ -119,6 +120,37 @@ export class PlatformService {
   async logout(operator: OperatorContext, meta: RequestMeta): Promise<void> {
     await this.sessions.revoke(operator.sessionId);
     await this.log(operator.operatorId, 'platform.logout', null, {}, null, meta);
+  }
+
+  /** An operator changes their own password (current one required); their other sessions end. */
+  async changePassword(
+    operator: OperatorContext,
+    body: ChangePasswordRequest,
+    meta: RequestMeta,
+  ): Promise<void> {
+    const o = schema.platformOperators;
+    const [op] = await this.db.unscoped.select().from(o).where(eq(o.id, operator.operatorId));
+    if (!op || !(await verifyPassword(op.passwordHash, body.currentPassword))) {
+      await this.log(operator.operatorId, 'platform.password_change_failed', null, {}, null, meta);
+      throw AppError.validation('The current password is not correct.', [
+        { path: 'currentPassword', message: 'The current password is not correct.' },
+      ]);
+    }
+    await this.db.unscoped
+      .update(o)
+      .set({ passwordHash: await hashPassword(body.newPassword) })
+      .where(eq(o.id, op.id));
+    await this.db.unscoped
+      .update(schema.platformSessions)
+      .set({ revokedAt: new Date() })
+      .where(
+        and(
+          eq(schema.platformSessions.operatorId, op.id),
+          isNull(schema.platformSessions.revokedAt),
+          ne(schema.platformSessions.id, operator.sessionId),
+        ),
+      );
+    await this.log(operator.operatorId, 'platform.password_changed', null, {}, null, meta);
   }
 
   // ------------------------------------------------------------------------------------------- tenants

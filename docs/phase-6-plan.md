@@ -139,3 +139,17 @@ obligations before launch (05 §6), and the accountant's sign-off.
 
 6.1 → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7 → 6.8, then the provider templates once D17 is chosen. Work continues on branch
 `phase-1-foundation`.
+
+## Notes from the build
+
+- **6.1:** a manager-issued reset gives a temporary password of four groups of four characters (no look-alike
+  letters, 80 random bits), shown once in the staff screen and kept nowhere else (not in the audit log, not in
+  logs; checked by a test that captures the real log output). It works for 24 hours, ends every session of the
+  person, and unlocks the account. Signing in with it leads to a new session state, `password_change`, reached
+  only after any two-step verification; in it the API answers `PASSWORD_CHANGE_REQUIRED` to everything except
+  choosing the new password, `me` and sign-out. Who may reset whom follows the existing staff rules: never
+  yourself, never someone with more access than you. A wrong current password when changing your own counts
+  toward the sign-in lockout. Users can see their sessions (device, since, last active) and end one or all
+  others; operators change their own password in the console. The browser check found that finishing a sign-in
+  step (two-step code, set-up, new password) could bounce back to the same step when the app had already cached
+  the earlier session state; each step now refetches the session before moving on.

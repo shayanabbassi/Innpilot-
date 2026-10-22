@@ -72,7 +72,8 @@
                           "enum": [
                             "active",
                             "mfa_verify",
-                            "mfa_enroll"
+                            "mfa_enroll",
+                            "password_change"
                           ]
                         }
                       },
@@ -119,6 +120,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -197,7 +199,7 @@
           "Auth"
         ],
         "summary": "End the current session",
-        "description": "Any signed-in session in state: active, mfa_verify, mfa_enroll.",
+        "description": "Any signed-in session in state: active, mfa_verify, mfa_enroll, password_change.",
         "security": [
           {
             "session": []
@@ -253,6 +255,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -331,7 +334,7 @@
           "Auth"
         ],
         "summary": "Current user, tenant, session state and property access",
-        "description": "Any signed-in session in state: active, mfa_verify, mfa_enroll.",
+        "description": "Any signed-in session in state: active, mfa_verify, mfa_enroll, password_change.",
         "security": [
           {
             "session": []
@@ -353,7 +356,8 @@
                           "enum": [
                             "active",
                             "mfa_verify",
-                            "mfa_enroll"
+                            "mfa_enroll",
+                            "password_change"
                           ]
                         },
                         "user": {
@@ -610,6 +614,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -756,6 +761,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -908,6 +914,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -1060,6 +1067,628 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Change your own password (current one required); ends your other sessions. Also completes a manager-issued reset",
+        "description": "Any signed-in session in state: active, password_change.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "minLength": 12,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "sessionsEnded": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "sessionsEnded"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sessions": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Your signed-in sessions (devices)",
+        "description": "Any signed-in session in state: active.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "lastSeenAt": {
+                            "type": "string"
+                          },
+                          "userAgent": {
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
+                          "current": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "createdAt",
+                          "lastSeenAt",
+                          "userAgent",
+                          "current"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sessions/end-others": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "End all your sessions except this one",
+        "description": "Any signed-in session in state: active.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "sessionsEnded": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "sessionsEnded"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sessions/{id}/end": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "End one of your other sessions",
+        "description": "Any signed-in session in state: active.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "sessionsEnded": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "sessionsEnded"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -1289,6 +1918,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -1515,6 +2145,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -1806,6 +2437,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -2032,6 +2664,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -2246,6 +2879,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -2503,6 +3137,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -2762,6 +3397,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -2925,6 +3561,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -3106,6 +3743,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -3240,6 +3878,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -3428,6 +4067,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -3639,6 +4279,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -3864,6 +4505,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -4079,6 +4721,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -4319,6 +4962,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -4519,6 +5163,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -4897,6 +5542,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -5140,6 +5786,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -5405,6 +6052,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -5744,6 +6392,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -6051,6 +6700,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -6316,6 +6966,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -6483,6 +7134,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -6720,6 +7372,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -7115,6 +7768,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -7553,6 +8207,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -7889,6 +8544,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -8254,6 +8910,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -8480,6 +9137,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -8816,6 +9474,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -9179,6 +9838,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -9538,6 +10198,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -9934,6 +10595,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -10330,6 +10992,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -10664,6 +11327,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -11022,6 +11686,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -11612,6 +12277,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -11916,6 +12582,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -12369,6 +13036,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -12652,6 +13320,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -12965,6 +13634,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -13140,6 +13810,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -13417,6 +14088,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -13696,6 +14368,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -13846,6 +14519,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -14115,6 +14789,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -14358,6 +15033,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -14620,6 +15296,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -14863,6 +15540,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -15140,6 +15818,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -15469,6 +16148,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -15725,6 +16405,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -16001,6 +16682,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -16477,6 +17159,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -16919,6 +17602,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -17397,6 +18081,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -17873,6 +18558,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -18315,6 +19001,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -18793,6 +19480,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -19002,6 +19690,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -19272,6 +19961,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -19519,6 +20209,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -19859,6 +20550,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -20195,6 +20887,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -20603,6 +21296,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -20744,6 +21438,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -21154,6 +21849,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -21490,6 +22186,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -21850,6 +22547,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -22177,6 +22875,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -22457,6 +23156,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -22668,6 +23368,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -22869,6 +23570,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -23097,6 +23799,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -23420,6 +24123,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -23760,6 +24464,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -24103,6 +24808,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -24334,6 +25040,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -24576,6 +25283,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -24868,6 +25576,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -25138,6 +25847,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -25405,6 +26115,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -25644,6 +26355,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -25834,6 +26546,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -26057,6 +26770,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -26276,6 +26990,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -26509,6 +27224,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -26718,6 +27434,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -26998,6 +27715,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -27598,6 +28316,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -28213,6 +28932,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -28391,6 +29111,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -28988,6 +29709,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -29624,6 +30346,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -30261,6 +30984,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -30878,6 +31602,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -31500,6 +32225,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -31860,6 +32586,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -32233,6 +32960,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -32559,6 +33287,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -32945,6 +33674,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -33313,6 +34043,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -33475,6 +34206,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -33666,6 +34398,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -33890,6 +34623,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -34105,6 +34839,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -34403,6 +35138,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -34643,6 +35379,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -34884,6 +35621,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -35069,6 +35807,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -35309,6 +36048,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -35768,6 +36508,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -36273,6 +37014,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -36779,6 +37521,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -37259,6 +38002,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -37738,6 +38482,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -38210,6 +38955,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -38686,6 +39432,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -38873,6 +39620,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -39096,6 +39844,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -39329,6 +40078,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -39841,6 +40591,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -40385,6 +41136,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -40539,6 +41291,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -40991,6 +41744,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -41535,6 +42289,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -42003,6 +42758,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -42455,6 +43211,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -42935,6 +43692,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -43407,6 +44165,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -43640,6 +44399,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -43948,6 +44708,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -44229,6 +44990,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -44528,6 +45290,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -44668,6 +45431,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -44972,6 +45736,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -45269,6 +46034,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -45462,6 +46228,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -45688,6 +46455,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -45959,6 +46727,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -46239,6 +47008,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -46585,6 +47355,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -46791,6 +47562,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -47058,6 +47830,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -47309,6 +48082,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -47540,6 +48314,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -47763,6 +48538,178 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}/password-reset": {
+      "post": {
+        "tags": [
+          "Staff"
+        ],
+        "summary": "Issue a one-time temporary password for a staff member (D18), shown once; it expires, must be changed at next sign-in, and ends their sessions",
+        "description": "Requires permission `user.manage` from a tenant-wide role. Session must be fully verified (MFA).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 500
+                  }
+                },
+                "required": [
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "temporaryPassword": {
+                          "type": "string"
+                        },
+                        "expiresAt": {
+                          "type": "string"
+                        },
+                        "sessionsEnded": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "temporaryPassword",
+                        "expiresAt",
+                        "sessionsEnded"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -48043,6 +48990,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -48417,6 +49365,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -48695,6 +49644,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -49064,6 +50014,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -49352,6 +50303,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -49648,6 +50600,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -49959,6 +50912,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -50354,6 +51308,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -50745,6 +51700,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -51055,6 +52011,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -51380,6 +52337,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -51708,6 +52666,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -51996,6 +52955,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -52351,6 +53311,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -52613,6 +53574,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -53149,6 +54111,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -53309,6 +54272,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -53487,6 +54451,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -53621,6 +54586,168 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
+                            "INVALID_MFA_CODE",
+                            "FORBIDDEN",
+                            "CSRF_FAILED",
+                            "NOT_FOUND",
+                            "CONFLICT",
+                            "ROOM_UNAVAILABLE",
+                            "ROOM_NOT_READY",
+                            "JOURNAL_UNBALANCED",
+                            "PERIOD_CLOSED",
+                            "FOLIO_CLOSED",
+                            "PAYMENT_EXCEEDS_BALANCE",
+                            "REFUND_EXCEEDS_REMAINDER",
+                            "DEPOSIT_HANDLING_REQUIRED",
+                            "SETTLEMENT_REQUIRED",
+                            "CASH_CLOSING_ALREADY_SUBMITTED",
+                            "IDEMPOTENCY_KEY_REUSED",
+                            "IDEMPOTENCY_IN_PROGRESS",
+                            "EXPORT_TOO_LARGE",
+                            "RATE_LIMITED",
+                            "INTERNAL_ERROR"
+                          ]
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "path": {
+                                "type": "string"
+                              },
+                              "message": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "path",
+                              "message"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message"
+                      ]
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/platform/auth/password": {
+      "post": {
+        "tags": [
+          "Platform"
+        ],
+        "summary": "An operator changes their own password; their other sessions end",
+        "description": "Platform operators only (operator session cookie; tenant sessions are refused).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "minLength": 12,
+                    "maxLength": 128
+                  }
+                },
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "null"
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "requestId"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "meta"
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error. `code` is stable and machine-readable; `message` is safe to show to users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "VALIDATION_ERROR",
+                            "UNAUTHENTICATED",
+                            "INVALID_CREDENTIALS",
+                            "ACCOUNT_LOCKED",
+                            "MFA_REQUIRED",
+                            "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -53772,6 +54899,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -53984,6 +55112,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -54338,6 +55467,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -54589,6 +55719,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -54783,6 +55914,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -54917,6 +56049,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -55193,6 +56326,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -55374,6 +56508,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -55647,6 +56782,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",
@@ -55788,6 +56924,7 @@
                             "ACCOUNT_LOCKED",
                             "MFA_REQUIRED",
                             "MFA_ENROLLMENT_REQUIRED",
+                            "PASSWORD_CHANGE_REQUIRED",
                             "INVALID_MFA_CODE",
                             "FORBIDDEN",
                             "CSRF_FAILED",

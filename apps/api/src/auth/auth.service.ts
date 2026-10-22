@@ -1,5 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import type {
+  ChangePasswordRequest,
+  SessionDto,
   LoginRequest,
   LoginResponse,
   MeResponse,
@@ -7,8 +9,8 @@ import type {
   Permission,
   RoleCode,
 } from '@innpilot/contracts';
-import { schema, verifyAgainstDummy, verifyPassword, type Tx } from '@innpilot/db';
-import { eq, inArray, sql } from 'drizzle-orm';
+import { hashPassword, schema, verifyAgainstDummy, verifyPassword, type Tx } from '@innpilot/db';
+import { and, desc, eq, gt, inArray, isNull, sql } from 'drizzle-orm';
 import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import type { AuthContext, RequestMeta } from '../common/request';
@@ -82,9 +84,20 @@ export class AuthService {
 
     return this.db.tenant(found.tenant_id, async (tx) => {
       const [user] = await tx
-        .select({ mfaEnabledAt: schema.users.mfaEnabledAt })
+        .select({
+          mfaEnabledAt: schema.users.mfaEnabledAt,
+          passwordChangeRequired: schema.users.passwordChangeRequired,
+          passwordExpiresAt: schema.users.passwordExpiresAt,
+        })
         .from(schema.users)
         .where(eq(schema.users.id, found.user_id));
+      // A temporary password from a reset works for a limited time only (slice 6.1).
+      if (user?.passwordExpiresAt && user.passwordExpiresAt <= new Date()) {
+        throw new AppError(
+          'INVALID_CREDENTIALS',
+          'This temporary password has expired. Ask your manager for a new one.',
+        );
+      }
       const assignments = await this.assignments(tx, found.user_id);
 
       await tx
@@ -113,6 +126,7 @@ export class AuthService {
         assignments,
         mfaEnabled: !!user?.mfaEnabledAt,
         sessionMfaVerified: false,
+        passwordChangeRequired: user?.passwordChangeRequired ?? false,
       });
       return { sessionState: state, session };
     });
@@ -292,6 +306,143 @@ export class AuthService {
         'That code is not valid. Check the time on your phone and try again.',
       );
     }
+  }
+
+  // ------------------------------------------------------------------------------------------- recovery (6.1)
+
+  /**
+   * Changes the signed-in user's password. The current one is required (a wrong one counts toward the lockout, so a
+   * left-open session cannot be used to guess it); every other session is ended. Also the way out of the
+   * `password_change` state after a manager-issued reset.
+   */
+  async changePassword(
+    auth: AuthContext,
+    body: ChangePasswordRequest,
+    meta: RequestMeta,
+  ): Promise<{ sessionsEnded: number }> {
+    const current = await this.db.tenant(auth.tenantId, (tx) => this.user(tx, auth.userId));
+    if (!(await verifyPassword(current.passwordHash, body.currentPassword))) {
+      const locked = await this.db.tenant(auth.tenantId, (tx) =>
+        this.recordFailedAttempt(tx, { user_id: auth.userId, tenant_id: auth.tenantId }, 'password', meta),
+      );
+      if (locked) {
+        await this.db.tenant(auth.tenantId, (tx) =>
+          this.sessions.revokeAllForUser(tx, auth.userId, 'locked'),
+        );
+      }
+      throw AppError.validation('The current password is not correct.', [
+        { path: 'currentPassword', message: 'The current password is not correct.' },
+      ]);
+    }
+    const passwordHash = await hashPassword(body.newPassword);
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      await tx
+        .update(schema.users)
+        .set({
+          passwordHash,
+          passwordChangedAt: new Date(),
+          passwordChangeRequired: false,
+          passwordExpiresAt: null,
+          failedLoginCount: 0,
+          lockedUntil: null,
+        })
+        .where(eq(schema.users.id, auth.userId));
+      const sessionsEnded = await this.sessions.revokeAllForUser(
+        tx,
+        auth.userId,
+        'password_changed',
+        auth.sessionId,
+      );
+      await this.audit.record(
+        tx,
+        {
+          tenantId: auth.tenantId,
+          actor: { type: 'user', userId: auth.userId },
+          action: 'auth.password_changed',
+          entityType: 'user',
+          entityId: auth.userId,
+          changes: { sessionsEnded, afterReset: auth.sessionState === 'password_change' },
+        },
+        meta,
+      );
+      return { sessionsEnded };
+    });
+  }
+
+  /** The signed-in user's live sessions (their devices), newest first. */
+  listSessions(auth: AuthContext): Promise<SessionDto[]> {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const now = new Date();
+      const s = schema.sessions;
+      const rows = await tx
+        .select()
+        .from(s)
+        .where(
+          and(
+            eq(s.userId, auth.userId),
+            isNull(s.revokedAt),
+            gt(s.idleExpiresAt, now),
+            gt(s.absoluteExpiresAt, now),
+          ),
+        )
+        .orderBy(desc(s.lastSeenAt));
+      return rows.map((r) => ({
+        id: r.id,
+        createdAt: r.createdAt.toISOString(),
+        lastSeenAt: r.lastSeenAt.toISOString(),
+        userAgent: r.userAgent,
+        current: r.id === auth.sessionId,
+      }));
+    });
+  }
+
+  /** Ends one of the user's other sessions, or all of them; the current one ends by signing out. */
+  async endSessions(
+    auth: AuthContext,
+    sessionId: string | null,
+    meta: RequestMeta,
+  ): Promise<{ sessionsEnded: number }> {
+    if (sessionId === auth.sessionId) {
+      throw new AppError('CONFLICT', 'This is the session you are using. Sign out to end it.');
+    }
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      let sessionsEnded: number;
+      if (sessionId) {
+        const ended = await tx
+          .update(schema.sessions)
+          .set({ revokedAt: new Date(), revokedReason: 'ended_by_user' })
+          .where(
+            and(
+              eq(schema.sessions.id, sessionId),
+              eq(schema.sessions.userId, auth.userId),
+              isNull(schema.sessions.revokedAt),
+            ),
+          )
+          .returning({ id: schema.sessions.id });
+        if (ended.length === 0) throw AppError.notFound('session');
+        sessionsEnded = 1;
+      } else {
+        sessionsEnded = await this.sessions.revokeAllForUser(
+          tx,
+          auth.userId,
+          'ended_by_user',
+          auth.sessionId,
+        );
+      }
+      await this.audit.record(
+        tx,
+        {
+          tenantId: auth.tenantId,
+          actor: { type: 'user', userId: auth.userId },
+          action: 'auth.sessions_ended',
+          entityType: 'user',
+          entityId: auth.userId,
+          changes: { sessionsEnded, all: sessionId === null },
+        },
+        meta,
+      );
+      return { sessionsEnded };
+    });
   }
 
   async assignments(tx: Tx, userId: string) {

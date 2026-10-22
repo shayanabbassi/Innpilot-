@@ -24,8 +24,9 @@ export type MfaCodeRequest = z.infer<typeof mfaCodeRequest>;
  * - `active`: fully signed in.
  * - `mfa_verify`: password accepted; a TOTP code is required.
  * - `mfa_enroll`: password accepted; the user's role requires MFA and they must set it up first.
+ * - `password_change`: signed in with a temporary password from a reset; a new password must be chosen first.
  */
-export const sessionState = z.enum(['active', 'mfa_verify', 'mfa_enroll']);
+export const sessionState = z.enum(['active', 'mfa_verify', 'mfa_enroll', 'password_change']);
 export type SessionState = z.infer<typeof sessionState>;
 
 export const loginResponse = z.object({ sessionState });
@@ -78,3 +79,27 @@ export function sessionCookieName(secure: boolean): string {
 export function csrfCookieName(secure: boolean): string {
   return secure ? '__Host-ip_csrf' : 'ip_csrf';
 }
+
+// ------------------------------------------------------------------------------------------------ recovery (6.1)
+
+export const changePasswordRequest = z
+  .object({
+    currentPassword: z.string().min(1, 'Enter your current password.').max(128),
+    newPassword: password,
+  })
+  .strict()
+  .refine((v) => v.newPassword !== v.currentPassword, {
+    path: ['newPassword'],
+    message: 'Choose a password different from the current one.',
+  });
+export type ChangePasswordRequest = z.infer<typeof changePasswordRequest>;
+
+/** One of the signed-in user's own sessions (devices). */
+export const sessionDto = z.object({
+  id: z.string().uuid(),
+  createdAt: z.string(),
+  lastSeenAt: z.string(),
+  userAgent: z.string().nullable(),
+  current: z.boolean(),
+});
+export type SessionDto = z.infer<typeof sessionDto>;

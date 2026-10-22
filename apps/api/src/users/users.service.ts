@@ -1,5 +1,8 @@
+import { randomBytes } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import {
+  PASSWORD_RESET_HOURS,
+  type PasswordResetResponse,
   ROLES,
   type CreateUserRequest,
   type Permission,
@@ -187,6 +190,52 @@ export class UsersService {
     });
   }
 
+  /**
+   * D18: replaces a staff member's password with a one-time temporary one that expires, must be changed at the next
+   * sign-in, and ends every session of theirs. Only for users the caller may administer (never themselves or
+   * someone with more access). The password is returned once and kept nowhere else; the audit records the reset
+   * and its reason, never the password.
+   */
+  async resetPassword(
+    auth: AuthContext,
+    userId: string,
+    reason: string,
+    meta: RequestMeta,
+  ): Promise<PasswordResetResponse> {
+    const temporaryPassword = temporaryPasswordText();
+    const passwordHash = await hashPassword(temporaryPassword);
+    const expiresAt = new Date(Date.now() + PASSWORD_RESET_HOURS * 3_600_000);
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      await this.loadManageable(tx, auth, userId);
+      await tx
+        .update(schema.users)
+        .set({
+          passwordHash,
+          passwordChangedAt: new Date(),
+          passwordChangeRequired: true,
+          passwordExpiresAt: expiresAt,
+          failedLoginCount: 0,
+          lockedUntil: null,
+        })
+        .where(eq(schema.users.id, userId));
+      const sessionsEnded = await this.sessions.revokeAllForUser(tx, userId, 'password_reset');
+      await this.audit.record(
+        tx,
+        {
+          tenantId: auth.tenantId,
+          actor: { type: 'user', userId: auth.userId },
+          action: 'user.password_reset',
+          entityType: 'user',
+          entityId: userId,
+          changes: { sessionsEnded, expiresAt: expiresAt.toISOString() },
+          reason,
+        },
+        meta,
+      );
+      return { temporaryPassword, expiresAt: expiresAt.toISOString(), sessionsEnded };
+    });
+  }
+
   private assertAssignable(auth: AuthContext, roles: readonly RoleAssignmentDto[]): void {
     const seen = new Set<string>();
     for (const r of roles) {
@@ -270,4 +319,12 @@ export class UsersService {
       roles: roles.map((r) => ({ role: (r.roleCode ?? r.role) as RoleCode, propertyId: r.propertyId })),
     };
   }
+}
+
+/** Easy to read out and type: four groups of four from an alphabet without look-alike characters (I, O, 0, 1). */
+function temporaryPasswordText(): string {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = randomBytes(16);
+  const chars = [...bytes].map((b) => alphabet[b % alphabet.length]);
+  return [0, 4, 8, 12].map((i) => chars.slice(i, i + 4).join('')).join('-');
 }

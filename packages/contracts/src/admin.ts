@@ -173,3 +173,12 @@ export const ONBOARDING_REQUIRED_FIELDS = [
   'phone',
   'timezone',
 ] as const;
+
+/** D18: a manager-issued reset. The temporary password is shown once, to hand over in person. */
+export const PASSWORD_RESET_HOURS = 24;
+export const passwordResetResponse = z.object({
+  temporaryPassword: z.string(),
+  expiresAt: z.string(),
+  sessionsEnded: z.number().int(),
+});
+export type PasswordResetResponse = z.infer<typeof passwordResetResponse>;

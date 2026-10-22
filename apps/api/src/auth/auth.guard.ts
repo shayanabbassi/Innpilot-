@@ -72,6 +72,9 @@ export class AuthGuard implements CanActivate {
           'Your role requires two-step verification. Set it up to continue.',
         );
       }
+      if (auth.sessionState === 'password_change') {
+        throw new AppError('PASSWORD_CHANGE_REQUIRED', 'Choose a new password to continue.');
+      }
       throw AppError.forbidden();
     }
 

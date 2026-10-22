@@ -72,6 +72,7 @@ export class SessionService {
           session: schema.sessions,
           userStatus: schema.users.status,
           mfaEnabledAt: schema.users.mfaEnabledAt,
+          passwordChangeRequired: schema.users.passwordChangeRequired,
           tenantStatus: schema.tenants.status,
         })
         .from(schema.sessions)
@@ -127,6 +128,7 @@ export class SessionService {
             assignments: roleAssignments,
             mfaEnabled: row.mfaEnabledAt !== null,
             sessionMfaVerified: row.session.mfaVerifiedAt !== null,
+            passwordChangeRequired: row.passwordChangeRequired,
           }),
           assignments: roleAssignments,
           tenantPropertyIds,

@@ -135,7 +135,13 @@
     "resetMfaTitle": "Reset two-step verification for {name}?",
     "resetMfaBody": "Use this when they lose their phone. They are signed out and must set up two-step verification again.",
     "confirm": "Confirm",
-    "mfaRequiredNote": "Requires two-step verification"
+    "mfaRequiredNote": "Requires two-step verification",
+    "resetPassword": "Reset password",
+    "resetPasswordTitle": "Reset the password of {name}",
+    "resetPasswordBody": "They will get a temporary password to sign in with, and must choose their own at once. They are signed out everywhere now. Give the reason for the audit log.",
+    "resetPasswordConfirm": "Reset password",
+    "resetPasswordDone": "Give this temporary password to {name} in person:",
+    "resetPasswordOnce": "It is shown only now and works until {until}. Do not send it by message or email."
   },
   "audit": {
     "title": "Audit log",
@@ -1883,5 +1889,26 @@
     "noRoles": "no role",
     "mfaOn": "two-step on",
     "locked": "locked"
+  },
+  "password": {
+    "title": "Password",
+    "current": "Current password",
+    "temporary": "Temporary password",
+    "new": "New password",
+    "confirm": "New password again",
+    "rule": "At least {min} characters. A short sentence is easy to remember and hard to guess.",
+    "save": "Change password",
+    "changed": "Password changed. You were signed out everywhere else.",
+    "mismatch": "The two new passwords are not the same.",
+    "same": "Choose a password different from the current one.",
+    "requiredTitle": "Choose a new password",
+    "requiredSubtitle": "You signed in with a temporary password from your manager. Choose your own to continue.",
+    "signOut": "Sign out",
+    "sessions": "Where you are signed in",
+    "unknownDevice": "Unknown device",
+    "sessionLine": "signed in {since} · last active {seen}",
+    "thisDevice": "This device",
+    "endSession": "Sign out",
+    "endOthers": "Sign out everywhere else"
   }
 }

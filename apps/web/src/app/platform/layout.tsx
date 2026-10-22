@@ -60,6 +60,12 @@ export default function PlatformLayout({ children }: { children: ReactNode }) {
             >
               {t('auditLog')}
             </Link>
+            <Link
+              href="/platform/password"
+              className={pathname === '/platform/password' ? 'underline' : 'text-white/80 hover:text-white'}
+            >
+              {t('password')}
+            </Link>
           </nav>
           <div className="ml-auto flex items-center gap-3 text-sm">
             {me.data && <span className="text-white/80">{me.data.fullName}</span>}

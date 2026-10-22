@@ -13,6 +13,8 @@ import {
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import {
+  changePasswordRequest,
+  type ChangePasswordRequest,
   grantAccessRequest,
   platformCsrfCookieName,
   platformLoginRequest,
@@ -90,6 +92,19 @@ export class PlatformController {
     const opts: CookieOptions = { secure: this.config.COOKIE_SECURE, path: '/' };
     res.clearCookie(platformSessionCookieName(this.config.COOKIE_SECURE), opts);
     res.clearCookie(platformCsrfCookieName(this.config.COOKIE_SECURE), opts);
+    return null;
+  }
+
+  @Post('auth/password')
+  @HttpCode(200)
+  @PlatformOnly()
+  @Throttle(LOGIN_LIMIT)
+  async changePassword(
+    @CurrentOperator() operator: OperatorContext,
+    @Body(new ZodPipe(changePasswordRequest)) body: ChangePasswordRequest,
+    @Req() req: AppRequest,
+  ): Promise<null> {
+    await this.platform.changePassword(operator, body, requestMeta(req));
     return null;
   }
 

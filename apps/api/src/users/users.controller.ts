@@ -1,5 +1,6 @@
 import { Body, Controller, Get, HttpCode, Param, ParseUUIDPipe, Post, Put, Req } from '@nestjs/common';
 import {
+  type PasswordResetResponse,
   createUserRequest,
   reasonRequest,
   setUserRolesRequest,
@@ -71,5 +72,18 @@ export class UsersController {
     @Req() req: AppRequest,
   ): Promise<UserDto> {
     return this.users.resetMfa(auth, id, body.reason, requestMeta(req));
+  }
+
+  /** D18: a one-time temporary password for a staff member, shown once to hand over in person. */
+  @Post(':id/password-reset')
+  @HttpCode(200)
+  @RequirePermission('user.manage')
+  resetPassword(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id', userId) id: string,
+    @Body(new ZodPipe(reasonRequest)) body: ReasonRequest,
+    @Req() req: AppRequest,
+  ): Promise<PasswordResetResponse> {
+    return this.users.resetPassword(auth, id, body.reason, requestMeta(req));
   }
 }

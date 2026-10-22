@@ -80,6 +80,8 @@ export const users = pgTable('users', {
   fullName: text('full_name').notNull(),
   passwordHash: text('password_hash').notNull(),
   passwordChangedAt: tsz('password_changed_at').notNull().defaultNow(),
+  passwordChangeRequired: boolean('password_change_required').notNull().default(false),
+  passwordExpiresAt: tsz('password_expires_at'),
   status: text('status', { enum: ['active', 'disabled'] })
     .notNull()
     .default('active'),

@@ -155,6 +155,9 @@ import {
   profitLossDto,
   profitLossQueryObject,
   agingQuery,
+  changePasswordRequest,
+  passwordResetResponse,
+  sessionDto,
   accessGrantDto,
   grantAccessRequest,
   operatorDto,
@@ -245,6 +248,28 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     body: mfaCodeRequest,
     data: null,
     status: 200,
+  },
+  'POST /auth/password': {
+    tag: 'Auth',
+    summary:
+      'Change your own password (current one required); ends your other sessions. Also completes a manager-issued reset',
+    body: changePasswordRequest,
+    data: z.object({ sessionsEnded: z.number().int() }),
+  },
+  'GET /auth/sessions': {
+    tag: 'Auth',
+    summary: 'Your signed-in sessions (devices)',
+    data: z.array(sessionDto),
+  },
+  'POST /auth/sessions/end-others': {
+    tag: 'Auth',
+    summary: 'End all your sessions except this one',
+    data: z.object({ sessionsEnded: z.number().int() }),
+  },
+  'POST /auth/sessions/{id}/end': {
+    tag: 'Auth',
+    summary: 'End one of your other sessions',
+    data: z.object({ sessionsEnded: z.number().int() }),
   },
   'POST /auth/mfa/verify': {
     tag: 'Auth',
@@ -1126,6 +1151,12 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     body: platformLoginRequest,
     data: operatorDto,
   },
+  'POST /platform/auth/password': {
+    tag: 'Platform',
+    summary: 'An operator changes their own password; their other sessions end',
+    body: changePasswordRequest,
+    data: null,
+  },
   'POST /platform/auth/logout': {
     tag: 'Platform',
     summary: 'End the operator session',
@@ -1327,6 +1358,13 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     body: setUserStatusRequest,
     data: userDto,
     status: 200,
+  },
+  'POST /users/{id}/password-reset': {
+    tag: 'Staff',
+    summary:
+      'Issue a one-time temporary password for a staff member (D18), shown once; it expires, must be changed at next sign-in, and ends their sessions',
+    body: reasonRequest,
+    data: passwordResetResponse,
   },
   'POST /users/{id}/mfa/reset': {
     tag: 'Staff',

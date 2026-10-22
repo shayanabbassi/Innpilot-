@@ -20,7 +20,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       ? '/login/verify'
       : me.data?.sessionState === 'mfa_enroll'
         ? '/login/setup-mfa'
-        : null;
+        : me.data?.sessionState === 'password_change'
+          ? '/login/change-password'
+          : null;
 
   useEffect(() => {
     if (redirect) router.replace(redirect);
