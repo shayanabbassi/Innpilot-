@@ -46,6 +46,11 @@ const schema = z.object({
   TRUST_PROXY: z.string().default('loopback'),
   /** Per-IP request rate limits. Only end-to-end tests switch this off. */
   RATE_LIMIT_ENABLED: bool.default('true'),
+  /**
+   * How often this instance looks for background jobs (slice 6.3). 0 turns the worker off, for an instance that
+   * should only serve requests (and in tests, which run jobs directly).
+   */
+  JOBS_POLL_SECONDS: z.coerce.number().int().min(0).max(3600).default(5),
   /** Private S3-compatible object storage for attachments (slice 6.2). Path-style addressing. */
   STORAGE_ENDPOINT: z
     .string()

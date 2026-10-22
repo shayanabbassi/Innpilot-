@@ -46,6 +46,9 @@ import { ReportsService } from './finance/reports.service';
 import { DashboardController } from './reports/dashboard.controller';
 import { ExportController } from './reports/export/export.controller';
 import { ExportService } from './reports/export/export.service';
+import { ExportJobsController } from './reports/export/export-jobs.controller';
+import { ExportJobsService } from './reports/export/export-jobs.service';
+import { JobsService } from './jobs/jobs.service';
 import { DashboardService } from './reports/dashboard.service';
 import { ReportsController } from './reports/reports.controller';
 import { StatementsService } from './reports/statements.service';
@@ -69,6 +72,7 @@ import { RoomsController } from './rooms/rooms.controller';
 import { StaysController } from './stays/stays.controller';
 import { StaysService } from './stays/stays.service';
 import { AttachmentsService } from './storage/attachments.service';
+import { FileStore } from './storage/file-store.service';
 import { FilesController } from './storage/files.controller';
 import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
@@ -173,6 +177,7 @@ export class AppModule {
         ReportsController,
         DashboardController,
         ExportController,
+        ExportJobsController,
         PlatformController,
         AuditController,
         FilesController,
@@ -206,6 +211,8 @@ export class AppModule {
         OperationalReportsService,
         DashboardService,
         ExportService,
+        ExportJobsService,
+        JobsService,
         TaxService,
         FolioService,
         PaymentService,
@@ -218,6 +225,7 @@ export class AppModule {
         InvoiceService,
         CheckoutService,
         PiiService,
+        FileStore,
         AttachmentsService,
         IdempotencyService,
         PlatformSessionService,

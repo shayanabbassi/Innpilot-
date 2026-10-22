@@ -79,7 +79,8 @@ describe('file encryption', () => {
 describe('download links', () => {
   const key = randomBytes(32);
   const claims = {
-    attachmentId: randomUUID(),
+    kind: 'a' as const,
+    id: randomUUID(),
     tenantId: randomUUID(),
     userId: randomUUID(),
     expires: 1_900_000_000,
@@ -87,6 +88,16 @@ describe('download links', () => {
 
   it('verifies its own signature and returns the claims', () => {
     expect(verifyLink(signLink(claims, key), key)).toEqual(claims);
+  });
+
+  it('keeps attachments and exports apart', () => {
+    const token = signLink({ ...claims, kind: 'e' }, key);
+    expect(verifyLink(token, key)?.kind).toBe('e');
+    const [payload, mac] = token.split('.');
+    const asAttachment = Buffer.from(
+      Buffer.from(payload!, 'base64url').toString().replace(/^e\./, 'a.'),
+    ).toString('base64url');
+    expect(verifyLink(`${asAttachment}.${mac}`, key)).toBeNull();
   });
 
   it('rejects a changed claim, another key and junk', () => {

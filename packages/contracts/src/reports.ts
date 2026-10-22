@@ -649,5 +649,50 @@ export type ExportReport = (typeof EXPORT_REPORTS)[number];
 export const EXPORT_FORMATS = ['csv', 'xlsx'] as const;
 export type ExportFormat = (typeof EXPORT_FORMATS)[number];
 
-/** Rows above this are refused with EXPORT_TOO_LARGE until background exports arrive (Phase 6). */
+/** Above this many rows an export is not made while you wait: it is prepared in the background (slice 6.3). */
 export const EXPORT_ROW_LIMIT = 50_000;
+
+/** A background export bigger than this is refused: choose a shorter period or one property. */
+export const BACKGROUND_EXPORT_ROW_LIMIT = 250_000;
+
+/** How long a prepared export can be downloaded before it is deleted. */
+export const EXPORT_FILE_HOURS = 24;
+
+/** Exports one person may have waiting or being prepared at once. */
+export const EXPORT_JOBS_PER_USER = 3;
+
+/** Prepare an export in the background: the same report and filters as the screen's export. */
+export const exportJobRequest = z
+  .object({
+    report: z.enum(EXPORT_REPORTS),
+    format: z.enum(EXPORT_FORMATS),
+    /** The report's own filters, as on its screen (e.g. from, to, propertyId). Checked by the report. */
+    query: z.record(z.string().max(64), z.string().max(200)).default({}),
+  })
+  .strict();
+export type ExportJobRequest = z.infer<typeof exportJobRequest>;
+
+export const EXPORT_JOB_STATUSES = ['queued', 'running', 'succeeded', 'failed'] as const;
+
+export const exportJobDto = z.object({
+  id: uuid,
+  report: z.enum(EXPORT_REPORTS),
+  format: z.enum(EXPORT_FORMATS),
+  query: z.record(z.string()),
+  status: z.enum(EXPORT_JOB_STATUSES),
+  createdAt: z.string(),
+  finishedAt: z.string().nullable(),
+  /** Why it failed, in words for the person who asked. */
+  error: z.string().nullable(),
+  file: z
+    .object({
+      fileName: z.string(),
+      sizeBytes: z.number().int(),
+      rowCount: z.number().int(),
+      expiresAt: z.string(),
+      /** Past its expiry: deleted, prepare it again. */
+      expired: z.boolean(),
+    })
+    .nullable(),
+});
+export type ExportJobDto = z.infer<typeof exportJobDto>;

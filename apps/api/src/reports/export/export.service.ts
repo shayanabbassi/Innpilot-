@@ -16,7 +16,7 @@ import {
   type ExportReport,
   type TrialBalanceDto,
 } from '@innpilot/contracts';
-import { schema } from '@innpilot/db';
+import { schema, type Tx } from '@innpilot/db';
 import { eq } from 'drizzle-orm';
 import type { ZodTypeAny } from 'zod';
 import { AuditService } from '../../audit/audit.service';
@@ -55,12 +55,19 @@ export interface ExportFile {
   contentType: string;
 }
 
+/** A built export and what the audit record and a stored copy need to know about it. */
+export interface BuiltExport extends ExportFile {
+  rows: number;
+  propertyId: string | null;
+  filters: unknown;
+}
+
 const range = (q: { from: string; to: string }) => `${q.from}_to_${q.to}`;
 
 /**
- * Exports (P5-14, D15): the same report service and query as the screen, plus `export.run`. Nothing is stored; each
- * export is audited (who, report, filters, rows). Above EXPORT_ROW_LIMIT rows the export is refused with a clear
- * message until background exports arrive.
+ * Exports (P5-14, D15): the same report service and query as the screen, plus `export.run`. Each export is audited
+ * (who, report, filters, rows). Up to EXPORT_ROW_LIMIT rows the file is made while you wait and not stored; bigger
+ * ones are prepared in the background (slice 6.3, ExportJobsService) up to BACKGROUND_EXPORT_ROW_LIMIT.
  */
 @Injectable()
 export class ExportService {
@@ -208,6 +215,7 @@ export class ExportService {
     return (EXPORT_REPORTS as readonly string[]).includes(name);
   }
 
+  /** On-screen export: made while you wait, refused above EXPORT_ROW_LIMIT (prepare it in the background). */
   async export(
     auth: AuthContext,
     report: ExportReport,
@@ -215,9 +223,17 @@ export class ExportService {
     raw: Record<string, unknown>,
     meta: RequestMeta,
   ): Promise<ExportFile> {
-    const def = this.reports[report]!;
-    const q = new ZodPipe(def.query).transform(raw) as { propertyId?: string };
-    // export.run on the property asked for (or tenant-wide for all properties); user activity is tenant-wide only.
+    const built = await this.build(auth, report, format, raw, EXPORT_ROW_LIMIT);
+    await this.db.tenant(auth.tenantId, (tx) => this.audited(tx, auth, report, format, built, meta, {}));
+    return built;
+  }
+
+  /**
+   * Parses the report's filters and checks `export.run` for them: on the property asked for (or tenant-wide for all
+   * properties); user activity is tenant-wide only, with audit.read. Used before queueing a background export too.
+   */
+  check(auth: AuthContext, report: ExportReport, raw: Record<string, unknown>): { propertyId?: string } {
+    const q = new ZodPipe(this.reports[report]!.query).transform(raw) as { propertyId?: string };
     if (report === 'user-activity') {
       if (!auth.tenantWidePermissions.has('export.run') || !auth.tenantWidePermissions.has('audit.read')) {
         throw AppError.forbidden();
@@ -225,6 +241,43 @@ export class ExportService {
     } else {
       reportScope(auth, 'export.run', q.propertyId);
     }
+    return q;
+  }
+
+  /** Writes the `report.exported` audit record in the caller's transaction. */
+  audited(
+    tx: Tx,
+    auth: AuthContext,
+    report: ExportReport,
+    format: ExportFormat,
+    built: BuiltExport,
+    meta: RequestMeta | null,
+    extra: Record<string, unknown>,
+  ): Promise<void> {
+    return this.audit.record(
+      tx,
+      {
+        tenantId: auth.tenantId,
+        propertyId: built.propertyId,
+        actor: { type: 'user', userId: auth.userId },
+        action: 'report.exported',
+        entityType: 'report',
+        changes: { report, format, filters: built.filters, rows: built.rows, ...extra },
+      },
+      meta,
+    );
+  }
+
+  /** Runs the report through its own service and writes the file. Refuses more than `rowLimit` rows. */
+  async build(
+    auth: AuthContext,
+    report: ExportReport,
+    format: ExportFormat,
+    raw: Record<string, unknown>,
+    rowLimit: number,
+  ): Promise<BuiltExport> {
+    const def = this.reports[report]!;
+    const q = this.check(auth, report, raw);
     const { context, sheets, period } = await def.run(auth, q as never);
 
     const propertyName = await this.db.tenant(auth.tenantId, async (tx) => {
@@ -246,33 +299,22 @@ export class ExportService {
       sheets,
     };
     const rows = rowCount(table);
-    if (rows > EXPORT_ROW_LIMIT) {
+    if (rows > rowLimit) {
       throw new AppError(
         'EXPORT_TOO_LARGE',
-        `This export has ${rows} rows, more than ${EXPORT_ROW_LIMIT}. Choose a shorter period or one property.`,
+        rowLimit === EXPORT_ROW_LIMIT
+          ? `This export has ${rows} rows, more than ${EXPORT_ROW_LIMIT} can be made while you wait. Prepare it in the background instead.`
+          : `This export has ${rows} rows, more than ${rowLimit}. Choose a shorter period or one property.`,
       );
     }
-
-    await this.db.tenant(auth.tenantId, (tx) =>
-      this.audit.record(
-        tx,
-        {
-          tenantId: auth.tenantId,
-          propertyId: context.propertyId,
-          actor: { type: 'user', userId: auth.userId },
-          action: 'report.exported',
-          entityType: 'report',
-          changes: { report, format, filters: q, rows },
-        },
-        meta,
-      ),
-    );
+    const done = { rows, propertyId: context.propertyId, filters: q };
 
     const scope = slug(propertyName ?? (report === 'user-activity' ? 'audit-log' : 'all-properties'));
     const fileName = `innpilot_${report}_${scope}_${period}.${format}`;
     return format === 'csv'
-      ? { body: toCsv(table), fileName, contentType: 'text/csv; charset=utf-8' }
+      ? { ...done, body: toCsv(table), fileName, contentType: 'text/csv; charset=utf-8' }
       : {
+          ...done,
           body: toXlsx(table),
           fileName,
           contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

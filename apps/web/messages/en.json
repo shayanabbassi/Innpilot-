@@ -80,7 +80,8 @@
     "expenses": "Expenses",
     "suppliers": "Suppliers",
     "reconciliation": "Bank reconciliation",
-    "reports": "Reports"
+    "reports": "Reports",
+    "exports": "My exports"
   },
   "overview": {
     "title": "Welcome, {name}",
@@ -1781,7 +1782,10 @@
     "uaNote": "From the audit log; nothing in it can be changed.",
     "export_csv": "Export CSV",
     "export_xlsx": "Export Excel",
-    "print": "Print"
+    "print": "Print",
+    "tooLargeForNow": "This export is too big to make while you wait. It can be prepared in the background instead.",
+    "prepareInBackground": "Prepare in the background",
+    "preparing": "Your export is being prepared. Collect it from <link>My exports</link> when it is ready."
   },
   "dashboard": {
     "today": "Today, {date}",
@@ -1932,5 +1936,27 @@
     "openConfirm": "Open scan",
     "removeTitle": "Remove {name}?",
     "removeBody": "The file is deleted. The audit log keeps a record that it was attached and removed."
+  },
+  "exports": {
+    "title": "My exports",
+    "subtitle": "Exports prepared in the background in the last seven days. Each file can be downloaded for 24 hours, by you only.",
+    "empty": "No exports prepared in the background. Large exports offer this from the report screen.",
+    "report": "Report",
+    "filters": "Filters",
+    "asked": "Asked",
+    "status": "Status",
+    "file": "File",
+    "statuses": {
+      "queued": "Waiting",
+      "running": "Being prepared",
+      "succeeded": "Ready",
+      "failed": "Failed"
+    },
+    "download": "Download",
+    "expired": "Expired",
+    "fileLine": "{rows} rows · {size} · until {until}",
+    "refreshNote": "This page updates itself while an export is being prepared.",
+    "period": "{from} to {to}",
+    "asOf": "as of {date}"
   }
 }

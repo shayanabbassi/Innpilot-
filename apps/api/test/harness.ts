@@ -154,6 +154,8 @@ export async function startHarness(options: HarnessOptions = {}): Promise<Harnes
     PII_ENCRYPTION_KEY: PII_KEY.toString('base64url'),
     LOG_LEVEL: options.logStream ? 'trace' : 'silent',
     RATE_LIMIT_ENABLED: 'false',
+    // Jobs are run by the tests themselves, not by a timer.
+    JOBS_POLL_SECONDS: '0',
     // The local storage container (pnpm db:up), with its own bucket for tests.
     STORAGE_ENDPOINT: process.env.STORAGE_ENDPOINT ?? 'http://localhost:7070',
     STORAGE_BUCKET: 'innpilot-test',

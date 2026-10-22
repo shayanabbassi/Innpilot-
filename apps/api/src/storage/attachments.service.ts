@@ -1,8 +1,7 @@
-import { createHash, hkdfSync, randomUUID } from 'node:crypto';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { createHash, randomUUID } from 'node:crypto';
+import { Injectable } from '@nestjs/common';
 import {
   ATTACHMENT_MAX_BYTES,
-  FILE_LINK_SECONDS,
   type AttachmentDto,
   type AttachmentType,
   type FileLinkDto,
@@ -13,18 +12,9 @@ import { and, asc, eq, inArray, isNull } from 'drizzle-orm';
 import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import type { AppRequest, AuthContext, RequestMeta } from '../common/request';
-import { APP_CONFIG, type AppConfig } from '../config';
 import { Db } from '../db/db.module';
-import {
-  detectType,
-  displayName,
-  openFile,
-  pdfHasActiveContent,
-  sealFile,
-  signLink,
-  verifyLink,
-} from './files';
-import { S3Client, StorageError } from './s3';
+import { FileStore } from './file-store.service';
+import { detectType, displayName, pdfHasActiveContent } from './files';
 
 const a = schema.attachments;
 /** Bodies up to this size are read and discarded when over the limit; beyond it the connection is closed. */
@@ -44,8 +34,7 @@ export interface DownloadFile {
 /**
  * Attachments in private object storage (slice 6.2, SEC-003).
  *
- * - The bucket is private and only the API talks to it. Files are encrypted here (AES-256-GCM, a key derived from
- *   PII_ENCRYPTION_KEY) before they leave, so the bucket alone reveals nothing.
+ * - Stored through FileStore: a private bucket only the API reaches, every file encrypted before it leaves.
  * - Object keys carry the tenant and property and a random id: never a file name or anything about a guest.
  * - Only PDF, JPEG and PNG, recognised from the content, at most 5 MB; PDFs with scripts or embedded files are
  *   refused.
@@ -54,28 +43,11 @@ export interface DownloadFile {
  */
 @Injectable()
 export class AttachmentsService {
-  private readonly logger = new Logger('Attachments');
-  private readonly s3: S3Client;
-  private readonly fileKey: Buffer;
-  private readonly linkKey: Buffer;
-  private bucketReady = false;
-
   constructor(
-    @Inject(APP_CONFIG) private readonly config: AppConfig,
     private readonly db: Db,
     private readonly audit: AuditService,
-  ) {
-    this.s3 = new S3Client({
-      endpoint: config.STORAGE_ENDPOINT,
-      region: config.STORAGE_REGION,
-      bucket: config.STORAGE_BUCKET,
-      accessKeyId: config.STORAGE_ACCESS_KEY_ID,
-      secretAccessKey: config.STORAGE_SECRET_ACCESS_KEY,
-    });
-    const root = Buffer.from(config.PII_ENCRYPTION_KEY, 'base64url');
-    this.fileKey = Buffer.from(hkdfSync('sha256', root, Buffer.alloc(0), 'innpilot/files/encrypt/v1', 32));
-    this.linkKey = Buffer.from(hkdfSync('sha256', root, Buffer.alloc(0), 'innpilot/files/link/v1', 32));
-  }
+    private readonly files: FileStore,
+  ) {}
 
   /** Reads the raw request body (the file), refusing more than the size limit. */
   async readUpload(req: AppRequest): Promise<Buffer> {
@@ -183,8 +155,7 @@ export class AttachmentsService {
     // Identity scans get a neutral name: whatever the file was called may hold the guest's name or number.
     const fileName =
       owner.kind === 'guest' ? displayName('identity-scan', type) : displayName(requestedName, type);
-    const sealed = sealFile(file, this.fileKey, id);
-    await this.storage('PUT', () => this.putObject(objectKey, sealed.body));
+    const stored = await this.files.put(objectKey, file, id);
     try {
       const [row] = await tx
         .insert(a)
@@ -199,9 +170,7 @@ export class AttachmentsService {
           fileName,
           contentType: type,
           sizeBytes: file.length,
-          sha256,
-          encIv: sealed.iv,
-          encTag: sealed.tag,
+          ...stored,
           createdBy: auth.userId,
         })
         .returning();
@@ -226,7 +195,7 @@ export class AttachmentsService {
       return { row: row!, created: true };
     } catch (err) {
       // The row did not commit, so the object must not stay behind.
-      await this.s3.delete(objectKey).catch(() => undefined);
+      await this.files.delete(objectKey).catch(() => undefined);
       throw err;
     }
   }
@@ -251,50 +220,26 @@ export class AttachmentsService {
       meta,
     );
     // After the row is marked: a failed delete leaves an orphan object, never a row pointing at nothing.
-    await this.s3.delete(row.objectKey).catch((err: unknown) => {
-      this.logger.warn({ err, attachmentId: row.id }, 'Stored file not deleted; it will be cleaned up later');
-    });
+    await this.files.deleteQuietly(row.objectKey, row.id);
   }
 
   /** A short-lived download link for the caller only. Access to the owner is checked by the caller first. */
   link(auth: AuthContext, row: AttachmentRow): FileLinkDto {
-    const expires = Math.floor(Date.now() / 1000) + FILE_LINK_SECONDS;
-    const token = signLink(
-      { attachmentId: row.id, tenantId: auth.tenantId, userId: auth.userId, expires },
-      this.linkKey,
-    );
-    return { url: `/api/v1/files/${token}`, expiresAt: new Date(expires * 1000).toISOString() };
+    return this.files.link('a', row.id, auth);
   }
 
-  /**
-   * Serves a link. Every failure except expiry looks the same (not found), so a link reveals nothing to anyone
-   * other than the person it was issued to. Identity scans are audited on every download.
-   */
-  async download(auth: AuthContext, token: string, meta: RequestMeta): Promise<DownloadFile> {
-    const claims = verifyLink(token, this.linkKey);
-    if (!claims || claims.tenantId !== auth.tenantId || claims.userId !== auth.userId) {
-      throw AppError.notFound('file');
-    }
-    if (claims.expires < Date.now() / 1000) {
-      throw new AppError('LINK_EXPIRED', 'This link has expired. Open the file again from its record.');
-    }
+  /** Serves a verified link (FileStore.verify). Identity scans are audited on every download. */
+  async download(auth: AuthContext, attachmentId: string, meta: RequestMeta): Promise<DownloadFile> {
     return this.db.tenant(auth.tenantId, async (tx) => {
       const [row] = await tx
         .select()
         .from(a)
-        .where(and(eq(a.id, claims.attachmentId), isNull(a.removedAt)));
+        .where(and(eq(a.id, attachmentId), isNull(a.removedAt)));
       if (!row) throw AppError.notFound('file');
       // Permissions can be taken away within the link's life: check the basic one again.
       if (!stillAllowed(auth, row)) throw AppError.notFound('file');
-      const stored = await this.storage('GET', () => this.s3.get(row.objectKey));
-      if (!stored) {
-        this.logger.error({ attachmentId: row.id }, 'Stored file is missing');
-        throw AppError.notFound('file');
-      }
-      const body = openFile({ body: stored, iv: row.encIv, tag: row.encTag }, this.fileKey, row.id);
-      if (!createHash('sha256').update(body).digest().equals(row.sha256)) {
-        throw new Error(`attachment ${row.id} does not match its checksum`);
-      }
+      const body = await this.files.read(row.objectKey, row, row.id);
+      if (!body) throw AppError.notFound('file');
       if (row.ownerType === 'guest') {
         await this.audit.record(
           tx,
@@ -311,28 +256,6 @@ export class AttachmentsService {
       }
       return { body, contentType: row.contentType, fileName: row.fileName };
     });
-  }
-
-  /** Creates the bucket on first use outside production; in production it must already exist. */
-  private async putObject(key: string, body: Buffer): Promise<void> {
-    if (!this.bucketReady && this.config.NODE_ENV !== 'production') {
-      if (!(await this.s3.bucketExists())) await this.s3.createBucket();
-      this.bucketReady = true;
-    }
-    await this.s3.put(key, body, 'application/octet-stream');
-  }
-
-  private async storage<T>(op: string, call: () => Promise<T>): Promise<T> {
-    try {
-      return await call();
-    } catch (err) {
-      if (!(err instanceof StorageError)) throw err;
-      this.logger.error({ err: { message: err.message, status: err.status } }, `Storage ${op} failed`);
-      throw new AppError(
-        'STORAGE_UNAVAILABLE',
-        'File storage is not available right now. Try again shortly.',
-      );
-    }
   }
 }
 

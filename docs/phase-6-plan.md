@@ -170,3 +170,18 @@ obligations before launch (05 §6), and the accountant's sign-off.
   audited. A removed file's row stays (who, when) while the stored file is deleted. Download links are replaced by
   `/files/[link]` in request logs. The same file sent twice to a record is kept once. Also fixed: the OpenAPI
   document had never listed path parameters (a regular expression typo); it now does.
+- **6.3:** the job queue is a `jobs` table in Postgres. The worker runs inside each API instance (every
+  `JOBS_POLL_SECONDS`, default 5; 0 turns it off) and claims work through one narrow `SECURITY DEFINER` function
+  using `SKIP LOCKED` and a five-minute lease, so several instances can share it and a job whose instance stopped is
+  picked up again. Each job carries the tenant it was created in, from the verified session, and runs inside that
+  tenant's row-level security as the person who asked, with their access as it is when it runs (a permission
+  removed in between fails the job with a reason). A refusal fails a job at once; anything else, including storage
+  being down, is retried after 30 s, 60 s, … up to three tries. Exports over 50,000 rows are no longer refused:
+  the export menu offers to prepare them in the background (up to 250,000 rows, at most three waiting per person),
+  and "My exports" shows their progress and downloads them. The file is encrypted into private storage under the
+  job's own key and recorded once per job, so a retry replaces it and never adds a second file or a second audit
+  record. Only the person who asked can see the job or download the file (five-minute links, as for
+  attachments), for 24 hours; a clean-up task deletes expired files every 15 minutes. The plan also named
+  "clean-up of expired files" for attachments: attachments do not expire (removal deletes the file at once), so
+  the only remaining case is an object whose delete failed; finding those needs a bucket listing and is left for
+  the operations slice (6.6), where storage usage is monitored.

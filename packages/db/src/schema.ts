@@ -1009,3 +1009,44 @@ export const attachments = pgTable('attachments', {
   removedAt: tsz('removed_at'),
   removedBy: uuid('removed_by'),
 });
+
+/** Background jobs (0025): a Postgres queue; each job carries its tenant and runs inside it. */
+export const jobs = pgTable('jobs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  kind: text('kind', { enum: ['report_export'] }).notNull(),
+  payload: jsonb('payload').$type<Record<string, unknown>>().notNull(),
+  status: text('status', { enum: ['queued', 'running', 'succeeded', 'failed'] })
+    .notNull()
+    .default('queued'),
+  attempts: integer('attempts').notNull().default(0),
+  maxAttempts: integer('max_attempts').notNull().default(3),
+  runAfter: tsz('run_after').notNull().defaultNow(),
+  lockedUntil: tsz('locked_until'),
+  lastError: text('last_error'),
+  createdBy: uuid('created_by').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  startedAt: tsz('started_at'),
+  finishedAt: tsz('finished_at'),
+});
+
+/** Files produced by background exports (0025): one per job, for the person who asked, until they expire. */
+export const exportFiles = pgTable('export_files', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull(),
+  jobId: uuid('job_id').notNull(),
+  userId: uuid('user_id').notNull(),
+  propertyId: uuid('property_id'),
+  report: text('report').notNull(),
+  format: text('format', { enum: ['csv', 'xlsx'] }).notNull(),
+  fileName: text('file_name').notNull(),
+  objectKey: text('object_key').notNull(),
+  sizeBytes: bigint('size_bytes', { mode: 'number' }).notNull(),
+  rowCount: integer('row_count').notNull(),
+  sha256: bytea('sha256').notNull(),
+  encIv: bytea('enc_iv').notNull(),
+  encTag: bytea('enc_tag').notNull(),
+  createdAt: tsz('created_at').notNull().defaultNow(),
+  expiresAt: tsz('expires_at').notNull(),
+  removedAt: tsz('removed_at'),
+});

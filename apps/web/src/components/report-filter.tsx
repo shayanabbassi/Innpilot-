@@ -1,10 +1,12 @@
 'use client';
 
-import type { ExportFormat, ExportReport, Permission } from '@innpilot/contracts';
+import type { ExportFormat, ExportJobDto, ExportReport, Permission } from '@innpilot/contracts';
+import { useQueryClient } from '@tanstack/react-query';
 import { useFormatter, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useState, type ReactNode } from 'react';
-import { ApiErrorAlert, Button, Card, SelectField, TextField } from '@/components/ui';
-import { api } from '@/lib/api';
+import { Alert, ApiErrorAlert, Button, Card, SelectField, TextField } from '@/components/ui';
+import { api, ApiError } from '@/lib/api';
 import { monthRange } from '@/lib/finance';
 import { useSession } from '@/lib/session';
 
@@ -37,7 +39,8 @@ export function useReportScope(permission: Permission) {
 
 /**
  * Export and print (P5-14, D15). The file comes from the same query as the screen; the server checks
- * `export.run` and audits it. Export buttons show only to users who hold `export.run` for the chosen scope.
+ * `export.run` and audits it. Export buttons show only to users who hold `export.run` for the chosen scope. An export
+ * too big to make while you wait can be prepared in the background (slice 6.3) and collected from My exports.
  */
 export function ExportMenu({ report, query, all }: { report: ExportReport; query: string; all: boolean }) {
   const t = useTranslations('reports');
@@ -47,12 +50,37 @@ export function ExportMenu({ report, query, all }: { report: ExportReport; query
     ? canTenant('export.run')
     : (me.properties.find((p) => p.id === (propertyId ?? property?.id))?.permissions.includes('export.run') ??
       false);
+  const queryClient = useQueryClient();
   const [busy, setBusy] = useState<ExportFormat | null>(null);
   const [error, setError] = useState<unknown>(null);
+  const [tooLarge, setTooLarge] = useState<ExportFormat | null>(null);
+  const [queued, setQueued] = useState(false);
+  const [queueing, setQueueing] = useState(false);
+
+  const prepare = async (format: ExportFormat) => {
+    setQueueing(true);
+    setError(null);
+    try {
+      await api.post<ExportJobDto>('/exports', {
+        report,
+        format,
+        query: Object.fromEntries(new URLSearchParams(query)),
+      });
+      setTooLarge(null);
+      setQueued(true);
+      void queryClient.invalidateQueries({ queryKey: ['exports'] });
+    } catch (err) {
+      setError(err);
+    } finally {
+      setQueueing(false);
+    }
+  };
 
   const run = async (format: ExportFormat) => {
     setBusy(format);
     setError(null);
+    setTooLarge(null);
+    setQueued(false);
     try {
       const { blob, fileName } = await api.download(`/reports/${report}/export?format=${format}&${query}`);
       const url = URL.createObjectURL(blob);
@@ -64,7 +92,8 @@ export function ExportMenu({ report, query, all }: { report: ExportReport; query
       a.remove();
       URL.revokeObjectURL(url);
     } catch (err) {
-      setError(err);
+      if (err instanceof ApiError && err.code === 'EXPORT_TOO_LARGE') setTooLarge(format);
+      else setError(err);
     } finally {
       setBusy(null);
     }
@@ -84,6 +113,27 @@ export function ExportMenu({ report, query, all }: { report: ExportReport; query
         </Button>
       </div>
       {error !== null && <ApiErrorAlert error={error} />}
+      {tooLarge && (
+        <Alert tone="info">
+          <span className="flex flex-wrap items-center gap-3">
+            <span>{t('tooLargeForNow')}</span>
+            <Button variant="secondary" busy={queueing} onClick={() => void prepare(tooLarge)}>
+              {t('prepareInBackground')}
+            </Button>
+          </span>
+        </Alert>
+      )}
+      {queued && (
+        <Alert tone="success">
+          {t.rich('preparing', {
+            link: (chunks) => (
+              <Link href="/exports" className="underline">
+                {chunks}
+              </Link>
+            ),
+          })}
+        </Alert>
+      )}
     </div>
   );
 }

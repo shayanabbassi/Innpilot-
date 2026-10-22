@@ -71,8 +71,12 @@ export function openFile(sealed: Sealed, key: Buffer, attachmentId: string): Buf
   return Buffer.concat([decipher.update(sealed.body), decipher.final()]);
 }
 
+/** What a link opens: an attachment (`a`) or a prepared export (`e`). */
+export type LinkKind = 'a' | 'e';
+
 export interface LinkClaims {
-  attachmentId: string;
+  kind: LinkKind;
+  id: string;
   tenantId: string;
   userId: string;
   /** Unix seconds. */
@@ -81,10 +85,10 @@ export interface LinkClaims {
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
-/** `<claims>.<hmac>`, both base64url. Bound to one attachment, tenant and user, and to a time. */
+/** `<claims>.<hmac>`, both base64url. Bound to one file, tenant and user, and to a time. */
 export function signLink(claims: LinkClaims, key: Buffer): string {
   const payload = Buffer.from(
-    [claims.attachmentId, claims.tenantId, claims.userId, String(claims.expires)].join('.'),
+    [claims.kind, claims.id, claims.tenantId, claims.userId, String(claims.expires)].join('.'),
   ).toString('base64url');
   const mac = createHmac('sha256', key).update(payload).digest('base64url');
   return `${payload}.${mac}`;
@@ -97,9 +101,11 @@ export function verifyLink(token: string, key: Buffer): LinkClaims | null {
   const expected = createHmac('sha256', key).update(payload).digest();
   const given = Buffer.from(mac, 'base64url');
   if (given.length !== expected.length || !timingSafeEqual(given, expected)) return null;
-  const [attachmentId, tenantId, userId, expires] = Buffer.from(payload, 'base64url').toString().split('.');
-  if (!attachmentId || !tenantId || !userId || !expires) return null;
-  if (!UUID.test(attachmentId) || !UUID.test(tenantId) || !UUID.test(userId) || !/^\d+$/.test(expires))
+  const [kind, id, tenantId, userId, expires, extraPart] = Buffer.from(payload, 'base64url')
+    .toString()
+    .split('.');
+  if ((kind !== 'a' && kind !== 'e') || !id || !tenantId || !userId || !expires || extraPart !== undefined)
     return null;
-  return { attachmentId, tenantId, userId, expires: Number(expires) };
+  if (!UUID.test(id) || !UUID.test(tenantId) || !UUID.test(userId) || !/^\d+$/.test(expires)) return null;
+  return { kind, id, tenantId, userId, expires: Number(expires) };
 }

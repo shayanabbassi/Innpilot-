@@ -36,6 +36,8 @@ import {
   duplicateCandidateDto,
   duplicateCheckRequest,
   guestDocumentInput,
+  exportJobDto,
+  exportJobRequest,
   fileLinkDto,
   guestDto,
   guestSearchQuery,
@@ -1268,11 +1270,31 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
   'GET /reports/{report}/export': {
     tag: 'Reports',
     summary:
-      'Export a report as CSV or Excel (D15). Takes the report’s own query plus `format`, needs export.run and the report’s permission, is audited, and refuses more than 50,000 rows (EXPORT_TOO_LARGE)',
+      'Export a report as CSV or Excel (D15). Takes the report’s own query plus `format`, needs export.run and the report’s permission, is audited; above 50,000 rows it answers EXPORT_TOO_LARGE and the export is prepared in the background instead (POST /exports)',
     params: z.object({ report: z.enum(EXPORT_REPORTS) }),
     query: z.object({ format: z.enum(EXPORT_FORMATS) }).passthrough(),
     data: null,
     file: ['text/csv', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+  },
+  'POST /exports': {
+    tag: 'Reports',
+    summary:
+      'Prepare an export in the background (up to 250,000 rows): the report, format and the report’s own filters. Checked now and again when it runs, as you; at most 3 waiting per person (409)',
+    body: exportJobRequest,
+    data: exportJobDto,
+    status: 201,
+  },
+  'GET /exports': {
+    tag: 'Reports',
+    summary: 'Your own background exports from the last seven days, newest first, with their status and file',
+    data: z.array(exportJobDto),
+  },
+  'POST /exports/{id}/link': {
+    tag: 'Reports',
+    summary:
+      'A five-minute download link to a prepared export, for the person who asked only; 410 LINK_EXPIRED once the file has expired (24 hours)',
+    data: fileLinkDto,
+    status: 200,
   },
   'GET /reports/trial-balance': {
     tag: 'Reports',
@@ -1433,10 +1455,14 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
   'GET /files/{token}': {
     tag: 'Files',
     summary:
-      'Open a download link issued by a record. Works only for the signed-in person it was issued to, until it expires (410 LINK_EXPIRED).',
+      'Open a download link issued for an attachment or a prepared export. Works only for the signed-in person it was issued to, until it expires (410 LINK_EXPIRED).',
     params: z.object({ token: z.string() }),
     data: null,
-    file: [...ATTACHMENT_TYPES],
+    file: [
+      ...ATTACHMENT_TYPES,
+      'text/csv',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ],
   },
   'GET /health': {
     tag: 'Operations',
