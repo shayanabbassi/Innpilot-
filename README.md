@@ -20,7 +20,7 @@ double-entry accounting underneath front-desk operations.
 ## Prerequisites
 
 - Node.js 24 (`.nvmrc`) and pnpm 10 (`npm install -g pnpm@10.34.7`)
-- Docker Desktop (runs PostgreSQL 16 locally)
+- Docker Desktop (runs PostgreSQL 16 and the object storage gateway locally)
 
 ## First-time setup
 
@@ -34,7 +34,8 @@ Copy `.env.example` to `.env` and fill in every empty value. Generate random sec
 node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
 ```
 
-Then start the database, create the restricted application role, migrate and load fictional demo data:
+Then start the database and object storage, create the restricted application role, migrate and load fictional
+demo data:
 
 ```bash
 pnpm db:up
@@ -64,6 +65,21 @@ Demo accounts (all use `SEED_USER_PASSWORD` from your `.env`) are listed in
 [packages/db/src/seed.ts](packages/db/src/seed.ts), for example `owner@ravi.demo.test` (owner, will be asked to set
 up two-step verification) and `frontdesk@ravi.demo.test`. A second tenant (`*@kohsar.demo.test`) exists so you can
 see that tenants are isolated.
+
+## Production-like stack and deployment
+
+The production images, start-up checks, release script and smoke test can be run locally on
+https://localhost:8443 (also run by CI on every pull request):
+
+```bash
+node deploy/local/init.mjs
+```
+
+```bash
+node deploy/local/up.mjs
+```
+
+Deploying to staging and production: [docs/deployment-runbook.md](docs/deployment-runbook.md).
 
 ## Adding a hotel (tenant)
 

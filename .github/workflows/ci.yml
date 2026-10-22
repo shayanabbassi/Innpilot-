@@ -52,8 +52,18 @@ jobs:
     env:
       DATABASE_ADMIN_URL: postgres://postgres:ci-only-postgres@localhost:5432/innpilot
       APP_DB_PASSWORD: ci-only-app-password-0001
+      # Object storage for the attachment and export tests (slice 6.2); throwaway CI credentials.
+      STORAGE_ENDPOINT: http://localhost:7070
+      STORAGE_ACCESS_KEY_ID: ci-only-storage
+      STORAGE_SECRET_ACCESS_KEY: ci-only-storage-secret-0001
     steps:
       - uses: actions/checkout@v4
+      # Started by hand: service containers cannot be given the gateway's command line.
+      - name: Start object storage
+        run: >-
+          docker run -d --name storage -p 7070:7070 -v ci-storage:/data
+          -e ROOT_ACCESS_KEY_ID="$STORAGE_ACCESS_KEY_ID" -e ROOT_SECRET_ACCESS_KEY="$STORAGE_SECRET_ACCESS_KEY"
+          versity/versitygw:v1.9.0 --port :7070 posix /data
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -61,3 +71,25 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:integration
+
+  production-stack:
+    name: Production images, start-up and smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      # Builds both images and runs them as production would (TLS proxy, restricted database role, release script
+      # with backup and migrations), then the smoke test. Local secrets are generated fresh for this run.
+      - run: node deploy/local/init.mjs
+      - run: node deploy/local/up.mjs
+      - name: Logs on failure
+        if: failure()
+        working-directory: deploy
+        env:
+          API_IMAGE: innpilot-api:local
+          WEB_IMAGE: innpilot-web:local
+          SITE_ADDRESS: localhost
+        run: docker compose -f compose.yml -f compose.local.yml logs --tail 200

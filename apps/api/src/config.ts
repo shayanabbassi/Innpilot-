@@ -71,17 +71,53 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     const problems = parsed.error.issues.map((i) => `  ${i.path.join('.')}: ${i.message}`).join('\n');
     throw new Error(`Invalid configuration:\n${problems}`);
   }
-  if (parsed.data.NODE_ENV === 'production' && !parsed.data.COOKIE_SECURE) {
-    throw new Error('COOKIE_SECURE must be true in production.');
-  }
   if (parsed.data.PII_ENCRYPTION_KEY === parsed.data.MFA_ENCRYPTION_KEY) {
     throw new Error('PII_ENCRYPTION_KEY and MFA_ENCRYPTION_KEY must be different keys.');
   }
-  if (parsed.data.NODE_ENV === 'production' && !parsed.data.RATE_LIMIT_ENABLED) {
-    throw new Error('RATE_LIMIT_ENABLED must be true in production.');
-  }
-  if (parsed.data.NODE_ENV === 'production' && !parsed.data.STORAGE_ENDPOINT.startsWith('https://')) {
-    throw new Error('STORAGE_ENDPOINT must use https in production.');
+  if (parsed.data.NODE_ENV === 'production') {
+    const problems = productionProblems(parsed.data);
+    if (problems.length) {
+      throw new Error(`Unsafe configuration for production:\n${problems.map((p) => `  ${p}`).join('\n')}`);
+    }
   }
   return parsed.data;
+}
+
+/** A host on the deployment's private network (a container or service name), never the public internet. */
+function privateServiceHost(url: string): boolean {
+  return !new URL(url).hostname.includes('.');
+}
+
+/** True for keys that look like placeholders: too few distinct bytes to be random. */
+function weakKey(base64url: string): boolean {
+  return new Set(Buffer.from(base64url, 'base64url')).size < 16;
+}
+
+/**
+ * Settings that are fine on a laptop but unsafe in production (P6-5). Start-up lists every problem at once, so a
+ * misconfigured release fails before it serves anything. The database role is checked separately once connected
+ * (see assertRestrictedDatabaseRole), because only the database knows what it may bypass.
+ */
+export function productionProblems(c: AppConfig): string[] {
+  const problems: string[] = [];
+  if (!c.COOKIE_SECURE) problems.push('COOKIE_SECURE must be true (cookies only over HTTPS).');
+  if (!c.RATE_LIMIT_ENABLED) problems.push('RATE_LIMIT_ENABLED must be true.');
+  for (const origin of c.WEB_ORIGINS) {
+    if (!origin.startsWith('https://')) problems.push(`WEB_ORIGINS must all use https (${origin}).`);
+  }
+  if (c.LOG_LEVEL === 'debug' || c.LOG_LEVEL === 'trace') {
+    problems.push('LOG_LEVEL must be info or quieter: debug and trace logs carry request details.');
+  }
+  // Storage may be reached over plain http only inside the private network; files are encrypted by the API.
+  if (!c.STORAGE_ENDPOINT.startsWith('https://') && !privateServiceHost(c.STORAGE_ENDPOINT)) {
+    problems.push('STORAGE_ENDPOINT must use https unless it is a service on the private network.');
+  }
+  if (c.STORAGE_SECRET_ACCESS_KEY.length < 20) problems.push('STORAGE_SECRET_ACCESS_KEY is too short.');
+  if (weakKey(c.MFA_ENCRYPTION_KEY)) problems.push('MFA_ENCRYPTION_KEY is not random; generate a new key.');
+  if (weakKey(c.PII_ENCRYPTION_KEY)) problems.push('PII_ENCRYPTION_KEY is not random; generate a new key.');
+  const dbUser = decodeURIComponent(new URL(c.DATABASE_URL).username);
+  if (dbUser === 'postgres') {
+    problems.push('DATABASE_URL must use the restricted application role, not the postgres superuser.');
+  }
+  return problems;
 }

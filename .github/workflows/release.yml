@@ -1,0 +1,79 @@
+name: Release
+
+# P6-5 / P6-6: every merge to main builds the images and deploys them to staging; a version tag (v1.2.3) deploys
+# the same build to production after a manual approval (set required reviewers on the "production" environment).
+# Deployment targets are any host running deploy/compose.yml (provider-neutral until D17 is decided). Until a
+# target is configured (repository variables STAGING_HOST / PRODUCTION_HOST), only the images are built and
+# published.
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  images:
+    name: Build and publish images
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: tag
+        name: Image tag
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT";
+          else echo "tag=sha-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"; fi
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/api/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/innpilot-api:${{ steps.tag.outputs.tag }}
+          provenance: true
+          sbom: true
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/web/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/innpilot-web:${{ steps.tag.outputs.tag }}
+          provenance: true
+          sbom: true
+
+  staging:
+    name: Deploy to staging
+    needs: images
+    if: github.ref_type == 'branch' && vars.STAGING_HOST != ''
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: staging
+      tag: ${{ needs.images.outputs.tag }}
+    secrets: inherit
+
+  production:
+    name: Deploy to production
+    needs: images
+    if: github.ref_type == 'tag' && vars.PRODUCTION_HOST != ''
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production
+      tag: ${{ needs.images.outputs.tag }}
+    secrets: inherit

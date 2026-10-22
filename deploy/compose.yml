@@ -1,0 +1,69 @@
+# InnPilot production stack, provider-neutral (D17 undecided). Runs on any host with Docker Compose; the database
+# and object storage are managed services reached through the settings in app.env (see env.example).
+#
+#   API_IMAGE=ghcr.io/<owner>/innpilot-api:<tag> WEB_IMAGE=ghcr.io/<owner>/innpilot-web:<tag> ./release.sh
+#
+# Release-only services (profile "release"): backup before migrating, then migrate. They use release.env, which
+# holds the database owner's credentials; the running API never sees them.
+name: innpilot
+
+x-hardened: &hardened
+  restart: unless-stopped
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: ['no-new-privileges:true']
+
+services:
+  proxy:
+    image: caddy:2.11.7-alpine
+    restart: unless-stopped
+    ports: ['80:80', '443:443']
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Set SITE_ADDRESS to the public host name}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/innpilot.caddy:/etc/caddy/innpilot.caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api: { condition: service_healthy }
+      web: { condition: service_healthy }
+
+  api:
+    <<: *hardened
+    image: ${API_IMAGE:?Set API_IMAGE}
+    env_file: app.env
+    environment:
+      NODE_ENV: production
+      API_PORT: '4000'
+      # One proxy (Caddy) in front: rate limits and audit records use the client's address it reports.
+      TRUST_PROXY: ${TRUST_PROXY:-1}
+
+  web:
+    <<: *hardened
+    image: ${WEB_IMAGE:?Set WEB_IMAGE}
+    tmpfs: [/tmp, /app/apps/web/.next/cache]
+
+  backup:
+    image: postgres:16.10-alpine
+    profiles: [release]
+    env_file: release.env
+    volumes: ['./backups:/backups']
+    entrypoint:
+      - sh
+      - -c
+      - >-
+        f="/backups/pre-migrate-$$(date -u +%Y%m%dT%H%M%SZ).dump" &&
+        pg_dump --format=custom --no-owner --file="$$f" "$$DATABASE_ADMIN_URL" &&
+        echo "Backup written: $$f"
+
+  migrate:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: release.env
+    command: ['node', 'node_modules/@innpilot/db/dist/cli.js', 'migrate']
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -2,6 +2,10 @@
   "name": "@innpilot/api",
   "version": "0.0.0",
   "private": true,
+  "main": "dist/main.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "dev": "nest start --watch",

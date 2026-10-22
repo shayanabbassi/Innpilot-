@@ -185,3 +185,15 @@ obligations before launch (05 §6), and the accountant's sign-off.
   "clean-up of expired files" for attachments: attachments do not expire (removal deletes the file at once), so
   the only remaining case is an object whose delete failed; finding those needs a bucket listing and is left for
   the operations slice (6.6), where storage usage is monitored.
+- **6.4:** see `docs/deployment-runbook.md`. Two images (API, web), both non-root; the API image also runs
+  migrations. A provider-neutral Compose stack behind Caddy (automatic TLS, http→https, HSTS, `/api` routed to the
+  API so cookies stay first-party), API and web read-only with all capabilities dropped. `release.sh` backs up,
+  migrates, starts and waits for health; GitHub Actions publish images on every merge, deploy to staging, and to
+  production on a version tag after approval, over SSH, then run `scripts/smoke.mjs`. Production start-up now
+  refuses http origins, debug logging, placeholder keys, a short storage secret, the `postgres` user, and (once
+  connected) any database role that row-level security does not bind. The web app sends a Content Security Policy
+  and HSTS in production builds; it still allows inline scripts, which Next.js needs without nonces (a hardening
+  item for 6.8). Storage over plain http is accepted only for a service on the private network. Found while
+  building: CI's integration job had no object storage since 6.2, so the attachment tests could not have passed
+  there; it now starts the same storage gateway. Proven locally twice (fresh, then re-release over it); also run by
+  CI on every pull request. Not done here: anything needing D17 or your accounts (runbook, last section).
