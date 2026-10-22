@@ -1,6 +1,7 @@
 # Phase 6 exit report — deployment and testing
 
-Date: 2026-10-23 · Branch: `phase-1-foundation` · Plan: [phase-6-plan.md](phase-6-plan.md)
+Date: 2026-10-23 · Branch: `phase-1-foundation` · Plan: [phase-6-plan.md](phase-6-plan.md) · **Accepted by the owner
+2026-10-23, with the open items as listed below.**
 
 Phase 6 is the playbook's last phase, "Hardening" (playbook phases 0 to 7; this project grouped housekeeping and
 night audit into earlier phases, so its numbering ends at 6). With it, the build plan is complete. What remains is
