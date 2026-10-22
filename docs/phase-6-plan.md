@@ -197,3 +197,15 @@ obligations before launch (05 §6), and the accountant's sign-off.
   building: CI's integration job had no object storage since 6.2, so the attachment tests could not have passed
   there; it now starts the same storage gateway. Proven locally twice (fresh, then re-release over it); also run by
   CI on every pull request. Not done here: anything needing D17 or your accounts (runbook, last section).
+- **6.5:** see `docs/backup-and-restore.md`, which also holds the drill record. Nightly `pg_dump` with every
+  table's row count taken in the same snapshot, encrypted per backup with a fresh key wrapped by an RSA public key
+  (the backup job cannot read backups; the private key stays offline with you), stored in a separate bucket with
+  35 daily and 12 monthly copies and a `latest.json` for the backup-age alert (6.6). `release.sh` now takes this
+  encrypted backup before migrating instead of a plain dump on the host. The restore drill restores into a new
+  database, runs seven integrity checks plus a real sign-in, and drops it; a test proves the checks catch an
+  unbalanced line, a lost audit event and a mis-tagged cash line, and that a changed backup or the wrong key stops
+  the drill. Drill on the 100-room year: passed in 18.5 s (target 4 h); the first run showed the folio check taking
+  75 s, rewritten to under 1 s. The 100-room seed now also writes the folio charges and payments behind its
+  journals, so the folio check holds on it. Locally there is no PostgreSQL client on this machine, so the tests
+  run pg_dump inside the database container (`PG_TOOLS_CONTAINER`, local `.env` only); CI and the images use the
+  tools directly. Not done here: the staging and production drills, the key pair and the backup bucket (yours).

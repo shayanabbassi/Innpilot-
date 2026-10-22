@@ -19,10 +19,23 @@ services:
       postgres: { condition: service_healthy }
       storage: { condition: service_started }
 
-  backup:
-    env_file: !override local/release.env
+  backups:
+    env_file: !override [local/release.env, local/backup.env]
     depends_on:
       postgres: { condition: service_healthy }
+      storage: { condition: service_started }
+
+  backup:
+    env_file: !override [local/release.env, local/backup.env]
+    depends_on:
+      postgres: { condition: service_healthy }
+      storage: { condition: service_started }
+
+  restore-drill:
+    env_file: !override [local/app.env, local/release.env, local/backup.env]
+    depends_on:
+      postgres: { condition: service_healthy }
+      storage: { condition: service_started }
 
   migrate:
     env_file: !override local/release.env

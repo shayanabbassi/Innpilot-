@@ -23,3 +23,6 @@ deploy/*.env
 deploy/local/*.env
 deploy/local/caddy-root.crt
 deploy/backups/
+
+# Output of the restore drill performance run (copied into docs/backup-and-restore.md)
+apps/api/perf/*.last.md

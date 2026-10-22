@@ -19,6 +19,8 @@ export interface SignInput {
   host: string;
   /** Already URI-encoded path, e.g. /bucket/a/b. */
   path: string;
+  /** Query parameters, unencoded (e.g. list-type=2). */
+  query?: Record<string, string>;
   /** Lower-case header names; host, x-amz-date and x-amz-content-sha256 are added. */
   headers?: Record<string, string>;
   payloadHash: string;
@@ -37,6 +39,14 @@ export function encodeSegment(s: string): string {
   return encodeURIComponent(s).replace(/[!'()*]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`);
 }
 
+/** Query string in SigV4 canonical form: names sorted, names and values RFC 3986 encoded. */
+export function canonicalQueryString(query: Record<string, string>): string {
+  return Object.keys(query)
+    .sort()
+    .map((k) => `${encodeSegment(k)}=${encodeSegment(query[k]!)}`)
+    .join('&');
+}
+
 /** The headers to send, including Authorization. Exported for the signing test. */
 export function signRequest(input: SignInput): Record<string, string> {
   const headers: Record<string, string> = {
@@ -50,10 +60,11 @@ export function signRequest(input: SignInput): Record<string, string> {
     .sort();
   const signedHeaders = names.join(';');
   const canonicalHeaders = names.map((n) => `${n}:${headers[n]!.trim()}\n`).join('');
+  const canonicalQuery = canonicalQueryString(input.query ?? {});
   const canonicalRequest = [
     input.method,
     input.path,
-    '',
+    canonicalQuery,
     canonicalHeaders,
     signedHeaders,
     input.payloadHash,
@@ -105,6 +116,34 @@ export class S3Client {
     if (!res.ok && res.status !== 404) throw await this.failure('DELETE', res);
   }
 
+  /** Every object key under `prefix`, following continuation pages. */
+  async list(prefix: string): Promise<{ key: string; size: number; lastModified: string }[]> {
+    const out: { key: string; size: number; lastModified: string }[] = [];
+    let token: string | undefined;
+    do {
+      const query: Record<string, string> = { 'list-type': '2', prefix };
+      if (token) query['continuation-token'] = token;
+      const res = await this.send('GET', null, undefined, {}, query);
+      if (!res.ok) throw await this.failure('LIST', res);
+      const xml = await res.text();
+      for (const m of xml.matchAll(/<Contents>([\s\S]*?)<\/Contents>/g)) {
+        const part = m[1]!;
+        const key = /<Key>([^<]*)<\/Key>/.exec(part)?.[1];
+        if (!key) continue;
+        out.push({
+          key: decodeXml(key),
+          size: Number(/<Size>(\d+)<\/Size>/.exec(part)?.[1] ?? 0),
+          lastModified: /<LastModified>([^<]*)<\/LastModified>/.exec(part)?.[1] ?? '',
+        });
+      }
+      token = /<IsTruncated>true<\/IsTruncated>/.test(xml)
+        ? decodeXml(/<NextContinuationToken>([^<]*)<\/NextContinuationToken>/.exec(xml)?.[1] ?? '') ||
+          undefined
+        : undefined;
+    } while (token);
+    return out;
+  }
+
   /** True if the bucket exists and these credentials can reach it. */
   async bucketExists(): Promise<boolean> {
     const res = await this.send('HEAD', null);
@@ -124,6 +163,7 @@ export class S3Client {
     key: string | null,
     body?: Buffer,
     extra: Record<string, string> = {},
+    query: Record<string, string> = {},
   ): Promise<Response> {
     const url = new URL(this.s.endpoint);
     const basePath = url.pathname.replace(/\/+$/, '');
@@ -138,6 +178,7 @@ export class S3Client {
       method,
       host: url.host,
       path,
+      query,
       headers: extra,
       payloadHash: hex(body ?? Buffer.alloc(0)),
       amzDate,
@@ -148,7 +189,8 @@ export class S3Client {
     // fetch sets Host itself from the URL; sending it explicitly is not allowed.
     delete headers.host;
     try {
-      return await fetch(`${url.protocol}//${url.host}${path}`, {
+      const qs = canonicalQueryString(query);
+      return await fetch(`${url.protocol}//${url.host}${path}${qs ? `?${qs}` : ''}`, {
         method,
         headers,
         body: body ? new Uint8Array(body) : undefined,
@@ -165,4 +207,13 @@ export class S3Client {
     const code = /<Code>([^<]{1,64})<\/Code>/.exec(text)?.[1] ?? 'unknown';
     return new StorageError(`storage ${op} returned ${res.status} (${code})`, res.status);
   }
+}
+
+function decodeXml(s: string): string {
+  return s
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&');
 }

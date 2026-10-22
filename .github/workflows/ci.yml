@@ -70,6 +70,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # The backup and restore tests (slice 6.5) run pg_dump and pg_restore; the runner image ships PostgreSQL 16.
+      - run: pg_dump --version && pg_restore --version
       - run: pnpm test:integration
 
   production-stack:

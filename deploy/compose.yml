@@ -3,8 +3,9 @@
 #
 #   API_IMAGE=ghcr.io/<owner>/innpilot-api:<tag> WEB_IMAGE=ghcr.io/<owner>/innpilot-web:<tag> ./release.sh
 #
-# Release-only services (profile "release"): backup before migrating, then migrate. They use release.env, which
-# holds the database owner's credentials; the running API never sees them.
+# Release-only services (profile "release"): an encrypted backup before migrating, then migrate, and the restore
+# drill. They use release.env (the database owner) and backup.env (the backup bucket and public key); the running
+# API sees neither. The "backups" service makes the nightly encrypted backup (slice 6.5).
 name: innpilot
 
 x-hardened: &hardened
@@ -45,18 +46,33 @@ services:
     image: ${WEB_IMAGE:?Set WEB_IMAGE}
     tmpfs: [/tmp, /app/apps/web/.next/cache]
 
+  # Nightly encrypted backup to the separate backup bucket, at BACKUP_AT_UTC (default 21:00 UTC, 02:00 in Pakistan).
+  backups:
+    <<: *hardened
+    image: ${API_IMAGE:?Set API_IMAGE}
+    env_file: [release.env, backup.env]
+    command: ['node', 'dist/ops/cli.js', 'schedule']
+    # The image's health check probes the API's web port, which this service does not run.
+    healthcheck:
+      disable: true
+
   backup:
-    image: postgres:16.10-alpine
+    image: ${API_IMAGE:?Set API_IMAGE}
     profiles: [release]
-    env_file: release.env
-    volumes: ['./backups:/backups']
-    entrypoint:
-      - sh
-      - -c
-      - >-
-        f="/backups/pre-migrate-$$(date -u +%Y%m%dT%H%M%SZ).dump" &&
-        pg_dump --format=custom --no-owner --file="$$f" "$$DATABASE_ADMIN_URL" &&
-        echo "Backup written: $$f"
+    env_file: [release.env, backup.env]
+    command: ['node', 'dist/ops/cli.js', 'backup']
+
+  # The restore drill (docs/backup-and-restore.md). The private key is given only for the run:
+  #   BACKUP_PRIVATE_KEY=... DRILL_SIGNIN_EMAIL=... DRILL_SIGNIN_PASSWORD=... docker compose --profile release run --rm restore-drill
+  restore-drill:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: [app.env, release.env, backup.env]
+    environment:
+      BACKUP_PRIVATE_KEY: ${BACKUP_PRIVATE_KEY:-}
+      DRILL_SIGNIN_EMAIL: ${DRILL_SIGNIN_EMAIL:-}
+      DRILL_SIGNIN_PASSWORD: ${DRILL_SIGNIN_PASSWORD:-}
+    command: ['node', 'dist/ops/cli.js', 'restore-drill']
 
   migrate:
     image: ${API_IMAGE:?Set API_IMAGE}

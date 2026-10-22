@@ -2,7 +2,8 @@
 /**
  * Builds the production images and runs them as production would, on https://localhost:8443 (P6-5): a database
  * and storage of its own, the role provisioned, the release script (backup, migrations, start), a smoke-test
- * account, then the smoke test against the stack. `node deploy/local/up.mjs --down` stops it.
+ * account, the smoke test against the stack, then a fresh encrypted backup and the restore drill (slice 6.5).
+ * `node deploy/local/up.mjs --down` stops it.
  */
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
@@ -47,12 +48,14 @@ step('Release: backup, migrations, start');
 run('sh', ['release.sh']);
 
 step('Smoke-test account');
-const smoke = Object.fromEntries(
-  readFileSync(join(here, 'smoke.env'), 'utf8')
-    .split('\n')
-    .filter((l) => l.includes('=') && !l.startsWith('#'))
-    .map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1)]),
-);
+const readEnv = (name) =>
+  Object.fromEntries(
+    readFileSync(join(here, name), 'utf8')
+      .split('\n')
+      .filter((l) => l.includes('=') && !l.startsWith('#'))
+      .map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1)]),
+  );
+const smoke = readEnv('smoke.env');
 try {
   execFileSync(
     'docker',
@@ -95,4 +98,18 @@ run('docker', [...compose, 'cp', 'proxy:/data/caddy/pki/authorities/local/root.c
 step('Smoke test');
 run(process.execPath, [join(root, 'scripts', 'smoke.mjs'), 'https://localhost:8443'], {
   env: { ...env, ...smoke, NODE_EXTRA_CA_CERTS: ca },
+});
+
+step('Encrypted backup');
+run('docker', [...compose, '--profile', 'release', 'run', '--rm', 'backup']);
+
+step('Restore drill: restore into a new database, check, sign in, drop');
+run('docker', [...compose, '--profile', 'release', 'run', '--rm', 'restore-drill'], {
+  env: {
+    ...env,
+    // As the owner would: the private key comes out of safe keeping for this run only.
+    ...readEnv('backup-private.env'),
+    DRILL_SIGNIN_EMAIL: smoke.SMOKE_EMAIL,
+    DRILL_SIGNIN_PASSWORD: smoke.SMOKE_PASSWORD,
+  },
 });

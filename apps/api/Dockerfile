@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1.7
 # InnPilot API: production image. Build from the repository root:
 #   docker build -f apps/api/Dockerfile -t innpilot-api .
-# The same image runs database migrations as a separate release step:
+# The same image runs database migrations as a separate release step, and backups and restore drills:
 #   docker run --rm -e DATABASE_ADMIN_URL=... innpilot-api node node_modules/@innpilot/db/dist/cli.js migrate
+#   docker run --rm --env-file ... innpilot-api node dist/ops/cli.js <keygen|backup|schedule|restore-drill>
 
 ARG NODE_IMAGE=node:24.19.0-alpine3.24
 
@@ -24,6 +25,8 @@ RUN pnpm --filter @innpilot/api... build \
 
 FROM ${NODE_IMAGE} AS runtime
 ENV NODE_ENV=production
+# PostgreSQL 16 client tools (pg_dump, pg_restore) for the backup and restore commands (dist/ops/cli.js).
+RUN apk add --no-cache postgresql16-client
 WORKDIR /app
 # Root owns the files; the server runs as the unprivileged node user and cannot change them.
 COPY --from=build /out ./

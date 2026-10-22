@@ -7,7 +7,7 @@
 # and wait until it reports healthy. Any failure stops the release; until the last step the old version keeps
 # serving.
 # Rollback: run this script again with the previous image tags. A migration is never undone in place: if one must
-# be reversed, restore the backup taken here into a new database (docs/deployment-runbook.md).
+# be reversed, restore the backup taken here into a new database (docs/backup-and-restore.md).
 set -eu
 : "${API_IMAGE:?Set API_IMAGE}"
 : "${WEB_IMAGE:?Set WEB_IMAGE}"
@@ -20,14 +20,13 @@ if [ "${SKIP_PULL:-}" != "1" ]; then
   $COMPOSE pull api web
 fi
 
-echo "==> Backing up the database before migrating"
-mkdir -p backups
+echo "==> Encrypted backup of the database before migrating"
 $COMPOSE --profile release run --rm backup
 
 echo "==> Applying migrations"
 $COMPOSE --profile release run --rm migrate
 
 echo "==> Starting the new version"
-$COMPOSE up -d --wait api web proxy
+$COMPOSE up -d --wait api web proxy backups
 
 echo "==> Released $API_IMAGE and $WEB_IMAGE"

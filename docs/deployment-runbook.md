@@ -18,7 +18,7 @@ plan P6-5 and P6-6.
 | `deploy/compose.yml`                          | The production stack: Caddy (TLS certificates and renewal, http→https, HSTS), API, web; release-only services for the pre-migration backup and migrations. API and web run read-only, with all Linux capabilities dropped.                      |
 | `deploy/caddy/`                               | One public origin: `/api/*` to the API, the rest to the web app, so cookies stay first-party. No access log (URLs can hold download links and search terms; the API logs requests itself, with those removed).                                  |
 | `deploy/env.example`                          | Every production setting, split into `app.env` (the API) and `release.env` (database owner, release steps only).                                                                                                                                |
-| `deploy/release.sh`                           | One release: pull images, back up the database, migrate, start, wait for health.                                                                                                                                                                |
+| `deploy/release.sh`                           | One release: pull images, encrypted backup of the database, migrate, start, wait for health.                                                                                                                                                    |
 | `scripts/smoke.mjs`                           | Smoke test after every release: health, security headers, unauthenticated and cross-site requests refused, error envelope, optional sign-in round trip with a smoke-test account.                                                               |
 | `deploy/compose.local.yml`, `deploy/local/`   | The same stack on a laptop or CI runner, with its own database and storage, on `https://localhost:8443`.                                                                                                                                        |
 | `.github/workflows/ci.yml`                    | Every pull request: format, lint, types, unit, build, dependency audit; database and end-to-end tests (Postgres and storage); production images started and smoke-tested.                                                                       |
@@ -59,8 +59,8 @@ Automatic once set up: merge to `main` releases to staging; tag `vX.Y.Z` release
 By hand on the host: `API_IMAGE=… WEB_IMAGE=… SITE_ADDRESS=… sh release.sh`, then `node scripts/smoke.mjs
 https://<host>`. Write release notes per deployment (what changed, migrations included, anything to watch).
 
-**Migrations** are forward-only and reviewed with the code. Each release takes a database backup first
-(`backups/pre-migrate-*.dump`, kept on the host until slice 6.5 moves backups to encrypted separate storage).
+**Migrations** are forward-only and reviewed with the code. Each release takes an encrypted backup to the separate
+backup bucket first (docs/backup-and-restore.md).
 Migrations must stay compatible with the version still running while they apply (add before you remove).
 
 ## Rollback
@@ -68,8 +68,8 @@ Migrations must stay compatible with the version still running while they apply 
 - **Code only:** run `release.sh` with the previous image tags. Migrations already applied stay, which is why they
   must remain compatible with the previous version.
 - **A migration must be undone:** do not edit the database by hand. Restore the pre-migration backup into a
-  **new** database, check it (slice 6.5's integrity checks), point `DATABASE_URL` at it, and release the previous
-  images. Anything written after the backup must be re-entered; record the incident.
+  **new** database with the restore drill (`--keep`), which runs the integrity checks, point `DATABASE_URL` at it,
+  and release the previous images (docs/backup-and-restore.md). Anything written after the backup must be re-entered; record the incident.
 
 ## Proven here, still to do there
 
