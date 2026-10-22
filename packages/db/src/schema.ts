@@ -1050,3 +1050,15 @@ export const exportFiles = pgTable('export_files', {
   expiresAt: tsz('expires_at').notNull(),
   removedAt: tsz('removed_at'),
 });
+
+/** One row per backup attempt (0026), written by the backup command; read for the backup alerts. */
+export const backupRuns = pgTable('backup_runs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  startedAt: tsz('started_at').notNull(),
+  finishedAt: tsz('finished_at').notNull().defaultNow(),
+  ok: boolean('ok').notNull(),
+  objectKey: text('object_key'),
+  bytes: bigint('bytes', { mode: 'number' }),
+  durationMs: integer('duration_ms').notNull(),
+  error: text('error'),
+});

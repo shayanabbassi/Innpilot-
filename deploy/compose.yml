@@ -40,6 +40,8 @@ services:
       API_PORT: '4000'
       # One proxy (Caddy) in front: rate limits and audit records use the client's address it reports.
       TRUST_PROXY: ${TRUST_PROXY:-1}
+      # Internal metrics port for Prometheus (6.6); not published, and the proxy never routes to it.
+      METRICS_PORT: '9464'
 
   web:
     <<: *hardened
@@ -80,6 +82,50 @@ services:
     env_file: release.env
     command: ['node', 'node_modules/@innpilot/db/dist/cli.js', 'migrate']
 
+  # Monitoring (slice 6.6), profile "monitoring": Prometheus with the alert rules, Alertmanager with your
+  # destinations (monitoring/alertmanager.yml, from alertmanager.example.yml) and Grafana with the dashboard.
+  # None is published: reach them over an SSH tunnel. A managed equivalent can replace all three (D17).
+  prometheus:
+    image: prom/prometheus:v3.14.0
+    profiles: [monitoring]
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=30d
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+
+  alertmanager:
+    image: prom/alertmanager:v0.33.1
+    profiles: [monitoring]
+    restart: unless-stopped
+    command: ['--config.file=/etc/alertmanager/alertmanager.yml', '--storage.path=/alertmanager']
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+
+  grafana:
+    image: grafana/grafana:13.1.8
+    profiles: [monitoring]
+    restart: unless-stopped
+    # monitoring.env must set GF_SECURITY_ADMIN_PASSWORD to a long random value: without it Grafana falls back to
+    # the well-known admin/admin.
+    env_file: monitoring.env
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+
 volumes:
   caddy_data:
   caddy_config:
+  prometheus_data:
+  alertmanager_data:
+  grafana_data:

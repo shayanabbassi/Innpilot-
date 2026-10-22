@@ -32,7 +32,7 @@ WORKDIR /app
 COPY --from=build /out ./
 USER node
 EXPOSE 4000
-# Liveness for docker and compose; the platform's own checks use the same endpoint.
+# Readiness (database, storage, migrations) for docker and compose; uptime checks use the same endpoint.
 HEALTHCHECK --interval=15s --timeout=3s --start-period=20s --retries=3 \
-  CMD wget -q -O /dev/null http://127.0.0.1:4000/api/v1/health || exit 1
+  CMD wget -q -O /dev/null http://127.0.0.1:4000/api/v1/health/ready || exit 1
 CMD ["node", "dist/main.js"]

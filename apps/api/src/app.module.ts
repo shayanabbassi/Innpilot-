@@ -73,6 +73,8 @@ import { StaysController } from './stays/stays.controller';
 import { StaysService } from './stays/stays.service';
 import { AttachmentsService } from './storage/attachments.service';
 import { FileStore } from './storage/file-store.service';
+import { ErrorReporter } from './monitoring/error-reporter.service';
+import { MetricsService } from './monitoring/metrics.service';
 import { FilesController } from './storage/files.controller';
 import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
@@ -226,6 +228,8 @@ export class AppModule {
         CheckoutService,
         PiiService,
         FileStore,
+        MetricsService,
+        ErrorReporter,
         AttachmentsService,
         IdempotencyService,
         PlatformSessionService,

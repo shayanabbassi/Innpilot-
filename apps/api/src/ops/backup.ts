@@ -124,3 +124,34 @@ export async function runBackup(opts: {
   for (const k of deleted) await opts.storage.delete(k);
   return { ...latest, monthlyCopy, deleted };
 }
+
+/**
+ * Records a backup attempt in backup_runs for the backup alerts (6.6). Skipped before the first migration (the table
+ * does not exist yet); a failure to record never hides the backup's own outcome.
+ */
+export async function recordBackupRun(
+  adminUrl: string,
+  run: { startedAt: Date; ok: boolean; key?: string; bytes?: number; error?: string },
+): Promise<void> {
+  const client = new Client({ connectionString: adminUrl });
+  try {
+    await client.connect();
+    const exists = (await client.query(`SELECT to_regclass('public.backup_runs') IS NOT NULL AS t`)).rows[0]
+      .t;
+    if (!exists) return;
+    await client.query(
+      `INSERT INTO backup_runs (started_at, ok, object_key, bytes, duration_ms, error)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [
+        run.startedAt,
+        run.ok,
+        run.key ?? null,
+        run.bytes ?? null,
+        Math.max(0, Date.now() - run.startedAt.getTime()),
+        run.ok ? null : (run.error ?? 'failed').slice(0, 500),
+      ],
+    );
+  } finally {
+    await client.end().catch(() => undefined);
+  }
+}

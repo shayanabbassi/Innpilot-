@@ -66,6 +66,35 @@ services:
     env_file: local/storage.env
     volumes: [storagedata:/data]
 
+  # Monitoring locally: published on localhost only, alerts delivered to a sink that prints them.
+  prometheus:
+    ports: ['127.0.0.1:9090:9090']
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+
+  alertmanager:
+    ports: ['127.0.0.1:9093:9093']
+    volumes: !override
+      - ./monitoring/alertmanager.local.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+
+  grafana:
+    env_file: !override local/monitoring.env
+    ports: ['127.0.0.1:3001:3000']
+
+  # Stands in for the real alert destinations: prints every notification it receives.
+  alert-sink:
+    image: node:24.19.0-alpine3.24
+    profiles: [monitoring]
+    command:
+      - node
+      - -e
+      - >-
+        require('http').createServer((q, s) => { let b = ''; q.on('data', (c) => (b += c));
+        q.on('end', () => { console.log('ALERT ' + b); s.end(); }); }).listen(8080)
+
 volumes:
   pgdata:
   storagedata:

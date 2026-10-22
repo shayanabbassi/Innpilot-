@@ -3,7 +3,7 @@ import { writeFileSync } from 'node:fs';
 import { loadRootEnv } from '@innpilot/db';
 import { z } from 'zod';
 import { S3Client } from '../storage/s3';
-import { runBackup } from './backup';
+import { recordBackupRun, runBackup } from './backup';
 import { generateBackupKeys, keyId } from './backup-format';
 import { drillMarkdown, runRestoreDrill } from './restore';
 
@@ -15,6 +15,8 @@ import { drillMarkdown, runRestoreDrill } from './restore';
  *   schedule        run `backup` every day at BACKUP_AT_UTC (HH:MM), forever
  *   restore-drill   restore the latest (or --key) backup into a new database, check it, drop it
  *                   [--key daily/...] [--keep] [--report drill.md]
+ *   ensure-buckets  create the application bucket (STORAGE_*) and the backup bucket (BACKUP_*) if missing: first
+ *                   set-up where the provider has not made them already
  */
 
 const storageSettings = z.object({
@@ -66,8 +68,64 @@ async function backupOnce(): Promise<void> {
     await storage.createBucket();
   }
   log('backup.started');
-  const r = await runBackup({ adminUrl: s.DATABASE_ADMIN_URL, storage, publicKey: s.BACKUP_PUBLIC_KEY });
-  log('backup.finished', { ...r });
+  const startedAt = new Date();
+  try {
+    const r = await runBackup({
+      adminUrl: s.DATABASE_ADMIN_URL,
+      storage,
+      publicKey: s.BACKUP_PUBLIC_KEY,
+      now: startedAt,
+    });
+    await recordBackupRun(s.DATABASE_ADMIN_URL, { startedAt, ok: true, key: r.key, bytes: r.bytes }).catch(
+      (err: unknown) =>
+        log('backup.record_failed', { error: err instanceof Error ? err.message : String(err) }),
+    );
+    log('backup.finished', { ...r });
+  } catch (err) {
+    // The reason is recorded for the backup-failure alert; connection strings never reach it (pg-tools strips the
+    // password, and the URL itself is never part of an error message here).
+    const reason = err instanceof Error ? err.message : String(err);
+    await recordBackupRun(s.DATABASE_ADMIN_URL, { startedAt, ok: false, error: reason }).catch(
+      () => undefined,
+    );
+    throw err;
+  }
+}
+
+async function ensureBuckets(): Promise<void> {
+  const app = z
+    .object({
+      STORAGE_ENDPOINT: z.string().url(),
+      STORAGE_REGION: z.string().default('us-east-1'),
+      STORAGE_BUCKET: z.string().min(3),
+      STORAGE_ACCESS_KEY_ID: z.string().min(3),
+      STORAGE_SECRET_ACCESS_KEY: z.string().min(8),
+    })
+    .parse(process.env);
+  const targets: [string, S3Client][] = [
+    [
+      app.STORAGE_BUCKET,
+      new S3Client({
+        endpoint: app.STORAGE_ENDPOINT.replace(/\/+$/, ''),
+        region: app.STORAGE_REGION,
+        bucket: app.STORAGE_BUCKET,
+        accessKeyId: app.STORAGE_ACCESS_KEY_ID,
+        secretAccessKey: app.STORAGE_SECRET_ACCESS_KEY,
+      }),
+    ],
+  ];
+  if (process.env.BACKUP_BUCKET) {
+    const s = settings({});
+    targets.push([s.BACKUP_BUCKET, bucket(s)]);
+  }
+  for (const [name, client] of targets) {
+    if (await client.bucketExists()) {
+      log('bucket.exists', { bucket: name });
+    } else {
+      await client.createBucket();
+      log('bucket.created', { bucket: name });
+    }
+  }
 }
 
 /** Milliseconds until the next HH:MM UTC. */
@@ -148,6 +206,8 @@ async function main(command: string | undefined, rest: string[]): Promise<void> 
       console.log(`BACKUP_PRIVATE_KEY=${keys.privateKey}`);
       return;
     }
+    case 'ensure-buckets':
+      return ensureBuckets();
     case 'backup':
       return backupOnce();
     case 'schedule':

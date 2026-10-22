@@ -10,6 +10,8 @@ import { and, eq, sql } from 'drizzle-orm';
 import { AppError } from '../common/app-error';
 import { APP_CONFIG, type AppConfig } from '../config';
 import { Db } from '../db/db.module';
+import { ErrorReporter } from '../monitoring/error-reporter.service';
+import { MetricsService } from '../monitoring/metrics.service';
 
 export type JobKind = (typeof schema.jobs.$inferSelect)['kind'];
 
@@ -60,6 +62,8 @@ export class JobsService implements OnApplicationBootstrap, OnApplicationShutdow
   constructor(
     @Inject(APP_CONFIG) private readonly config: AppConfig,
     private readonly db: Db,
+    private readonly metrics: MetricsService,
+    private readonly reporter: ErrorReporter,
   ) {}
 
   register(kind: JobKind, handler: Handler): void {
@@ -163,13 +167,17 @@ export class JobsService implements OnApplicationBootstrap, OnApplicationShutdow
       if (!handler) throw new Error(`no handler for job kind ${job.kind}`);
       await handler(job);
       await this.finish(job, { status: 'succeeded', lastError: null });
+      this.metrics.jobRuns.inc({ kind: job.kind, outcome: 'succeeded' });
     } catch (err) {
       const refusal = err instanceof AppError && err.code !== 'STORAGE_UNAVAILABLE';
       if (refusal) {
         await this.finish(job, { status: 'failed', lastError: err.message.slice(0, 500) });
+        this.metrics.jobRuns.inc({ kind: job.kind, outcome: 'refused' });
         return;
       }
+      this.reporter.report(err, { jobId: job.id, jobKind: job.kind, tenantId: job.tenantId });
       this.logger.error({ err, jobId: job.id, attempt: job.attempts }, 'Job failed');
+      this.metrics.jobRuns.inc({ kind: job.kind, outcome: 'failed' });
       if (job.attempts >= job.maxAttempts) {
         await this.finish(job, {
           status: 'failed',

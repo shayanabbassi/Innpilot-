@@ -24,6 +24,14 @@ plan P6-5 and P6-6.
 | `.github/workflows/ci.yml`                    | Every pull request: format, lint, types, unit, build, dependency audit; database and end-to-end tests (Postgres and storage); production images started and smoke-tested.                                                                       |
 | `.github/workflows/release.yml`, `deploy.yml` | Merge to `main`: images published to GitHub Container Registry, deployed to staging. Tag `v*`: the same images deployed to production after approval.                                                                                           |
 
+## Monitoring
+
+The API serves `/api/v1/health/live` (process up), `/api/v1/health/ready` (database, storage, migrations; use
+this for the provider's uptime check and TLS expiry check) and Prometheus metrics on the internal port 9464. Start
+the `monitoring` profile (`docker compose --profile monitoring up -d`) for Prometheus with the alert rules,
+Alertmanager with your destinations and Grafana with the dashboard, or point a managed equivalent at the same
+endpoints. Alerts, owners and what to do: docs/incident-response.md.
+
 ## Start-up refuses unsafe configuration
 
 In production (`NODE_ENV=production`, set by the images) the API will not start, and lists every problem, if:

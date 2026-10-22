@@ -1,0 +1,211 @@
+# Unit tests for alerts.yml: each alert fires on the signal it watches and stays quiet otherwise.
+#   docker run --rm -v "$PWD/deploy/monitoring:/m" --entrypoint promtool prom/prometheus:v3.14.0 test rules /m/alerts.test.yml
+rule_files: [alerts.yml]
+evaluation_interval: 1m
+
+tests:
+  - name: API down and not ready
+    interval: 1m
+    input_series:
+      - series: 'up{job="innpilot-api"}'
+        values: '1 1 0 0 0 0'
+      - series: 'innpilot_ready{dependency="storage"}'
+        values: '1 0 0 0 0 0'
+      - series: 'innpilot_ready{dependency="database"}'
+        values: '1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: InnPilotApiDown
+        exp_alerts: []
+      - eval_time: 5m
+        alertname: InnPilotApiDown
+        exp_alerts:
+          - exp_labels: { severity: critical, job: innpilot-api }
+            exp_annotations:
+              summary: The InnPilot API is not answering its metrics scrape.
+              runbook: docs/incident-response.md#api-down
+      - eval_time: 5m
+        alertname: InnPilotNotReady
+        exp_alerts:
+          - exp_labels: { severity: critical, dependency: storage }
+            exp_annotations:
+              summary: The API cannot use storage.
+              runbook: docs/incident-response.md#not-ready
+
+  - name: Error rate
+    interval: 1m
+    input_series:
+      # 60 requests a minute, 6 of them server errors (10%) from minute 0.
+      - series: 'innpilot_http_requests_total{route="/api/v1/folios/:id",status="200"}'
+        values: '0+54x15'
+      - series: 'innpilot_http_requests_total{route="/api/v1/folios/:id",status="500"}'
+        values: '0+6x15'
+    alert_rule_test:
+      - eval_time: 12m
+        alertname: InnPilotHighErrorRate
+        exp_alerts:
+          - exp_labels: { severity: critical }
+            exp_annotations:
+              summary: More than 5% of requests fail with a server error (10%).
+              runbook: docs/incident-response.md#errors
+
+  - name: Healthy traffic stays quiet
+    interval: 1m
+    input_series:
+      - series: 'innpilot_http_requests_total{route="/api/v1/folios/:id",status="200"}'
+        values: '0+100x30'
+      - series: 'innpilot_http_requests_total{route="/api/v1/folios/:id",status="500"}'
+        values: '0+1x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="0.25"}'
+        values: '0+95x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="0.5"}'
+        values: '0+100x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="1"}'
+        values: '0+101x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="+Inf"}'
+        values: '0+101x30'
+    alert_rule_test:
+      - eval_time: 25m
+        alertname: InnPilotHighErrorRate
+        exp_alerts: []
+      - eval_time: 25m
+        alertname: InnPilotSlowResponses
+        exp_alerts: []
+
+  - name: Slow responses
+    interval: 1m
+    input_series:
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="0.5"}'
+        values: '0+50x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="1"}'
+        values: '0+60x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="2.5"}'
+        values: '0+100x30'
+      - series: 'innpilot_http_request_duration_seconds_bucket{le="+Inf"}'
+        values: '0+100x30'
+    alert_rule_test:
+      - eval_time: 25m
+        alertname: InnPilotSlowResponses
+        exp_alerts:
+          - exp_labels: { severity: warning }
+            exp_annotations:
+              summary: p95 response time is 2.312s (target 0.5 s).
+              runbook: docs/incident-response.md#slow
+
+  - name: Database pool saturated
+    interval: 1m
+    input_series:
+      - series: 'innpilot_db_pool_connections{state="waiting"}'
+        values: '0 3 3 3 3 3 3 3'
+      - series: 'innpilot_db_pool_connections{state="total"}'
+        values: '4 10 10 10 10 10 10 10'
+      - series: 'innpilot_db_pool_connections{state="max"}'
+        values: '10 10 10 10 10 10 10 10'
+    alert_rule_test:
+      - eval_time: 7m
+        alertname: InnPilotDatabasePoolSaturated
+        exp_alerts:
+          - exp_labels: { severity: warning }
+            exp_annotations:
+              summary: Requests are waiting for a database connection.
+              runbook: docs/incident-response.md#database-capacity
+
+  - name: Jobs failing and waiting
+    interval: 1m
+    input_series:
+      - series: 'innpilot_job_runs_total{kind="report_export",outcome="failed"}'
+        values: '0 1 2 3 4 5 6 7 8 9 10'
+      - series: 'innpilot_jobs_oldest_queued_seconds'
+        values: '0 120 240 960 1020 1080 1140 1200 1260 1320 1380'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: InnPilotJobsFailing
+        exp_alerts:
+          - exp_labels: { severity: warning }
+            exp_annotations:
+              summary: Background jobs are failing (10 in 30 minutes).
+              runbook: docs/incident-response.md#jobs
+      - eval_time: 10m
+        alertname: InnPilotJobBacklog
+        exp_alerts:
+          - exp_labels: { severity: warning }
+            exp_annotations:
+              summary: A background job has waited 23m 0s.
+              runbook: docs/incident-response.md#jobs
+
+  - name: Backups
+    interval: 1h
+    input_series:
+      # The last success was at time 0 (the epoch); then attempts keep failing.
+      - series: 'innpilot_backup_last_success_timestamp_seconds'
+        values: '0x30'
+      - series: 'innpilot_backup_last_run_ok'
+        values: '1 0x29'
+    alert_rule_test:
+      - eval_time: 25h
+        alertname: InnPilotBackupTooOld
+        exp_alerts: []
+      - eval_time: 27h
+        alertname: InnPilotBackupTooOld
+        exp_alerts:
+          - exp_labels: { severity: critical }
+            exp_annotations:
+              summary: The last good backup is 1d 3h 0m 0s old.
+              runbook: docs/incident-response.md#backups
+      - eval_time: 2h
+        alertname: InnPilotBackupFailed
+        exp_alerts:
+          - exp_labels: { severity: critical }
+            exp_annotations:
+              summary: The most recent backup attempt failed.
+              runbook: docs/incident-response.md#backups
+
+  - name: No backup ever
+    interval: 1h
+    input_series:
+      - series: 'innpilot_process_uptime_seconds'
+        values: '0+3600x30'
+    alert_rule_test:
+      - eval_time: 20h
+        alertname: InnPilotBackupMissing
+        exp_alerts: []
+      - eval_time: 28h
+        alertname: InnPilotBackupMissing
+        exp_alerts:
+          - exp_labels: { severity: critical }
+            exp_annotations:
+              summary: No successful backup has ever been recorded.
+              runbook: docs/incident-response.md#backups
+
+  - name: Failed sign-in spike
+    interval: 1m
+    input_series:
+      - series: 'innpilot_errors_total{code="INVALID_CREDENTIALS"}'
+        values: '0+5x20'
+      - series: 'innpilot_errors_total{code="ACCOUNT_LOCKED"}'
+        values: '0+1x20'
+    alert_rule_test:
+      - eval_time: 15m
+        alertname: InnPilotFailedSignInSpike
+        exp_alerts:
+          - exp_labels: { severity: warning }
+            exp_annotations:
+              summary: '50 failed sign-ins in 10 minutes: possible password guessing.'
+              runbook: docs/incident-response.md#sign-in-spike
+      - eval_time: 15m
+        alertname: InnPilotAccountsLocking
+        exp_alerts:
+          - exp_labels: { severity: warning }
+            exp_annotations:
+              summary: 10 sign-ins refused for locked accounts in 10 minutes.
+              runbook: docs/incident-response.md#sign-in-spike
+
+  - name: A few wrong passwords stay quiet
+    interval: 1m
+    input_series:
+      - series: 'innpilot_errors_total{code="INVALID_CREDENTIALS"}'
+        values: '0+1x20'
+    alert_rule_test:
+      - eval_time: 15m
+        alertname: InnPilotFailedSignInSpike
+        exp_alerts: []

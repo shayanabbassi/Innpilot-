@@ -209,3 +209,17 @@ obligations before launch (05 §6), and the accountant's sign-off.
   journals, so the folio check holds on it. Locally there is no PostgreSQL client on this machine, so the tests
   run pg_dump inside the database container (`PG_TOOLS_CONTAINER`, local `.env` only); CI and the images use the
   tools directly. Not done here: the staging and production drills, the key pair and the backup bucket (yours).
+- **6.6:** see `docs/incident-response.md`. `/health/live` (no dependencies) and `/health/ready` (database,
+  storage, migrations; 503 `NOT_READY` names the failure; the image's health check uses it). Prometheus metrics on
+  an internal port the proxy never routes to: request latency and status by route template, error codes (the
+  failed sign-in spike), database pool, job queue, backup age and outcome (backups now record each attempt in
+  `backup_runs`), readiness, memory. Labels are route templates and codes only; a test proves no guest id, name or
+  identity number reaches them. Unexpected errors become one scrubbed report each (identity numbers, phones, emails,
+  tokens removed; no request content), logged and optionally posted to `ERROR_WEBHOOK_URL`. Found while building:
+  the query layer puts a failed statement's parameter values (names, phone numbers) into its error message, which
+  the old error log copied; reports now drop that list entirely, checked by the log-capture test. 13 alert rules
+  with promtool unit tests; Prometheus, Alertmanager and a Grafana dashboard as an optional `monitoring` profile.
+  The local alert drill stops the API and waits for the alert, and its resolution, to reach a test receiver (also in
+  CI). Readiness in production requires the storage bucket to exist; `node dist/ops/cli.js ensure-buckets`
+  creates missing buckets at first set-up. Not done here: real alert destinations, owners and the legal answer on
+  breach notification (yours, listed at the top of the runbook).

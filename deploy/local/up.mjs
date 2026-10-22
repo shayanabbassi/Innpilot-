@@ -44,6 +44,19 @@ run('docker', [...compose, 'up', '-d', '--wait', 'postgres', 'storage']);
 step('Provisioning the restricted application role');
 run('docker', [...compose, '--profile', 'release', 'run', '--rm', 'provision']);
 
+step('Storage buckets (made by the provider in a real deployment)');
+run('docker', [
+  ...compose,
+  '--profile',
+  'release',
+  'run',
+  '--rm',
+  'restore-drill',
+  'node',
+  'dist/ops/cli.js',
+  'ensure-buckets',
+]);
+
 step('Release: backup, migrations, start');
 run('sh', ['release.sh']);
 
@@ -113,3 +126,77 @@ run('docker', [...compose, '--profile', 'release', 'run', '--rm', 'restore-drill
     DRILL_SIGNIN_PASSWORD: smoke.SMOKE_PASSWORD,
   },
 });
+
+if (process.argv.includes('--alert-drill')) {
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const until = async (what, timeoutMs, test) => {
+    const end = Date.now() + timeoutMs;
+    for (;;) {
+      const value = await test().catch(() => null);
+      if (value) return value;
+      if (Date.now() > end) throw new Error(`Timed out waiting for: ${what}`);
+      await sleep(3000);
+    }
+  };
+  const prom = async (query) =>
+    (await (await fetch(`http://127.0.0.1:9090/api/v1/query?query=${encodeURIComponent(query)}`)).json()).data
+      .result;
+  const sinkLog = () =>
+    execFileSync('docker', [...compose, '--profile', 'monitoring', 'logs', '--no-color', 'alert-sink'], {
+      cwd: deploy,
+      env,
+      encoding: 'utf8',
+    });
+
+  step('Monitoring: Prometheus, Alertmanager, Grafana and the alert sink');
+  run('docker', [
+    ...compose,
+    '--profile',
+    'monitoring',
+    'up',
+    '-d',
+    'prometheus',
+    'alertmanager',
+    'grafana',
+    'alert-sink',
+  ]);
+  await until('Prometheus scraping the API', 120_000, async () => {
+    const r = await prom('up{job="innpilot-api"}');
+    return r[0]?.value[1] === '1';
+  });
+  console.log('  ok   Prometheus scrapes the API metrics port');
+  await until(
+    'readiness metrics',
+    60_000,
+    async () => (await prom('min(innpilot_ready)'))[0]?.value[1] === '1',
+  );
+  console.log('  ok   database, storage and migrations report ready');
+  const rules = await (await fetch('http://127.0.0.1:9090/api/v1/rules')).json();
+  const names = rules.data.groups.flatMap((g) => g.rules.map((r) => r.name));
+  if (names.length < 13 || !names.includes('InnPilotApiDown')) throw new Error(`rules not loaded: ${names}`);
+  console.log(`  ok   ${names.length} alert rules loaded`);
+  const grafana = readEnv('monitoring.env').GF_SECURITY_ADMIN_PASSWORD;
+  await until('the Grafana dashboard', 120_000, async () => {
+    const res = await fetch('http://127.0.0.1:3001/api/dashboards/uid/innpilot-overview', {
+      headers: { authorization: `Basic ${Buffer.from(`admin:${grafana}`).toString('base64')}` },
+    });
+    return res.status === 200;
+  });
+  console.log('  ok   Grafana has the InnPilot dashboard');
+
+  step('Alert drill: stop the API and wait for InnPilotApiDown at the sink');
+  const t0 = Date.now();
+  run('docker', [...compose, 'stop', 'api']);
+  try {
+    await until('InnPilotApiDown firing at the alert sink', 6 * 60_000, async () =>
+      /ALERT .*"status":"firing".*InnPilotApiDown/.test(sinkLog()),
+    );
+    console.log(`  ok   InnPilotApiDown delivered after ${Math.round((Date.now() - t0) / 1000)} s`);
+  } finally {
+    run('docker', [...compose, 'start', 'api']);
+  }
+  await until('InnPilotApiDown resolved at the alert sink', 6 * 60_000, async () =>
+    /ALERT .*"status":"resolved".*InnPilotApiDown/.test(sinkLog()),
+  );
+  console.log(`  ok   resolution delivered ${Math.round((Date.now() - t0) / 1000)} s after the stop`);
+}

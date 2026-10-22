@@ -51,6 +51,13 @@ const schema = z.object({
    * should only serve requests (and in tests, which run jobs directly).
    */
   JOBS_POLL_SECONDS: z.coerce.number().int().min(0).max(3600).default(5),
+  /**
+   * Port of the internal metrics server (slice 6.6): Prometheus text at GET /metrics. 0 turns it off. Never publish
+   * this port; the proxy does not route to it.
+   */
+  METRICS_PORT: z.coerce.number().int().min(0).max(65535).default(0),
+  /** Optional: where scrubbed error reports are also posted (an error-tracking ingest URL or a team webhook). */
+  ERROR_WEBHOOK_URL: z.string().url().optional(),
   /** Private S3-compatible object storage for attachments (slice 6.2). Path-style addressing. */
   STORAGE_ENDPOINT: z
     .string()
@@ -113,6 +120,9 @@ export function productionProblems(c: AppConfig): string[] {
     problems.push('STORAGE_ENDPOINT must use https unless it is a service on the private network.');
   }
   if (c.STORAGE_SECRET_ACCESS_KEY.length < 20) problems.push('STORAGE_SECRET_ACCESS_KEY is too short.');
+  if (c.ERROR_WEBHOOK_URL && !c.ERROR_WEBHOOK_URL.startsWith('https://')) {
+    problems.push('ERROR_WEBHOOK_URL must use https.');
+  }
   if (weakKey(c.MFA_ENCRYPTION_KEY)) problems.push('MFA_ENCRYPTION_KEY is not random; generate a new key.');
   if (weakKey(c.PII_ENCRYPTION_KEY)) problems.push('PII_ENCRYPTION_KEY is not random; generate a new key.');
   const dbUser = decodeURIComponent(new URL(c.DATABASE_URL).username);

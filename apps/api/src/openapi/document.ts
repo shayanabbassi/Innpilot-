@@ -1464,6 +1464,20 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ],
   },
+  'GET /health/live': {
+    tag: 'Operations',
+    summary: 'Liveness: the process is running (no dependency is checked)',
+    data: z.object({ status: z.literal('ok') }),
+  },
+  'GET /health/ready': {
+    tag: 'Operations',
+    summary:
+      'Readiness: database, file storage and migrations; 503 NOT_READY names the dependency that failed',
+    data: z.object({
+      status: z.literal('ok'),
+      checks: z.object({ database: z.literal('ok'), storage: z.literal('ok'), migrations: z.literal('ok') }),
+    }),
+  },
   'GET /health': {
     tag: 'Operations',
     summary: 'Liveness and database reachability',

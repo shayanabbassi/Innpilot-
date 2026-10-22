@@ -29,6 +29,7 @@ export const ERROR_CODES = [
   'FILE_TOO_LARGE',
   'LINK_EXPIRED',
   'STORAGE_UNAVAILABLE',
+  'NOT_READY',
   'RATE_LIMITED',
   'INTERNAL_ERROR',
 ] as const;

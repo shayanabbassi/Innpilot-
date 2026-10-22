@@ -13,7 +13,13 @@ describe('route access policies', () => {
       .filter((r) => r.policy?.kind === 'public')
       .map((r) => r.key)
       .sort();
-    expect(publicRoutes).toEqual(['GET /health', 'POST /auth/login', 'POST /platform/auth/login']);
+    expect(publicRoutes).toEqual([
+      'GET /health',
+      'GET /health/live',
+      'GET /health/ready',
+      'POST /auth/login',
+      'POST /platform/auth/login',
+    ]);
   });
 
   it('keeps platform routes for operators only and tenant routes for hotel sessions only', () => {

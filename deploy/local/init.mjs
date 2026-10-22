@@ -64,6 +64,7 @@ const files = {
     STORAGE_SECRET_ACCESS_KEY: storageSecret,
   }),
   'smoke.env': () => ({ SMOKE_EMAIL: 'smoke-owner@local.test', SMOKE_PASSWORD: secret(18) }),
+  'monitoring.env': () => ({ GF_SECURITY_ADMIN_PASSWORD: secret(18) }),
 };
 
 // The backup pair is made together: the public half for the backup job, the private half kept apart (as the owner

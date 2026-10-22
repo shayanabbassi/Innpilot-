@@ -74,10 +74,21 @@ jobs:
       - run: pg_dump --version && pg_restore --version
       - run: pnpm test:integration
 
-  production-stack:
-    name: Production images, start-up and smoke test
+  alert-rules:
+    name: Alert rule tests
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: promtool test rules
+        run: >-
+          docker run --rm -v "$PWD/deploy/monitoring:/m" --entrypoint promtool prom/prometheus:v3.14.0
+          test rules /m/alerts.test.yml
+
+  production-stack:
+    name: Production images, start-up, smoke test, backup, restore and alert drills
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -86,7 +97,8 @@ jobs:
       # Builds both images and runs them as production would (TLS proxy, restricted database role, release script
       # with backup and migrations), then the smoke test. Local secrets are generated fresh for this run.
       - run: node deploy/local/init.mjs
-      - run: node deploy/local/up.mjs
+      # Also starts monitoring and proves an alert reaches its destination (the API is stopped on purpose).
+      - run: node deploy/local/up.mjs --alert-drill
       - name: Logs on failure
         if: failure()
         working-directory: deploy

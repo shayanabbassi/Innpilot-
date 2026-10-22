@@ -40,6 +40,18 @@ export class FileStore {
     this.linkKey = Buffer.from(hkdfSync('sha256', root, Buffer.alloc(0), 'innpilot/files/link/v1', 32));
   }
 
+  /**
+   * Whether the bucket answers (readiness, 6.6). Outside production a bucket that does not exist yet counts as
+   * reachable: it is created on first use.
+   */
+  async reachable(): Promise<boolean> {
+    try {
+      return (await this.s3.bucketExists()) || this.config.NODE_ENV !== 'production';
+    } catch {
+      return false;
+    }
+  }
+
   /** Encrypts and stores `plain` at `key`, replacing anything there. Storage failures become STORAGE_UNAVAILABLE. */
   async put(key: string, plain: Buffer, fileId: string): Promise<StoredFile> {
     const sealed = sealFile(plain, this.fileKey, fileId);

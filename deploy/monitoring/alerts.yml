@@ -1,0 +1,111 @@
+# InnPilot alert rules (slice 6.6), for Prometheus or any compatible ruler (Grafana Mimir, a managed Prometheus).
+# The 05 runbook's list: uptime, latency, error rate, database capacity, queue failures, backup failures, failed
+# sign-in spikes. Severity "critical" pages the on-call owner at any hour; "warning" goes to the team channel.
+# Each alert links to its section of docs/incident-response.md. Tested by alerts.test.yml (promtool test rules).
+groups:
+  - name: innpilot
+    rules:
+      - alert: InnPilotApiDown
+        expr: up{job="innpilot-api"} == 0
+        for: 2m
+        labels: { severity: critical }
+        annotations:
+          summary: The InnPilot API is not answering its metrics scrape.
+          runbook: docs/incident-response.md#api-down
+
+      - alert: InnPilotNotReady
+        expr: min by (dependency) (innpilot_ready) == 0
+        for: 3m
+        labels: { severity: critical }
+        annotations:
+          summary: 'The API cannot use {{ $labels.dependency }}.'
+          runbook: docs/incident-response.md#not-ready
+
+      - alert: InnPilotHighErrorRate
+        expr: >
+          sum(rate(innpilot_http_requests_total{status=~"5.."}[5m]))
+          / clamp_min(sum(rate(innpilot_http_requests_total[5m])), 1e-9) > 0.05
+          and sum(rate(innpilot_http_requests_total[5m])) > 0.05
+        for: 5m
+        labels: { severity: critical }
+        annotations:
+          summary: 'More than 5% of requests fail with a server error ({{ $value | humanizePercentage }}).'
+          runbook: docs/incident-response.md#errors
+
+      - alert: InnPilotSlowResponses
+        expr: >
+          histogram_quantile(0.95, sum by (le) (rate(innpilot_http_request_duration_seconds_bucket[10m]))) > 1
+        for: 10m
+        labels: { severity: warning }
+        annotations:
+          summary: 'p95 response time is {{ $value | humanizeDuration }} (target 0.5 s).'
+          runbook: docs/incident-response.md#slow
+
+      - alert: InnPilotDatabasePoolSaturated
+        expr: >
+          max(innpilot_db_pool_connections{state="waiting"}) > 0
+          and max(innpilot_db_pool_connections{state="total"}) >= max(innpilot_db_pool_connections{state="max"})
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: Requests are waiting for a database connection.
+          runbook: docs/incident-response.md#database-capacity
+
+      - alert: InnPilotJobsFailing
+        expr: sum(increase(innpilot_job_runs_total{outcome="failed"}[30m])) > 3
+        labels: { severity: warning }
+        annotations:
+          summary: 'Background jobs are failing ({{ $value }} in 30 minutes).'
+          runbook: docs/incident-response.md#jobs
+
+      - alert: InnPilotJobBacklog
+        expr: max(innpilot_jobs_oldest_queued_seconds) > 900
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: 'A background job has waited {{ $value | humanizeDuration }}.'
+          runbook: docs/incident-response.md#jobs
+
+      - alert: InnPilotBackupTooOld
+        expr: time() - max(innpilot_backup_last_success_timestamp_seconds) > 26 * 3600
+        labels: { severity: critical }
+        annotations:
+          summary: 'The last good backup is {{ $value | humanizeDuration }} old.'
+          runbook: docs/incident-response.md#backups
+
+      - alert: InnPilotBackupMissing
+        expr: absent(innpilot_backup_last_success_timestamp_seconds) and on() max(innpilot_process_uptime_seconds) > 26 * 3600
+        labels: { severity: critical }
+        annotations:
+          summary: No successful backup has ever been recorded.
+          runbook: docs/incident-response.md#backups
+
+      - alert: InnPilotBackupFailed
+        expr: max(innpilot_backup_last_run_ok) == 0
+        labels: { severity: critical }
+        annotations:
+          summary: The most recent backup attempt failed.
+          runbook: docs/incident-response.md#backups
+
+      - alert: InnPilotFailedSignInSpike
+        expr: >
+          sum(increase(innpilot_errors_total{code=~"INVALID_CREDENTIALS|INVALID_MFA_CODE"}[10m])) > 30
+        labels: { severity: warning }
+        annotations:
+          summary: '{{ $value }} failed sign-ins in 10 minutes: possible password guessing.'
+          runbook: docs/incident-response.md#sign-in-spike
+
+      - alert: InnPilotAccountsLocking
+        expr: sum(increase(innpilot_errors_total{code="ACCOUNT_LOCKED"}[10m])) > 5
+        labels: { severity: warning }
+        annotations:
+          summary: '{{ $value }} sign-ins refused for locked accounts in 10 minutes.'
+          runbook: docs/incident-response.md#sign-in-spike
+
+      - alert: InnPilotMemoryHigh
+        expr: max(innpilot_process_resident_memory_bytes) > 1.5e9
+        for: 15m
+        labels: { severity: warning }
+        annotations:
+          summary: 'The API process uses {{ $value | humanize1024 }}B of memory.'
+          runbook: docs/incident-response.md#slow

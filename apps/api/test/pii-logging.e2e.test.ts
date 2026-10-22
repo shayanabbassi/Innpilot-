@@ -130,8 +130,11 @@ describe('identity numbers in the application log', () => {
       expect.objectContaining({ level: 40, context: 'AuthService', msg: 'Login failed: unknown account' }),
     );
     expect(entries).toContainEqual(
-      expect.objectContaining({ level: 50, context: 'ErrorFilter', msg: 'Unhandled error' }),
+      expect.objectContaining({ level: 50, context: 'ErrorReporter', msg: 'Unhandled error' }),
     );
+    // The failed insert's parameters (encrypted number, guest id, names) never reach the error report (6.6).
+    const report = JSON.stringify(entries.filter((e) => e.context === 'ErrorReporter'));
+    expect(report).toContain('params: [removed]');
 
     for (const secret of SECRETS) expect(output, secret).not.toContain(secret);
   });
