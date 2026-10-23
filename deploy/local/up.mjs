@@ -5,7 +5,7 @@
  * account, the smoke test against the stack, then a fresh encrypted backup and the restore drill (slice 6.5).
  * `node deploy/local/up.mjs --down` stops it.
  */
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,8 +22,25 @@ const env = {
   SKIP_PULL: '1',
 };
 const compose = ['compose', '-f', 'compose.yml', '-f', 'compose.local.yml'];
-const run = (cmd, args, opts = {}) =>
-  execFileSync(cmd, args, { stdio: 'inherit', cwd: deploy, env, ...opts });
+let failure = '';
+const run = (cmd, args, opts = {}) => {
+  const r = spawnSync(cmd, args, {
+    cwd: deploy,
+    env,
+    ...opts,
+    stdio: ['inherit', 'inherit', 'pipe'],
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (r.stderr?.length) process.stderr.write(r.stderr);
+  if (r.status !== 0) {
+    failure = String(r.stderr ?? r.error ?? '')
+      .trim()
+      .split('\n')
+      .slice(-15)
+      .join('\n');
+    throw new Error(`${cmd} ${args.join(' ')} exited with ${r.status}`);
+  }
+};
 
 if (process.argv.includes('--down')) {
   run('docker', [...compose, '--profile', 'release', 'down']);
@@ -37,7 +54,10 @@ const step = (title) => {
 };
 // In CI, name the failed step as an annotation: annotations are readable without opening the job log.
 process.on('exit', (code) => {
-  if (code !== 0 && process.env.GITHUB_ACTIONS) console.log(`::error title=Local stack failed::${current}`);
+  if (code !== 0 && process.env.GITHUB_ACTIONS) {
+    const text = `${current}\n${failure}`.replace(/%/g, '%25').replace(/\r?\n/g, '%0A');
+    console.log(`::error title=Local stack failed::${text}`);
+  }
 });
 
 if (!process.argv.includes('--no-build')) {
