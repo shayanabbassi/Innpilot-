@@ -109,7 +109,14 @@ jobs:
           WEB_IMAGE: innpilot-web:local
           SITE_ADDRESS: localhost
         run: |
-          docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring ps -a
-          docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring logs --no-color --tail 200 | tee /tmp/stack.log
-          # The last lines again as an annotation, which is readable without opening the job log.
-          echo "::error title=Local stack logs::$(tail -n 40 /tmp/stack.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
+          C="docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring"
+          $C ps -a
+          $C logs --no-color --tail 200
+          # Again as annotations, which are readable without opening the job log: each container's state and last
+          # health check, then the last log lines without the start-up route listing.
+          annotate() { echo "::error title=$1::$(sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"; }
+          for id in $($C ps -aq); do
+            docker inspect --format '{{.Name}} {{.State.Status}} exit={{.State.ExitCode}} {{if .State.Health}}{{.State.Health.Status}} {{range .State.Health.Log}}[{{.ExitCode}}] {{.Output}} {{end}}{{end}}' "$id"
+          done | cut -c1-600 | annotate "Local stack containers"
+          $C logs --no-color --tail 400 | grep -v 'Mapped {\|RoutesResolver\|InstanceLoader' | tail -n 30 | cut -c1-300 \
+            | annotate "Local stack logs"
