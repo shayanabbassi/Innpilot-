@@ -27,6 +27,8 @@ echo "==> Applying migrations"
 $COMPOSE --profile release run --rm migrate
 
 echo "==> Starting the new version"
-$COMPOSE up -d --wait api web proxy backups
+$COMPOSE up -d --wait api web proxy
+# The backup scheduler serves no requests and has no health check; newer Compose refuses to --wait on it.
+$COMPOSE up -d backups
 
 echo "==> Released $API_IMAGE and $WEB_IMAGE"
