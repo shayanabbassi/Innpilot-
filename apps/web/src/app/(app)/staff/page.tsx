@@ -6,6 +6,7 @@ import {
   ROLE_CODES,
   ROLES,
   type CreateUserRequest,
+  type PasswordResetResponse,
   type RoleAssignmentDto,
   type RoleCode,
   type UserDto,
@@ -15,6 +16,7 @@ import { useFormatter, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  Alert,
   ApiErrorAlert,
   Button,
   Dialog,
@@ -33,7 +35,9 @@ import { useSession } from '@/lib/session';
 
 const USERS_KEY = ['users'] as const;
 type Action =
-  { kind: 'roles' | 'disable' | 'enable' | 'resetMfa'; user: UserDto } | { kind: 'create' } | null;
+  | { kind: 'roles' | 'disable' | 'enable' | 'resetMfa' | 'resetPassword'; user: UserDto }
+  | { kind: 'create' }
+  | null;
 
 export default function StaffPage() {
   const t = useTranslations('staff');
@@ -67,6 +71,9 @@ export default function StaffPage() {
 
       {action?.kind === 'create' && <CreateUserDialog onClose={() => setAction(null)} />}
       {action?.kind === 'roles' && <RolesDialog user={action.user} onClose={() => setAction(null)} />}
+      {action?.kind === 'resetPassword' && (
+        <PasswordResetDialog user={action.user} onClose={() => setAction(null)} />
+      )}
       {(action?.kind === 'disable' || action?.kind === 'enable' || action?.kind === 'resetMfa') && (
         <ConfirmWithReason kind={action.kind} user={action.user} onClose={() => setAction(null)} />
       )}
@@ -121,6 +128,15 @@ function StaffTable({
         >
           {u.status === 'active' ? t('disable') : t('enable')}
         </Button>
+        {u.status === 'active' && (
+          <Button
+            variant="ghost"
+            className="min-h-8 px-2"
+            onClick={() => onAction({ kind: 'resetPassword', user: u })}
+          >
+            {t('resetPassword')}
+          </Button>
+        )}
         {u.mfaEnabled && (
           <Button
             variant="ghost"
@@ -429,6 +445,71 @@ function ConfirmWithReason({
           </Button>
         </div>
       </div>
+    </Dialog>
+  );
+}
+
+/**
+ * D18: a one-time temporary password for a staff member. It is shown once, here, to hand over in person; it expires
+ * and must be changed at the next sign-in. Closing the dialog removes it from the screen for good.
+ */
+function PasswordResetDialog({ user, onClose }: { user: UserDto; onClose: () => void }) {
+  const t = useTranslations('staff');
+  const tCommon = useTranslations('common');
+  const format = useFormatter();
+  const queryClient = useQueryClient();
+  const [reason, setReason] = useState('');
+  const run = useMutation({
+    mutationFn: () => api.post<PasswordResetResponse>(`/users/${user.id}/password-reset`, { reason }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: USERS_KEY }),
+  });
+
+  return (
+    <Dialog open onClose={onClose} title={t('resetPasswordTitle', { name: user.fullName })}>
+      {run.data ? (
+        <div className="flex flex-col gap-4">
+          <p className="text-sm">{t('resetPasswordDone', { name: user.fullName })}</p>
+          <p className="tabular select-all rounded-md border border-line bg-canvas px-3 py-3 text-center font-mono text-lg tracking-wider">
+            {run.data.temporaryPassword}
+          </p>
+          <Alert tone="warning">
+            {t('resetPasswordOnce', {
+              until: format.dateTime(new Date(run.data.expiresAt), {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              }),
+            })}
+          </Alert>
+          <div className="flex justify-end">
+            <Button onClick={onClose}>{tCommon('close')}</Button>
+          </div>
+        </div>
+      ) : (
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (reason.trim().length >= 3 && !run.isPending) run.mutate();
+          }}
+        >
+          <p className="text-sm text-muted">{t('resetPasswordBody')}</p>
+          {run.isError && <ApiErrorAlert error={run.error} />}
+          <TextField
+            label={t('reasonLabel')}
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            maxLength={500}
+          />
+          <div className="flex justify-end gap-2">
+            <Button variant="secondary" onClick={onClose}>
+              {tCommon('cancel')}
+            </Button>
+            <Button type="submit" busy={run.isPending} disabled={reason.trim().length < 3}>
+              {t('resetPasswordConfirm')}
+            </Button>
+          </div>
+        </form>
+      )}
     </Dialog>
   );
 }

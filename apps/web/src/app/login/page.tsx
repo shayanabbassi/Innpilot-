@@ -12,7 +12,12 @@ import { api } from '@/lib/api';
 import { applyServerErrors } from '@/lib/forms';
 import { AuthFrame } from './auth-frame';
 
-const NEXT_STEP = { active: '/', mfa_verify: '/login/verify', mfa_enroll: '/login/setup-mfa' } as const;
+const NEXT_STEP = {
+  active: '/',
+  mfa_verify: '/login/verify',
+  mfa_enroll: '/login/setup-mfa',
+  password_change: '/login/change-password',
+} as const;
 
 export default function LoginPage() {
   const t = useTranslations('login');

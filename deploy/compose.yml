@@ -1,0 +1,131 @@
+# InnPilot production stack, provider-neutral (D17 undecided). Runs on any host with Docker Compose; the database
+# and object storage are managed services reached through the settings in app.env (see env.example).
+#
+#   API_IMAGE=ghcr.io/<owner>/innpilot-api:<tag> WEB_IMAGE=ghcr.io/<owner>/innpilot-web:<tag> ./release.sh
+#
+# Release-only services (profile "release"): an encrypted backup before migrating, then migrate, and the restore
+# drill. They use release.env (the database owner) and backup.env (the backup bucket and public key); the running
+# API sees neither. The "backups" service makes the nightly encrypted backup (slice 6.5).
+name: innpilot
+
+x-hardened: &hardened
+  restart: unless-stopped
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: ['no-new-privileges:true']
+
+services:
+  proxy:
+    image: caddy:2.11.7-alpine
+    restart: unless-stopped
+    ports: ['80:80', '443:443']
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Set SITE_ADDRESS to the public host name}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/innpilot.caddy:/etc/caddy/innpilot.caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api: { condition: service_healthy }
+      web: { condition: service_healthy }
+
+  api:
+    <<: *hardened
+    image: ${API_IMAGE:?Set API_IMAGE}
+    env_file: app.env
+    environment:
+      NODE_ENV: production
+      API_PORT: '4000'
+      # One proxy (Caddy) in front: rate limits and audit records use the client's address it reports.
+      TRUST_PROXY: ${TRUST_PROXY:-1}
+      # Internal metrics port for Prometheus (6.6); not published, and the proxy never routes to it.
+      METRICS_PORT: '9464'
+
+  web:
+    <<: *hardened
+    image: ${WEB_IMAGE:?Set WEB_IMAGE}
+    tmpfs: [/tmp, /app/apps/web/.next/cache]
+
+  # Nightly encrypted backup to the separate backup bucket, at BACKUP_AT_UTC (default 21:00 UTC, 02:00 in Pakistan).
+  backups:
+    <<: *hardened
+    image: ${API_IMAGE:?Set API_IMAGE}
+    env_file: [release.env, backup.env]
+    command: ['node', 'dist/ops/cli.js', 'schedule']
+    # The image's health check probes the API's web port, which this service does not run.
+    healthcheck:
+      disable: true
+
+  backup:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: [release.env, backup.env]
+    command: ['node', 'dist/ops/cli.js', 'backup']
+
+  # The restore drill (docs/backup-and-restore.md). The private key is given only for the run:
+  #   BACKUP_PRIVATE_KEY=... DRILL_SIGNIN_EMAIL=... DRILL_SIGNIN_PASSWORD=... docker compose --profile release run --rm restore-drill
+  restore-drill:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: [app.env, release.env, backup.env]
+    environment:
+      BACKUP_PRIVATE_KEY: ${BACKUP_PRIVATE_KEY:-}
+      DRILL_SIGNIN_EMAIL: ${DRILL_SIGNIN_EMAIL:-}
+      DRILL_SIGNIN_PASSWORD: ${DRILL_SIGNIN_PASSWORD:-}
+    command: ['node', 'dist/ops/cli.js', 'restore-drill']
+
+  migrate:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: release.env
+    command: ['node', 'node_modules/@innpilot/db/dist/cli.js', 'migrate']
+
+  # Monitoring (slice 6.6), profile "monitoring": Prometheus with the alert rules, Alertmanager with your
+  # destinations (monitoring/alertmanager.yml, from alertmanager.example.yml) and Grafana with the dashboard.
+  # None is published: reach them over an SSH tunnel. A managed equivalent can replace all three (D17).
+  prometheus:
+    image: prom/prometheus:v3.14.0
+    profiles: [monitoring]
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=30d
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+
+  alertmanager:
+    image: prom/alertmanager:v0.33.1
+    profiles: [monitoring]
+    restart: unless-stopped
+    command: ['--config.file=/etc/alertmanager/alertmanager.yml', '--storage.path=/alertmanager']
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+
+  grafana:
+    image: grafana/grafana:13.1.8
+    profiles: [monitoring]
+    restart: unless-stopped
+    # monitoring.env must set GF_SECURITY_ADMIN_PASSWORD to a long random value: without it Grafana falls back to
+    # the well-known admin/admin.
+    env_file: monitoring.env
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 'false'
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  caddy_data:
+  caddy_config:
+  prometheus_data:
+  alertmanager_data:
+  grafana_data:

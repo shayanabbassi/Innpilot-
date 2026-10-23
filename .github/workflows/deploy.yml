@@ -1,0 +1,67 @@
+name: Deploy
+
+# Deploys published images to one environment over SSH and smoke-tests it. Called by release.yml.
+#
+# Repository variables STAGING_HOST and PRODUCTION_HOST turn each deployment on (release.yml checks them before an
+# environment applies). Per GitHub environment (staging, production), the owner sets:
+#   variables: DEPLOY_USER, DEPLOY_DIR, SITE_ADDRESS
+#   secrets:   DEPLOY_SSH_KEY (a key allowed only to deploy), DEPLOY_KNOWN_HOSTS (the host's verified key),
+#              SMOKE_EMAIL / SMOKE_PASSWORD (optional: a dedicated smoke-test account)
+# The host holds app.env and release.env itself and is logged in to ghcr.io with a read-only token; no
+# application secret passes through this workflow.
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Release ${{ inputs.tag }} to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: ${{ inputs.environment }}
+      url: https://${{ vars.SITE_ADDRESS }}
+    env:
+      HOST: ${{ inputs.environment == 'production' && vars.PRODUCTION_HOST || vars.STAGING_HOST }}
+      DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+      DEPLOY_DIR: ${{ vars.DEPLOY_DIR }}
+      SITE_ADDRESS: ${{ vars.SITE_ADDRESS }}
+      API_IMAGE: ghcr.io/${{ github.repository_owner }}/innpilot-api:${{ inputs.tag }}
+      WEB_IMAGE: ghcr.io/${{ github.repository_owner }}/innpilot-web:${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+      - name: SSH access
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+      - name: Copy the stack definition
+        run: |
+          ssh -i ~/.ssh/id_deploy "$DEPLOY_USER@$HOST" "mkdir -p '$DEPLOY_DIR/caddy'"
+          scp -i ~/.ssh/id_deploy deploy/compose.yml deploy/release.sh "$DEPLOY_USER@$HOST:$DEPLOY_DIR/"
+          scp -i ~/.ssh/id_deploy deploy/caddy/Caddyfile deploy/caddy/innpilot.caddy "$DEPLOY_USER@$HOST:$DEPLOY_DIR/caddy/"
+      - name: Release (backup, migrations, start)
+        run: >-
+          ssh -i ~/.ssh/id_deploy "$DEPLOY_USER@$HOST"
+          "cd '$DEPLOY_DIR' && API_IMAGE='$API_IMAGE' WEB_IMAGE='$WEB_IMAGE' SITE_ADDRESS='$SITE_ADDRESS' sh release.sh"
+      - name: Smoke test
+        env:
+          SMOKE_EMAIL: ${{ secrets.SMOKE_EMAIL }}
+          SMOKE_PASSWORD: ${{ secrets.SMOKE_PASSWORD }}
+        run: node scripts/smoke.mjs "https://$SITE_ADDRESS"

@@ -1,0 +1,100 @@
+# Local production-like stack: the production compose file plus a database and object storage of its own, on
+# https://localhost:8443. Proves the images, start-up checks, migrations and smoke test without a cloud account.
+#   node deploy/local/init.mjs        (once: writes deploy/local/*.env with random local secrets)
+#   node deploy/local/up.mjs          (builds images, provisions, migrates, starts, runs the smoke test)
+services:
+  proxy:
+    ports: !override ['127.0.0.1:8443:8443']
+    environment:
+      SITE_ADDRESS: localhost
+    volumes: !override
+      - ./caddy/Caddyfile.local:/etc/caddy/Caddyfile:ro
+      - ./caddy/innpilot.caddy:/etc/caddy/innpilot.caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  api:
+    env_file: !override local/app.env
+    depends_on:
+      postgres: { condition: service_healthy }
+      storage: { condition: service_started }
+
+  backups:
+    env_file: !override [local/release.env, local/backup.env]
+    depends_on:
+      postgres: { condition: service_healthy }
+      storage: { condition: service_started }
+
+  backup:
+    env_file: !override [local/release.env, local/backup.env]
+    depends_on:
+      postgres: { condition: service_healthy }
+      storage: { condition: service_started }
+
+  restore-drill:
+    env_file: !override [local/app.env, local/release.env, local/backup.env]
+    depends_on:
+      postgres: { condition: service_healthy }
+      storage: { condition: service_started }
+
+  migrate:
+    env_file: !override local/release.env
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  provision:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: local/release.env
+    command: ['node', 'node_modules/@innpilot/db/dist/cli.js', 'provision']
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  postgres:
+    image: postgres:16.10-alpine
+    env_file: local/postgres.env
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d innpilot']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  storage:
+    image: versity/versitygw:v1.9.0
+    command: ['--port', ':7070', 'posix', '/data']
+    env_file: local/storage.env
+    volumes: [storagedata:/data]
+
+  # Monitoring locally: published on localhost only, alerts delivered to a sink that prints them.
+  prometheus:
+    ports: ['127.0.0.1:9090:9090']
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+
+  alertmanager:
+    ports: ['127.0.0.1:9093:9093']
+    volumes: !override
+      - ./monitoring/alertmanager.local.yml:/etc/alertmanager/alertmanager.yml:ro
+      - alertmanager_data:/alertmanager
+
+  grafana:
+    env_file: !override local/monitoring.env
+    ports: ['127.0.0.1:3001:3000']
+
+  # Stands in for the real alert destinations: prints every notification it receives.
+  alert-sink:
+    image: node:24.19.0-alpine3.24
+    profiles: [monitoring]
+    command:
+      - node
+      - -e
+      - >-
+        require('http').createServer((q, s) => { let b = ''; q.on('data', (c) => (b += c));
+        q.on('end', () => { console.log('ALERT ' + b); s.end(); }); }).listen(8080)
+
+volumes:
+  pgdata:
+  storagedata:

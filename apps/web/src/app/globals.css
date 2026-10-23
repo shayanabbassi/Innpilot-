@@ -52,4 +52,17 @@ dialog::backdrop {
   .no-print {
     display: none !important;
   }
+  /* Printed reports (D15): full width without the sidebar, wide tables shown whole, definitions open. */
+  .app-shell {
+    display: block !important;
+  }
+  .overflow-x-auto {
+    overflow: visible !important;
+  }
+  body {
+    background: #fff !important;
+  }
+  tr {
+    break-inside: avoid;
+  }
 }

@@ -9,7 +9,34 @@ import { useSession } from '@/lib/session';
 
 interface NavItem {
   href: string;
-  label: 'overview' | 'staff' | 'audit' | 'property' | 'account';
+  label:
+    | 'overview'
+    | 'frontDesk'
+    | 'reservations'
+    | 'board'
+    | 'guests'
+    | 'housekeeping'
+    | 'maintenance'
+    | 'dayClose'
+    | 'cash'
+    | 'myShift'
+    | 'cashClosings'
+    | 'expenses'
+    | 'suppliers'
+    | 'reconciliation'
+    | 'journals'
+    | 'reports'
+    | 'exports'
+    | 'trialBalance'
+    | 'accounts'
+    | 'periods'
+    | 'taxes'
+    | 'invoice'
+    | 'rooms'
+    | 'staff'
+    | 'audit'
+    | 'property'
+    | 'account';
   /** Shown only when the user could use it. Phase 2+ sections appear here as they ship. */
   visible: (s: ReturnType<typeof useSession>) => boolean;
 }
@@ -18,7 +45,46 @@ const tenant = (p: Permission) => (s: ReturnType<typeof useSession>) => s.canTen
 
 const NAV: NavItem[] = [
   { href: '/', label: 'overview', visible: () => true },
+  { href: '/front-desk', label: 'frontDesk', visible: (s) => s.can('reservation.read') },
+  { href: '/reservations', label: 'reservations', visible: (s) => s.can('reservation.read') },
+  { href: '/rooms', label: 'board', visible: (s) => s.can('room.read') },
+  { href: '/guests', label: 'guests', visible: (s) => s.can('guest.read') },
+  { href: '/housekeeping', label: 'housekeeping', visible: (s) => s.can('housekeeping.read') },
+  { href: '/maintenance', label: 'maintenance', visible: (s) => s.can('housekeeping.read') },
+  { href: '/night-audit', label: 'dayClose', visible: (s) => s.can('night_audit.run') },
+  { href: '/cashier', label: 'myShift', visible: (s) => s.can('cashier.operate') },
+  {
+    href: '/cashier/shifts',
+    label: 'cashClosings',
+    visible: (s) => s.can('cashier.approve') || s.can('journal.read'),
+  },
+  { href: '/expenses', label: 'expenses', visible: (s) => s.can('expense.write') },
+  { href: '/suppliers', label: 'suppliers', visible: (s) => s.can('expense.write') },
+  { href: '/finance/cash', label: 'cash', visible: (s) => s.can('journal.read') || s.can('cash.transfer') },
+  { href: '/finance/reconciliations', label: 'reconciliation', visible: (s) => s.can('journal.read') },
+  {
+    href: '/reports',
+    label: 'reports',
+    visible: (s) =>
+      s.canTenant('audit.read') ||
+      s.me.properties.some(
+        (p) => p.permissions.includes('report.financial') || p.permissions.includes('report.operational'),
+      ),
+  },
+  {
+    href: '/exports',
+    label: 'exports',
+    visible: (s) =>
+      s.canTenant('export.run') || s.me.properties.some((p) => p.permissions.includes('export.run')),
+  },
+  { href: '/finance/journals', label: 'journals', visible: tenant('journal.read') },
+  { href: '/finance/trial-balance', label: 'trialBalance', visible: tenant('journal.read') },
+  { href: '/finance/accounts', label: 'accounts', visible: tenant('journal.read') },
+  { href: '/finance/periods', label: 'periods', visible: tenant('journal.read') },
   { href: '/settings/property', label: 'property', visible: (s) => s.can('property.read') },
+  { href: '/settings/rooms', label: 'rooms', visible: (s) => s.can('room.read') },
+  { href: '/settings/taxes', label: 'taxes', visible: (s) => s.can('tax.configure') },
+  { href: '/settings/invoice', label: 'invoice', visible: (s) => s.can('tax.configure') },
   { href: '/staff', label: 'staff', visible: tenant('user.read') },
   { href: '/audit', label: 'audit', visible: tenant('audit.read') },
   { href: '/account', label: 'account', visible: () => true },
@@ -59,7 +125,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[15rem_1fr]">
+    <div className="app-shell min-h-dvh lg:grid lg:grid-cols-[15rem_1fr]">
       {/* Sidebar: fixed on desktop, slide-over on tablet and phone. */}
       <aside
         className={`no-print fixed inset-y-0 left-0 z-30 w-64 bg-navy-800 transition-transform lg:static lg:w-auto lg:translate-x-0 ${

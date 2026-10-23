@@ -72,6 +72,7 @@ export class SessionService {
           session: schema.sessions,
           userStatus: schema.users.status,
           mfaEnabledAt: schema.users.mfaEnabledAt,
+          passwordChangeRequired: schema.users.passwordChangeRequired,
           tenantStatus: schema.tenants.status,
         })
         .from(schema.sessions)
@@ -89,22 +90,7 @@ export class SessionService {
         return null;
       }
 
-      const [assignments, properties] = await Promise.all([
-        tx
-          .select({ role: schema.userRoles.roleCode, propertyId: schema.userRoles.propertyId })
-          .from(schema.userRoles)
-          .where(eq(schema.userRoles.userId, found.user_id)),
-        tx
-          .select({ id: schema.properties.id })
-          .from(schema.properties)
-          .where(eq(schema.properties.status, 'active')),
-      ]);
-      const roleAssignments = assignments.map((a) => ({
-        role: a.role as RoleCode,
-        propertyId: a.propertyId,
-      }));
-      const tenantPropertyIds = properties.map((p) => p.id);
-      const access = buildAccess(roleAssignments, tenantPropertyIds);
+      const { roleAssignments, tenantPropertyIds, access } = await this.loadAccess(tx, found.user_id);
 
       const now = Date.now();
       if (now - row.session.lastSeenAt.getTime() > TOUCH_INTERVAL_MS) {
@@ -127,6 +113,7 @@ export class SessionService {
             assignments: roleAssignments,
             mfaEnabled: row.mfaEnabledAt !== null,
             sessionMfaVerified: row.session.mfaVerifiedAt !== null,
+            passwordChangeRequired: row.passwordChangeRequired,
           }),
           assignments: roleAssignments,
           tenantPropertyIds,
@@ -134,6 +121,47 @@ export class SessionService {
         },
       };
     });
+  }
+
+  /**
+   * What a user may do right now, without a session: for background jobs acting for the person who asked, so a
+   * job never runs with access that has since been taken away. Null if the user or the hotel is no longer active.
+   */
+  accessFor(tenantId: string, userId: string): Promise<AuthContext | null> {
+    return this.db.tenant(tenantId, async (tx) => {
+      const [row] = await tx
+        .select({ userStatus: schema.users.status, tenantStatus: schema.tenants.status })
+        .from(schema.users)
+        .innerJoin(schema.tenants, eq(schema.tenants.id, schema.users.tenantId))
+        .where(eq(schema.users.id, userId));
+      if (!row || row.userStatus !== 'active' || !ACTIVE_TENANT_STATUSES.has(row.tenantStatus)) return null;
+      const { roleAssignments, tenantPropertyIds, access } = await this.loadAccess(tx, userId);
+      return {
+        sessionId: '',
+        tenantId,
+        userId,
+        sessionState: 'active',
+        assignments: roleAssignments,
+        tenantPropertyIds,
+        ...access,
+      };
+    });
+  }
+
+  private async loadAccess(tx: Tx, userId: string) {
+    const [assignments, properties] = await Promise.all([
+      tx
+        .select({ role: schema.userRoles.roleCode, propertyId: schema.userRoles.propertyId })
+        .from(schema.userRoles)
+        .where(eq(schema.userRoles.userId, userId)),
+      tx
+        .select({ id: schema.properties.id })
+        .from(schema.properties)
+        .where(eq(schema.properties.status, 'active')),
+    ]);
+    const roleAssignments = assignments.map((a) => ({ role: a.role as RoleCode, propertyId: a.propertyId }));
+    const tenantPropertyIds = properties.map((p) => p.id);
+    return { roleAssignments, tenantPropertyIds, access: buildAccess(roleAssignments, tenantPropertyIds) };
   }
 
   async markMfaVerified(tx: Tx, sessionId: string): Promise<void> {

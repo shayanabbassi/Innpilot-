@@ -22,9 +22,18 @@ export interface AuthContext {
   tenantWidePermissions: Set<Permission>;
 }
 
+/** A signed-in platform operator (slice 5.7). Never set together with `auth`. */
+export interface OperatorContext {
+  sessionId: string;
+  operatorId: string;
+  email: string;
+  fullName: string;
+}
+
 export interface AppRequest extends Request {
   id: string;
   auth?: AuthContext;
+  operator?: OperatorContext;
 }
 
 /** Audit metadata taken from the request. */

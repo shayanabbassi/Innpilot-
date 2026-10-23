@@ -2,6 +2,7 @@ import { type INestApplication } from '@nestjs/common';
 import { CSRF_HEADER, type RoleCode } from '@innpilot/contracts';
 import { createTestDatabase, hashPassword, type TestDatabase } from '@innpilot/db';
 import { Client } from 'pg';
+import type { DestinationStream } from 'pino';
 import request from 'supertest';
 import { encryptSecret } from '../src/auth/crypto';
 import { base32Decode, generateTotpSecret, hotp, timeStep } from '../src/auth/totp';
@@ -10,7 +11,8 @@ import { loadConfig } from '../src/config';
 
 export const ORIGIN = 'http://localhost:3000';
 export const PASSWORD = 'correct-horse-battery';
-const MFA_KEY = Buffer.alloc(32, 9);
+export const MFA_KEY = Buffer.alloc(32, 9);
+export const PII_KEY = Buffer.alloc(32, 5);
 
 export interface FixtureUser {
   id: string;
@@ -31,8 +33,10 @@ export interface Fixture {
     | 'managerA'
     | 'managerA1'
     | 'deskA'
+    | 'accountantA'
     | 'housekeepingA'
     | 'auditorA'
+    | 'cashierA'
     | 'ownerB'
     | 'deskB',
     FixtureUser
@@ -121,15 +125,22 @@ async function buildFixture(admin: Client): Promise<Fixture> {
       managerA: await user(tenantA, 'manager@a.test', 'hotel_manager', null, true),
       managerA1: await user(tenantA, 'manager1@a.test', 'hotel_manager', propA1, true),
       deskA: await user(tenantA, 'desk@a.test', 'front_desk'),
+      accountantA: await user(tenantA, 'accountant@a.test', 'accountant', null, true),
       housekeepingA: await user(tenantA, 'hk@a.test', 'housekeeping'),
       auditorA: await user(tenantA, 'auditor@a.test', 'read_only_auditor'),
+      cashierA: await user(tenantA, 'cashier@a.test', 'cashier'),
       ownerB: await user(tenantB, 'owner@b.test', 'tenant_owner', null, true),
       deskB: await user(tenantB, 'desk@b.test', 'front_desk'),
     },
   };
 }
 
-export async function startHarness(): Promise<Harness> {
+export interface HarnessOptions {
+  /** Turns on the application logger at trace level, writing to this stream. */
+  logStream?: DestinationStream;
+}
+
+export async function startHarness(options: HarnessOptions = {}): Promise<Harness> {
   const db = await createTestDatabase();
   const admin = new Client({ connectionString: db.adminUrl });
   await admin.connect();
@@ -140,10 +151,21 @@ export async function startHarness(): Promise<Harness> {
     WEB_ORIGINS: ORIGIN,
     COOKIE_SECURE: 'false',
     MFA_ENCRYPTION_KEY: MFA_KEY.toString('base64url'),
-    LOG_LEVEL: 'silent',
+    PII_ENCRYPTION_KEY: PII_KEY.toString('base64url'),
+    LOG_LEVEL: options.logStream ? 'trace' : 'silent',
     RATE_LIMIT_ENABLED: 'false',
+    // Jobs are run by the tests themselves, not by a timer.
+    JOBS_POLL_SECONDS: '0',
+    // The local storage container (pnpm db:up), with its own bucket for tests.
+    STORAGE_ENDPOINT: process.env.STORAGE_ENDPOINT ?? 'http://localhost:7070',
+    STORAGE_BUCKET: 'innpilot-test',
+    STORAGE_ACCESS_KEY_ID: process.env.STORAGE_ACCESS_KEY_ID,
+    STORAGE_SECRET_ACCESS_KEY: process.env.STORAGE_SECRET_ACCESS_KEY,
   });
-  const app = await createApp(config, { logger: false });
+  const app = await createApp(
+    config,
+    options.logStream ? { logStream: options.logStream } : { logger: false },
+  );
   await app.init();
   return {
     app,
@@ -211,6 +233,20 @@ export class BrowserClient {
       .set('origin', ORIGIN)
       .set(CSRF_HEADER, this.csrf)
       .send(body as object);
+  }
+
+  /** Sends a file as the raw request body, the way the web app uploads attachments. */
+  upload(path: string, file: Buffer, contentType = 'application/octet-stream') {
+    return this.agent
+      .post(`/api/v1${path}`)
+      .set('origin', ORIGIN)
+      .set(CSRF_HEADER, this.csrf)
+      .set('content-type', contentType)
+      .send(file);
+  }
+
+  delete(path: string) {
+    return this.agent.delete(`/api/v1${path}`).set('origin', ORIGIN).set(CSRF_HEADER, this.csrf);
   }
 
   patch(path: string, body: unknown) {

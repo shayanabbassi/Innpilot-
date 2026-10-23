@@ -17,7 +17,14 @@
     "test:integration": {
       "dependsOn": ["^build"],
       "cache": false,
-      "env": ["DATABASE_URL", "DATABASE_ADMIN_URL"]
+      "env": ["DATABASE_URL", "DATABASE_ADMIN_URL"],
+      "passThroughEnv": [
+        "APP_DB_PASSWORD",
+        "SEED_USER_PASSWORD",
+        "STORAGE_*",
+        "BACKUP_*",
+        "PG_TOOLS_CONTAINER"
+      ]
     },
     "dev": {
       "dependsOn": ["^build"],

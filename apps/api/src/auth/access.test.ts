@@ -70,3 +70,25 @@ describe('isSubset', () => {
     expect(isSubset(['room.read', 'period.reopen'], new Set(['room.read']))).toBe(false);
   });
 });
+
+describe('sessionState after a password reset (slice 6.1)', () => {
+  const owner = [{ role: 'tenant_owner' as const, propertyId: null }];
+  const desk = [{ role: 'front_desk' as const, propertyId: null }];
+
+  it('asks for the new password after any two-step verification, never before', () => {
+    const reset = { passwordChangeRequired: true };
+    expect(sessionState({ assignments: owner, mfaEnabled: true, sessionMfaVerified: false, ...reset })).toBe(
+      'mfa_verify',
+    );
+    expect(sessionState({ assignments: owner, mfaEnabled: false, sessionMfaVerified: false, ...reset })).toBe(
+      'mfa_enroll',
+    );
+    expect(sessionState({ assignments: owner, mfaEnabled: true, sessionMfaVerified: true, ...reset })).toBe(
+      'password_change',
+    );
+    expect(sessionState({ assignments: desk, mfaEnabled: false, sessionMfaVerified: false, ...reset })).toBe(
+      'password_change',
+    );
+    expect(sessionState({ assignments: desk, mfaEnabled: false, sessionMfaVerified: false })).toBe('active');
+  });
+});

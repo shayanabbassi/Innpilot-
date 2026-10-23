@@ -19,6 +19,12 @@ export class Db implements OnApplicationShutdown {
     return this.handle.db;
   }
 
+  /** Connection pool usage, for the database-capacity metric. */
+  poolStats(): { total: number; idle: number; waiting: number; max: number } {
+    const p = this.handle.pool;
+    return { total: p.totalCount, idle: p.idleCount, waiting: p.waitingCount, max: p.options.max ?? 10 };
+  }
+
   async onApplicationShutdown(): Promise<void> {
     await this.handle.close();
   }

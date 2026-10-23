@@ -3,6 +3,8 @@ import { type DynamicModule, Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
+import type { DestinationStream } from 'pino';
+import type { Options as PinoHttpOptions } from 'pino-http';
 import { AuditController } from './audit/audit.controller';
 import { AuditService } from './audit/audit.service';
 import { AuthController } from './auth/auth.controller';
@@ -12,10 +14,69 @@ import { SessionService } from './auth/session.service';
 import { EnvelopeInterceptor } from './common/envelope.interceptor';
 import { ErrorFilter } from './common/error.filter';
 import { APP_CONFIG, type AppConfig } from './config';
+import { DayCloseController, NightAuditController } from './day-close/day-close.controller';
+import { DayCloseService } from './day-close/day-close.service';
 import { DbModule } from './db/db.module';
+import { AccountsService } from './finance/accounts.service';
+import { FinanceController } from './finance/finance.controller';
+import { FolioController } from './finance/folio.controller';
+import { FolioService } from './finance/folio.service';
+import { CashController } from './finance/cash.controller';
+import { CashService } from './finance/cash.service';
+import { CashierController } from './finance/cashier.controller';
+import { CashierService } from './finance/cashier.service';
+import { ExpenseController, SuppliersController } from './finance/expense.controller';
+import { ExpenseService } from './finance/expense.service';
+import { SuppliersService } from './finance/suppliers.service';
+import { ReconciliationController } from './finance/reconciliation.controller';
+import { ReconciliationService } from './finance/reconciliation.service';
+import { YearEndService } from './finance/year-end.service';
+import { PaymentController } from './finance/payment.controller';
+import { PaymentService } from './finance/payment.service';
+import { PlatformController } from './platform/platform.controller';
+import { PlatformSessionService } from './platform/platform-session.service';
+import { PlatformService } from './platform/platform.service';
+import { InvoiceService } from './finance/invoice.service';
+import { CheckoutController } from './stays/checkout.controller';
+import { CheckoutService } from './stays/checkout.service';
+import { JournalsService } from './finance/journals.service';
+import { PeriodsService } from './finance/periods.service';
+import { PostingService } from './finance/posting.service';
+import { ReportsService } from './finance/reports.service';
+import { DashboardController } from './reports/dashboard.controller';
+import { ExportController } from './reports/export/export.controller';
+import { ExportService } from './reports/export/export.service';
+import { ExportJobsController } from './reports/export/export-jobs.controller';
+import { ExportJobsService } from './reports/export/export-jobs.service';
+import { JobsService } from './jobs/jobs.service';
+import { DashboardService } from './reports/dashboard.service';
+import { ReportsController } from './reports/reports.controller';
+import { StatementsService } from './reports/statements.service';
+import { AgingService } from './reports/aging.service';
+import { CashReportsService } from './reports/cash-reports.service';
+import { OperationalReportsService } from './reports/operational.service';
+import { TaxController } from './finance/tax.controller';
+import { TaxService } from './finance/tax.service';
 import { HealthController } from './health/health.controller';
+import { HousekeepingController } from './housekeeping/housekeeping.controller';
+import { HousekeepingService } from './housekeeping/housekeeping.service';
+import { MaintenanceService } from './housekeeping/maintenance.service';
 import { IdempotencyService } from './idempotency/idempotency.service';
 import { PropertiesController } from './properties/properties.controller';
+import { GuestsController } from './guests/guests.controller';
+import { GuestsService } from './guests/guests.service';
+import { PiiService } from './guests/pii.service';
+import { ReservationsController } from './reservations/reservations.controller';
+import { ReservationsService } from './reservations/reservations.service';
+import { RoomsController } from './rooms/rooms.controller';
+import { StaysController } from './stays/stays.controller';
+import { StaysService } from './stays/stays.service';
+import { AttachmentsService } from './storage/attachments.service';
+import { FileStore } from './storage/file-store.service';
+import { ErrorReporter } from './monitoring/error-reporter.service';
+import { MetricsService } from './monitoring/metrics.service';
+import { FilesController } from './storage/files.controller';
+import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
 
@@ -34,11 +95,26 @@ export const LOG_REDACT_PATHS = [
   '*.code',
   '*.secret',
   '*.mfaSecretEnc',
+  '*.number',
+  '*.numberEnc',
+  '*.document',
 ];
+
+export interface AppOptions {
+  /** Where logs are written instead of stdout. Lets tests read the real log output. */
+  logStream?: DestinationStream;
+}
+
+function withLogStream(
+  stream: DestinationStream | undefined,
+  options: PinoHttpOptions,
+): PinoHttpOptions | [PinoHttpOptions, DestinationStream] {
+  return stream ? [options, stream] : options;
+}
 
 @Module({})
 export class AppModule {
-  static register(config: AppConfig): DynamicModule {
+  static register(config: AppConfig, options: AppOptions = {}): DynamicModule {
     return {
       module: AppModule,
       imports: [
@@ -49,7 +125,7 @@ export class AppModule {
           exports: [APP_CONFIG],
         },
         LoggerModule.forRoot({
-          pinoHttp: {
+          pinoHttp: withLogStream(options.logStream, {
             level: config.LOG_LEVEL,
             genReqId: (req, res) => {
               const incoming = req.headers['x-request-id'];
@@ -63,14 +139,15 @@ export class AppModule {
               req: (req: { id: string; method: string; url: string }) => ({
                 id: req.id,
                 method: req.method,
-                path: req.url.split('?')[0],
+                // Download links are credentials for five minutes: log that one was used, not the link.
+                path: req.url.split('?')[0]!.replace(/\/files\/[^/]+$/, '/files/[link]'),
               }),
             },
             customProps: (req) => {
               const auth = (req as { auth?: { tenantId: string; userId: string } }).auth;
               return auth ? { tenantId: auth.tenantId, userId: auth.userId } : {};
             },
-          },
+          }),
         }),
         ThrottlerModule.forRoot({
           throttlers: [{ name: 'default', ttl: 60_000, limit: 300 }],
@@ -78,7 +155,36 @@ export class AppModule {
         }),
         DbModule,
       ],
-      controllers: [AuthController, PropertiesController, UsersController, AuditController, HealthController],
+      controllers: [
+        AuthController,
+        PropertiesController,
+        RoomsController,
+        GuestsController,
+        ReservationsController,
+        StaysController,
+        HousekeepingController,
+        NightAuditController,
+        DayCloseController,
+        FinanceController,
+        TaxController,
+        FolioController,
+        PaymentController,
+        CashController,
+        CashierController,
+        SuppliersController,
+        ExpenseController,
+        ReconciliationController,
+        CheckoutController,
+        UsersController,
+        ReportsController,
+        DashboardController,
+        ExportController,
+        ExportJobsController,
+        PlatformController,
+        AuditController,
+        FilesController,
+        HealthController,
+      ],
       providers: [
         // Order matters: rate limiting runs before authentication.
         { provide: APP_GUARD, useClass: ThrottlerGuard },
@@ -89,7 +195,45 @@ export class AppModule {
         AuthService,
         SessionService,
         UsersService,
+        RoomsService,
+        GuestsService,
+        ReservationsService,
+        StaysService,
+        HousekeepingService,
+        MaintenanceService,
+        DayCloseService,
+        PostingService,
+        AccountsService,
+        JournalsService,
+        PeriodsService,
+        ReportsService,
+        StatementsService,
+        CashReportsService,
+        AgingService,
+        OperationalReportsService,
+        DashboardService,
+        ExportService,
+        ExportJobsService,
+        JobsService,
+        TaxService,
+        FolioService,
+        PaymentService,
+        CashService,
+        CashierService,
+        SuppliersService,
+        ExpenseService,
+        ReconciliationService,
+        YearEndService,
+        InvoiceService,
+        CheckoutService,
+        PiiService,
+        FileStore,
+        MetricsService,
+        ErrorReporter,
+        AttachmentsService,
         IdempotencyService,
+        PlatformSessionService,
+        PlatformService,
       ],
     };
   }

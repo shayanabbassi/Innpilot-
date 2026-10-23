@@ -17,5 +17,20 @@ services:
       timeout: 3s
       retries: 20
 
+  # Private S3-compatible object storage for attachments (slice 6.2). Files are encrypted by the API before
+  # they get here. Bound to localhost only.
+  storage:
+    image: versity/versitygw:v1.9.0
+    restart: unless-stopped
+    command: ['--port', ':7070', 'posix', '/data']
+    environment:
+      ROOT_ACCESS_KEY_ID: ${STORAGE_ACCESS_KEY_ID:?Set STORAGE_ACCESS_KEY_ID in .env}
+      ROOT_SECRET_ACCESS_KEY: ${STORAGE_SECRET_ACCESS_KEY:?Set STORAGE_SECRET_ACCESS_KEY in .env}
+    ports:
+      - '127.0.0.1:7070:7070'
+    volumes:
+      - storagedata:/data
+
 volumes:
   pgdata:
+  storagedata:

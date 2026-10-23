@@ -27,7 +27,7 @@ export default function VerifyPage() {
     setError(null);
     try {
       await api.post('/auth/mfa/verify', values);
-      await queryClient.invalidateQueries({ queryKey: ME_QUERY_KEY });
+      await queryClient.refetchQueries({ queryKey: ME_QUERY_KEY });
       router.replace('/');
     } catch (err) {
       // A lost or locked session cannot continue here.

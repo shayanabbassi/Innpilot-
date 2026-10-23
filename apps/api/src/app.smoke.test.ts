@@ -18,7 +18,14 @@ beforeAll(async () => {
     WEB_ORIGINS: 'http://localhost:3000',
     COOKIE_SECURE: 'false',
     MFA_ENCRYPTION_KEY: Buffer.alloc(32, 1).toString('base64url'),
+    PII_ENCRYPTION_KEY: Buffer.alloc(32, 2).toString('base64url'),
     LOG_LEVEL: 'silent',
+    // Jobs are run by the tests themselves, not by a timer.
+    JOBS_POLL_SECONDS: '0',
+    STORAGE_ENDPOINT: 'http://127.0.0.1:1',
+    STORAGE_BUCKET: 'innpilot-test',
+    STORAGE_ACCESS_KEY_ID: 'nobody',
+    STORAGE_SECRET_ACCESS_KEY: 'nothing-here',
   });
   app = await createApp(config, { logger: false });
   await app.init();

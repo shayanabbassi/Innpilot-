@@ -1,6 +1,7 @@
 import {
   CSRF_HEADER,
   csrfCookieName,
+  platformCsrfCookieName,
   type ErrorBody,
   type ErrorCode,
   type FieldIssue,
@@ -26,9 +27,13 @@ function readCookie(name: string): string | null {
 }
 
 /** The API sets a __Host- prefixed cookie over HTTPS and a plain one in local http development. */
-function csrfToken(): string | null {
-  return readCookie(csrfCookieName(true)) ?? readCookie(csrfCookieName(false));
+function csrfToken(side: Side): string | null {
+  const name = side === 'platform' ? platformCsrfCookieName : csrfCookieName;
+  return readCookie(name(true)) ?? readCookie(name(false));
 }
+
+/** The hotel app and the operator console have separate sessions and CSRF cookies. */
+type Side = 'tenant' | 'platform';
 
 export interface Paged<T> {
   items: T[];
@@ -39,11 +44,16 @@ async function request<T>(
   method: string,
   path: string,
   body?: unknown,
+  extraHeaders: Record<string, string> = {},
+  side: Side = 'tenant',
 ): Promise<{ data: T; nextCursor: string | null }> {
-  const headers: Record<string, string> = { accept: 'application/json' };
-  if (body !== undefined) headers['content-type'] = 'application/json';
+  const headers: Record<string, string> = { accept: 'application/json', ...extraHeaders };
+  // A file is sent as the body itself (attachments, slice 6.2); everything else as JSON.
+  const isFile = typeof Blob !== 'undefined' && body instanceof Blob;
+  if (body !== undefined)
+    headers['content-type'] = isFile ? (body as Blob).type || 'application/octet-stream' : 'application/json';
   if (method !== 'GET') {
-    const token = csrfToken();
+    const token = csrfToken(side);
     if (token) headers[CSRF_HEADER] = token;
   }
 
@@ -53,7 +63,7 @@ async function request<T>(
       method,
       headers,
       credentials: 'same-origin',
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined ? undefined : isFile ? (body as Blob) : JSON.stringify(body),
     });
   } catch {
     throw new ApiError(
@@ -84,6 +94,53 @@ export const api = {
     return { items: data, nextCursor };
   },
   post: async <T>(path: string, body: unknown = {}) => (await request<T>('POST', path, body)).data,
+  /** POST with extra headers, e.g. an Idempotency-Key for retry-safe commands. */
+  postWith: async <T>(path: string, body: unknown, headers: Record<string, string>) =>
+    (await request<T>('POST', path, body, headers)).data,
   put: async <T>(path: string, body: unknown) => (await request<T>('PUT', path, body)).data,
   patch: async <T>(path: string, body: unknown) => (await request<T>('PATCH', path, body)).data,
+  del: async <T>(path: string) => (await request<T>('DELETE', path)).data,
+  /** Uploads one file as the request body; its name goes in the fileName query parameter. */
+  upload: async <T>(path: string, file: File) =>
+    (
+      await request<T>(
+        'POST',
+        `${path}${path.includes('?') ? '&' : '?'}fileName=${encodeURIComponent(file.name)}`,
+        file,
+      )
+    ).data,
+  /** A file download (report exports). Errors come back as the usual JSON error and are thrown as ApiError. */
+  download: async (path: string): Promise<{ blob: Blob; fileName: string }> => {
+    let res: Response;
+    try {
+      res = await fetch(`/api/v1${path}`, { credentials: 'same-origin' });
+    } catch {
+      throw new ApiError(
+        0,
+        'INTERNAL_ERROR',
+        'Cannot reach the server. Check your internet connection and try again.',
+      );
+    }
+    if (!res.ok) {
+      const err = (await res.json().catch(() => null)) as ErrorBody | null;
+      throw new ApiError(
+        res.status,
+        err?.error.code ?? 'INTERNAL_ERROR',
+        err?.error.message ?? 'Something went wrong. Try again.',
+        err?.error.details ?? [],
+        err?.meta.requestId ?? res.headers.get('x-request-id'),
+      );
+    }
+    const name = /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ?? 'export';
+    return { blob: await res.blob(), fileName: name };
+  },
+};
+
+/** The operator console (slice 5.7): operator session and CSRF cookie, never the hotel ones. */
+export const platformApi = {
+  get: async <T>(path: string) => (await request<T>('GET', path, undefined, {}, 'platform')).data,
+  post: async <T>(path: string, body: unknown = {}) =>
+    (await request<T>('POST', path, body, {}, 'platform')).data,
+  patch: async <T>(path: string, body: unknown) =>
+    (await request<T>('PATCH', path, body, {}, 'platform')).data,
 };
