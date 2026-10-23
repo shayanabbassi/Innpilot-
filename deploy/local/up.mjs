@@ -30,7 +30,15 @@ if (process.argv.includes('--down')) {
   process.exit(0);
 }
 
-const step = (title) => console.log(`\n==> ${title}`);
+let current = 'start';
+const step = (title) => {
+  current = title;
+  console.log(`\n==> ${title}`);
+};
+// In CI, name the failed step as an annotation: annotations are readable without opening the job log.
+process.on('exit', (code) => {
+  if (code !== 0 && process.env.GITHUB_ACTIONS) console.log(`::error title=Local stack failed::${current}`);
+});
 
 if (!process.argv.includes('--no-build')) {
   step('Building images');

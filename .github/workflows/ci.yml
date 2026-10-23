@@ -108,4 +108,8 @@ jobs:
           API_IMAGE: innpilot-api:local
           WEB_IMAGE: innpilot-web:local
           SITE_ADDRESS: localhost
-        run: docker compose -f compose.yml -f compose.local.yml logs --tail 200
+        run: |
+          docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring ps -a
+          docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring logs --no-color --tail 200 | tee /tmp/stack.log
+          # The last lines again as an annotation, which is readable without opening the job log.
+          echo "::error title=Local stack logs::$(tail -n 40 /tmp/stack.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
