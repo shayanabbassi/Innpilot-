@@ -16,8 +16,8 @@ services:
   api:
     env_file: !override home/app.env
     environment:
-      # Two proxies in front: Tailscale (which adds the visitor's address) and Caddy. Rate limits and the audit log
-      # then use the real visitor address; a forged X-Forwarded-For from the visitor is ignored (tested 2026-10-25).
+      # Two proxies in front: Tailscale and Caddy. A forged X-Forwarded-For from a visitor is ignored (tested
+      # 2026-10-25); Funnel forwards its own address, so visitors still share one (home-staging-runbook.md).
       TRUST_PROXY: '2'
     depends_on:
       storage: { condition: service_started }

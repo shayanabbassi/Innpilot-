@@ -65,8 +65,8 @@ written so you can follow them one by one.
 - **Done:** home staging live at `https://inpilot.tail96c7fc.ts.net` (2026-10-25), smoke test 6/6 over the public
   address; settings saved off the computer (USB and an encrypted copy in Google Drive), backup key removed from it.
 - **On home staging, in this order:**
-  1. **Real visitor addresses:** Caddy keeps the address Tailscale forwards, the API trusts two proxies; a forged
-     address is ignored (tested from this computer). Confirm from outside with a phone on mobile data.
+  1. **Visitor addresses:** Caddy keeps the address Tailscale forwards and the API trusts two proxies; a forged
+     address is ignored. Done; finding: Funnel forwards its own address, so visitors still share one (runbook).
   2. **Your own hotel account** on staging (a fictional training hotel, you as owner, two-step verification on
      your phone), to look around and to train staff later.
   3. **Restore drill** on staging, with the backup key brought back from your copy for the run only.
