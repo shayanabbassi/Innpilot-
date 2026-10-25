@@ -1,0 +1,22 @@
+# The InnPilot site, shared by the production and local Caddyfiles.
+# One public origin: /api goes to the API, everything else to the web app, so cookies stay first-party.
+(innpilot) {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+		-Via
+	}
+	# Uploads are capped at 5 MB by the API; this only stops absurd bodies at the edge.
+	request_body /api/* {
+		max_size 25MB
+	}
+	handle /api/* {
+		reverse_proxy api:4000
+	}
+	handle {
+		reverse_proxy web:3000
+	}
+	# No access log here on purpose: request URIs can carry download links and search terms. The API logs
+	# requests itself, with those removed.
+}

@@ -42,10 +42,13 @@ export function sessionState(input: {
   assignments: readonly RoleAssignment[];
   mfaEnabled: boolean;
   sessionMfaVerified: boolean;
+  /** Signed in with a temporary password from a reset (slice 6.1): a new one must be chosen after MFA. */
+  passwordChangeRequired?: boolean;
 }): SessionState {
-  if (!mfaRequiredByRoles(input.assignments) && !input.mfaEnabled) return 'active';
-  if (!input.mfaEnabled) return 'mfa_enroll';
-  if (!input.sessionMfaVerified) return 'mfa_verify';
+  const mfa = mfaRequiredByRoles(input.assignments) || input.mfaEnabled;
+  if (mfa && !input.mfaEnabled) return 'mfa_enroll';
+  if (mfa && !input.sessionMfaVerified) return 'mfa_verify';
+  if (input.passwordChangeRequired) return 'password_change';
   return 'active';
 }
 

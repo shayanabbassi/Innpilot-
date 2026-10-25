@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { AppShell } from '@/components/app-shell';
+import { OnboardingGate } from '@/components/onboarding-gate';
 import { PageError, PageSkeleton } from '@/components/ui';
 import { ApiError } from '@/lib/api';
 import { SessionProvider, useMe } from '@/lib/session';
@@ -19,7 +20,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       ? '/login/verify'
       : me.data?.sessionState === 'mfa_enroll'
         ? '/login/setup-mfa'
-        : null;
+        : me.data?.sessionState === 'password_change'
+          ? '/login/change-password'
+          : null;
 
   useEffect(() => {
     if (redirect) router.replace(redirect);
@@ -41,7 +44,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   }
   return (
     <SessionProvider me={me.data}>
-      <AppShell>{children}</AppShell>
+      <AppShell>
+        <OnboardingGate>{children}</OnboardingGate>
+      </AppShell>
     </SessionProvider>
   );
 }

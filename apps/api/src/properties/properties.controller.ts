@@ -1,7 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Req } from '@nestjs/common';
-import { updatePropertyRequest, type PropertyDto, type UpdatePropertyRequest } from '@innpilot/contracts';
+import { Body, Controller, Get, HttpCode, Param, Patch, Post, Req } from '@nestjs/common';
+import {
+  ONBOARDING_REQUIRED_FIELDS,
+  updatePropertyRequest,
+  type PropertyDto,
+  type UpdatePropertyRequest,
+} from '@innpilot/contracts';
 import { schema } from '@innpilot/db';
-import { eq, inArray } from 'drizzle-orm';
+import { and, eq, inArray, lte, notExists, sql } from 'drizzle-orm';
 import { AuditService, changeSet } from '../audit/audit.service';
 import { CurrentAuth, RequirePermission } from '../auth/policy';
 import { AppError } from '../common/app-error';
@@ -26,7 +31,9 @@ function toDto(p: PropertyRow): PropertyDto {
     checkInTime: p.checkInTime.slice(0, 5),
     checkOutTime: p.checkOutTime.slice(0, 5),
     businessDate: p.businessDate,
+    cashVarianceThreshold: p.cashVarianceThreshold.replace(/^(\d+)\.(\d{2})\d*$/, '$1.$2'),
     status: p.status,
+    onboardingCompletedAt: p.onboardingCompletedAt?.toISOString() ?? null,
   };
 }
 
@@ -40,6 +47,7 @@ const AUDITED_FIELDS = [
   'email',
   'checkInTime',
   'checkOutTime',
+  'cashVarianceThreshold',
 ] as const;
 
 @Controller('properties')
@@ -114,6 +122,91 @@ export class PropertiesController {
         );
       }
       return toDto(after!);
+    });
+  }
+
+  /**
+   * Finishes the setup wizard. Checks the required details server-side; completing an already
+   * onboarded property is a no-op that returns it unchanged.
+   */
+  @Post(':id/onboarding/complete')
+  @HttpCode(200)
+  @RequirePermission('property.manage', { propertyParam: 'id' })
+  completeOnboarding(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id') id: string,
+    @Req() req: AppRequest,
+  ): Promise<PropertyDto> {
+    return this.db.tenant(auth.tenantId, async (tx) => {
+      const [row] = await tx
+        .select()
+        .from(schema.properties)
+        .where(eq(schema.properties.id, id))
+        .for('update');
+      if (!row) throw AppError.notFound('property');
+      if (row.onboardingCompletedAt) return toDto(row);
+
+      const dto = toDto(row);
+      const missing = ONBOARDING_REQUIRED_FIELDS.filter((f) => {
+        const v = dto[f];
+        return v === null || (typeof v === 'string' && v.trim() === '');
+      });
+      const issues = missing.map((path) => ({ path: path as string, message: 'Required to finish setup.' }));
+
+      // At least one active room, and every room type that has active rooms needs a rate in effect.
+      const rooms = await tx
+        .select({ typeId: schema.rooms.roomTypeId })
+        .from(schema.rooms)
+        .where(and(eq(schema.rooms.propertyId, id), eq(schema.rooms.active, true)));
+      if (rooms.length === 0) issues.push({ path: 'rooms', message: 'Add at least one room.' });
+      const typeIds = [...new Set(rooms.map((r) => r.typeId))];
+      if (typeIds.length > 0) {
+        const t = schema.roomTypes;
+        const r = schema.roomTypeRates;
+        const unpriced = await tx
+          .select({ code: t.code })
+          .from(t)
+          .where(
+            and(
+              inArray(t.id, typeIds),
+              notExists(
+                tx
+                  .select({ one: sql`1` })
+                  .from(r)
+                  .where(and(eq(r.roomTypeId, t.id), lte(r.effectiveFrom, row.businessDate))),
+              ),
+            ),
+          )
+          .orderBy(t.code);
+        if (unpriced.length > 0) {
+          issues.push({
+            path: 'rates',
+            message: `Set a rate for: ${unpriced.map((u) => u.code).join(', ')}.`,
+          });
+        }
+      }
+      if (issues.length > 0) {
+        throw AppError.validation('Complete the setup steps before finishing.', issues);
+      }
+
+      const [done] = await tx
+        .update(schema.properties)
+        .set({ onboardingCompletedAt: new Date() })
+        .where(eq(schema.properties.id, id))
+        .returning();
+      await this.audit.record(
+        tx,
+        {
+          tenantId: auth.tenantId,
+          propertyId: id,
+          actor: { type: 'user', userId: auth.userId },
+          action: 'property.onboarding_completed',
+          entityType: 'property',
+          entityId: id,
+        },
+        requestMeta(req),
+      );
+      return toDto(done!);
     });
   }
 }

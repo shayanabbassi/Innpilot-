@@ -19,7 +19,7 @@ export default function SetupMfaPage() {
         <Alert tone="info">{t('setupRequired')}</Alert>
         <MfaSetup
           onEnabled={async () => {
-            await queryClient.invalidateQueries({ queryKey: ME_QUERY_KEY });
+            await queryClient.refetchQueries({ queryKey: ME_QUERY_KEY });
             router.replace('/');
           }}
         />

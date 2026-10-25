@@ -34,6 +34,7 @@ const FIELDS = [
   'timezone',
   'checkInTime',
   'checkOutTime',
+  'cashVarianceThreshold',
 ] as const;
 const TIME_ZONES = Intl.supportedValuesOf('timeZone');
 
@@ -48,6 +49,7 @@ function toForm(p: PropertyDto): FormValues {
     timezone: p.timezone,
     checkInTime: p.checkInTime,
     checkOutTime: p.checkOutTime,
+    cashVarianceThreshold: p.cashVarianceThreshold,
   };
 }
 
@@ -166,6 +168,17 @@ function PropertyForm({ property, canEdit }: { property: PropertyDto; canEdit: b
             disabled
             readOnly
             hint={t('businessDateNote')}
+          />
+        </div>
+      </Card>
+      <Card>
+        <div className="grid gap-4 md:grid-cols-2">
+          <TextField
+            {...field('cashVarianceThreshold', {
+              inputMode: 'decimal',
+              hint: t('cashVarianceThresholdHint'),
+            })}
+            className="tabular"
           />
         </div>
       </Card>

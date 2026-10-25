@@ -1,27 +1,37 @@
 'use client';
 
 import { useFormatter, useTranslations } from 'next-intl';
+import { Dashboard } from '@/components/dashboard';
 import { Alert, Card, PageHeader } from '@/components/ui';
 import { useSession } from '@/lib/session';
 
 /**
- * Phase 1 overview. Shows only real data from the session. Operational and financial KPIs arrive with the
- * modules that produce them; no placeholder metrics are shown in the meantime.
+ * Overview. Roles with operational reports on the current property get the dashboard (slice 5.5); others (such as
+ * housekeeping) see their property and roles. Only real data is shown, never placeholder metrics.
  */
 export default function OverviewPage() {
   const t = useTranslations('overview');
   const tRoles = useTranslations('roles');
   const format = useFormatter();
-  const { me, property } = useSession();
+  const { me, property, can } = useSession();
 
   return (
     <>
       <PageHeader
         title={t('title', { name: me.user.fullName })}
-        subtitle={t('subtitle', { hotel: me.tenant.displayName })}
+        subtitle={
+          property
+            ? t('dashboardSubtitle', {
+                hotel: property.name,
+                roles: property.roles.map((r) => tRoles(r)).join(', '),
+              })
+            : t('subtitle', { hotel: me.tenant.displayName })
+        }
       />
       {!property ? (
         <Alert tone="warning">{t('noProperty')}</Alert>
+      ) : can('report.operational') ? (
+        <Dashboard key={property.id} propertyId={property.id} />
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           <Card title={t('propertyCard')}>
@@ -49,9 +59,6 @@ export default function OverviewPage() {
               ))}
             </ul>
           </Card>
-          <div className="md:col-span-2">
-            <Alert tone="info">{t('comingNext')}</Alert>
-          </div>
         </div>
       )}
     </>

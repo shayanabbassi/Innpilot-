@@ -45,6 +45,6 @@ privileges; a malicious or compromised owner/manager account; a developer mistak
   MVP (ADR-0001); revisit with multi-tenant user support.
 - **In-memory rate limiting** resets on restart and is per instance. Move to a shared store before horizontal scaling.
 - **No email-based recovery** yet (open decision on provider).
-- **Support/platform-admin access** is not built; when it is (Phase 5) it must be time-bound, reason-coded and audited.
+- **Support/platform-admin access** (built in slice 5.7): operators are a separate identity with their own session cookie and MFA at every sign-in; a tenant session never reaches platform routes and an operator session never reaches tenant routes (checked by a route test). Inside a tenant an operator sees only properties, staff accounts and recent activity, and only during a support grant that is reason-coded, at most four hours, and recorded in both the platform log and the tenant's own audit log. Guest and money records are never exposed to operators.
 - **Production database owner**: locally the migrator is the Postgres superuser. Production must use a dedicated
   non-superuser owner role so SECURITY DEFINER functions run with least privilege.

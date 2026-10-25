@@ -1,0 +1,7 @@
+# Production: SITE_ADDRESS is the public host name (e.g. app.example.com). Caddy obtains and renews its TLS
+# certificate automatically and redirects http to https.
+import /etc/caddy/innpilot.caddy
+
+{$SITE_ADDRESS} {
+	import innpilot
+}

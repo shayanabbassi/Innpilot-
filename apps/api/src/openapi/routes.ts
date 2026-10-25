@@ -47,6 +47,8 @@ export function describePolicy(policy: RoutePolicy): string {
       return 'Public.';
     case 'session':
       return `Any signed-in session in state: ${policy.states.join(', ')}.`;
+    case 'platform':
+      return 'Platform operators only (operator session cookie; tenant sessions are refused).';
     case 'permission': {
       const scope =
         policy.scope === 'tenant'

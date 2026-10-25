@@ -1,7 +1,7 @@
 import { createParamDecorator, type ExecutionContext, SetMetadata } from '@nestjs/common';
 import type { Permission, SessionState } from '@innpilot/contracts';
 import { AppError } from '../common/app-error';
-import type { AppRequest, AuthContext } from '../common/request';
+import type { AppRequest, AuthContext, OperatorContext } from '../common/request';
 
 /**
  * Every route must declare exactly one access policy; the guard rejects routes without one (deny by default).
@@ -16,6 +16,8 @@ export type PermissionScope = 'tenant' | 'any' | { propertyParam: string };
 export type RoutePolicy =
   | { kind: 'public' }
   | { kind: 'session'; states: SessionState[] }
+  /** A platform operator session (separate cookie); tenant sessions never pass. */
+  | { kind: 'platform' }
   | { kind: 'permission'; permission: Permission; scope: PermissionScope };
 
 export const POLICY_KEY = 'innpilot:policy';
@@ -36,4 +38,13 @@ export const CurrentAuth = createParamDecorator((_: unknown, ctx: ExecutionConte
   const auth = ctx.switchToHttp().getRequest<AppRequest>().auth;
   if (!auth) throw new AppError('UNAUTHENTICATED', 'Sign in to continue.');
   return auth;
+});
+
+/** A signed-in platform operator (slice 5.7). Tenant sessions are never accepted on these routes. */
+export const PlatformOnly = () => SetMetadata(POLICY_KEY, { kind: 'platform' } satisfies RoutePolicy);
+
+export const CurrentOperator = createParamDecorator((_: unknown, ctx: ExecutionContext): OperatorContext => {
+  const operator = ctx.switchToHttp().getRequest<AppRequest>().operator;
+  if (!operator) throw new AppError('UNAUTHENTICATED', 'Sign in to continue.');
+  return operator;
 });

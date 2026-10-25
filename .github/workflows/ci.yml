@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -30,8 +30,10 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
-      - name: Dependency audit (high and critical)
-        run: pnpm audit --audit-level high
+      # Security review (6.8): no credentials in tracked files or the browser bundles just built.
+      - run: node scripts/secret-scan.mjs
+      - name: Dependency audit (moderate and above)
+        run: pnpm audit --audit-level moderate
 
   integration:
     name: Database integration and end-to-end tests
@@ -52,12 +54,69 @@ jobs:
     env:
       DATABASE_ADMIN_URL: postgres://postgres:ci-only-postgres@localhost:5432/innpilot
       APP_DB_PASSWORD: ci-only-app-password-0001
+      # Object storage for the attachment and export tests (slice 6.2); throwaway CI credentials.
+      STORAGE_ENDPOINT: http://localhost:7070
+      STORAGE_ACCESS_KEY_ID: ci-only-storage
+      STORAGE_SECRET_ACCESS_KEY: ci-only-storage-secret-0001
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # Started by hand: service containers cannot be given the gateway's command line.
+      - name: Start object storage
+        run: >-
+          docker run -d --name storage -p 7070:7070 -v ci-storage:/data
+          -e ROOT_ACCESS_KEY_ID="$STORAGE_ACCESS_KEY_ID" -e ROOT_SECRET_ACCESS_KEY="$STORAGE_SECRET_ACCESS_KEY"
+          versity/versitygw:v1.9.0 --port :7070 posix /data
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # The backup and restore tests (slice 6.5) run pg_dump and pg_restore; the runner image ships PostgreSQL 16.
+      - run: pg_dump --version && pg_restore --version
       - run: pnpm test:integration
+
+  alert-rules:
+    name: Alert rule tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: promtool test rules
+        run: >-
+          docker run --rm -v "$PWD/deploy/monitoring:/m" --entrypoint promtool prom/prometheus:v3.14.0
+          test rules /m/alerts.test.yml
+
+  production-stack:
+    name: Production images, start-up, smoke test, backup, restore and alert drills
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+      # Builds both images and runs them as production would (TLS proxy, restricted database role, release script
+      # with backup and migrations), then the smoke test. Local secrets are generated fresh for this run.
+      - run: node deploy/local/init.mjs
+      # Also starts monitoring and proves an alert reaches its destination (the API is stopped on purpose).
+      - run: node deploy/local/up.mjs --alert-drill
+      - name: Logs on failure
+        if: failure()
+        working-directory: deploy
+        env:
+          API_IMAGE: innpilot-api:local
+          WEB_IMAGE: innpilot-web:local
+          SITE_ADDRESS: localhost
+        run: |
+          C="docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring"
+          $C ps -a
+          $C logs --no-color --tail 200
+          # Again as annotations, which are readable without opening the job log: each container's state and last
+          # health check, then the last log lines without the start-up route listing.
+          annotate() { echo "::error title=$1::$(sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"; }
+          for id in $($C ps -aq); do
+            docker inspect --format '{{.Name}} {{.State.Status}} exit={{.State.ExitCode}} {{if .State.Health}}{{.State.Health.Status}} {{range .State.Health.Log}}[{{.ExitCode}}] {{.Output}} {{end}}{{end}}' "$id"
+          done | cut -c1-600 | annotate "Local stack containers"
+          $C logs --no-color --tail 400 | grep -v 'Mapped {\|RoutesResolver\|InstanceLoader' | tail -n 30 | cut -c1-300 \
+            | annotate "Local stack logs"

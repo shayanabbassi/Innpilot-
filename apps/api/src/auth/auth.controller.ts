@@ -1,6 +1,20 @@
-import { Body, Controller, Get, HttpCode, Inject, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Inject,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import {
+  changePasswordRequest,
+  type ChangePasswordRequest,
+  type SessionDto,
   csrfCookieName,
   loginRequest,
   mfaCodeRequest,
@@ -17,6 +31,7 @@ import { requestMeta, type AppRequest, type AuthContext } from '../common/reques
 import { ZodPipe } from '../common/zod.pipe';
 import { AuthService } from './auth.service';
 import { CurrentAuth, Public, SessionOnly } from './policy';
+import { AppError } from '../common/app-error';
 
 /** Brute-force limits per client IP, on top of the per-account lockout. */
 const LOGIN_LIMIT = { default: { limit: 10, ttl: 60_000 } };
@@ -62,7 +77,7 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(200)
-  @SessionOnly(['active', 'mfa_verify', 'mfa_enroll'])
+  @SessionOnly(['active', 'mfa_verify', 'mfa_enroll', 'password_change'])
   async logout(
     @CurrentAuth() auth: AuthContext,
     @Req() req: AppRequest,
@@ -74,7 +89,7 @@ export class AuthController {
   }
 
   @Get('me')
-  @SessionOnly(['active', 'mfa_verify', 'mfa_enroll'])
+  @SessionOnly(['active', 'mfa_verify', 'mfa_enroll', 'password_change'])
   me(@CurrentAuth() auth: AuthContext): Promise<MeResponse> {
     return this.auth.me(auth);
   }
@@ -110,6 +125,43 @@ export class AuthController {
   ): Promise<null> {
     await this.auth.verifyMfa(auth, body.code, requestMeta(req));
     return null;
+  }
+
+  /** Change your own password; also the way out of a manager-issued reset (state `password_change`). */
+  @Post('password')
+  @HttpCode(200)
+  @SessionOnly(['active', 'password_change'])
+  @Throttle(MFA_LIMIT)
+  changePassword(
+    @CurrentAuth() auth: AuthContext,
+    @Body(new ZodPipe(changePasswordRequest)) body: ChangePasswordRequest,
+    @Req() req: AppRequest,
+  ): Promise<{ sessionsEnded: number }> {
+    return this.auth.changePassword(auth, body, requestMeta(req));
+  }
+
+  @Get('sessions')
+  @SessionOnly(['active'])
+  sessions(@CurrentAuth() auth: AuthContext): Promise<SessionDto[]> {
+    return this.auth.listSessions(auth);
+  }
+
+  @Post('sessions/end-others')
+  @HttpCode(200)
+  @SessionOnly(['active'])
+  endOthers(@CurrentAuth() auth: AuthContext, @Req() req: AppRequest): Promise<{ sessionsEnded: number }> {
+    return this.auth.endSessions(auth, null, requestMeta(req));
+  }
+
+  @Post('sessions/:id/end')
+  @HttpCode(200)
+  @SessionOnly(['active'])
+  endSession(
+    @CurrentAuth() auth: AuthContext,
+    @Param('id', new ParseUUIDPipe({ exceptionFactory: () => AppError.notFound('session') })) id: string,
+    @Req() req: AppRequest,
+  ): Promise<{ sessionsEnded: number }> {
+    return this.auth.endSessions(auth, id, requestMeta(req));
   }
 
   private clearCookies(res: Response): void {

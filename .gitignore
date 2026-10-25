@@ -17,3 +17,15 @@ playwright-report/
 
 # Specification PDFs stay outside version control (internal documents)
 /*.pdf
+
+# Deployment settings and artefacts (deploy/env.example is the template)
+deploy/*.env
+deploy/local/*.env
+deploy/local/caddy-root.crt
+deploy/backups/
+
+# Output of the restore drill performance run (copied into docs/backup-and-restore.md)
+apps/api/perf/*.last.md
+
+# Load test working files (sessions are written here during a run, then cleared)
+apps/api/load/out/

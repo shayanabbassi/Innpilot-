@@ -1,11 +1,12 @@
 import { type CanActivate, type ExecutionContext, Inject, Injectable, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { CSRF_HEADER, sessionCookieName } from '@innpilot/contracts';
+import { CSRF_HEADER, platformSessionCookieName, sessionCookieName } from '@innpilot/contracts';
 import { APP_CONFIG, type AppConfig } from '../config';
 import { AppError } from '../common/app-error';
 import type { AppRequest, AuthContext } from '../common/request';
 import { safeEqual, sha256 } from './crypto';
 import { POLICY_KEY, type RoutePolicy } from './policy';
+import { PlatformSessionService } from '../platform/platform-session.service';
 import { SessionService } from './session.service';
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
@@ -23,6 +24,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly sessions: SessionService,
+    private readonly platformSessions: PlatformSessionService,
     @Inject(APP_CONFIG) private readonly config: AppConfig,
   ) {}
 
@@ -40,6 +42,7 @@ export class AuthGuard implements CanActivate {
     const unsafe = !SAFE_METHODS.has(req.method);
     if (unsafe) this.checkOrigin(req);
     if (policy.kind === 'public') return true;
+    if (policy.kind === 'platform') return this.checkOperator(req, unsafe);
 
     const token: unknown = req.cookies?.[sessionCookieName(this.config.COOKIE_SECURE)];
     const resolved = typeof token === 'string' ? await this.sessions.resolve(token) : null;
@@ -69,6 +72,9 @@ export class AuthGuard implements CanActivate {
           'Your role requires two-step verification. Set it up to continue.',
         );
       }
+      if (auth.sessionState === 'password_change') {
+        throw new AppError('PASSWORD_CHANGE_REQUIRED', 'Choose a new password to continue.');
+      }
       throw AppError.forbidden();
     }
 
@@ -97,6 +103,27 @@ export class AuthGuard implements CanActivate {
     const perms = auth.permissionsByProperty.get(propertyId);
     if (!perms) throw AppError.notFound('property');
     if (!perms.has(permission)) throw AppError.forbidden();
+  }
+
+  /**
+   * Platform routes (slice 5.7): only the operator cookie counts, so a tenant session never passes here, and tenant
+   * routes never look at the operator cookie.
+   */
+  private async checkOperator(req: AppRequest, unsafe: boolean): Promise<boolean> {
+    const token: unknown = req.cookies?.[platformSessionCookieName(this.config.COOKIE_SECURE)];
+    const resolved = typeof token === 'string' ? await this.platformSessions.resolve(token) : null;
+    if (!resolved) throw new AppError('UNAUTHENTICATED', 'Your session has ended. Sign in again.');
+    if (unsafe) {
+      const header = req.get(CSRF_HEADER);
+      if (!header || !safeEqual(sha256(header), resolved.csrfTokenHash)) {
+        throw new AppError(
+          'CSRF_FAILED',
+          'This request could not be verified. Reload the page and try again.',
+        );
+      }
+    }
+    req.operator = resolved.operator;
+    return true;
   }
 
   /** Browsers always send Origin on cross-site state-changing requests; reject any we do not serve. */
