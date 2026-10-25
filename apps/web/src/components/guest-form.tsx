@@ -55,7 +55,7 @@ function toForm(g?: GuestDto): FormValues {
   };
 }
 
-/** Empty country codes mean "not given"; the contract wants null rather than an empty string for them. */
+/** Empty country codes mean "not given" (the fields also turn an empty box into null, so the form validates). */
 function clean(values: FormValues): FormValues {
   const out = { ...values };
   if (!out.nationality) out.nationality = null;
@@ -171,7 +171,7 @@ export function GuestForm({
               label={t('nationality')}
               maxLength={2}
               error={errors.nationality?.message}
-              {...form.register('nationality')}
+              {...form.register('nationality', { setValueAs: (v: string | null) => v || null })}
             />
           </div>
         </Card>
@@ -188,7 +188,7 @@ export function GuestForm({
               label={t('countryCode')}
               maxLength={2}
               error={errors.countryCode?.message}
-              {...form.register('countryCode')}
+              {...form.register('countryCode', { setValueAs: (v: string | null) => v || null })}
             />
           </div>
         </Card>
