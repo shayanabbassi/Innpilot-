@@ -209,13 +209,13 @@ interface RouteDoc {
   summary: string;
   tag: string;
   body?: ZodTypeAny;
-  query?: z.AnyZodObject;
+  query?: z.ZodObject;
   /** `null` for commands that return no data. */
   data: ZodTypeAny | null;
   paged?: boolean;
   status?: number;
   /** Path parameters that are not UUIDs. */
-  params?: z.AnyZodObject;
+  params?: z.ZodObject;
   /** A file download instead of the JSON envelope: the media types it can be sent as. */
   file?: string[];
   /** The request body is a file itself (slice 6.2), in one of these media types. */

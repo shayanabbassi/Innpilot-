@@ -4,6 +4,17 @@ import { createUserRequest, loginRequest, updatePropertyRequest } from './index'
 const roles = [{ role: 'front_desk', propertyId: null }];
 
 describe('request schemas', () => {
+  it('reports a missing value as "Required", and keeps a schema’s own messages', () => {
+    const missing = loginRequest.safeParse({ email: 'owner@example.com' });
+    expect(missing.error?.issues).toEqual([
+      expect.objectContaining({ path: ['password'], message: 'Required' }),
+    ]);
+    const own = createUserRequest.safeParse({ email: 'not-an-email', fullName: 'A', password: 'x', roles });
+    expect(own.error?.issues.find((i) => i.path[0] === 'email')?.message).toBe(
+      'Enter a valid email address.',
+    );
+  });
+
   it('normalises login email', () => {
     expect(loginRequest.parse({ email: '  Owner@Example.COM ', password: 'x' }).email).toBe(
       'owner@example.com',

@@ -15,7 +15,7 @@ const schema = z.object({
         .map((s) => s.trim())
         .filter(Boolean),
     ),
-  COOKIE_SECURE: bool.default('true'),
+  COOKIE_SECURE: bool.default(true),
   MFA_ENCRYPTION_KEY: z
     .string()
     .refine(
@@ -45,7 +45,7 @@ const schema = z.object({
   /** Express "trust proxy" setting, so rate limits and audit IPs use the real client address. */
   TRUST_PROXY: z.string().default('loopback'),
   /** Per-IP request rate limits. Only end-to-end tests switch this off. */
-  RATE_LIMIT_ENABLED: bool.default('true'),
+  RATE_LIMIT_ENABLED: bool.default(true),
   /**
    * How often this instance looks for background jobs (slice 6.3). 0 turns the worker off, for an instance that
    * should only serve requests (and in tests, which run jobs directly).

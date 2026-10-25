@@ -119,7 +119,7 @@ export const auditEventDto = z.object({
     userId: z.string().uuid().nullable(),
     name: z.string().nullable(),
   }),
-  changes: z.record(z.unknown()),
+  changes: z.record(z.string(), z.unknown()),
   reason: z.string().nullable(),
   requestId: z.string().nullable(),
 });
@@ -154,9 +154,7 @@ export const createTenantInput = z
     propertyName: z.string().trim().min(1, 'Enter the property name.').max(200),
     timezone: timeZone.default('Asia/Karachi'),
     // MVP posts in PKR only (accounting spec §1); the column stays explicit for later currencies.
-    currency: z
-      .literal('PKR', { errorMap: () => ({ message: 'Only PKR is supported for now.' }) })
-      .default('PKR'),
+    currency: z.literal('PKR', { error: 'Only PKR is supported for now.' }).default('PKR'),
     ownerEmail: z.string().trim().toLowerCase().email('Enter a valid email address.').max(254),
     ownerFullName: z.string().trim().min(1, 'Enter the owner’s full name.').max(200),
     ownerPassword: password,

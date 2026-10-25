@@ -13842,7 +13842,8 @@
                                   "out_of_order",
                                   "dirty",
                                   "cleaning",
-                                  "inactive"
+                                  "inactive",
+                                  null
                                 ]
                               }
                             },
@@ -29230,7 +29231,8 @@
                             ],
                             "enum": [
                               "room",
-                              "cancellation"
+                              "cancellation",
+                              null
                             ]
                           },
                           "active": {
@@ -29471,7 +29473,8 @@
                           ],
                           "enum": [
                             "room",
-                            "cancellation"
+                            "cancellation",
+                            null
                           ]
                         },
                         "active": {
@@ -29716,7 +29719,8 @@
                           ],
                           "enum": [
                             "room",
-                            "cancellation"
+                            "cancellation",
+                            null
                           ]
                         },
                         "active": {

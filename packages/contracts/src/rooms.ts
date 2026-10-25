@@ -218,6 +218,6 @@ export type UpdateRoomRequest = z.infer<typeof updateRoomRequest>;
 export const roomBoardDto = z.object({
   businessDate: z.string(),
   rooms: z.array(roomDto.extend({ roomTypeName: z.string(), boardState: z.enum(BOARD_STATES) })),
-  counts: z.record(z.enum(BOARD_STATES), z.number().int()),
+  counts: z.partialRecord(z.enum(BOARD_STATES), z.number().int()),
 });
 export type RoomBoardDto = z.infer<typeof roomBoardDto>;

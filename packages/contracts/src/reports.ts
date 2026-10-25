@@ -678,7 +678,7 @@ export const exportJobDto = z.object({
   id: uuid,
   report: z.enum(EXPORT_REPORTS),
   format: z.enum(EXPORT_FORMATS),
-  query: z.record(z.string()),
+  query: z.record(z.string(), z.string()),
   status: z.enum(EXPORT_JOB_STATUSES),
   createdAt: z.string(),
   finishedAt: z.string().nullable(),
