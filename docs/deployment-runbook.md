@@ -1,10 +1,10 @@
 # Deployment runbook
 
-Status: slice 6.4 (2026-10-22). Hosting provider and region are **undecided (D17)**, so everything here is
-provider-neutral: two container images, a Compose stack for any Linux host with Docker, and a GitHub Actions
-pipeline that deploys over SSH. When D17 is chosen, a short follow-up adds that provider's templates (managed
-database with point-in-time recovery, storage, container service, secret store, private network); the images,
-start-up checks, release steps and smoke test stay the same.
+Status: slice 6.4 (2026-10-22), single-server form slice 7.1 (2026-10-25). Everything here is provider-neutral: two
+container images (amd64 and arm64), a Compose stack for any Linux host with Docker, and a GitHub Actions pipeline
+that deploys over SSH. D17 (2026-10-25): staging runs on one Oracle Always Free machine with Cloudflare R2, set up by
+following [staging-runbook.md](staging-runbook.md); production waits for D21 (a managed database with point-in-time
+recovery).
 
 Sources: 05 Security & Deployment Runbook §1–7, 02 Technical Architecture §7–10, 06 Test Strategy §4, Phase 6
 plan P6-5 and P6-6.
@@ -20,7 +20,8 @@ plan P6-5 and P6-6.
 | `deploy/env.example`                          | Every production setting, split into `app.env` (the API) and `release.env` (database owner, release steps only).                                                                                                                                |
 | `deploy/release.sh`                           | One release: pull images, encrypted backup of the database, migrate, start, wait for health.                                                                                                                                                    |
 | `scripts/smoke.mjs`                           | Smoke test after every release: health, security headers, unauthenticated and cross-site requests refused, error envelope, optional sign-in round trip with a smoke-test account.                                                               |
-| `deploy/compose.local.yml`, `deploy/local/`   | The same stack on a laptop or CI runner, with its own database and storage, on `https://localhost:8443`.                                                                                                                                        |
+| `deploy/compose.single.yml`, `deploy/single/` | Single-server form (P7-1, staging): PostgreSQL on the same machine; the server set-up script and the settings generator. Steps: docs/staging-runbook.md.                                                                                        |
+| `deploy/compose.local.yml`, `deploy/local/`   | The single-server stack on a laptop or CI runner, with its own storage, on `https://localhost:8443`.                                                                                                                                            |
 | `.github/workflows/ci.yml`                    | Every pull request: format, lint, types, unit, build, dependency audit; database and end-to-end tests (Postgres and storage); production images started and smoke-tested.                                                                       |
 | `.github/workflows/release.yml`, `deploy.yml` | Merge to `main`: images published to GitHub Container Registry, deployed to staging. Tag `v*`: the same images deployed to production after approval.                                                                                           |
 

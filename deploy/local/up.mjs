@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Builds the production images and runs them as production would, on https://localhost:8443 (P6-5): a database
- * and storage of its own, the role provisioned, the release script (backup, migrations, start), a smoke-test
- * account, the smoke test against the stack, then a fresh encrypted backup and the restore drill (slice 6.5).
+ * Builds the production images and runs them as the single-server staging would (P6-5, P7-1), on
+ * https://localhost:8443: a database and storage of its own, the release script (role, backup, migrations, start),
+ * a smoke-test account, the smoke test against the stack, then a fresh encrypted backup and the restore drill.
  * `node deploy/local/up.mjs --down` stops it.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
@@ -18,10 +18,10 @@ const env = {
   API_IMAGE: 'innpilot-api:local',
   WEB_IMAGE: 'innpilot-web:local',
   SITE_ADDRESS: 'localhost',
-  COMPOSE_FILES: '-f compose.yml -f compose.local.yml',
+  COMPOSE_FILES: '-f compose.yml -f compose.single.yml -f compose.local.yml',
   SKIP_PULL: '1',
 };
-const compose = ['compose', '-f', 'compose.yml', '-f', 'compose.local.yml'];
+const compose = ['compose', '-f', 'compose.yml', '-f', 'compose.single.yml', '-f', 'compose.local.yml'];
 let failure = '';
 const run = (cmd, args, opts = {}) => {
   const r = spawnSync(cmd, args, {
@@ -69,9 +69,6 @@ if (!process.argv.includes('--no-build')) {
 step('Starting the database and storage');
 run('docker', [...compose, 'up', '-d', '--wait', 'postgres', 'storage']);
 
-step('Provisioning the restricted application role');
-run('docker', [...compose, '--profile', 'release', 'run', '--rm', 'provision']);
-
 step('Storage buckets (made by the provider in a real deployment)');
 run('docker', [
   ...compose,
@@ -85,7 +82,7 @@ run('docker', [
   'ensure-buckets',
 ]);
 
-step('Release: backup, migrations, start');
+step('Release: role, backup, migrations, start');
 run('sh', ['release.sh']);
 
 step('Smoke-test account');

@@ -1,0 +1,51 @@
+# Single-server stack (P7-1): the production compose file plus PostgreSQL on the same machine, for staging on one
+# virtual machine (D17: Oracle Always Free). Files and backups stay in S3-compatible storage elsewhere (Cloudflare
+# R2), so a lost machine loses nothing that the nightly backup does not hold.
+#   COMPOSE_FILES="-f compose.yml -f compose.single.yml" API_IMAGE=... WEB_IMAGE=... SITE_ADDRESS=... ./release.sh
+# Settings files next to this one: app.env, release.env, backup.env, postgres.env (deploy/single/init-env.mjs writes
+# them). No point-in-time recovery here: the machine loses at most a day (P7-5), so this form is for staging only.
+services:
+  api:
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  backups:
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  backup:
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  restore-drill:
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  migrate:
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  # Creates or updates the restricted application role (first release, or rotating its password).
+  provision:
+    image: ${API_IMAGE:?Set API_IMAGE}
+    profiles: [release]
+    env_file: release.env
+    command: ['node', 'node_modules/@innpilot/db/dist/cli.js', 'provision']
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  # Never published: only the services on this machine's private network reach it.
+  postgres:
+    image: postgres:16.10-alpine
+    restart: unless-stopped
+    env_file: postgres.env
+    volumes: [pgdata:/var/lib/postgresql/data]
+    shm_size: 256mb
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d innpilot']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  pgdata:

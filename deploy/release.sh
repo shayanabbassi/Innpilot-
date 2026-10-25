@@ -12,12 +12,20 @@ set -eu
 : "${API_IMAGE:?Set API_IMAGE}"
 : "${WEB_IMAGE:?Set WEB_IMAGE}"
 : "${SITE_ADDRESS:?Set SITE_ADDRESS}"
-# The local stack passes "-f compose.yml -f compose.local.yml"; a real host uses compose.yml alone.
+# A managed-database host uses compose.yml alone; a single server (staging, P7-1) passes
+# "-f compose.yml -f compose.single.yml", and the local stack adds "-f compose.local.yml" to that.
 COMPOSE="docker compose ${COMPOSE_FILES:--f compose.yml}"
 
 if [ "${SKIP_PULL:-}" != "1" ]; then
   echo "==> Pulling $API_IMAGE and $WEB_IMAGE"
   $COMPOSE pull api web
+fi
+
+# A single server runs its own database, so the release also keeps the application role in place (created on the
+# first release, its password and limits re-asserted after). A managed database is provisioned once by hand.
+if $COMPOSE --profile release config --services | grep -qx provision; then
+  echo "==> Restricted application role"
+  $COMPOSE --profile release run --rm provision
 fi
 
 echo "==> Encrypted backup of the database before migrating"

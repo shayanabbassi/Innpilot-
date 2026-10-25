@@ -21,6 +21,7 @@ playwright-report/
 # Deployment settings and artefacts (deploy/env.example is the template)
 deploy/*.env
 deploy/local/*.env
+deploy/single/*.env
 deploy/local/caddy-root.crt
 deploy/backups/
 

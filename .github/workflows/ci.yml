@@ -87,6 +87,20 @@ jobs:
           docker run --rm -v "$PWD/deploy/monitoring:/m" --entrypoint promtool prom/prometheus:v3.14.0
           test rules /m/alerts.test.yml
 
+  # P7-2: staging runs on an Arm machine. Both images must build there natively; release.yml publishes them.
+  arm-images:
+    name: Production images build on Arm
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: docker build -f apps/api/Dockerfile -t innpilot-api:arm .
+      - run: docker build -f apps/web/Dockerfile -t innpilot-web:arm .
+      - name: The API image starts its tools on Arm
+        run: |
+          docker run --rm innpilot-api:arm node -e "require('@node-rs/argon2'); console.log(process.arch)"
+          docker run --rm innpilot-api:arm pg_dump --version
+
   production-stack:
     name: Production images, start-up, smoke test, backup, restore and alert drills
     runs-on: ubuntu-latest
@@ -109,7 +123,7 @@ jobs:
           WEB_IMAGE: innpilot-web:local
           SITE_ADDRESS: localhost
         run: |
-          C="docker compose -f compose.yml -f compose.local.yml --profile release --profile monitoring"
+          C="docker compose -f compose.yml -f compose.single.yml -f compose.local.yml --profile release --profile monitoring"
           $C ps -a
           $C logs --no-color --tail 200
           # Again as annotations, which are readable without opening the job log: each container's state and last
