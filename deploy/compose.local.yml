@@ -1,5 +1,6 @@
-# Local production-like stack: the production compose file plus a database and object storage of its own, on
-# https://localhost:8443. Proves the images, start-up checks, migrations and smoke test without a cloud account.
+# Local production-like stack: the single-server stack (compose.yml + compose.single.yml, as on staging) plus object
+# storage of its own, on https://localhost:8443. Proves the images, start-up checks, migrations and smoke test
+# without a cloud account; CI runs it on every pull request.
 #   node deploy/local/init.mjs        (once: writes deploy/local/*.env with random local secrets)
 #   node deploy/local/up.mjs          (builds images, provisions, migrates, starts, runs the smoke test)
 services:
@@ -16,49 +17,31 @@ services:
   api:
     env_file: !override local/app.env
     depends_on:
-      postgres: { condition: service_healthy }
       storage: { condition: service_started }
 
   backups:
     env_file: !override [local/release.env, local/backup.env]
     depends_on:
-      postgres: { condition: service_healthy }
       storage: { condition: service_started }
 
   backup:
     env_file: !override [local/release.env, local/backup.env]
     depends_on:
-      postgres: { condition: service_healthy }
       storage: { condition: service_started }
 
   restore-drill:
     env_file: !override [local/app.env, local/release.env, local/backup.env]
     depends_on:
-      postgres: { condition: service_healthy }
       storage: { condition: service_started }
 
   migrate:
     env_file: !override local/release.env
-    depends_on:
-      postgres: { condition: service_healthy }
 
   provision:
-    image: ${API_IMAGE:?Set API_IMAGE}
-    profiles: [release]
-    env_file: local/release.env
-    command: ['node', 'node_modules/@innpilot/db/dist/cli.js', 'provision']
-    depends_on:
-      postgres: { condition: service_healthy }
+    env_file: !override local/release.env
 
   postgres:
-    image: postgres:16.10-alpine
-    env_file: local/postgres.env
-    volumes: [pgdata:/var/lib/postgresql/data]
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d innpilot']
-      interval: 3s
-      timeout: 3s
-      retries: 30
+    env_file: !override local/postgres.env
 
   storage:
     image: versity/versitygw:v1.9.0
@@ -96,5 +79,4 @@ services:
         q.on('end', () => { console.log('ALERT ' + b); s.end(); }); }).listen(8080)
 
 volumes:
-  pgdata:
   storagedata:

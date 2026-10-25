@@ -3,13 +3,27 @@
  * Writes the local production-like stack's settings (deploy/local/*.env) with fresh random secrets. Safe to run
  * again: files that already exist are kept, and only missing ones are added (reusing the values they share).
  * These are local test values only: never reuse them anywhere else.
+ *
+ * Home staging (slice 7.1, docs/home-staging-runbook.md) uses the same settings in another folder, for its public
+ * address and buckets:
+ *   node deploy/local/init.mjs --dir deploy/home --origin https://<pc>.<tailnet>.ts.net --buckets innpilot-staging
  */
 import { generateKeyPairSync, randomBytes } from 'node:crypto';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const here = dirname(fileURLToPath(import.meta.url));
+const arg = (name, fallback) => {
+  const i = process.argv.indexOf(`--${name}`);
+  return i > 0 && process.argv[i + 1] ? process.argv[i + 1] : fallback;
+};
+const here = resolve(arg('dir', dirname(fileURLToPath(import.meta.url))));
+const origin = arg('origin', 'https://localhost:8443');
+const buckets = arg('buckets', 'innpilot-local');
+if (!/^https:\/\/[a-z0-9.-]+(:\d+)?$/i.test(origin)) {
+  throw new Error(`--origin must be https://host, not ${origin}`);
+}
+mkdirSync(here, { recursive: true });
 const secret = (n = 24) => randomBytes(n).toString('base64url');
 const read = (name) =>
   existsSync(join(here, name))
@@ -51,7 +65,7 @@ const files = {
   }),
   'app.env': () => ({
     DATABASE_URL: `postgres://innpilot_app:${appPassword}@postgres:5432/innpilot`,
-    WEB_ORIGINS: 'https://localhost:8443',
+    WEB_ORIGINS: origin,
     COOKIE_SECURE: 'true',
     MFA_ENCRYPTION_KEY: secret(32),
     PII_ENCRYPTION_KEY: secret(32),
@@ -59,7 +73,7 @@ const files = {
     JOBS_POLL_SECONDS: '5',
     STORAGE_ENDPOINT: 'http://storage:7070',
     STORAGE_REGION: 'us-east-1',
-    STORAGE_BUCKET: 'innpilot-local',
+    STORAGE_BUCKET: buckets,
     STORAGE_ACCESS_KEY_ID: storageKey,
     STORAGE_SECRET_ACCESS_KEY: storageSecret,
   }),
@@ -76,7 +90,7 @@ if (needKeys) {
     // Locally the same storage container, another bucket; in production a separate account (runbook).
     BACKUP_STORAGE_ENDPOINT: 'http://storage:7070',
     BACKUP_STORAGE_REGION: 'us-east-1',
-    BACKUP_BUCKET: 'innpilot-local-backups',
+    BACKUP_BUCKET: `${buckets}-backups`,
     BACKUP_ACCESS_KEY_ID: storageKey,
     BACKUP_SECRET_ACCESS_KEY: storageSecret,
     BACKUP_PUBLIC_KEY: keys.publicKey,
@@ -98,6 +112,6 @@ for (const [name, values] of Object.entries(files)) {
 }
 console.log(
   written
-    ? `Wrote ${written} file(s) in deploy/local with random local secrets.`
-    : 'deploy/local is complete.',
+    ? `Wrote ${written} file(s) in ${relative(process.cwd(), here) || '.'} with random secrets.`
+    : `${relative(process.cwd(), here) || '.'} is complete.`,
 );

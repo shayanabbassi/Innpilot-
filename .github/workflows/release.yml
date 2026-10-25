@@ -2,7 +2,7 @@ name: Release
 
 # P6-5 / P6-6: every merge to main builds the images and deploys them to staging; a version tag (v1.2.3) deploys
 # the same build to production after a manual approval (set required reviewers on the "production" environment).
-# Deployment targets are any host running deploy/compose.yml (provider-neutral until D17 is decided). Until a
+# Deployment targets are any host running deploy/compose.yml (staging on one server: D17, P7-1). Until a
 # target is configured (repository variables STAGING_HOST / PRODUCTION_HOST), only the images are built and
 # published.
 
@@ -19,44 +19,90 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  images:
-    name: Build and publish images
-    runs-on: ubuntu-latest
+  # Each image for each processor, built natively (P7-2: Oracle Always Free machines are Arm, and GitHub's Arm
+  # runners are free for public repositories), pushed by digest only; "images" then publishes one tag for both.
+  build:
+    name: Build ${{ matrix.image }} (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     permissions:
       contents: read
       packages: write
-    outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+    strategy:
+      fail-fast: true
+      matrix:
+        image: [api, web]
+        arch: [amd64, arm64]
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - id: tag
-        name: Image tag
-        run: |
-          if [ "$GITHUB_REF_TYPE" = tag ]; then echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT";
-          else echo "tag=sha-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"; fi
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
       - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+      - id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
         with:
           context: .
-          file: apps/api/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/innpilot-api:${{ steps.tag.outputs.tag }}
+          file: apps/${{ matrix.image }}/Dockerfile
+          platforms: linux/${{ matrix.arch }}
+          outputs: type=image,name=ghcr.io/${{ github.repository_owner }}/innpilot-${{ matrix.image }},push-by-digest=true,name-canonical=true,push=true
           provenance: true
           sbom: true
-      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+      - name: Record the digest
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: mkdir -p digests && echo "$DIGEST" > "digests/${{ matrix.image }}-${{ matrix.arch }}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          context: .
-          file: apps/web/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/innpilot-web:${{ steps.tag.outputs.tag }}
-          provenance: true
-          sbom: true
+          name: digest-${{ matrix.image }}-${{ matrix.arch }}
+          path: digests/*
+          retention-days: 1
+
+  images:
+    name: Publish multi-platform images
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - id: tag
+        name: Image tag
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT";
+          else echo "tag=sha-${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: digest-*
+          path: digests
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: One tag for both processors
+        env:
+          OWNER: ${{ github.repository_owner }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          for image in api web; do
+            repo="ghcr.io/$OWNER/innpilot-$image"
+            docker buildx imagetools create -t "$repo:$TAG" \
+              "$repo@$(cat "digests/$image-amd64")" "$repo@$(cat "digests/$image-arm64")"
+            docker buildx imagetools inspect "$repo:$TAG"
+          done
 
   staging:
     name: Deploy to staging

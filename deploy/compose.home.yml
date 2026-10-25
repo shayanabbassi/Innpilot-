@@ -1,0 +1,57 @@
+# Home staging (no card needed): the single-server stack on your own computer, with object storage of its own and a
+# public https address from Tailscale Funnel (docs/home-staging-runbook.md). Run it as its own Compose project,
+# "innpilot-staging", so the local drills (project "innpilot") never touch it:
+#   node deploy/home/release.mjs
+# Settings: deploy/home/*.env, written by "node deploy/local/init.mjs --dir deploy/home --origin https://...".
+services:
+  proxy:
+    # Only the laptop itself can reach it; Tailscale Funnel forwards the public address here.
+    ports: !override ['127.0.0.1:8090:80']
+    volumes: !override
+      - ./caddy/Caddyfile.home:/etc/caddy/Caddyfile:ro
+      - ./caddy/innpilot.caddy:/etc/caddy/innpilot.caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  api:
+    env_file: !override home/app.env
+    depends_on:
+      storage: { condition: service_started }
+
+  backups:
+    env_file: !override [home/release.env, home/backup.env]
+    depends_on:
+      storage: { condition: service_started }
+
+  backup:
+    env_file: !override [home/release.env, home/backup.env]
+    depends_on:
+      storage: { condition: service_started }
+
+  restore-drill:
+    env_file: !override [home/app.env, home/release.env, home/backup.env]
+    depends_on:
+      storage: { condition: service_started }
+
+  migrate:
+    env_file: !override home/release.env
+
+  provision:
+    env_file: !override home/release.env
+
+  postgres:
+    env_file: !override home/postgres.env
+
+  # Files and backups on this computer (no cloud storage without a card). Never published.
+  storage:
+    image: versity/versitygw:v1.9.0
+    restart: unless-stopped
+    command: ['--port', ':7070', 'posix', '/data']
+    env_file: home/storage.env
+    volumes: [storagedata:/data]
+
+  grafana:
+    env_file: !override home/monitoring.env
+
+volumes:
+  storagedata:

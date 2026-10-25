@@ -29,7 +29,8 @@ staging and production.
 
 ## Keys: the one thing to get right
 
-`node dist/ops/cli.js keygen` prints a key pair once:
+`node dist/ops/cli.js keygen` prints a key pair once (on a single server, `deploy/single/init-env.sh` makes it in
+the same format):
 
 - `BACKUP_PUBLIC_KEY` goes into `backup.env` on the host.
 - `BACKUP_PRIVATE_KEY` is the **only** way to read any backup. Keep it **offline**: in a password manager with
