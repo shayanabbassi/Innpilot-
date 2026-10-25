@@ -1,0 +1,12 @@
+# Home staging (docs/home-staging-runbook.md): Tailscale Funnel holds the public https address and its certificate,
+# and forwards to this proxy over plain http on the laptop itself (127.0.0.1 only). Caddy therefore gets no
+# certificate of its own; the browser still sees https, so cookies stay Secure.
+{
+	auto_https off
+}
+
+import /etc/caddy/innpilot.caddy
+
+:80 {
+	import innpilot
+}

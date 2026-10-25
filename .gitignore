@@ -22,6 +22,7 @@ playwright-report/
 deploy/*.env
 deploy/local/*.env
 deploy/single/*.env
+deploy/home/*.env
 deploy/local/caddy-root.crt
 deploy/backups/
 

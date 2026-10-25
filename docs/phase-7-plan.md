@@ -17,10 +17,12 @@ written so you can follow them one by one.
 
 ## Owner decisions
 
-| #   | Topic                | Decision                                                                                                                                                                                                                           |
-| --- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| D17 | Hosting (2026-10-25) | **Staging:** Oracle Cloud Always Free (one Ampere A1 Arm virtual machine) with Cloudflare R2 for files and backups, at no cost. **Production:** a small paid server later; provider chosen before the pilot's first real day (D21) |
-| D21 | Production provider  | Open. Must meet PRD §9 (RPO 15 minutes, RTO 4 hours), which a single free server cannot: needs a managed database with point-in-time recovery, or archived write-ahead logs                                                        |
+| #   | Topic                | Decision                                                                                                                                                                                                                                            |
+| --- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D17 | Hosting (2026-10-25) | **Staging:** Oracle Cloud Always Free (one Ampere A1 Arm virtual machine) with Cloudflare R2 for files and backups, at no cost. **Production:** a small paid server later; provider chosen before the pilot's first real day (D21)                  |
+| D21 | Production provider  | Open. Must meet PRD §9 (RPO 15 minutes, RTO 4 hours), which a single free server cannot: needs a managed database with point-in-time recovery, or archived write-ahead logs                                                                         |
+| D17 | Revised (2026-10-25) | No payment card yet, so Oracle and R2 cannot be opened. **Staging now runs on your own computer** with Tailscale Funnel for the public https address (home staging). The Oracle + R2 templates stay ready for when a card is available              |
+| D22 | Selling model        | **On-premises first:** InnPilot is sold and installed on each buyer's own PC (one hotel per install); a cloud service follows after growth. Home staging is the template for that install; what selling on-premises still needs is listed under 7.3 |
 
 ## Design decisions (defaults unless you say otherwise)
 
@@ -48,16 +50,20 @@ written so you can follow them one by one.
   (`COMPOSE_FILES` variable), so staging uses the single-server form and production the managed one.
 - **Server:** `deploy/single/setup-server.sh` for Ubuntu 24.04 (Arm or x86): Docker from Docker's own repository,
   firewall opened for 22, 80 and 443 only (including Oracle's image rules), log rotation, automatic security
-  updates, a deploy user. `deploy/single/init-env.mjs` writes the settings files with fresh random secrets and
+  updates, a deploy user. `deploy/single/init-env.sh` writes the settings files with fresh random secrets and
   placeholders for the R2 keys and the address.
 - **Runbook:** `docs/staging-runbook.md`, step by step from account sign-up to first release, written for you.
+- **Home staging (D17 revised):** `deploy/compose.home.yml` (storage on the same computer, proxy on
+  `127.0.0.1:8090` behind Tailscale Funnel, its own Compose project), `deploy/caddy/Caddyfile.home`,
+  `deploy/home/release.mjs` (build or pull, the same `release.sh`, smoke-test hotel, smoke test), settings from
+  `deploy/local/init.mjs --dir deploy/home`; `docs/home-staging-runbook.md`.
 - **Tests:** the local production-like stack (images, provisioning, release, smoke test, restore drill, alert drill)
   runs on the single-server form locally and in CI; both architectures build in the release workflow.
 
 ### 7.2 Staging up and drilled — pilot runbook step 1
 
-- **Yours:** Oracle account and machine, Cloudflare account, buckets and tokens, the address, GitHub environment
-  settings, following the runbook. **Mine:** guiding each step, then the first release through the pipeline.
+- **Yours:** Tailscale account and Funnel on this computer (home staging runbook); later, with a card, the Oracle
+  and Cloudflare accounts. **Mine:** settings, releases, guiding each step.
 - **Then, on staging:** smoke test, restore drill, a rebuild-from-backup drill onto a fresh machine (P7-6), the
   route probe and a load run, each recorded in its document; alert destinations confirmed with a test alert.
 
@@ -69,6 +75,11 @@ written so you can follow them one by one.
   of terms, privacy notice and retention; F-7, F-8 and F-9 decided.
 - The pilot hotel created, set up through onboarding, opening balances agreed with the accountant; staff trained on
   staging.
+- **On-premises install (D22), not built yet:** a one-command installer for a buyer's Windows PC (Docker Desktop
+  or WSL, the stack, Tailscale or local-network https); updates delivered without git (published images, a signed
+  update command); backups copied off the PC (USB drive or a free cloud folder such as Google Drive: the files are
+  already encrypted); a UPS and power-cut recovery; per-install secrets kept by the buyer; remote support access
+  with the buyer's consent; licensing or activation if you want it; terms and a privacy notice for buyers.
 
 ### 7.4 Go-live and first weeks — pilot runbook steps 8 and 9
 
