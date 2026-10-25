@@ -80,5 +80,15 @@ training.
 - **Everything is on one disk**: database, files and backups. A broken disk loses staging. Fine for fictional
   training data; an on-premises sale needs backups copied off the machine (slice 7.3).
 - **Everyone appears to come from one address** behind Tailscale, so sign-in rate limits are shared: a few wrong
-  passwords in a training session can briefly slow sign-in for everyone. To be measured in 7.2.
+  passwords in a training session can briefly slow sign-in for everyone. Measured 2026-10-25 on the first release:
+  every sign-in, from the internet or not, is audited as `172.20.0.1` (Docker's network gateway). Recording the
+  real visitor address needs Tailscale to pass it on; to be checked in 7.2.
+
+## First release record
+
+2026-10-25, `https://inpilot.tail96c7fc.ts.net`, images built from `phase-7-pilot` at 058c1f6: role, encrypted
+backup, 26 migrations, start; smoke-test hotel created; smoke test over the public address **6 passed, 0 failed**
+(health, security headers, no-session and cross-site refusals, error envelope, sign-in and sign-out with secure
+cookies); certificate valid.
+
 - Tailscale Funnel is meant for light use; heavy traffic or a public launch belongs on a real server.
