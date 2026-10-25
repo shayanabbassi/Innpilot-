@@ -7,5 +7,10 @@ onlyBuiltDependencies:
   - sharp
 # Security review (6.8): Next.js 15 pins an older PostCSS with source-map file-read advisories
 # (GHSA-6g55-p6wh-862q and follow-ups); 8.5.28 carries the fixes.
+# Advisories published after Phase 6: body-parser (GHSA, compressed-body DoS) and multer under Express and
+# Nest, and fast-uri under the Nest CLI; the patched releases are compatible minor updates.
 overrides:
   postcss: 8.5.28
+  body-parser: 2.4.0
+  multer: 2.5.0
+  fast-uri: 3.1.9
