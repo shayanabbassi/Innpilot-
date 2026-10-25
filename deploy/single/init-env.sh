@@ -67,12 +67,12 @@ POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 EOF
 
 write release.env <<EOF
-DATABASE_ADMIN_URL=postgres://postgres:$POSTGRES_PASSWORD@postgres:5432/innpilot
+DATABASE_ADMIN_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/innpilot
 APP_DB_PASSWORD=$APP_DB_PASSWORD
 EOF
 
 write app.env <<EOF
-DATABASE_URL=postgres://innpilot_app:$APP_DB_PASSWORD@postgres:5432/innpilot
+DATABASE_URL=postgres://innpilot_app:${APP_DB_PASSWORD}@postgres:5432/innpilot
 WEB_ORIGINS=https://$SITE_ADDRESS
 COOKIE_SECURE=true
 MFA_ENCRYPTION_KEY=$(secret 32)

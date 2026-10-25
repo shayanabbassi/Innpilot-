@@ -98,7 +98,7 @@ jobs:
       - run: docker build -f apps/web/Dockerfile -t innpilot-web:arm .
       - name: The API image starts its tools on Arm
         run: |
-          docker run --rm innpilot-api:arm node -e "require('@node-rs/argon2'); console.log(process.arch)"
+          docker run --rm innpilot-api:arm node -e "require('@innpilot/db').hashPassword('arm-check').then((h) => console.log(process.arch, h.split('$')[1]))"
           docker run --rm innpilot-api:arm pg_dump --version
 
   production-stack:
