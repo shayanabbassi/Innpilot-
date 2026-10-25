@@ -79,10 +79,11 @@ training.
   Docker brings it back when the computer restarts.
 - **Everything is on one disk**: database, files and backups. A broken disk loses staging. Fine for fictional
   training data; an on-premises sale needs backups copied off the machine (slice 7.3).
-- **Everyone appears to come from one address** behind Tailscale, so sign-in rate limits are shared: a few wrong
-  passwords in a training session can briefly slow sign-in for everyone. Measured 2026-10-25 on the first release:
-  every sign-in, from the internet or not, is audited as `172.20.0.1` (Docker's network gateway). Recording the
-  real visitor address needs Tailscale to pass it on; to be checked in 7.2.
+- **Visitor addresses** (fixed in 7.2): at first every sign-in was audited as `172.20.0.1`, Docker's network
+  gateway, so rate limits were shared by everyone. Caddy now keeps the address Tailscale forwards
+  (`Caddyfile.home`, `trusted_proxies`) and the API trusts two proxies (`compose.home.yml`, `TRUST_PROXY=2`): sign-ins
+  are audited with the visitor's own address, and a forged `X-Forwarded-For` header is ignored. Anyone signed in to
+  this computer itself can still reach the proxy directly on `127.0.0.1:8090`; that is acceptable for staging.
 
 ## First release record
 

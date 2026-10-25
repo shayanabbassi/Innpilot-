@@ -62,10 +62,22 @@ written so you can follow them one by one.
 
 ### 7.2 Staging up and drilled — pilot runbook step 1
 
-- **Yours:** Tailscale account and Funnel on this computer (home staging runbook); later, with a card, the Oracle
-  and Cloudflare accounts. **Mine:** settings, releases, guiding each step.
-- **Then, on staging:** smoke test, restore drill, a rebuild-from-backup drill onto a fresh machine (P7-6), the
-  route probe and a load run, each recorded in its document; alert destinations confirmed with a test alert.
+- **Done:** home staging live at `https://inpilot.tail96c7fc.ts.net` (2026-10-25), smoke test 6/6 over the public
+  address; settings saved off the computer (USB and an encrypted copy in Google Drive), backup key removed from it.
+- **On home staging, in this order:**
+  1. **Real visitor addresses:** Caddy keeps the address Tailscale forwards, the API trusts two proxies; a forged
+     address is ignored (tested from this computer). Confirm from outside with a phone on mobile data.
+  2. **Your own hotel account** on staging (a fictional training hotel, you as owner, two-step verification on
+     your phone), to look around and to train staff later.
+  3. **Restore drill** on staging, with the backup key brought back from your copy for the run only.
+  4. **Rebuild drill:** the whole staging rebuilt from the latest backup and the saved settings into a fresh Docker
+     project, as after a lost or broken computer (P7-6); exact commands written into the runbook.
+  5. **Backups off the computer:** a scheduled copy of the encrypted backups to a folder that leaves the machine
+     (Google Drive for desktop or a USB drive): needed for staging's safety and for every on-premises sale (D22).
+  6. **Alerts to your phone:** the monitoring profile with a free destination (a Telegram bot or email), proved with
+     a test alert.
+  7. Route probe and a light load run against staging, recorded.
+- **Later, with a card:** the same on Oracle and R2 (staging-runbook.md).
 
 ### 7.3 Production and pilot preparation — pilot runbook steps 2 to 7
 

@@ -3,6 +3,11 @@
 # certificate of its own; the browser still sees https, so cookies stay Secure.
 {
 	auto_https off
+	servers {
+		# Only Tailscale reaches this proxy (127.0.0.1, through Docker's network gateway), so keep the visitor
+		# address it forwards instead of replacing it with the gateway's.
+		trusted_proxies static private_ranges
+	}
 }
 
 import /etc/caddy/innpilot.caddy
