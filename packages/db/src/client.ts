@@ -15,6 +15,12 @@ export interface DbHandle {
 
 export function createDb(connectionString: string, options: PoolConfig = {}): DbHandle {
   const pool = new Pool({ connectionString, max: 10, ...options });
+  // An idle connection the server ends (restart, failover, a dropped database) is reported here; without a
+  // listener it would crash the process. The pool discards it and opens a new one when next needed. Only the
+  // code and message are written: the error object carries the connection settings, password included.
+  pool.on('error', (err: Error & { code?: string }) => {
+    process.stderr.write(`Idle database connection closed: ${err.code ?? ''} ${err.message}\n`);
+  });
   const db = drizzle(pool, { schema });
   return { db, pool, close: () => pool.end() };
 }
