@@ -100,6 +100,22 @@ The nightly backup is at 21:00 UTC (02:00 in Pakistan). When this computer is of
 scheduler takes the missed backup as soon as Docker starts again (since 2026-10-29; before that, staging went four
 days without one). So a backup happens at least once on every day the computer is switched on.
 
+## Rebuild after a lost or broken computer (P7-6)
+
+`node deploy/home/rebuild-drill.mjs` proves it, beside live staging: a fresh Compose project (`innpilot-rebuild`)
+with empty volumes, the saved settings, a copy of the storage (backups and files), the role provisioned, the latest
+backup restored with all eight checks and kept, made the live database, InnPilot started, then compared with live
+staging and removed (`--keep` leaves it on `http://127.0.0.1:8091`).
+
+**2026-10-29: passed in 58.1 s.** Backup of 29 October restored (8 of 8 checks), ready 200, smoke-test sign-in 200;
+tenants 2, users 4, rooms 2, journals 2 on both; audit events 69 against 67 (the drill's own two sign-ins). Live
+staging was not changed.
+
+For a real rebuild on a new computer: install Docker Desktop, Tailscale (same account; set the same machine name and
+`tailscale funnel --bg 8090`) and the repository; put the saved settings in `deploy\home`; copy the storage from the
+off-site copy; then the same steps with the project name `innpilot-staging` and port 8090. **Until backups are
+copied off this computer (7.2 item 5), a lost disk loses the backups with it.**
+
 ## Restore drill (bring the key back for the run only)
 
 1. Copy `backup-private.env` from your USB stick into `deploy\home`.

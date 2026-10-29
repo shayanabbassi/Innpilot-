@@ -69,8 +69,8 @@ written so you can follow them one by one.
      address is ignored. Done; finding: Funnel forwards its own address, so visitors still share one (runbook).
   2. **Your own hotel account** on staging (a fictional training hotel, you as owner, two-step verification on
      your phone), to look around and to train staff later.
-  3. **Restore drill** on staging, with the backup key brought back from your copy for the run only.
-  4. **Rebuild drill:** the whole staging rebuilt from the latest backup and the saved settings into a fresh Docker
+  3. **Restore drill (passed 2026-10-29, after the missed-backup fix)** on staging, with the backup key brought back for the run only.
+  4. **Rebuild drill (passed 2026-10-29, 58 s):** the whole staging rebuilt from the latest backup and the saved settings into a fresh Docker
      project, as after a lost or broken computer (P7-6); exact commands written into the runbook.
   5. **Backups off the computer:** a scheduled copy of the encrypted backups to a folder that leaves the machine
      (Google Drive for desktop or a USB drive): needed for staging's safety and for every on-premises sale (D22).
