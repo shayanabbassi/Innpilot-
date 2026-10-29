@@ -31,6 +31,7 @@ export * from './reports';
 export * from './reservations';
 export * from './rooms';
 export * from './stays';
+export * from './system';
 export * from './tax';
 /** The Zod instance the contracts are built with; use it when extending or composing these schemas. */
 export { z } from 'zod';

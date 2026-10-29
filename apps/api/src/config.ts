@@ -47,6 +47,12 @@ const schema = z.object({
   /** Per-IP request rate limits. Only end-to-end tests switch this off. */
   RATE_LIMIT_ENABLED: bool.default(true),
   /**
+   * System warnings inside the app for owners and managers (slice 7.2): backups and background work. On for a
+   * single-hotel install (home staging, on-premises, D22), where no one watches a monitoring screen; off for a hosted
+   * multi-hotel service, where those are the operator's concern and not one hotel's.
+   */
+  IN_APP_SYSTEM_WARNINGS: bool.default(false),
+  /**
    * How often this instance looks for background jobs (slice 6.3). 0 turns the worker off, for an instance that
    * should only serve requests (and in tests, which run jobs directly).
    */

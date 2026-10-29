@@ -19,6 +19,8 @@ services:
       # Two proxies in front: Tailscale and Caddy. A forged X-Forwarded-For from a visitor is ignored (tested
       # 2026-10-25); Funnel forwards its own address, so visitors still share one (home-staging-runbook.md).
       TRUST_PROXY: '2'
+      # A single-hotel install: the owner and manager see backup and background-work warnings in the app (7.2).
+      IN_APP_SYSTEM_WARNINGS: 'true'
     depends_on:
       storage: { condition: service_started }
 

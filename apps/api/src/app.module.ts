@@ -75,6 +75,7 @@ import { AttachmentsService } from './storage/attachments.service';
 import { FileStore } from './storage/file-store.service';
 import { ErrorReporter } from './monitoring/error-reporter.service';
 import { MetricsService } from './monitoring/metrics.service';
+import { SystemWarningsController } from './monitoring/system-warnings.controller';
 import { FilesController } from './storage/files.controller';
 import { RoomsService } from './rooms/rooms.service';
 import { UsersController } from './users/users.controller';
@@ -184,6 +185,7 @@ export class AppModule {
         AuditController,
         FilesController,
         HealthController,
+        SystemWarningsController,
       ],
       providers: [
         // Order matters: rate limiting runs before authentication.

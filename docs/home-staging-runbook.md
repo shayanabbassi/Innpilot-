@@ -136,6 +136,22 @@ it was off then) and logs to `%LOCALAPPDATA%\InnPilot\offsite.log`. First runs: 
 two copies in Drive. To check: open the log, or look at the Drive folder's newest file date. To stop it: Task
 Scheduler → "InnPilot off-site copy" → Disable.
 
+## Warnings inside InnPilot (7.2 item 6)
+
+No outside alert service (owner's choice, 2026-10-29: nothing of the owner's, such as a mail password, may sit on a
+hotel's computer). Instead the **owner and general manager** see a banner above every page while a problem lasts:
+no backup yet, the last good backup older than 26 hours, the last backup attempt failed, background tasks failing
+or waiting too long; the same conditions as the alert rules. Other roles never see it. Switched on for a
+single-hotel install (`IN_APP_SYSTEM_WARNINGS: 'true'` in `compose.home.yml`); off by default, for a hosted
+multi-hotel service where the operator watches these instead.
+
+Checked 2026-10-29: unit and end-to-end tests (owner and both kinds of manager see it; front desk, accountant,
+auditor, cashier and housekeeping are refused; switched off it answers with nothing); released to staging (no
+banner, backups healthy); in the browser with a local database that has no backup: the banner at 1280, 768 and 360
+pixels without sideways scrolling, and none for front desk (no request made, the endpoint refuses it).
+
+**Limit:** someone has to open InnPilot to see a warning, and a computer that is off warns no one.
+
 ## Restore drill (bring the key back for the run only)
 
 1. Copy `backup-private.env` from your USB stick into `deploy\home`.

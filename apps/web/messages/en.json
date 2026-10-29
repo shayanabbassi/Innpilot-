@@ -1958,5 +1958,27 @@
     "refreshNote": "This page updates itself while an export is being prepared.",
     "period": "{from} to {to}",
     "asOf": "as of {date}"
+  },
+  "systemWarnings": {
+    "backup_missing": {
+      "title": "No backup has been made yet.",
+      "action": "Keep InnPilot running for a few minutes so the first backup can finish. If this stays, contact your InnPilot support person."
+    },
+    "backup_too_old": {
+      "title": "The last good backup was {since}.",
+      "action": "Backups run when this computer is on. Keep it switched on and connected for a while today; if this warning stays, contact your InnPilot support person."
+    },
+    "backup_failed": {
+      "title": "The last backup attempt failed.",
+      "action": "InnPilot will try again. If this warning is still here tomorrow, contact your InnPilot support person."
+    },
+    "jobs_failing": {
+      "title": "{count, plural, one {# background task} other {# background tasks}} failed in the last 24 hours.",
+      "action": "Exports or clean-up may not have finished. Try the export again; if this stays, contact your InnPilot support person."
+    },
+    "jobs_backlog": {
+      "title": "Background tasks have been waiting since {since}.",
+      "action": "Exports may be slow to appear. If this stays for more than an hour, contact your InnPilot support person."
+    }
   }
 }
