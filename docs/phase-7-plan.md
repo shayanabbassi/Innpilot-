@@ -77,7 +77,7 @@ written so you can follow them one by one.
   6. **Warnings inside InnPilot (done 2026-10-29), instead of alerts to your phone:** Telegram is not available
      in Pakistan, and a Gmail password on every hotel's computer is unsafe for selling (D22), so the owner chose
      an in-app banner for the owner and manager (backups, background work); `system.warnings`, migration 0027.
-  7. Route probe and a light load run against staging, recorded.
+  7. **Route probe and light load run (done 2026-10-29):** no findings over 201 routes; 5 users, 0 failed, p95 0.55 s.
 - **Later, with a card:** the same on Oracle and R2 (staging-runbook.md).
 
 ### 7.3 Production and pilot preparation — pilot runbook steps 2 to 7

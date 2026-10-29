@@ -152,6 +152,24 @@ pixels without sideways scrolling, and none for front desk (no request made, the
 
 **Limit:** someone has to open InnPilot to see a warning, and a computer that is off warns no one.
 
+## Route probe and light load run (7.2 item 7)
+
+Both run from a container pinned to Funnel's public IPv4 relay (`--add-host <address>:<relay IP>`): from this
+computer the address otherwise resolves to its own Tailscale address and never leaves it.
+
+**Route probe, 2026-10-29** (`node scripts/probe-live.mjs https://<address>`): every route in the OpenAPI document,
+signed out, over the internet: 201 routes; 196 refused a signed-out request; 113 routes that change data also
+refused a foreign origin; the 3 public reads answered 200; no 5xx, no internals in any error. **No findings**
+(2 min 39 s; 17 s from this computer). The in-process probe (`security-probe.e2e`) still covers roles and other
+hotels on every change.
+
+**Light load run, 2026-10-29** (`deploy/home/light-load.k6.js`, k6 2.2.0): 5 front-desk users for 2 minutes reading
+the front desk, room board, reservations, guests and dashboard, with pauses as a person would; account
+`load-desk@smoke-check.test` (front desk, Smoke Check Hotel, staging only, `deploy/home/load.env`). 260 requests,
+**0 failed**, 250 of 250 checks; reads median 0.43 s, p95 **0.55 s** (threshold 1.5 s), slowest 1.6 s. The floor of
+0.36 s is the trip to Tailscale's relay and back; the API itself answers these in about 0.2 s (phase-6-load-test).
+A first run failed (87 % 401) because k6 clears cookies every round by default; `noCookiesReset` fixed the script.
+
 ## Restore drill (bring the key back for the run only)
 
 1. Copy `backup-private.env` from your USB stick into `deploy\home`.
