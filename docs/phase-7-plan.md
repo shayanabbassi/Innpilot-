@@ -88,11 +88,12 @@ written so you can follow them one by one.
   of terms, privacy notice and retention; F-7, F-8 and F-9 decided.
 - The pilot hotel created, set up through onboarding, opening balances agreed with the accountant; staff trained on
   staging.
-- **On-premises install (D22), not built yet:** a one-command installer for a buyer's Windows PC (Docker Desktop
-  or WSL, the stack, Tailscale or local-network https); updates delivered without git (published images, a signed
-  update command); backups copied off the PC (USB drive or a free cloud folder such as Google Drive: the files are
-  already encrypted); a UPS and power-cut recovery; per-install secrets kept by the buyer; remote support access
-  with the buyer's consent; licensing or activation if you want it; terms and a privacy notice for buyers.
+- **On-premises install (D22):** **built 2026-10-29** ([onprem-install-guide.md](onprem-install-guide.md)): a
+  one-command installer bundle for a hotel's Windows computer (Docker Desktop check, secrets generated on the
+  computer, the hotel and owner, a recovery kit, start with Windows, a daily encrypted copy off the computer, the
+  owner's first sign-in proven), upgrades by running a newer bundle, `build-bundle.mjs` for published versions.
+  **Still open:** a test on a second, real hotel-like computer; remote support access with the buyer's consent;
+  licensing or activation if you want it; terms and a privacy notice for buyers; a UPS recommendation per site.
 
 ### 7.4 Go-live and first weeks — pilot runbook steps 8 and 9
 
