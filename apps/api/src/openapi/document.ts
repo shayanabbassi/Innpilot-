@@ -195,6 +195,7 @@ import {
   taxSummaryDto,
   taxSummaryQueryObject,
   dayClosePreviewDto,
+  systemWarningsDto,
   dayCloseRequest,
   z,
 } from '@innpilot/contracts';
@@ -1482,6 +1483,12 @@ export const ROUTE_DOCS: Record<string, RouteDoc> = {
     tag: 'Operations',
     summary: 'Liveness and database reachability',
     data: z.object({ status: z.literal('ok') }),
+  },
+  'GET /system/warnings': {
+    tag: 'Operations',
+    summary:
+      'System warnings for the owner and manager: backups and background work (empty unless IN_APP_SYSTEM_WARNINGS)',
+    data: systemWarningsDto,
   },
 };
 

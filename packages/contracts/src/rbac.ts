@@ -51,6 +51,8 @@ export const PERMISSIONS = {
   'report.operational': 'View operational reports',
   'report.financial': 'View financial reports and statements',
   'export.run': 'Export reports and data',
+  // Deliberately not "*.read": every role that reads everything would get it. Owner and manager only.
+  'system.warnings': 'See system warnings about backups and background work',
 } as const;
 
 export type Permission = keyof typeof PERMISSIONS;

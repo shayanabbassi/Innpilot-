@@ -138,6 +138,8 @@ async function buildFixture(admin: Client): Promise<Fixture> {
 export interface HarnessOptions {
   /** Turns on the application logger at trace level, writing to this stream. */
   logStream?: DestinationStream;
+  /** Extra configuration for this run, e.g. a feature switch. */
+  env?: Record<string, string>;
 }
 
 export async function startHarness(options: HarnessOptions = {}): Promise<Harness> {
@@ -161,6 +163,7 @@ export async function startHarness(options: HarnessOptions = {}): Promise<Harnes
     STORAGE_BUCKET: 'innpilot-test',
     STORAGE_ACCESS_KEY_ID: process.env.STORAGE_ACCESS_KEY_ID,
     STORAGE_SECRET_ACCESS_KEY: process.env.STORAGE_SECRET_ACCESS_KEY,
+    ...options.env,
   });
   const app = await createApp(
     config,

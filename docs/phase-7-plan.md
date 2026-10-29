@@ -62,10 +62,23 @@ written so you can follow them one by one.
 
 ### 7.2 Staging up and drilled — pilot runbook step 1
 
-- **Yours:** Tailscale account and Funnel on this computer (home staging runbook); later, with a card, the Oracle
-  and Cloudflare accounts. **Mine:** settings, releases, guiding each step.
-- **Then, on staging:** smoke test, restore drill, a rebuild-from-backup drill onto a fresh machine (P7-6), the
-  route probe and a load run, each recorded in its document; alert destinations confirmed with a test alert.
+- **Done:** home staging live at `https://inpilot.tail96c7fc.ts.net` (2026-10-25), smoke test 6/6 over the public
+  address; settings saved off the computer (USB and an encrypted copy in Google Drive), backup key removed from it.
+- **On home staging, in this order:**
+  1. **Visitor addresses:** Caddy keeps the address Tailscale forwards and the API trusts two proxies; a forged
+     address is ignored. Done; finding: Funnel forwards its own address, so visitors still share one (runbook).
+  2. **Your own hotel account** on staging (a fictional training hotel, you as owner, two-step verification on
+     your phone), to look around and to train staff later.
+  3. **Restore drill (passed 2026-10-29, after the missed-backup fix)** on staging, with the backup key brought back for the run only.
+  4. **Rebuild drill (passed 2026-10-29, 58 s):** the whole staging rebuilt from the latest backup and the saved settings into a fresh Docker
+     project, as after a lost or broken computer (P7-6); exact commands written into the runbook.
+  5. **Backups off the computer (done 2026-10-29: daily to Google Drive):** a scheduled copy of the encrypted backups to a folder that leaves the machine
+     (Google Drive for desktop or a USB drive): needed for staging's safety and for every on-premises sale (D22).
+  6. **Warnings inside InnPilot (done 2026-10-29), instead of alerts to your phone:** Telegram is not available
+     in Pakistan, and a Gmail password on every hotel's computer is unsafe for selling (D22), so the owner chose
+     an in-app banner for the owner and manager (backups, background work); `system.warnings`, migration 0027.
+  7. **Route probe and light load run (done 2026-10-29):** no findings over 201 routes; 5 users, 0 failed, p95 0.55 s.
+- **Later, with a card:** the same on Oracle and R2 (staging-runbook.md).
 
 ### 7.3 Production and pilot preparation — pilot runbook steps 2 to 7
 
