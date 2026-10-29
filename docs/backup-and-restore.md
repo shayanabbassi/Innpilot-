@@ -122,6 +122,18 @@ The same drill run by the production images inside the Compose stack: an encrypt
 second after the smoke-test hotel was created, then the drill with the private key given for that run only. All
 eight checks passed (restore 8.2 s, total 9.8 s). CI repeats this on every pull request.
 
+### 2026-10-29: home staging (`docs/home-staging-runbook.md`)
+
+First attempt **failed**, and found a real gap: the newest backup was the empty one `release.sh` took before the
+first migrations on 25 October. The nightly scheduler waits for 21:00 UTC (02:00 in Pakistan), and the computer
+was off every night, so each start just scheduled the next night: four days without a backup. Fix: when the
+scheduler starts and the last scheduled backup was missed (`missedBackup`, unit-tested), it backs up at once
+(`backup.catch_up` in its log). On staging it caught up immediately (backup of 25 October → 29 October); a restart
+after that did not back up again. The drill then **passed** all eight checks in 6.1 s: 26 migrations, 66 tables and
+486 rows matched, one tenant's trial balance balanced, folios and cash accounts agree with the ledger, 67 audit
+events intact, row-level security on 57 tables, sign-in to the restored copy. The backup key was brought back from
+the owner's copy for the run only.
+
 ### Still to do (yours)
 
 The same drill in staging, then in production, once they exist (D17): generate the key pair, store the private key

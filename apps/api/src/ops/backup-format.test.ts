@@ -8,7 +8,7 @@ import {
   sealBackup,
   type BackupManifest,
 } from './backup-format';
-import { dailyKey, expired, monthlyKey } from './retention';
+import { dailyKey, expired, missedBackup, monthlyKey, previousRun } from './retention';
 
 const keys = generateBackupKeys();
 const other = generateBackupKeys();
@@ -74,5 +74,30 @@ describe('retention', () => {
 
   it('ignores objects it did not write', () => {
     expect(expired(['daily/notes.txt', 'other/2020.ipbk'], now)).toEqual([]);
+  });
+});
+
+describe('missed nightly backups', () => {
+  const at = '21:00';
+  const t = (iso: string) => new Date(iso);
+
+  it('finds the latest scheduled time at or before now', () => {
+    expect(previousRun(at, t('2026-10-29T12:37:00Z')).toISOString()).toBe('2026-10-28T21:00:00.000Z');
+    expect(previousRun(at, t('2026-10-29T21:00:00Z')).toISOString()).toBe('2026-10-29T21:00:00.000Z');
+    expect(previousRun(at, t('2026-11-01T00:30:00Z')).toISOString()).toBe('2026-10-31T21:00:00.000Z');
+  });
+
+  it('is missed when the computer was off at the scheduled time (home staging, 2026-10-29)', () => {
+    // Last backup on the 25th at 13:50; switched off every night since; started again on the 29th at noon.
+    expect(missedBackup(t('2026-10-25T13:50:58Z'), at, t('2026-10-29T12:37:18Z'))).toBe(true);
+  });
+
+  it('is missed when there is no backup at all', () => {
+    expect(missedBackup(null, at, t('2026-10-29T12:00:00Z'))).toBe(true);
+  });
+
+  it('is not missed when last night ran, or a backup was taken since', () => {
+    expect(missedBackup(t('2026-10-28T21:00:40Z'), at, t('2026-10-29T12:00:00Z'))).toBe(false);
+    expect(missedBackup(t('2026-10-29T09:15:00Z'), at, t('2026-10-29T12:00:00Z'))).toBe(false);
   });
 });

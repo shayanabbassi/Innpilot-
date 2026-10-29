@@ -94,4 +94,17 @@ backup, 26 migrations, start; smoke-test hotel created; smoke test over the publ
 (health, security headers, no-session and cross-site refusals, error envelope, sign-in and sign-out with secure
 cookies); certificate valid.
 
+## Backups when the computer is off at night
+
+The nightly backup is at 21:00 UTC (02:00 in Pakistan). When this computer is off at that time, the backup
+scheduler takes the missed backup as soon as Docker starts again (since 2026-10-29; before that, staging went four
+days without one). So a backup happens at least once on every day the computer is switched on.
+
+## Restore drill (bring the key back for the run only)
+
+1. Copy `backup-private.env` from your USB stick into `deploy\home`.
+2. I run the drill: the latest backup is restored into a separate temporary database, checked and dropped; live
+   staging is not touched. Record: [backup-and-restore.md](backup-and-restore.md), drill record.
+3. Delete `deploy\home\backup-private.env` again.
+
 - Tailscale Funnel is meant for light use; heavy traffic or a public launch belongs on a real server.

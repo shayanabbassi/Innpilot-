@@ -6,6 +6,7 @@ import { S3Client } from '../storage/s3';
 import { recordBackupRun, runBackup } from './backup';
 import { generateBackupKeys, keyId } from './backup-format';
 import { drillMarkdown, runRestoreDrill } from './restore';
+import { LATEST_KEY, missedBackup } from './retention';
 
 /**
  * Backup and restore commands (slice 6.5). In the API image: `node dist/ops/cli.js <command>`.
@@ -145,6 +146,18 @@ async function schedule(): Promise<void> {
       .regex(/^([01]\d|2[0-3]):[0-5]\d$/)
       .default('21:00'),
   });
+  // A computer switched off at night never reaches the scheduled time (home staging, on-premises, D22): when the
+  // last scheduled backup was missed, back up now. An unreadable latest.json counts as missed.
+  const latest = await bucket(s)
+    .get(LATEST_KEY)
+    .then((b) => (b ? new Date((JSON.parse(b.toString('utf8')) as { finishedAt: string }).finishedAt) : null))
+    .catch(() => null);
+  if (missedBackup(latest && !Number.isNaN(latest.getTime()) ? latest : null, s.BACKUP_AT_UTC, new Date())) {
+    log('backup.catch_up', { last: latest?.toISOString() ?? null });
+    await backupOnce().catch((err: unknown) =>
+      log('backup.failed', { error: err instanceof Error ? err.message : String(err) }),
+    );
+  }
   for (;;) {
     const wait = untilNext(s.BACKUP_AT_UTC);
     log('backup.scheduled', { at: new Date(Date.now() + wait).toISOString() });

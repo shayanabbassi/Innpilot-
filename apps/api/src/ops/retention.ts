@@ -33,6 +33,23 @@ export function expired(keys: string[], now: Date): string[] {
   return out;
 }
 
+/** The latest scheduled time (`HH:MM` UTC, every day) at or before `now`. */
+export function previousRun(at: string, now: Date): Date {
+  const [h, m] = at.split(':').map(Number) as [number, number];
+  const run = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), h, m));
+  if (run > now) run.setUTCDate(run.getUTCDate() - 1);
+  return run;
+}
+
+/**
+ * Whether a nightly backup was missed: there is none yet, or the last one finished before the latest scheduled
+ * time. A computer that is switched off at night (home staging, an on-premises install, D22) never reaches the
+ * scheduled time, so the scheduler checks this when it starts and backs up straight away.
+ */
+export function missedBackup(lastFinishedAt: Date | null, at: string, now: Date): boolean {
+  return !lastFinishedAt || lastFinishedAt < previousRun(at, now);
+}
+
 function parseStamp(s: string): Date {
   const m = /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z$/.exec(s)!;
   return new Date(Date.UTC(+m[1]!, +m[2]! - 1, +m[3]!, +m[4]!, +m[5]!, +m[6]!));
