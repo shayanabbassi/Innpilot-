@@ -130,6 +130,12 @@ extended attributes (16 of 16, needed for a rebuild); only the newest three copi
 refused with a clear message. A rebuild starts from such a file:
 `node deploy/home/rebuild-drill.mjs --from-file <file>` (to be drilled with the key at the next drill).
 
+**Set up 2026-10-29:** Google Drive for desktop, folder `G:\My Drive\InnPilot backups`; a Windows scheduled task,
+"InnPilot off-site copy", runs `deploy\home\copy-offsite.cmd` daily at 15:00 (or as soon as the computer is on, if
+it was off then) and logs to `%LOCALAPPDATA%\InnPilot\offsite.log`. First runs: by hand, then by the task (result 0);
+two copies in Drive. To check: open the log, or look at the Drive folder's newest file date. To stop it: Task
+Scheduler → "InnPilot off-site copy" → Disable.
+
 ## Restore drill (bring the key back for the run only)
 
 1. Copy `backup-private.env` from your USB stick into `deploy\home`.

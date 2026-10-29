@@ -72,7 +72,7 @@ written so you can follow them one by one.
   3. **Restore drill (passed 2026-10-29, after the missed-backup fix)** on staging, with the backup key brought back for the run only.
   4. **Rebuild drill (passed 2026-10-29, 58 s):** the whole staging rebuilt from the latest backup and the saved settings into a fresh Docker
      project, as after a lost or broken computer (P7-6); exact commands written into the runbook.
-  5. **Backups off the computer:** a scheduled copy of the encrypted backups to a folder that leaves the machine
+  5. **Backups off the computer (done 2026-10-29: daily to Google Drive):** a scheduled copy of the encrypted backups to a folder that leaves the machine
      (Google Drive for desktop or a USB drive): needed for staging's safety and for every on-premises sale (D22).
   6. **Alerts to your phone:** the monitoring profile with a free destination (a Telegram bot or email), proved with
      a test alert.
