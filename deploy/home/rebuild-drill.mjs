@@ -4,6 +4,8 @@
  * after a lost or broken computer. The same steps rebuild an on-premises install (D22).
  *   node deploy/home/rebuild-drill.mjs           drill beside live staging, then remove the rebuilt copy
  *   node deploy/home/rebuild-drill.mjs --keep    leave it running on http://127.0.0.1:8091 to look at
+ *   node deploy/home/rebuild-drill.mjs --from-file <innpilot-storage-….tar>   start from an off-site copy
+ *                                                (copy-offsite.mjs) instead of live staging's storage
  * Needs deploy/home/*.env (the saved settings) including backup-private.env. Uses a fresh Compose project,
  * "innpilot-rebuild", with empty volumes; the storage of live staging stands in for the off-site copy of the
  * backups and files. Live staging is only read, never changed.
@@ -87,21 +89,46 @@ step('A fresh, empty stack (new database and storage volumes)');
 spawnSync('docker', [...compose, '--profile', 'release', 'down', '-v'], { cwd: deploy, env });
 run([...compose, 'up', '-d', '--wait', 'postgres', 'storage'], { stdio: 'inherit' });
 
-step('Storage copied in (stands in for the off-site copy of backups and files)');
+const fi = process.argv.indexOf('--from-file');
+const fromFile = fi > 0 ? process.argv[fi + 1] : undefined;
 run(['compose', '-p', project, 'stop', 'storage'], { stdio: 'inherit' });
-run([
-  'run',
-  '--rm',
-  '-v',
-  'innpilot-staging_storagedata:/from:ro',
-  '-v',
-  `${project}_storagedata:/to`,
-  'debian:bookworm-slim',
-  'sh',
-  '-c',
-  // The storage gateway keeps object details in extended attributes: copy them too.
-  'cd /from && tar --xattrs --xattrs-include="*" -cf - . | (cd /to && tar --xattrs --xattrs-include="*" -xf -)',
-]);
+if (fromFile) {
+  // As after a real loss: the off-site copy made by copy-offsite.mjs.
+  step(`Storage restored from the off-site copy ${fromFile}`);
+  run(
+    [
+      'run',
+      '--rm',
+      '-i',
+      '-v',
+      `${project}_storagedata:/to`,
+      'debian:bookworm-slim',
+      'tar',
+      '--xattrs',
+      '--xattrs-include=*',
+      '-C',
+      '/to',
+      '-xf',
+      '-',
+    ],
+    { input: readFileSync(fromFile) },
+  );
+} else {
+  step('Storage copied in (stands in for the off-site copy of backups and files)');
+  run([
+    'run',
+    '--rm',
+    '-v',
+    'innpilot-staging_storagedata:/from:ro',
+    '-v',
+    `${project}_storagedata:/to`,
+    'debian:bookworm-slim',
+    'sh',
+    '-c',
+    // The storage gateway keeps object details in extended attributes: copy them too.
+    'cd /from && tar --xattrs --xattrs-include="*" -cf - . | (cd /to && tar --xattrs --xattrs-include="*" -xf -)',
+  ]);
+}
 run([...compose, 'up', '-d', 'storage'], { stdio: 'inherit' });
 
 step('Application role');

@@ -116,6 +116,20 @@ For a real rebuild on a new computer: install Docker Desktop, Tailscale (same ac
 off-site copy; then the same steps with the project name `innpilot-staging` and port 8090. **Until backups are
 copied off this computer (7.2 item 5), a lost disk loses the backups with it.**
 
+## Copies off this computer (7.2 item 5)
+
+`node deploy/home/copy-offsite.mjs --to "<folder>"` packs the whole storage (the encrypted backups and the
+application's files, which are encrypted too) into one file, `innpilot-storage-<time>.tar`, in a folder that leaves
+this computer, and keeps the newest three there. The folder is remembered (`deploy/home/offsite.env`), so later runs
+need no argument. Free choices: a **Google Drive for desktop** folder (synced to Google automatically, 15 GB free)
+or a USB drive kept elsewhere. The file needs no extra password: without the backup key and `app.env` it cannot be
+read.
+
+Checked 2026-10-29 into a test folder: the copy holds exactly what storage holds, including the storage gateway's
+extended attributes (16 of 16, needed for a rebuild); only the newest three copies stay; a missing folder is
+refused with a clear message. A rebuild starts from such a file:
+`node deploy/home/rebuild-drill.mjs --from-file <file>` (to be drilled with the key at the next drill).
+
 ## Restore drill (bring the key back for the run only)
 
 1. Copy `backup-private.env` from your USB stick into `deploy\home`.
