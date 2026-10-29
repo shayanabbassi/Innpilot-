@@ -31,3 +31,6 @@ apps/api/perf/*.last.md
 
 # Load test working files (sessions are written here during a run, then cleared)
 apps/api/load/out/
+
+# On-premises installer bundles (built by deploy/onprem/build-bundle.mjs)
+deploy/onprem/out/

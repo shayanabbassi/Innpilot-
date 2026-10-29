@@ -1,0 +1,60 @@
+# On-premises install (D22): InnPilot on the hotel's own Windows computer, sold and installed per hotel. The
+# single-server stack plus object storage on the same computer; the hotel's free Tailscale Funnel gives the public
+# https address and forwards to the proxy, which listens only on this computer. Installed and upgraded by
+# deploy/onprem/install.ps1; settings in settings\*.env next to this file, generated on the computer at install.
+services:
+  proxy:
+    ports: !override ['127.0.0.1:${INNPILOT_PORT:-8090}:80']
+    volumes: !override
+      - ./caddy/Caddyfile.home:/etc/caddy/Caddyfile:ro
+      - ./caddy/innpilot.caddy:/etc/caddy/innpilot.caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+  api:
+    env_file: !override settings/app.env
+    environment:
+      # Tailscale and Caddy in front; a forged X-Forwarded-For is ignored (docs/home-staging-runbook.md).
+      TRUST_PROXY: '2'
+      # One hotel per computer: the owner and manager see backup and background-work warnings in the app.
+      IN_APP_SYSTEM_WARNINGS: 'true'
+    depends_on:
+      storage: { condition: service_started }
+
+  backups:
+    env_file: !override [settings/release.env, settings/backup.env]
+    depends_on:
+      storage: { condition: service_started }
+
+  backup:
+    env_file: !override [settings/release.env, settings/backup.env]
+    depends_on:
+      storage: { condition: service_started }
+
+  restore-drill:
+    env_file: !override [settings/app.env, settings/release.env, settings/backup.env]
+    depends_on:
+      storage: { condition: service_started }
+
+  migrate:
+    env_file: !override settings/release.env
+
+  provision:
+    env_file: !override settings/release.env
+
+  postgres:
+    env_file: !override settings/postgres.env
+
+  # Files and backups on this computer; install.ps1 sets up the daily encrypted copy that leaves it.
+  storage:
+    image: versity/versitygw:v1.9.0
+    restart: unless-stopped
+    command: ['--port', ':7070', 'posix', '/data']
+    env_file: settings/storage.env
+    volumes: [storagedata:/data]
+
+  grafana:
+    env_file: !override settings/monitoring.env
+
+volumes:
+  storagedata:
