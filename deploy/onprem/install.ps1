@@ -67,10 +67,19 @@ function Invoke-Native {
   $psi.RedirectStandardInput = [bool]$StdIn
   $psi.RedirectStandardOutput = [bool]$Capture
   $psi.RedirectStandardError = [bool]$Capture
-  $p = [System.Diagnostics.Process]::Start($psi)
+  # The input writer takes the console's input encoding and, when that is UTF-8, writes a byte-order mark as soon
+  # as the program starts: it once turned the owner's one-time password into a different one (install test,
+  # 2026-10-29). So the input encoding is UTF-8 without a mark while the program starts.
+  $previousInput = $null
   if ($StdIn) {
-    # Raw UTF-8 bytes: the text writer adds a byte-order mark when the console's input encoding is UTF-8, which
-    # once turned the owner's one-time password into a different one (found by the install test, 2026-10-29).
+    try { $previousInput = [Console]::InputEncoding; [Console]::InputEncoding = $Utf8 } catch { $previousInput = $null }
+  }
+  try {
+    $p = [System.Diagnostics.Process]::Start($psi)
+  } finally {
+    if ($previousInput) { try { [Console]::InputEncoding = $previousInput } catch { } }
+  }
+  if ($StdIn) {
     $bytes = $Utf8.GetBytes($StdIn)
     $p.StandardInput.BaseStream.Write($bytes, 0, $bytes.Length)
     $p.StandardInput.BaseStream.Close()
@@ -244,6 +253,10 @@ if ($FirstInstall) {
     'tenant:create', '--slug', $slug, '--legal-name', $HotelName, '--display-name', $HotelName, '--property', $HotelName,
     '--owner-email', $OwnerEmail, '--owner-name', $OwnerName) -StdIn "$ownerPassword`n" -Capture
   Say ($created.Out.Trim())
+  # The backup before the first migrations ran on an empty database, before backups could be recorded: take the
+  # first real one now, with the hotel in it, so the owner does not start with a "no backup yet" warning.
+  Say 'First backup with the hotel in it...'
+  Compose @('--profile', 'release', 'run', '--rm', 'backup') -Capture | Out-Null
 
   Step 'Recovery kit (move it to a USB stick)'
   $kit = Join-Path ([Environment]::GetFolderPath('Desktop')) 'InnPilot recovery kit'
