@@ -313,6 +313,25 @@ describe('approval policy', () => {
     expect(other.status).toBe(200);
   });
 
+  it("approves the owner's own closing as it is submitted, even over the threshold", async () => {
+    const open = await withKey(owner, `${base}/cashier-shifts/open`, {
+      cashAccountId: cash['Bar cash'],
+      openingCount: '0',
+    });
+    expect(open.status).toBe(201);
+    const res = await withKey(owner, `${base}/cashier-shifts/${open.body.data.id}/submit-closing`, {
+      countedAmount: '5000',
+      explanation: 'Event takings counted late',
+    });
+    expect(res.status).toBe(200);
+    expect(res.body.data.closing).toMatchObject({
+      status: 'approved',
+      approvalRequired: true,
+      approvedByName: 'owner@a.test',
+    });
+    expect(res.body.data.closing.varianceJournalEntryId).toBeTruthy();
+  });
+
   it('uses the property threshold, which only property managers change', async () => {
     expect((await acc.patch(`/properties/${h.fx.propA1}`, { cashVarianceThreshold: '50' })).status).toBe(403);
     const res = await owner.patch(`/properties/${h.fx.propA1}`, { cashVarianceThreshold: '50' });
@@ -356,7 +375,8 @@ describe('visibility, audit and isolation', () => {
     expect(mine.status).toBe(200);
     expect(new Set(mine.body.data.map((s: { userName: string }) => s.userName)).size).toBe(1);
     const all = await acc.get(`${base}/cashier-shifts`);
-    expect(new Set(all.body.data.map((s: { userName: string }) => s.userName)).size).toBe(2);
+    // The desk clerk, the manager and the owner.
+    expect(new Set(all.body.data.map((s: { userName: string }) => s.userName)).size).toBe(3);
     const waiting = await acc.get(`${base}/cashier-shifts?status=awaiting_approval`);
     expect(waiting.body.data).toHaveLength(1);
     const managerShift = all.body.data.find(
@@ -374,10 +394,10 @@ describe('visibility, audit and isolation', () => {
       [h.fx.tenantA],
     );
     expect(Object.fromEntries(rows.map((r) => [r.action, r.n]))).toEqual({
-      'cashier.closing_approved': 2,
+      'cashier.closing_approved': 3,
       'cashier.closing_reopened': 1,
-      'cashier.closing_submitted': 5,
-      'cashier.shift_opened': 5,
+      'cashier.closing_submitted': 6,
+      'cashier.shift_opened': 6,
     });
   });
 

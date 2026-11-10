@@ -43,7 +43,7 @@ function ExpenseDetail() {
   const format = useFormatter();
   const { id } = useParams<{ id: string }>();
   const params = useSearchParams();
-  const { can, property, me } = useSession();
+  const { can, property, me, isOwner } = useSession();
   const allowed = can('expense.write');
   const expense = useQuery({
     queryKey: ['expenses', 'one', id],
@@ -70,7 +70,7 @@ function ExpenseDetail() {
     );
   }
 
-  const canApprove = can('expense.approve') && e.needsApproval && e.createdById !== me.user.id;
+  const canApprove = can('expense.approve') && e.needsApproval && (isOwner || e.createdById !== me.user.id);
   const canPay =
     can('expense.pay') && e.kind === 'bill' && (e.status === 'approved' || e.status === 'partly_paid');
   const canVoid =
@@ -269,7 +269,7 @@ function ActionDialog({
 }) {
   const t = useTranslations('expenses');
   const tCommon = useTranslations('common');
-  const { property } = useSession();
+  const { property, isOwner } = useSession();
   const queryClient = useQueryClient();
   const cashAccounts = useCashAccounts(property?.id, action === 'pay' || action === 'submit');
   const cur = property?.currencyCode ?? 'PKR';
@@ -315,13 +315,14 @@ function ActionDialog({
   };
 
   const titles: Record<Exclude<Action, null>, string> = {
-    submit: expense.kind === 'cash' ? t('payTitle') : t('submitTitle'),
+    submit: expense.kind === 'cash' ? t('payTitle') : isOwner ? t('submitOwnerTitle') : t('submitTitle'),
     approve: t('approveTitle'),
     pay: t('payBillTitle'),
     void: t('voidTitle'),
   };
   const explain: Record<Exclude<Action, null>, string> = {
-    submit: expense.kind === 'cash' ? t('payExplain') : t('submitExplain'),
+    submit:
+      expense.kind === 'cash' ? t('payExplain') : isOwner ? t('submitOwnerExplain') : t('submitExplain'),
     approve: expense.kind === 'bill' ? t('approveBillExplain') : t('approveCashExplain'),
     pay: t('payBillExplain'),
     void: expense.journalEntryId ? t('voidPostedExplain') : t('voidExplain'),

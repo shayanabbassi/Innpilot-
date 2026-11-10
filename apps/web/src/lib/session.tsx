@@ -26,6 +26,8 @@ interface SessionValue {
   can(permission: Permission): boolean;
   /** True if a tenant-wide role grants the permission (staff admin, audit log). */
   canTenant(permission: Permission): boolean;
+  /** The hotel's owner: needs no second person's approval, and may approve their own expenses and closings. */
+  isOwner: boolean;
   signOut(): Promise<void>;
 }
 
@@ -81,6 +83,7 @@ export function SessionProvider({ me, children }: { me: MeResponse; children: Re
       setPropertyId,
       can: (p) => property?.permissions.includes(p) ?? false,
       canTenant: (p) => me.tenantPermissions.includes(p),
+      isOwner: property?.roles.includes('tenant_owner') ?? false,
       signOut,
     }),
     [me, property, setPropertyId, signOut],

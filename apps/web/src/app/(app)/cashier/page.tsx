@@ -139,7 +139,7 @@ function OpenForm() {
 
 function OpenShift({ shiftId, onClosed }: { shiftId: string; onClosed: (id: string) => void }) {
   const t = useTranslations('cashier');
-  const { property, can } = useSession();
+  const { property, can, isOwner } = useSession();
   const queryClient = useQueryClient();
   const shift = useShift(shiftId);
   const [counted, setCounted] = useState('');
@@ -201,7 +201,9 @@ function OpenShift({ shiftId, onClosed }: { shiftId: string; onClosed: (id: stri
           )}
           {needsReason && variance.abs().compare(threshold) > 0 && (
             <Alert tone="warning">
-              {t('needsApproval', { threshold: formatAmount(threshold.toString(), cur) })}
+              {t(isOwner ? 'needsApprovalOwner' : 'needsApproval', {
+                threshold: formatAmount(threshold.toString(), cur),
+              })}
             </Alert>
           )}
           <TextField

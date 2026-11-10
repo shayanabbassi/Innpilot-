@@ -24,7 +24,7 @@ import { useSession } from '@/lib/session';
 export default function ShiftDetailPage() {
   const t = useTranslations('cashier');
   const { id } = useParams<{ id: string }>();
-  const { can, property, me } = useSession();
+  const { can, property, me, isOwner } = useSession();
   const allowed = can('folio.read');
   const shift = useQuery({
     queryKey: ['cashier', 'shift', id],
@@ -39,8 +39,9 @@ export default function ShiftDetailPage() {
   const s = shift.data;
   const cur = property?.currencyCode ?? 'PKR';
   const links = can('journal.read');
-  // The submitter never approves their own closing; the server refuses it too.
-  const canApprove = can('cashier.approve') && s.closing?.status === 'submitted' && s.userId !== me.user.id;
+  // The submitter never approves their own closing, except the owner; the server enforces the same.
+  const canApprove =
+    can('cashier.approve') && s.closing?.status === 'submitted' && (isOwner || s.userId !== me.user.id);
   const canReopen = can('cashier.reopen') && !!s.closing;
 
   return (

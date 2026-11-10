@@ -16,7 +16,7 @@ import { and, desc, eq, gte, inArray, lte, ne, sql, type SQL } from 'drizzle-orm
 import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
 import { PG_UNIQUE_VIOLATION, pgErrorCode } from '../common/pg-error';
-import type { AuthContext, RequestMeta } from '../common/request';
+import { isTenantOwner, type AuthContext, type RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 import { IdempotencyService } from '../idempotency/idempotency.service';
 import { ledgerErrors, PostingService } from './posting.service';
@@ -229,6 +229,9 @@ export class CashierService {
       }
       const threshold = Money.fromStorage(property.cashVarianceThreshold, cur);
       const approvalRequired = variance.abs().compare(threshold) > 0;
+      // The owner's own closing needs no second person: approved by them as it is submitted.
+      const ownerApproves = approvalRequired && isTenantOwner(auth);
+      const waits = approvalRequired && !ownerApproves;
 
       // Closed first: from here no posting can join the shift, including the variance entry below.
       await tx
@@ -236,9 +239,7 @@ export class CashierService {
         .set({ status: 'closed', closedAt: sql`now()` })
         .where(eq(sh.id, shift.id));
       const id = randomUUID();
-      const journalId = approvalRequired
-        ? null
-        : await this.postVariance(tx, auth, property, shift, id, variance);
+      const journalId = waits ? null : await this.postVariance(tx, auth, property, shift, id, variance);
       await tx.insert(cl).values({
         id,
         tenantId: auth.tenantId,
@@ -252,8 +253,9 @@ export class CashierService {
         explanation,
         threshold: threshold.toStorage(),
         approvalRequired,
-        status: approvalRequired ? 'submitted' : 'approved',
+        status: waits ? 'submitted' : 'approved',
         submittedBy: auth.userId,
+        ...(ownerApproves ? { approvedBy: auth.userId, approvedAt: sql`now()` } : {}),
         varianceJournalEntryId: journalId,
       });
       await this.record(tx, auth, propertyId, meta, 'cashier.closing_submitted', shift.id, {
@@ -262,11 +264,20 @@ export class CashierService {
         variance: variance.toString(),
         approvalRequired,
       });
+      if (ownerApproves) {
+        await this.record(tx, auth, propertyId, meta, 'cashier.closing_approved', shift.id, {
+          variance: variance.toString(),
+          note: null,
+        });
+      }
       return { status: 200, body: await this.detail(tx, property, shift.id) };
     });
   }
 
-  /** Approves a closing waiting for approval; the approver cannot be the cashier who submitted it. */
+  /**
+   * Approves a closing waiting for approval; the approver cannot be the cashier who submitted it, except the owner,
+   * who may approve their own.
+   */
   approveClosing(
     auth: AuthContext,
     propertyId: string,
@@ -283,7 +294,7 @@ export class CashierService {
       if (!closing || closing.status !== 'submitted') {
         throw new AppError('CONFLICT', 'There is no closing waiting for approval on this shift.');
       }
-      if (closing.submittedBy === auth.userId) {
+      if (closing.submittedBy === auth.userId && !isTenantOwner(auth)) {
         throw new AppError('FORBIDDEN', 'You submitted this closing. Someone else must approve it.');
       }
       const variance = Money.fromStorage(closing.variance, property.currencyCode);

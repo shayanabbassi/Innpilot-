@@ -16,7 +16,7 @@ import { and, asc, desc, eq, gte, inArray, lte, sql, type SQL } from 'drizzle-or
 import { alias } from 'drizzle-orm/pg-core';
 import { AuditService } from '../audit/audit.service';
 import { AppError } from '../common/app-error';
-import type { AuthContext, RequestMeta } from '../common/request';
+import { isTenantOwner, type AuthContext, type RequestMeta } from '../common/request';
 import { Db } from '../db/db.module';
 import { IdempotencyService } from '../idempotency/idempotency.service';
 import { AttachmentsService } from '../storage/attachments.service';
@@ -315,6 +315,10 @@ export class ExpenseService {
             from: cash.name,
           });
         }
+        // The owner's own expenses need no second person: approved as they are submitted.
+        if (isTenantOwner(auth)) {
+          await this.applyApproval(tx, auth, property, await this.lock(tx, propertyId, id), meta);
+        }
         return { status: 200, body: (await this.dtos(tx, property, [id]))[0]! };
       },
     );
@@ -322,7 +326,7 @@ export class ExpenseService {
 
   /**
    * Approves a submitted bill into accounts payable, or reviews a paid cash expense. Never by whoever created or
-   * submitted it (maker-checker).
+   * submitted it (maker-checker), except the owner, who may approve their own.
    */
   approve(auth: AuthContext, propertyId: string, id: string, key: string | undefined, meta: RequestMeta) {
     return this.command(
@@ -333,46 +337,56 @@ export class ExpenseService {
       async (tx) => {
         const property = await this.property(tx, propertyId);
         const row = await this.lock(tx, propertyId, id);
-        if (row.createdBy === auth.userId || row.submittedBy === auth.userId) {
+        if (!isTenantOwner(auth) && (row.createdBy === auth.userId || row.submittedBy === auth.userId)) {
           throw new AppError('FORBIDDEN', 'You recorded this expense. Someone else must approve it.');
         }
-        if (row.kind === 'bill' && row.status === 'submitted') {
-          const total = Money.fromStorage(row.totalAmount, property.currencyCode);
-          const payable = await this.systemAccount(tx, 'accounts_payable');
-          const journalId = await this.posting.post(tx, auth, {
-            propertyId,
-            sourceType: 'expense',
-            sourceId: id,
-            reference: row.billReference ?? row.voucherNumber,
-            narration: `Bill ${row.voucherNumber}: ${row.description}`,
-            lines: [
-              ...(await this.costLines(tx, property, id)),
-              { accountId: payable, debit: '0', credit: total.toString(), supplierId: row.supplierId },
-            ],
-          });
-          await tx
-            .update(v)
-            .set({
-              status: 'approved',
-              approvedBy: auth.userId,
-              approvedAt: sql`now()`,
-              journalEntryId: journalId,
-            })
-            .where(eq(v.id, id));
-        } else if (row.kind === 'cash' && row.status === 'paid' && !row.approvedBy) {
-          await tx
-            .update(v)
-            .set({ approvedBy: auth.userId, approvedAt: sql`now()` })
-            .where(eq(v.id, id));
-        } else {
-          throw new AppError('CONFLICT', `${row.voucherNumber} is not waiting for approval.`);
-        }
-        await this.record(tx, auth, propertyId, meta, 'expense.approved', id, {
-          voucherNumber: row.voucherNumber,
-        });
-        return { status: 200, body: (await this.dtos(tx, property, [id]))[0]! };
+        await this.applyApproval(tx, auth, property, row, meta);
+        return { status: 200, body: (await this.dtos(tx, property, [row.id]))[0]! };
       },
     );
+  }
+
+  private async applyApproval(
+    tx: Tx,
+    auth: AuthContext,
+    property: PropertyRow,
+    row: VoucherRow,
+    meta: RequestMeta,
+  ): Promise<void> {
+    if (row.kind === 'bill' && row.status === 'submitted') {
+      const total = Money.fromStorage(row.totalAmount, property.currencyCode);
+      const payable = await this.systemAccount(tx, 'accounts_payable');
+      const journalId = await this.posting.post(tx, auth, {
+        propertyId: property.id,
+        sourceType: 'expense',
+        sourceId: row.id,
+        reference: row.billReference ?? row.voucherNumber,
+        narration: `Bill ${row.voucherNumber}: ${row.description}`,
+        lines: [
+          ...(await this.costLines(tx, property, row.id)),
+          { accountId: payable, debit: '0', credit: total.toString(), supplierId: row.supplierId },
+        ],
+      });
+      await tx
+        .update(v)
+        .set({
+          status: 'approved',
+          approvedBy: auth.userId,
+          approvedAt: sql`now()`,
+          journalEntryId: journalId,
+        })
+        .where(eq(v.id, row.id));
+    } else if (row.kind === 'cash' && row.status === 'paid' && !row.approvedBy) {
+      await tx
+        .update(v)
+        .set({ approvedBy: auth.userId, approvedAt: sql`now()` })
+        .where(eq(v.id, row.id));
+    } else {
+      throw new AppError('CONFLICT', `${row.voucherNumber} is not waiting for approval.`);
+    }
+    await this.record(tx, auth, property.id, meta, 'expense.approved', row.id, {
+      voucherNumber: row.voucherNumber,
+    });
   }
 
   /** Pays part or all of an approved bill: Dr Accounts payable (the supplier), Cr cash or bank. */

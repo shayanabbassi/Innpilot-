@@ -417,3 +417,86 @@ describe('visibility, audit and isolation', () => {
     expect(bill.status).toBe(400);
   });
 });
+
+describe("the owner's own expenses", () => {
+  it('are approved as they are submitted, with no second person', async () => {
+    const owner = await browser(h).loginActive(h.fx.users.ownerA);
+    const cashDraft = await withKey(owner, `${base}/expenses`, {
+      kind: 'cash',
+      payee: 'Florist',
+      expenseDate: '2026-10-19',
+      description: 'Lobby flowers',
+      cashAccountId: cash['Front desk cash'],
+      lines: [{ accountId: account['6200'], amount: '300' }],
+    });
+    const paid = await withKey(owner, `${base}/expenses/${cashDraft.body.data.id}/submit`);
+    expect(paid.status).toBe(200);
+    expect(paid.body.data).toMatchObject({
+      status: 'paid',
+      needsApproval: false,
+      approvedByName: 'owner@a.test',
+    });
+
+    const billDraft = await withKey(owner, `${base}/expenses`, {
+      kind: 'bill',
+      supplierId,
+      expenseDate: '2026-10-19',
+      description: 'Owner-ordered linen',
+      lines: [{ accountId: account['5000'], amount: '700' }],
+    });
+    const bill = await withKey(owner, `${base}/expenses/${billDraft.body.data.id}/submit`);
+    expect(bill.status).toBe(200);
+    expect(bill.body.data).toMatchObject({
+      status: 'approved',
+      needsApproval: false,
+      approvedByName: 'owner@a.test',
+      outstanding: '700.00',
+    });
+    expect(await linesOf(bill.body.data.journalEntryId)).toEqual([
+      { code: '5000', debit: '700.00', credit: '0.00', supplier: null },
+      { code: '2000', debit: '0.00', credit: '700.00', supplier: 'Fresh Foods' },
+    ]);
+  });
+
+  it('can be approved by the owner when one was left waiting', async () => {
+    const owner = await browser(h).loginActive(h.fx.users.ownerA);
+    const draft = await withKey(owner, `${base}/expenses`, {
+      kind: 'cash',
+      payee: 'Taxi',
+      expenseDate: '2026-10-19',
+      description: 'Airport run',
+      cashAccountId: cash['Front desk cash'],
+      lines: [{ accountId: account['6200'], amount: '200' }],
+    });
+    const id = draft.body.data.id;
+    await withKey(owner, `${base}/expenses/${id}/submit`);
+    // As if recorded before the owner's approvals were automatic.
+    await h.admin.query(`UPDATE expense_vouchers SET approved_by = NULL, approved_at = NULL WHERE id = $1`, [
+      id,
+    ]);
+    const res = await withKey(owner, `${base}/expenses/${id}/approve`);
+    expect(res.status).toBe(200);
+    expect(res.body.data).toMatchObject({ needsApproval: false, approvedByName: 'owner@a.test' });
+  });
+
+  it('still keep maker and checker apart for everyone else', async () => {
+    const draft = await withKey(manager, `${base}/expenses`, {
+      kind: 'cash',
+      payee: 'Plumber',
+      expenseDate: '2026-10-19',
+      description: 'Tap washer',
+      cashAccountId: cash['Front desk cash'],
+      lines: [{ accountId: account['6200'], amount: '100' }],
+    });
+    const paid = await withKey(manager, `${base}/expenses/${draft.body.data.id}/submit`);
+    expect(paid.body.data.needsApproval).toBe(true);
+    expect((await withKey(manager, `${base}/expenses/${draft.body.data.id}/approve`)).status).toBe(403);
+    // The database refuses it too, whatever the application does.
+    await expect(
+      h.admin.query(
+        `UPDATE expense_vouchers SET approved_by = created_by, approved_at = now() WHERE id = $1`,
+        [draft.body.data.id],
+      ),
+    ).rejects.toMatchObject({ code: '23514' });
+  });
+});

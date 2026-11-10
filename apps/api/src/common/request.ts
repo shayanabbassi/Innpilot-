@@ -22,6 +22,14 @@ export interface AuthContext {
   tenantWidePermissions: Set<Permission>;
 }
 
+/**
+ * The hotel's owner (a tenant-wide `tenant_owner`). Approvals that exist so a second person checks someone's work
+ * (expenses, cashier variances) do not apply to the owner: what the owner records is final at once.
+ */
+export function isTenantOwner(auth: AuthContext): boolean {
+  return auth.assignments.some((a) => a.role === 'tenant_owner' && a.propertyId === null);
+}
+
 /** A signed-in platform operator (slice 5.7). Never set together with `auth`. */
 export interface OperatorContext {
   sessionId: string;
