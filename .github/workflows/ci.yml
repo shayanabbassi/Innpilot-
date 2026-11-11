@@ -72,8 +72,22 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # The backup and restore tests (slice 6.5) run pg_dump and pg_restore; the runner image ships PostgreSQL 16.
-      - run: pg_dump --version && pg_restore --version
+      # The backup and restore tests (slice 6.5) run pg_dump and pg_restore. They must match the PostgreSQL 16
+      # service: the runner image's newer client writes settings (transaction_timeout) a 16 server rejects on
+      # restore. So install the PGDG 16 client and put it first on PATH, then fail fast if anything else is found.
+      - name: PostgreSQL 16 client tools
+        run: |
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc \
+            https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" \
+            | sudo tee /etc/apt/sources.list.d/pgdg.list > /dev/null
+          sudo apt-get update -qq -o Dir::Etc::sourcelist=sources.list.d/pgdg.list -o Dir::Etc::sourceparts=-
+          sudo apt-get install -y -qq --no-install-recommends postgresql-client-16
+          echo /usr/lib/postgresql/16/bin >> "$GITHUB_PATH"
+      - run: |
+          pg_dump --version && pg_restore --version
+          pg_dump --version | grep -q ' 16\.' && pg_restore --version | grep -q ' 16\.'
       - run: pnpm test:integration
 
   alert-rules:
