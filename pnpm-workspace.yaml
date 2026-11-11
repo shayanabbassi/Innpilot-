@@ -14,3 +14,7 @@ overrides:
   body-parser: 2.4.0
   multer: 2.5.0
   fast-uri: 3.1.9
+  # Dev tooling advisories (Nov 2026): glob under the Nest CLI (GHSA-3g3m-2fjr-6pw4) and minimatch under
+  # typescript-eslint (GHSA-g3hv-75wg-m249). Scoped to those parents so ESLint's own minimatch 3 is untouched.
+  '@nestjs/cli>glob': 14.0.4
+  '@typescript-eslint/typescript-estree>minimatch': 11.0.8
